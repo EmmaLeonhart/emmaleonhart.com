@@ -104,7 +104,10 @@ def _extract_entities_from_text(sentence: str) -> list[str]:
     # This captures "atmospheric pressure", "sea level", "boiling point", etc.
     entities += re.findall(
         r"\b([a-z]+\s+(?:pressure|temperature|altitude|level|point|transition"
-        r"|peak|surface|water|atoms?))\b",
+        r"|peak|surface|water|atoms?"
+        r"|enzyme|acid|protein|gene|factor|receptor|signal|chain|system|cell|layer"
+        r"|particle|emission|frequency|radiation|component|supply|manufacturing"
+        r"|ring|structure|ion|carbonate))\b",
         sentence.lower(),
     )
 
