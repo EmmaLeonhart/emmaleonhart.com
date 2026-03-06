@@ -7,17 +7,43 @@
 - **Update README.md regularly.** It should always reflect the current state of the project for human readers.
 
 ## Project Description
-This project builds on the paper:
+
+Research prototype and forthcoming arXiv paper on **Neurosymbolic GraphRAG** — using runtime Virtual Knowledge Graphs (VKGs) as a semantic space for logic-gated retrieval, compared against standard vector-similarity RAG.
+
+**Core thesis:** Standard RAG retrieves by vector proximity, which fails on multi-hop causal reasoning. By constructing a knowledge graph at runtime from propositional extractions and running a logic engine over it, the system retrieves correct reasoning chains even when intermediate steps have low similarity to the query.
+
+**Current state:** Working prototype in `prototype/` demonstrating 100% ground truth coverage vs 75% for standard RAG on a causal reasoning benchmark. Paper writing has not yet begun.
+
+### Reference Paper
+This project builds on:
 
 > **"Toward Verified Artificial Intelligence"**
 > Sanjit A. Seshia (UC Berkeley), Dorsa Sadigh (Stanford), S. Shankar Sastry (UC Berkeley)
 > *Communications of the ACM*, Volume 65, Issue 7, 2022
 > DOI: [10.1145/3503914](https://dl.acm.org/doi/10.1145/3503914)
 
-The paper presents a formal methods-based approach to AI system verification and validation, aiming to make AI more trustworthy. Key topics include adversarial robustness in machine learning, formal verification methods, and explainable AI (XAI).
-
 ## Architecture and Conventions
-_TODO: Document key decisions, file structure, and patterns as they emerge._
 
-# currentDate
-Today's date is 2026-03-05.
+### File Structure
+- `prototype/` — All runnable code lives here
+  - `knowledge_base.py` — Curated corpus, query, and ground truth definitions
+  - `pillar1_extraction.py` — Propositional extraction via LLM (subject, predicate, object triples)
+  - `pillar2_mapping.py` — Embedding + VKG construction with entity bridging (NetworkX + RDFLib)
+  - `pillar3_logic.py` — Multi-hop chain search, contradiction detection via SPARQL, pruning
+  - `standard_rag.py` — Baseline: cosine similarity retrieval
+  - `neurosymbolic_rag.py` — Full pipeline orchestrating all 3 pillars
+  - `run_demo.py` — Entry point: side-by-side comparison of both approaches
+- `gemini_conversation.md` — Original 5-turn conversation that seeded the idea
+- `paper_names.md` — 12 candidate paper titles
+- `todo.md` — Project task tracker
+
+### Key Decisions
+- **Local-only inference:** Ollama with `deepseek-r1:8b` (reasoning) and `mxbai-embed-large` (embeddings)
+- **Dual graph representation:** NetworkX DiGraph for path-finding, RDFLib for formal semantics/SPARQL
+- **Proposition-first ontology:** Entire claims are embedded rather than entity-relation triples
+- **Entity bridging:** Propositions are linked in the VKG through shared entities, not just vector similarity
+
+### Conventions
+- Python scripts use `python` (not `python3`) on this Windows system
+- Commit messages explain *why*, not just what
+- README.md must always reflect current project state
