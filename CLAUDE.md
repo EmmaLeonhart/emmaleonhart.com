@@ -7,7 +7,14 @@
 - **Update README.md regularly.** It should always reflect the current state of the project for human readers.
 
 ## Project Description
-_TODO: Describe what this project is about._
+This project builds on the paper:
+
+> **"Toward Verified Artificial Intelligence"**
+> Sanjit A. Seshia (UC Berkeley), Dorsa Sadigh (Stanford), S. Shankar Sastry (UC Berkeley)
+> *Communications of the ACM*, Volume 65, Issue 7, 2022
+> DOI: [10.1145/3503914](https://dl.acm.org/doi/10.1145/3503914)
+
+The paper presents a formal methods-based approach to AI system verification and validation, aiming to make AI more trustworthy. Key topics include adversarial robustness in machine learning, formal verification methods, and explainable AI (XAI).
 
 ## Architecture and Conventions
 _TODO: Document key decisions, file structure, and patterns as they emerge._
