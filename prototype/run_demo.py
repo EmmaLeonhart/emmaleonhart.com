@@ -1,13 +1,14 @@
 """Entry point: run both pipelines and print side-by-side comparison.
 
 Usage:
-    python -m prototype.run_demo
-    # or
-    python prototype/run_demo.py
+    python prototype/run_demo.py                          # original demo
+    python prototype/run_demo.py --benchmark              # full 7-scenario suite
+    python prototype/run_demo.py --benchmark --save-json results.json
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 import re
 import sys
@@ -46,6 +47,30 @@ def _keyword_hit(answer: str, keywords: list[str]) -> bool:
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Neurosymbolic GraphRAG demo and benchmark"
+    )
+    parser.add_argument(
+        "--benchmark", action="store_true",
+        help="Run the full multi-scenario benchmark suite"
+    )
+    parser.add_argument(
+        "--save-json", type=str, default=None,
+        help="Save benchmark results to a JSON file (requires --benchmark)"
+    )
+    parser.add_argument(
+        "--scenario", type=str, default=None,
+        help="Run a single benchmark scenario by ID (requires --benchmark)"
+    )
+    args = parser.parse_args()
+
+    if args.benchmark:
+        from prototype.benchmark import run_benchmark
+        from prototype.scenarios import get_scenario
+        scenarios = [get_scenario(args.scenario)] if args.scenario else None
+        run_benchmark(scenarios=scenarios, save_json=args.save_json)
+        return
+
     print("=" * 70)
     print("  NEUROSYMBOLIC GraphRAG vs STANDARD RAG — Demo Comparison")
     print("=" * 70)
