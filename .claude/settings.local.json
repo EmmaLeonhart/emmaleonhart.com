@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:gemini.google.com)",
+      "Bash(cd \"C:/Users/Immanuelle/Documents/Github/axiv-neurosymbolic-paper\" && python extract_gemini.py 2>&1)",
+      "Bash(python:*)",
+      "Bash(cd:*)",
+      "Bash(ollama list:*)",
+      "Bash(ollama pull:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
