@@ -10,9 +10,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+import re
+
 import ollama
 
 from prototype.pillar1_extraction import Proposition, extract_all
+
+
+def _strip_think(text: str) -> str:
+    """Remove <think>...</think> blocks from deepseek-r1 output."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 from prototype.pillar2_mapping import VKG, build_vkg
 from prototype.pillar3_logic import (
     ReasoningChain,
@@ -104,9 +111,9 @@ def run_neurosymbolic_rag(
         response = ollama.chat(
             model=LLM_MODEL,
             messages=[{"role": "user", "content": prompt}],
-            options={"temperature": 0.3, "num_predict": 256},
+            options={"temperature": 0.3, "num_predict": 1024},
         )
-        answer = response["message"]["content"].strip()
+        answer = _strip_think(response["message"]["content"])
     except Exception as e:
         answer = f"[LLM error: {e}]"
 

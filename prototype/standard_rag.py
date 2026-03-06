@@ -8,10 +8,17 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import re
+
 import numpy as np
 import ollama
 
 from prototype.pillar2_mapping import embed_texts, retrieve_by_similarity
+
+
+def _strip_think(text: str) -> str:
+    """Remove <think>...</think> blocks from deepseek-r1 output."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
 LLM_MODEL = "deepseek-r1:8b"
 
@@ -66,9 +73,9 @@ def run_standard_rag(
         response = ollama.chat(
             model=LLM_MODEL,
             messages=[{"role": "user", "content": prompt}],
-            options={"temperature": 0.3, "num_predict": 256},
+            options={"temperature": 0.3, "num_predict": 1024},
         )
-        answer = response["message"]["content"].strip()
+        answer = _strip_think(response["message"]["content"])
     except Exception as e:
         answer = f"[LLM error: {e}]"
 

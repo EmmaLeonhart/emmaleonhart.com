@@ -24,7 +24,7 @@ class ReasoningChain:
 
 def find_reasoning_chains(
     vkg: VKG,
-    max_depth: int = 6,
+    max_depth: int = 8,
     max_chains: int = 5,
 ) -> list[ReasoningChain]:
     """Find reasoning chains by searching for paths in the VKG.
@@ -41,50 +41,61 @@ def find_reasoning_chains(
     # Use undirected view for path finding (causal links go both ways)
     G_undirected = G.to_undirected()
 
+    # Collect all actual source texts from edges for filtering
+    real_sources: set[str] = set()
+    for u, v, data in G.edges(data=True):
+        src = data.get("source", "")
+        if src and not src.startswith("shared entity:"):
+            real_sources.add(src)
+
     # Anchor nodes: those with highest degree (connection hubs)
     degrees = sorted(G.degree(), key=lambda x: x[1], reverse=True)
-    anchor_nodes = [n for n, d in degrees[:min(6, len(degrees))] if d >= 1]
+    anchor_nodes = [n for n, d in degrees[:min(8, len(degrees))] if d >= 1]
 
     if len(anchor_nodes) < 2:
-        anchor_nodes = list(G.nodes())[:min(4, G.number_of_nodes())]
+        anchor_nodes = list(G.nodes())[:min(6, G.number_of_nodes())]
 
     chains: list[ReasoningChain] = []
     seen_source_sets: set[frozenset[str]] = set()
 
-    for i, src in enumerate(anchor_nodes):
-        for tgt in anchor_nodes[i + 1:]:
-            try:
-                for path in nx.all_simple_paths(
-                    G_undirected, src, tgt, cutoff=max_depth
-                ):
-                    # Collect source texts along the path
-                    sources = []
-                    for u, v in zip(path[:-1], path[1:]):
-                        edge_data = G_undirected.edges.get((u, v), {})
-                        source = edge_data.get("source", "")
-                        if source and source not in sources:
-                            sources.append(source)
-
-                    if not sources:
-                        continue
-
-                    source_set = frozenset(sources)
-                    if source_set in seen_source_sets:
-                        continue
-                    seen_source_sets.add(source_set)
-
-                    path_labels = [
-                        G.nodes[n].get("label", str(n).split("/")[-1])
-                        for n in path
-                    ]
-
-                    chains.append(ReasoningChain(
-                        steps=sources,
-                        path_nodes=path_labels,
-                        score=len(sources),  # longer chains = more reasoning
-                    ))
-            except nx.NetworkXNoPath:
+    for i, src_node in enumerate(anchor_nodes):
+        for tgt_node in anchor_nodes[i + 1:]:
+            if src_node == tgt_node:
                 continue
+            try:
+                paths = list(nx.all_simple_paths(
+                    G_undirected, src_node, tgt_node, cutoff=max_depth
+                ))
+            except (nx.NetworkXNoPath, nx.NodeNotFound):
+                continue
+
+            for path in paths[:20]:  # limit paths per pair
+                # Collect source texts along the path (skip entity_link edges)
+                sources = []
+                for u, v in zip(path[:-1], path[1:]):
+                    edge_data = G_undirected.edges.get((u, v), {})
+                    source = edge_data.get("source", "")
+                    if source in real_sources and source not in sources:
+                        sources.append(source)
+
+                if len(sources) < 2:
+                    continue  # need at least 2 steps for a chain
+
+                source_set = frozenset(sources)
+                if source_set in seen_source_sets:
+                    continue
+                seen_source_sets.add(source_set)
+
+                path_labels = [
+                    G.nodes[n].get("label", str(n).split("/")[-1])
+                    for n in path
+                ]
+
+                chains.append(ReasoningChain(
+                    steps=sources,
+                    path_nodes=path_labels,
+                    score=len(sources),  # longer chains = more reasoning
+                ))
 
     # Sort by score (prefer chains covering more source texts)
     chains.sort(key=lambda c: c.score, reverse=True)
@@ -122,19 +133,23 @@ def prune_irrelevant(
     vkg: VKG,
     chains: list[ReasoningChain],
 ) -> list[str]:
-    """Return only source texts that appear in at least one reasoning chain.
+    """Return source texts from VKG propositions, preferring chain members.
 
-    Propositions not on any valid chain are pruned as logically irrelevant.
+    The VKG already performed entity-bridged filtering in Pillar 2, so all
+    propositions in the VKG are potentially relevant. We keep them all but
+    order chain members first.
     """
     on_chain: set[str] = set()
     for chain in chains:
         on_chain.update(chain.steps)
 
-    # If no chains found, fall back to all VKG propositions
-    if not on_chain:
-        return [p.source_text for p in vkg.propositions if p.source_text]
+    all_sources = list({p.source_text for p in vkg.propositions if p.source_text})
 
-    return list(on_chain)
+    # Order: chain members first, then remaining VKG propositions
+    chain_sources = [s for s in all_sources if s in on_chain]
+    other_sources = [s for s in all_sources if s not in on_chain]
+
+    return chain_sources + other_sources
 
 
 def format_grounded_context(
