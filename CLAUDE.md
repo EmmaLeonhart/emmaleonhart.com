@@ -33,6 +33,13 @@ This project builds on:
   - `standard_rag.py` — Baseline: cosine similarity retrieval
   - `neurosymbolic_rag.py` — Full pipeline orchestrating all 3 pillars
   - `run_demo.py` — Entry point: side-by-side comparison of both approaches
+  - `scenarios.py` — 7 benchmark scenarios across diverse domains
+  - `benchmark.py` — Multi-scenario benchmark runner with JSON export
+  - `explore_embeddings.py` — Embedding geometry exploration for proposition families
+  - `semantic_grid.py` — 3x3x3 subject/predicate/object grid for isolating embedding axes
+- `exploration_notes.md` — Narrative interpretation of experimental results
+- `experiment_log.md` — Chronological log of every experiment run
+- `results.json` — Benchmark results from 7-scenario suite
 - `gemini_conversation.md` — Original 5-turn conversation that seeded the idea
 - `paper_names.md` — 12 candidate paper titles
 - `todo.md` — Project task tracker
@@ -42,6 +49,12 @@ This project builds on:
 - **Dual graph representation:** NetworkX DiGraph for path-finding, RDFLib for formal semantics/SPARQL
 - **Proposition-first ontology:** Entire claims are embedded rather than entity-relation triples
 - **Entity bridging:** Propositions are linked in the VKG through shared entities, not just vector similarity
+
+### Experiment Logging
+- **Every experiment must be logged** to `experiment_log.md` with: date, what was run, key findings, and paths to output artifacts.
+- Log entries are append-only and chronological. Each entry gets a numbered header.
+- Raw data artifacts (`.json`, `.npz`, etc.) live alongside their scripts in `prototype/`.
+- Narrative interpretation goes in `exploration_notes.md` (updated as findings accumulate).
 
 ### Conventions
 - Python scripts use `python` (not `python3`) on this Windows system
