@@ -147,6 +147,10 @@ The "cute animals" family clustered closest to the "robin syllogism" family (cen
 
 4. **The bottleneck is extraction, not the graph.** The VKG architecture works when fed good propositions. The current 8b model is the weak link. This suggests a clean separation of concerns: improve extraction quality independently, and the end-to-end system improves without changing the VKG or logic engine.
 
+5. **Embeddings are compositional but lopsidedly weighted.** The semantic grid proves that S, P, and O each contribute a consistent, independent, approximately additive vector component. But the weights are drastically unequal: Subject (3.5x) > Object (2.6x) > Predicate (1.0x). The model allocates its dimensions to encode *what things are about* (entities/topics), not *what relationship holds* (predicates). This is optimal for topical retrieval but exactly wrong for logical reasoning, where the predicate is the most important component.
+
+6. **Verbs are consistent translations, not deformations.** Despite weak magnitude, verb displacement vectors point in the same direction across S/O contexts (0.84 alignment). The verb shifts the entity subspace without reshaping it (subspace r=0.958). This explains why entity bridging works robustly — shared entities stay close regardless of what predicate connects them. But it also means you cannot discover structural analogies ("all inhibition relationships") via embedding distance alone. The VKG's explicit predicate labels fill exactly this gap.
+
 ### Observations worth highlighting in the paper
 
 - **The Socrates gap:** 0.560 between the two premises of a valid syllogism. This is a vivid, citable example of embedding space failing at logical reasoning.
