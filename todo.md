@@ -44,10 +44,10 @@
 - [ ] Within-role similarity reversal — predicates most similar in isolation, weakest in propositions (Exp 5)
 - [ ] Context compression — predicate synonyms nearly invisible in sentences (devour/eat = 0.965) (Exp 5)
 - [ ] Hierarchy convergence is literal, not graduated — branches snap to identity at shared words (Exp 5+7)
-- [ ] Linnaean taxonomy results — register consistency doesn't fix non-monotonicity (Exp 7)
-- [ ] "Animalia bounce" as universal pattern (Exp 7)
-- [ ] E. coli extreme case — Bacteria closer than Enterobacterales (Exp 7)
-- [ ] Argument against hyperbolic embeddings — problem is distributional not geometric (§3g)
+- [x] Linnaean taxonomy results — register consistency doesn't fix non-monotonicity (Exp 7)
+- [x] "Animalia bounce" as universal pattern (Exp 7)
+- [x] E. coli extreme case — Bacteria closer than Enterobacterales (Exp 7)
+- [x] Argument against hyperbolic embeddings — problem is distributional not geometric (§3g)
 - [ ] Distractor trap analysis — Starbucks outscoring Brazilian drought in economic scenario
 - [ ] Pillar 3 finding: 0 formal chains in 2/3 winning scenarios — entity bridging alone is doing the work
 - [ ] 16.9x time overhead analysis

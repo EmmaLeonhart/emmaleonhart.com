@@ -275,6 +275,24 @@
   <h3>4.6 Distributional vs. Ontological Distance</h3>
   <p>dog&rarr;animal (0.876) scores higher than dog&rarr;mammal (0.816), despite mammal being taxonomically closer. Embedding distance reflects co-occurrence frequency, not formal taxonomic distance. Word register matters: &ldquo;dog&rdquo; (informal), &ldquo;canine&rdquo; (taxonomic), and &ldquo;carnivoran&rdquo; (scientific) occupy different regions of the space.</p>
 
+  <h3>4.7 Linnaean Taxonomy: Register Consistency Does Not Help</h3>
+  <p>One might hypothesize that the distributional confounds in Section 4.6 arise from mixing informal and scientific registers within a single hierarchy (puppy&rarr;dog&rarr;canine&rarr;mammal&rarr;animal). We tested this by using purely formal Linnaean taxonomy &mdash; <em>Canis lupus familiaris</em> &rarr; <em>Canis</em> &rarr; <em>Canidae</em> &rarr; <em>Carnivora</em> &rarr; <em>Mammalia</em> &rarr; <em>Vertebrata</em> &rarr; <em>Chordata</em> &rarr; <em>Animalia</em> &rarr; <em>Eukaryota</em> &mdash; across 10 organisms.</p>
+
+  <p><strong>Result:</strong> Only 1/10 Linnaean hierarchies show monotonic distance decay (vs. 3/10 for common English names). The &ldquo;Animalia bounce&rdquo; is universal &mdash; every animal hierarchy shows <em>Animalia</em> closer to the species name than <em>Chordata</em> is, because &ldquo;Animalia&rdquo; appears in far more contexts (legal, philosophical, educational) than &ldquo;Chordata&rdquo; (biology textbooks only).</p>
+
+  <p>The most extreme case is <em>E. coli</em>: &ldquo;Bacteria&rdquo; (0.806) is closer to &ldquo;Escherichia coli&rdquo; than &ldquo;Enterobacterales&rdquo; (0.567) is &mdash; the hierarchy is <em>inverted</em> for the top four levels. This is because &ldquo;E. coli&rdquo; and &ldquo;Bacteria&rdquo; massively co-occur in general science writing, while &ldquo;E. coli&rdquo; and &ldquo;Enterobacterales&rdquo; co-occur almost exclusively in taxonomy databases.</p>
+
+  <p>Convergence between branches remains literal, not graduated: <em>Canidae</em> &harr; <em>Felidae</em> = 0.785, then instant 1.000 at shared <em>Carnivora</em>. Even the most formally structured taxonomy humans have ever created cannot be recovered from embedding geometry.</p>
+
+  <h3>4.8 Why Hyperbolic Embeddings Will Not Fix This</h3>
+  <p>A likely objection is that the limitations documented above are artifacts of Euclidean geometry, and that hyperbolic embeddings (Nickel &amp; Kiela 2017) &mdash; which have exponentially growing volume with distance from the origin, naturally matching tree branching factors &mdash; would resolve the hierarchy recovery problem. Our data argues otherwise.</p>
+
+  <p>The non-monotonicity we observe is not geometric but <strong>distributional</strong>. &ldquo;Bacteria&rdquo; is closer to &ldquo;Escherichia coli&rdquo; than &ldquo;Enterobacterales&rdquo; is not because Euclidean space lacks room for a tree, but because &ldquo;E. coli&rdquo; and &ldquo;Bacteria&rdquo; co-occur millions of times in PubMed abstracts while &ldquo;E. coli&rdquo; and &ldquo;Enterobacterales&rdquo; co-occur almost exclusively in taxonomy databases. A hyperbolic model trained on the same corpus would learn the same co-occurrence statistics and place &ldquo;Bacteria&rdquo; close to &ldquo;E. coli&rdquo; in the Poincar&eacute; disk for exactly the same distributional reasons.</p>
+
+  <p>The &ldquo;Animalia bounce&rdquo; would become the &ldquo;Animalia warp&rdquo; &mdash; hyperbolic space compresses distances near the origin and stretches them at the boundary, so a word incorrectly pulled toward the origin by co-occurrence frequency would create <em>larger</em> effective tree-distance errors, not smaller ones.</p>
+
+  <p>Hyperbolic embeddings show strong results on <strong>curated ontologies</strong> (WordNet, medical taxonomies) where the training data <em>is</em> the hierarchy itself &mdash; (hypernym, hyponym) pairs that give the model exactly the signal it needs. But this is precisely the point: you need the explicit symbolic hierarchy first. The hyperbolic embedding is a compressed representation of an ontology that already exists; it does not discover ontology from distributional data. For general-purpose retrieval over arbitrary text &mdash; which is the RAG use case &mdash; the problem is not the geometry of the embedding space but the absence of explicit symbolic structure. The VKG adds what is actually missing.</p>
+
   <h2>5. Benchmark Evaluation</h2>
 
   <h3>5.1 Setup</h3>
@@ -316,6 +334,7 @@
   <div class="references">
     <p>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, &Lstrok;., &amp; Polosukhin, I. (2017). Attention Is All You Need. <em>Advances in Neural Information Processing Systems</em>, 30. arXiv: <a href="https://arxiv.org/abs/1706.03762">1706.03762</a></p>
     <p>Seshia, S. A., Sadigh, D., &amp; Sastry, S. S. (2022). Toward Verified Artificial Intelligence. <em>Communications of the ACM</em>, 65(7). DOI: <a href="https://dl.acm.org/doi/10.1145/3503914">10.1145/3503914</a></p>
+    <p>Nickel, M. &amp; Kiela, D. (2017). Poincar&eacute; Embeddings for Learning Hierarchical Representations. <em>Advances in Neural Information Processing Systems</em>, 30. arXiv: <a href="https://arxiv.org/abs/1705.08039">1705.08039</a></p>
   </div>
 
   <div class="footer">
