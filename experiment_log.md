@@ -95,3 +95,44 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/verb_structure.py` — Analysis script
 - `prototype/verb_structure_results.json` — Full results
 - `exploration_notes.md` §3c — Narrative interpretation
+
+---
+
+## Experiment 5: Word Isolation & Taxonomic Jitter
+
+**Date:** 2026-03-06
+**Script:** `python prototype/word_isolation.py`
+**Duration:** ~60 seconds
+
+**What:** Four-part analysis. (1) Grid words embedded in isolation to compare word-level vs proposition-level similarity. (2) Taxonomic hierarchies (dog→hound→canine→mammal→animal→creature, plus fish, rock, verb synonyms) embedded in isolation. (3) Jitter: substitute hierarchy words into proposition templates and measure whether word-level distance predicts sentence-level distance. (4) Convergence: do dog→animal and cat→animal converge at shared superclasses?
+
+**Key findings:**
+
+*Part 1 — Isolated grid words:*
+- Within-role similarity: predicates (0.639) > objects (0.618) > subjects (0.545)
+- This REVERSES the proposition-level hierarchy (subjects strongest in propositions)
+- Predicates are more similar to each other as bare words, yet weakest in proposition pull
+- "eat" and "fish" have highest cross-role similarity (0.708) — strong collocational association
+
+*Part 2 — Taxonomic hierarchies:*
+- dog/canine: 0.947 (near-synonyms, highest in any hierarchy)
+- cat/feline: 0.923 (also near-synonyms)
+- Adjacent hierarchy steps: mean ~0.82 (animals), ~0.72 (objects)
+- Endpoints: puppy→creature 0.619, trout→thing 0.506 (clear taxonomic decay)
+- Verb synonyms: eat family (0.741) > watch family (0.718) > carry family (0.653)
+
+*Part 3 — Jitter in propositions:*
+- Word↔sentence correlation is HIGH: subject jitter r=0.91, predicate r=0.92, object r=0.76
+- Context compresses distances: predicate jitter most compressed (0.16-0.63), subject least (0.49-0.66)
+- Predicate synonyms in context are almost invisible: "Cats eat fish" vs "Cats devour fish" = 0.965, "Cats munch fish" = 0.925 — all >0.92
+- Subject hierarchy preserves relative ordering in all 3 templates (r>0.86)
+
+*Part 4 — Hierarchy convergence:*
+- dog→animal (0.876) vs cat→animal (0.769): dogs closer to "animal" than cats
+- creature↔thing: 0.738 — near-universal hypernyms converge
+- dog↔cat at base level: 0.691, but at mammal level: 1.000 (shared word), at animal level: also 1.000
+- Convergence is literal (shared words) not graduated — the model doesn't smoothly merge unrelated hierarchies
+
+**Artifacts:**
+- `prototype/word_isolation.py` — Full analysis script
+- `prototype/word_isolation_results.json` — All numerical results
