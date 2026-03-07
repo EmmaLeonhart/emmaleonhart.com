@@ -162,8 +162,56 @@ The "cute animals" family clustered closest to the "robin syllogism" family (cen
 
 ---
 
+## 3b. Semantic Grid: Isolating Subject, Predicate, Object Axes
+
+The embedding family experiments (§2) hinted that subject overlap drives similarity more than predicate overlap. The 3×3×3 semantic grid tests this rigorously by crossing 3 subjects (cats, trucks, children) × 3 predicates (eat, carry, watch) × 3 objects (fish, rocks, stars) into 27 propositions. Every word was chosen to be concrete, unambiguous, and maximally distinct from others in its role.
+
+### The axis hierarchy
+
+| Axis | Same-axis mean | Diff-axis mean | Separation | Relative strength |
+|---|---|---|---|---|
+| Subject | 0.702 | 0.462 | **+0.240** | 3.5x |
+| Object | 0.658 | 0.482 | **+0.176** | 2.6x |
+| Predicate | 0.583 | 0.515 | **+0.069** | 1.0x (baseline) |
+
+Subject dominates. Two sentences sharing a subject are on average 0.240 more similar than two that don't — the predicate gap is only 0.069. This means that in embedding space, *who does something* matters 3.5x more than *what they do*.
+
+Object is second. *What they act on* matters 2.6x more than the action itself. The predicate — the relational structure that a logician would consider the most important part of a proposition — is almost invisible to the embedding model.
+
+### What this means for VKG design
+
+This result quantitatively confirms what the "inhibits" family showed qualitatively: **embedding models encode entities, not relations**. Two propositions with the same subject and object but different predicates ("Trucks carry stars" vs "Trucks watch stars") score 0.915. Two with the same predicate but different entities ("Cats eat fish" vs "Children carry stars") score 0.247.
+
+For the VKG, this has a specific architectural implication. Entity bridging works *because* embeddings are entity-dominated. When two propositions share an entity (subject or object), they're already close in embedding space and easily bridged. The VKG's contribution is bridging across the *predicate gap* — connecting "CYP2C9 is an enzyme" to "CYP2C9 is inhibited" where the shared entity pulls them together even though the predicates are unrelated.
+
+But it also means the VKG should NOT rely on embedding similarity to identify structurally similar propositions across domains (the "inhibits" failure). If we want cross-domain analogy ("ketoconazole inhibits CYP2C9" ↔ "regulation inhibits competition"), we need explicit predicate-type matching in the ontology, not embedding distance.
+
+### Per-value pull strength
+
+Not all values within an axis pull equally:
+
+- **Subjects:** "trucks" (+0.267) > "cats" (+0.254) > "children" (+0.201). The concrete, unambiguous noun "trucks" pulls harder than the more semantically rich "children" — likely because "children" co-occurs in many more contexts in training data, spreading its embedding across a wider region.
+- **Predicates:** All nearly identical (~0.07). "eat", "carry", "watch" are all common verbs with clear meanings, and none pulls harder than the others. The predicate simply doesn't anchor the embedding.
+- **Objects:** Also nearly identical (~0.18). Concrete nouns are equally effective as attractors.
+
+### The step function at 0, 1, 2 shared axes
+
+The joint analysis shows a clean staircase:
+
+| Shared axes | Mean similarity | Interpretation |
+|---|---|---|
+| 0 | 0.361 | Different subject, predicate, object: near-random |
+| 1 | 0.546 | Share one axis: moderate pull |
+| 2 | 0.750 | Share two axes: strong cluster |
+
+The steps are roughly equal (+0.19, +0.20), suggesting the axes contribute approximately additively. There's no strong interaction effect — sharing two axes is roughly the sum of sharing each independently.
+
+---
+
 ## 4. Raw Data Artifacts
 
 - `results.json` — Full benchmark metrics (per-scenario + aggregate)
 - `prototype/embeddings_exploration.npz` — Raw 1024-dim embedding vectors for all 18 propositions across 5 families. Load with `np.load('prototype/embeddings_exploration.npz', allow_pickle=True)`. Keys: `vecs_cute_animals`, `vecs_socrates_syllogism`, `vecs_syllogism_variant`, `vecs_causal_chain`, `vecs_inhibits_X`, `all_vecs`, `all_labels`.
 - `prototype/embeddings_exploration.json` — Pairwise similarity matrices and cluster statistics for all 5 families.
+- `prototype/semantic_grid_results.json` — Full 27×27 similarity matrix and axis/joint/per-value analysis.
+- `prototype/semantic_grid_results_embeddings.npz` — Raw 1024-dim vectors for all 27 grid propositions. Keys: `vecs`, `sentences`, `subjects`, `predicates`, `objects`.
