@@ -595,3 +595,45 @@ The Linnaean "up" directions agree less across hierarchies (0.360 vs 0.465) beca
 3. **Convergence is always literal.** Even in pure Latin taxonomy, branches snap to identity at shared words rather than gradually merging. The embedding model has no representation of "these two families share an order" — it only knows that the same word appears in both contexts.
 
 4. **This is the strongest evidence yet for the VKG.** Even the most formally structured, register-consistent taxonomy humans have ever created (Linnaean classification) cannot be recovered from embedding geometry. The only way to know that Canidae and Felidae are both Carnivora is to have that relationship explicitly stated. The VKG does exactly this.
+
+---
+
+## 3g. Why Hyperbolic Embeddings Won't Save You
+
+### The claim
+
+A common response to the limitations of Euclidean embedding spaces for hierarchical data is to propose **hyperbolic embeddings** (Nickel & Kiela 2017, Dhingra et al. 2018, etc.). The argument: hyperbolic space has exponentially growing volume with distance from the origin, which naturally maps to the exponentially growing number of nodes at each level of a tree. Place the root near the origin, leaves far away, and the geometry does your taxonomy for you. Poincaré embeddings, hyperbolic neural networks, and related approaches have shown impressive results on *curated* ontologies like WordNet.
+
+### Why our data says this won't work for general-purpose retrieval
+
+The hyperbolic embedding argument assumes the problem is **geometric** — that Euclidean space lacks the capacity to represent tree structures efficiently, and switching to a space with native tree-like geometry will fix the hierarchy recovery problem. Our experiments show that the problem is not geometric but **distributional**.
+
+**The core issue:** The non-monotonicity we observe is not caused by the embedding space lacking room for hierarchies. It's caused by the training data distribution. Consider:
+
+1. **"Bacteria" (0.806) is closer to "Escherichia coli" than "Enterobacterales" (0.567) is.** This isn't because Euclidean space can't fit a tree — it's because "E. coli" and "Bacteria" co-occur millions of times in PubMed abstracts, news articles, and textbooks, while "E. coli" and "Enterobacterales" co-occur almost exclusively in taxonomy databases. A hyperbolic model trained on the same corpus would learn the same co-occurrence statistics. It would place "Bacteria" close to "E. coli" in the Poincaré disk for exactly the same distributional reasons.
+
+2. **The "Animalia bounce" would become the "Animalia warp."** In hyperbolic space, distances near the origin are compressed while distances near the boundary are stretched. If "Animalia" gets pulled closer to species names by co-occurrence (as it does in Euclidean space), the hyperbolic metric would actually *amplify* this distortion. A word that's incorrectly close in Euclidean space would be incorrectly close in hyperbolic space too — but now the exponential metric makes the error in effective tree-distance even larger.
+
+3. **Convergence is literal, not graduated, regardless of geometry.** Our experiments show that Canidae and Felidae don't gradually converge as they ascend toward Carnivora — they remain distinct until they literally share a word. This is a property of **how the model learns**, not of what space it learns in. A hyperbolic model would still map "Canidae" and "Felidae" to separate points and "Carnivora" to a third point. The "is-a" relationship between them would still need to be explicitly stated, not inferred from position.
+
+4. **The frequency-distance inversion is training-objective-deep.** Embedding models are trained to place co-occurring terms close together. Frequent co-occurrence = short distance. This objective doesn't change when you switch from Euclidean to hyperbolic space — you're still minimizing a distance-based loss over co-occurrence statistics. The systematic errors we observe (common words closer than rare words at lower taxonomic levels) are direct consequences of this objective, not of the metric space.
+
+### The empirical prediction
+
+If someone trained a Poincaré embedding model on the same general-purpose corpus (Wikipedia, Common Crawl, etc.) used to train mxbai-embed-large, and then tested it on our Linnaean hierarchies, we predict:
+
+- **Non-monotonicity would persist.** "Bacteria" would still be closer to "Escherichia coli" than "Enterobacterales" is, because the training signal is the same.
+- **Non-monotonicity might be worse.** Hyperbolic space's exponential metric means that small errors in placement near the origin (where general terms like "Animalia" live) translate to large errors in effective tree-distance. A word that's slightly too close in Euclidean space could be dramatically too close in hyperbolic space.
+- **The abstraction axis would still not exist.** Our Experiment 6 showed no universal "up" direction across hierarchies. Hyperbolic space provides a notion of "toward the origin" as an abstraction axis, but if the training data doesn't consistently push general terms toward the origin (and our data shows it doesn't — "Animalia" and "Bacteria" are pulled *toward* specific species, not away from them), then the hyperbolic geometry is wasted.
+
+### When hyperbolic embeddings DO work
+
+Hyperbolic embeddings show strong results on **curated ontologies** — WordNet, medical taxonomies, organizational hierarchies — where the training data IS the hierarchy itself. When you train a Poincaré embedding directly on (hypernym, hyponym) pairs from WordNet, you're giving the model exactly the signal it needs: "dog" is below "canine" is below "carnivore." The hyperbolic geometry efficiently encodes this *given* hierarchy.
+
+But this is precisely the point: **you need the explicit symbolic hierarchy first.** The hyperbolic embedding is a compressed representation of an ontology that already exists. It doesn't discover the ontology from distributional data. For general-purpose retrieval over arbitrary text — which is the RAG use case — you don't have a curated ontology. You have a corpus of sentences, and any embedding model trained on that corpus (Euclidean or hyperbolic) will inherit the distributional biases of the training data.
+
+### What this means for our paper
+
+This argument strengthens the neurosymbolic thesis in a specific way: **the problem isn't the geometry of the embedding space, it's the absence of explicit symbolic structure.** Changing from Euclidean to hyperbolic doesn't add symbolic structure — it just changes the manifold on which distributional statistics are projected. The VKG adds what's actually missing: explicit entity-predicate-entity triples that state relationships like "Canidae is-a Carnivora" directly, rather than hoping they'll emerge from corpus statistics in any geometry.
+
+The right framing is not "Euclidean embeddings can't represent hierarchies" (they can, given the right training signal). It's "distributional training objectives can't recover hierarchies from corpus statistics, regardless of the target geometry." The fix is not a better embedding space — it's a knowledge graph.
