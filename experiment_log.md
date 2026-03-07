@@ -71,3 +71,27 @@ Chronological record of every experiment run in this project. Each entry records
 **Artifacts:**
 - `prototype/semantic_grid_results.json` — Full analysis with similarity matrix
 - `prototype/semantic_grid_results_embeddings.npz` — Raw 1024-dim vectors for all 27 propositions
+
+---
+
+## Experiment 4: Verb Structure — Predicate Directional Consistency
+
+**Date:** 2026-03-06
+**Script:** `python prototype/verb_structure.py`
+**Duration:** <1 second (reuses grid embeddings)
+
+**What:** Deep analysis of predicate effects on embeddings. Four analyses: (1) verb displacement vector consistency across S/O contexts, (2) verb-conditioned subspace correlation, (3) naturalness/selectional preference encoding, (4) S×P and P×O interaction effects.
+
+**Key findings:**
+- Verb displacements ARE directionally consistent: eat→carry has 0.671 mean pairwise cosine of displacement vectors, 0.841 alignment to mean direction
+- Displacement consistency is higher when subject is shared (0.769) vs neither shared (0.601)
+- Verb-conditioned subspace geometry is nearly identical: Pearson r=0.958 between eat and carry internal structures
+- Verbs translate the S/O cluster without deforming it
+- Naturalness not encoded: overall correlation r=-0.031 between hand-labeled naturalness and centroid distance
+- S×P and P×O interaction effects are minimal (all 0.70-0.77)
+- Compositionality is real but lopsided: S + P + O combine approximately additively with unequal weights
+
+**Artifacts:**
+- `prototype/verb_structure.py` — Analysis script
+- `prototype/verb_structure_results.json` — Full results
+- `exploration_notes.md` §3c — Narrative interpretation

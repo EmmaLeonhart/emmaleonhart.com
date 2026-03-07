@@ -208,6 +208,80 @@ The steps are roughly equal (+0.19, +0.20), suggesting the axes contribute appro
 
 ---
 
+## 3c. Verb Structure: Is the Predicate Signal Consistent or Just Weak?
+
+The grid showed predicates have the weakest pull (+0.069). But weak overall doesn't mean incoherent. The verb structure analysis asks: when you swap a verb, does the embedding shift in a *consistent direction* — a "verb vector" — or does it just add noise?
+
+### Verb displacement vectors ARE consistent
+
+When you change eat→carry across all 9 subject/object combinations, the displacement vectors (the literal vector difference in 1024-dim space) have a mean pairwise cosine of **0.671**. This is well above zero — the verb swap moves the embedding in roughly the same direction regardless of what's eating or being eaten.
+
+| Verb swap | Displacement cosine | Mean alignment to centroid direction |
+|---|---|---|
+| eat → carry | 0.671 | 0.841 |
+| eat → watch | 0.640 | 0.825 |
+| carry → watch | 0.641 | 0.825 |
+
+All three verb pairs show ~0.65 consistency. The individual alignment to the mean displacement direction is even higher (~0.83), meaning each individual verb swap tracks the mean "verb direction" closely.
+
+**Key finding:** There IS a consistent "verb direction" in embedding space. The predicate has weak *magnitude* (it doesn't move the vector far) but strong *directional consistency* (it moves it the same way every time). This is exactly what you'd expect from compositional semantics — the verb contributes a small but systematic component to the overall embedding.
+
+### The verb direction is modulated by context
+
+Breaking down displacement consistency by what's shared:
+
+| Context | eat→carry | eat→watch | carry→watch |
+|---|---|---|---|
+| Same subject | 0.769 | 0.697 | 0.720 |
+| Same object | 0.713 | 0.691 | 0.697 |
+| Neither shared | 0.601 | 0.587 | 0.573 |
+
+When the subject is the same, the verb displacement is MORE consistent (0.769 vs 0.601 for eat→carry). This makes sense: "cats eat fish → cats carry fish" and "cats eat rocks → cats carry rocks" are conceptually similar verb swaps (same agent performing a different action). When the subject also changes, the verb direction gets noisier because you're changing the conceptual frame.
+
+### The verb doesn't change the internal structure
+
+The verb-conditioned subspace analysis asks: within "eat" propositions, does the similarity landscape (which S/O pairs are close?) look the same as within "carry"?
+
+| Verb pair | Pearson r | Rank r |
+|---|---|---|
+| eat vs carry | 0.958 | 0.889 |
+| eat vs watch | 0.939 | 0.856 |
+| carry vs watch | 0.973 | 0.935 |
+
+Pearson r of **0.958** between the eat and carry subspaces. The verb changes the *location* of the cluster in 1024-dim space but barely touches its *internal geometry*. cats/fish is close to cats/rocks and far from trucks/stars regardless of whether they eat, carry, or watch. The verb is a translation, not a deformation.
+
+### Naturalness: the model doesn't clearly encode selectional preferences
+
+"Cats eat fish" is natural. "Trucks eat stars" is absurd. Does the embedding position "cats eat fish" closer to the verb centroid (as a more "prototypical" use of "eat")?
+
+**No.** Overall correlation between hand-labeled naturalness (1-3) and centroid distance: **r = -0.031**. Essentially zero. The individual verbs show mixed signals (eat: -0.33, carry: +0.30, watch: -0.05) with no consistent pattern.
+
+This is surprising. It means mxbai-embed-large either doesn't encode selectional preferences, or encodes them in a way that isn't captured by centroid distance. The model places "trucks eat rocks" just as comfortably within the "eat" cluster as "cats eat fish". For our purposes, this is actually useful — it means entity bridging won't be derailed by "weird" combinations that the model might otherwise push to the periphery.
+
+### Interaction effects are minimal
+
+The Subject × Predicate coherence matrix shows no strong interactions:
+
+|  | eat | carry | watch |
+|---|---|---|---|
+| cats | 0.714 | 0.771 | 0.749 |
+| trucks | 0.755 | 0.765 | 0.734 |
+| children | 0.759 | 0.719 | 0.698 |
+
+All values cluster between 0.70 and 0.77. No subject has a privileged relationship with any verb. Similarly, Predicate × Object shows flat interactions (0.65-0.70 throughout). The embedding model treats S, P, O as approximately independent contributions — further evidence for compositional structure.
+
+### Synthesis: what this means for the paper
+
+The verb has a small but **directionally consistent** effect on embeddings. It acts as a translation vector that shifts the entire subject/object landscape without deforming it. This has three implications:
+
+1. **Entity bridging is robust.** Because verbs don't deform the S/O subspace, two propositions sharing an entity will be close regardless of their predicates. This is exactly what makes entity bridging work in the VKG.
+
+2. **Predicate-aware retrieval needs explicit structure.** You can't use embedding distance to find "all inhibition relationships" across domains — the verb direction is consistent *within* a verb but the magnitude is too small to create a separable cluster. The VKG's explicit predicate labels fill this gap.
+
+3. **Compositionality is real but lopsided.** The model composes S + P + O approximately additively, but with wildly unequal weights (subject 3.5x, object 2.6x, predicate 1x). A semantic space that rebalances these weights — giving predicates equal standing — would better represent logical structure.
+
+---
+
 ## 4. Raw Data Artifacts
 
 - `results.json` — Full benchmark metrics (per-scenario + aggregate)
@@ -215,3 +289,4 @@ The steps are roughly equal (+0.19, +0.20), suggesting the axes contribute appro
 - `prototype/embeddings_exploration.json` — Pairwise similarity matrices and cluster statistics for all 5 families.
 - `prototype/semantic_grid_results.json` — Full 27×27 similarity matrix and axis/joint/per-value analysis.
 - `prototype/semantic_grid_results_embeddings.npz` — Raw 1024-dim vectors for all 27 grid propositions. Keys: `vecs`, `sentences`, `subjects`, `predicates`, `objects`.
+- `prototype/verb_structure_results.json` — Displacement consistency, subspace correlation, naturalness, and interaction analysis.
