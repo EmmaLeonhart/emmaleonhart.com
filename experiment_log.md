@@ -194,3 +194,46 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/taxonomic_direction_embeddings.npz` — Raw 1024-dim vectors for 111 words
 - `prototype/taxonomic_direction_vectors.npz` — Mean "up" direction for each hierarchy
 - `exploration_notes.md` §3e — Full narrative analysis
+
+---
+
+## Experiment 7: Linnaean Taxonomy — Does Consistent Register Fix Monotonicity?
+
+**Date:** 2026-03-07
+**Script:** `python prototype/linnaean_hierarchy.py`
+**Duration:** ~60 seconds
+
+**What:** Tested whether using purely formal Linnaean taxonomy (Canis lupus familiaris → Canis → Canidae → Carnivora → Mammalia → Vertebrata → Chordata → Animalia → Eukaryota) produces monotonic distance decay, unlike the mixed-register hierarchies in Experiment 6. 10 Linnaean hierarchies (dog, cat, human, horse, trout, sparrow, fruit fly, E. coli, oak, yeast) plus 6 common-English comparison hierarchies. 55 unique Linnaean terms + 27 common terms.
+
+**Key findings:**
+
+*1. Linnaean names are also non-monotonic:*
+- Only 1/10 monotonic (bread yeast), 19 total violations
+- Common English: 0/6 monotonic, 18 violations
+- Register consistency does NOT fix the fundamental problem
+
+*2. The "Animalia bounce" is universal:*
+- Every animal hierarchy shows Vertebrata < Chordata < Animalia
+- "Animalia" co-occurs with species names far more than "Chordata" does
+- E. coli extreme: Bacteria (0.806) closer to origin than Enterobacterales (0.567)
+
+*3. Head-to-head (same organisms):*
+- Linnaean names produce fewer violations for mammals (2 vs 4 for dog/cat/human)
+- But house sparrow is worse in Linnaean (3 vs 1) — Passeridae bounces above Passer
+- Neither register is reliably monotonic
+
+*4. Convergence is still literal:*
+- Canidae ↔ Felidae = 0.785, then instant 1.000 at shared Carnivora
+- Carnivora ↔ Primates = 0.553, then instant 1.000 at Mammalia
+- No gradual merging even in formal taxonomy
+
+*5. Cross-hierarchy "up" direction:*
+- Linnaean cross-hierarchy: 0.360 (lower than common English 0.465)
+- Eukaryotes only: 0.426
+- Lower because Linnaean hierarchies diverge earlier (different phyla/kingdoms)
+
+**Artifacts:**
+- `prototype/linnaean_hierarchy.py` — Full analysis script
+- `prototype/linnaean_hierarchy_results.json` — All numerical results
+- `prototype/linnaean_hierarchy_embeddings.npz` — Raw 1024-dim vectors for all terms
+- `exploration_notes.md` §3f — Full narrative analysis

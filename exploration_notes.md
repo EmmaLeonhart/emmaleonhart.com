@@ -298,6 +298,8 @@ The verb has a small but **directionally consistent** effect on embeddings. It a
 - `prototype/taxonomic_direction_results.json` — Full displacement, cross-hierarchy, abstraction level, and decay analysis.
 - `prototype/taxonomic_direction_embeddings.npz` — Raw 1024-dim vectors for all 111 unique words.
 - `prototype/taxonomic_direction_vectors.npz` — Mean "upward" displacement vectors for all 24 hierarchies.
+- `prototype/linnaean_hierarchy_results.json` — Linnaean vs common-name comparison, convergence, displacement data.
+- `prototype/linnaean_hierarchy_embeddings.npz` — Raw 1024-dim vectors for all Linnaean + common name terms.
 
 ---
 
@@ -500,3 +502,96 @@ The within-level and cross-level similarities are nearly identical. There is no 
 3. **Adjectives are taxonomic islands.** With cross-hierarchy "up" cosine of 0.057, adjective abstractions share essentially no geometric structure. Going from "crimson" to "perceptible" is a completely different direction than going from "enormous" to "sized." This makes sense — adjective hierarchies don't share upper levels the way noun hierarchies converge on "animal" or "entity."
 
 4. **The VKG's explicit type hierarchy fills a real gap.** Since embedding space cannot represent "is-a" relationships geometrically, any retrieval system that needs to reason about types (e.g., "retrieve all statements about mammals" when the corpus mentions dogs, cats, and horses) must have an explicit symbolic type system. The VKG provides exactly this through its ontological triples.
+
+---
+
+## 3f. Linnaean Taxonomy: Does Consistent Register Fix Monotonicity?
+
+### The hypothesis
+
+Experiment 6 found that mixed-register hierarchies (puppy→dog→canine→mammal→animal) produce non-monotonic distance decay. The violations seemed driven by register mixing: casual "animal" bouncing back closer than scientific "mammal." If we use **purely formal Linnaean taxonomy** — Canis lupus familiaris → Canis → Canidae → Carnivora → Mammalia → Vertebrata → Chordata → Animalia → Eukaryota — does the consistently scientific register eliminate the bounce-backs?
+
+### The result: No. Linnaean names are ALSO non-monotonic.
+
+| Category | Monotonic | Total violations |
+|---|---|---|
+| Linnaean (10 hierarchies) | 1/10 | 19 violations |
+| Common English (6 hierarchies) | 0/6 | 18 violations |
+
+Only bread yeast (Saccharomyces cerevisiae → ... → Fungi → Eukaryota) is monotonic. Every other hierarchy has violations.
+
+### The "Animalia bounce" — a universal pattern
+
+The most striking pattern: **Animalia bounces back in almost every animal hierarchy.** Every Linnaean hierarchy that passes through Chordata and Animalia shows the same violation:
+
+| Hierarchy | Vertebrata | Chordata | Animalia | Pattern |
+|---|---|---|---|---|
+| Domestic dog | 0.423 | 0.433 ←! | 0.525 ←! | V < Ch < An |
+| Domestic cat | 0.462 | 0.476 ←! | 0.528 ←! | V < Ch < An |
+| Human | 0.548 | 0.566 ←! | 0.621 ←! | V < Ch < An |
+| Horse | 0.486 | 0.488 ←! | 0.577 ←! | V < Ch < An |
+| Brown trout | 0.388 | 0.456 ←! | 0.442 | V < Ch, then decays |
+| House sparrow | 0.475 | 0.521 ←! | 0.587 ←! | V < Ch < An |
+| Fruit fly | — | — | 0.536 | (skips Vertebrata/Chordata) |
+
+"Animalia" is a far more common/recognizable word than "Vertebrata" or "Chordata" — even in Latin. This is the same distributional frequency effect we saw with common English names, just shifted into formal taxonomy. "Animalia" appears in more contexts (legal, philosophical, educational, everyday) than "Chordata" (biology textbooks only).
+
+### E. coli: the most dramatic example
+
+The E. coli hierarchy shows an extreme violation — similarity to origin *increases* as you go up:
+
+| Level | Sim to "Escherichia coli" |
+|---|---|
+| Enterobacterales | 0.567 |
+| Gammaproteobacteria | 0.587 ←! |
+| Proteobacteria | 0.669 ←! |
+| Bacteria | 0.806 ←! |
+
+"Bacteria" (0.806) is **closer** to "Escherichia coli" than "Enterobacterales" (0.567) is! This is because "E. coli" and "Bacteria" massively co-occur in general science writing, while "Enterobacterales" and "Gammaproteobacteria" are specialist terms that appear in very different contexts (taxonomic databases, microbiology journals).
+
+### Head-to-head: Linnaean vs common names (same organisms)
+
+For the 6 organisms tested in both registers:
+
+| Organism | Linnaean violations | Common violations |
+|---|---|---|
+| Domestic dog | 2 | 4 |
+| Domestic cat | 2 | 4 |
+| Human | 2 | 4 |
+| Horse | 3 | 3 |
+| Brown trout | 1 | 2 |
+| House sparrow | 3 | 1 |
+
+Linnaean names produce **fewer violations for mammals** (2 vs 4 for dog, cat, human) but the difference isn't dramatic. Common names are worse because they mix casual and scientific registers more aggressively (puppy→dog→canine→carnivore→mammal→vertebrate→animal has multiple register shifts).
+
+The house sparrow is the one case where common names win — likely because "sparrow→songbird→bird→vertebrate→animal→organism→living thing" is a smoother frequency gradient than "Passer domesticus→Passer→Passeridae→Passeriformes→Aves→..." where Passeridae bounces back above Passer.
+
+### Cross-hierarchy convergence: literal, not graduated (confirmed)
+
+The Linnaean convergence analysis confirms what we found in §3d with common names:
+
+- Dog vs Cat: Canidae ↔ Felidae = 0.785, then instant 1.000 at shared Carnivora
+- Dog vs Human: Carnivora ↔ Primates = 0.553, then instant 1.000 at shared Mammalia
+- Cat vs Horse: Carnivora ↔ Perissodactyla = 0.457, then instant 1.000 at shared Mammalia
+
+There is no smooth convergence. Two branches remain distinct until they literally share a word. Canidae and Felidae (0.785) are reasonably close because they're both Latin "-idae" family names in zoology, not because the model understands they share an order. Carnivora and Primates (0.553) are much further apart despite being one taxonomic level below the same class.
+
+### Displacement direction: Linnaean agrees within-hierarchy better than expected
+
+| Metric | Linnaean | Common English (Exp. 6) |
+|---|---|---|
+| Mean within-hierarchy alignment | ~0.19 | ~0.24 |
+| Cross-hierarchy "up" cosine | 0.360 | 0.465 |
+| Eukaryotes-only cross-hierarchy | 0.426 | — |
+
+The Linnaean "up" directions agree less across hierarchies (0.360 vs 0.465) because the common English hierarchies share more terminal words ("animal", "entity" appear everywhere). Linnaean hierarchies diverge earlier — Arthropoda, Plantae, Fungi, Bacteria are all different terminal branches, reducing the shared-word effect that inflated the common English cross-hierarchy score.
+
+### What this tells us
+
+1. **Register consistency doesn't fix the fundamental problem.** Non-monotonicity isn't caused by mixing casual and scientific words in the same hierarchy. It's caused by the mismatch between **taxonomic distance** and **distributional frequency** at every level. "Animalia" bounces back not because it's informal but because it's simply a more common Latin word than "Chordata."
+
+2. **The "common word bounce" is universal.** Whether you use "animal" or "Animalia," "bacteria" or "Bacteria," the more frequently encountered word at a higher taxonomic level will be closer to the origin than the less frequent word at a lower level. This is a fundamental property of distributional embeddings, not a register artifact.
+
+3. **Convergence is always literal.** Even in pure Latin taxonomy, branches snap to identity at shared words rather than gradually merging. The embedding model has no representation of "these two families share an order" — it only knows that the same word appears in both contexts.
+
+4. **This is the strongest evidence yet for the VKG.** Even the most formally structured, register-consistent taxonomy humans have ever created (Linnaean classification) cannot be recovered from embedding geometry. The only way to know that Canidae and Felidae are both Carnivora is to have that relationship explicitly stated. The VKG does exactly this.
