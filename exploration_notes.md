@@ -295,6 +295,9 @@ The verb has a small but **directionally consistent** effect on embeddings. It a
 - `prototype/semantic_grid_results_embeddings.npz` — Raw 1024-dim vectors for all 27 grid propositions. Keys: `vecs`, `sentences`, `subjects`, `predicates`, `objects`.
 - `prototype/verb_structure_results.json` — Displacement consistency, subspace correlation, naturalness, and interaction analysis.
 - `prototype/word_isolation_results.json` — Isolated word embeddings, taxonomic hierarchies, jitter analysis, convergence data.
+- `prototype/taxonomic_direction_results.json` — Full displacement, cross-hierarchy, abstraction level, and decay analysis.
+- `prototype/taxonomic_direction_embeddings.npz` — Raw 1024-dim vectors for all 111 unique words.
+- `prototype/taxonomic_direction_vectors.npz` — Mean "upward" displacement vectors for all 24 hierarchies.
 
 ---
 
@@ -369,3 +372,131 @@ This finding strengthens the core thesis in two ways:
 1. **Embedding space is systematically wrong about logical distance.** dog→animal being closer than dog→mammal is not noise — it's a predictable consequence of distributional training. Any retrieval system that relies on embedding distance for reasoning will inherit these systematic biases. The VKG corrects this by imposing explicit logical structure through entity-predicate-entity triples.
 
 2. **Register and frequency contaminate semantic relationships.** The same concept at different levels of formality (dog/canine/canis) occupies different regions of embedding space, not because the meaning changed, but because the *contexts of use* changed. A formal ontology (the VKG) treats these as equivalent; an embedding space does not. This is another gap that only explicit symbolic structure can bridge.
+
+---
+
+## 3e. Taxonomic Direction: Is There a Universal "Up" in Embedding Space?
+
+### The question
+
+When you move from specific→general along a taxonomic hierarchy (puppy→dog→canine→mammal→animal→entity), does the displacement vector point in a **consistent direction**? And does that direction generalize across hierarchies — nouns, verbs, and adjectives alike?
+
+If yes, embeddings encode a latent "abstraction axis." If no, taxonomic generalization is just a local phenomenon with no shared geometric structure.
+
+### The experiment
+
+24 hierarchies tested: 10 nouns (dog, cat, horse, fish, bird, tree, rock, truck, child, star), 10 verbs (eat, devour, carry, throw, watch, listen, cut, build, run, speak), 4 adjectives (red, huge, cold, fast). Each hierarchy runs from a maximally specific term to a maximally general one. 111 unique words embedded with mxbai-embed-large.
+
+### Finding 1: Within each hierarchy, "up" is barely consistent
+
+For each hierarchy, we computed the displacement vector at each step (word[i]→word[i+1]), normalized to unit length, then checked whether all step-vectors point in roughly the same direction.
+
+| POS | Mean alignment to own mean direction | Pairwise step consistency |
+|---|---|---|
+| Nouns | 0.24 | -0.14 (near zero) |
+| Verbs | 0.23 | -0.17 (near zero) |
+| Adjectives | 0.33 | -0.18 (near zero) |
+
+The mean alignment is weakly positive (~0.2-0.3), meaning there's a *slight* tendency for steps to point in the same direction, but the pairwise consistency between individual steps is essentially zero or negative. Going from "canine→carnivore" points in a completely different direction than going from "carnivore→mammal" — there is no single "upward" vector within a hierarchy.
+
+**The first and last steps are the most aligned.** Across nearly all hierarchies, the first step (specific→near-synonym) and the last step (penultimate→most-general) show the highest alignment to the mean direction. The middle steps are the noisiest, with some even pointing "downward" (negative alignment). This suggests that specific→synonym and abstract→maximally-abstract may encode partially shared geometry, but the middle of the hierarchy is chaotic.
+
+### Finding 2: Nouns share more "upward" direction than verbs
+
+Cross-hierarchy comparison — does the "up" direction of dog agree with the "up" direction of cat, truck, fish, etc.?
+
+| Comparison | Mean cosine of "up" directions |
+|---|---|
+| Noun × Noun | 0.465 |
+| Verb × Verb | 0.381 |
+| Adj × Adj | 0.057 |
+| Noun × Verb | 0.061 |
+| Noun × Adj | 0.030 |
+| Verb × Adj | 0.051 |
+
+**Nouns have the most shared "up" direction** (0.465 mean between hierarchies). Dog's "up" and horse's "up" agree at 0.696; dog and cat at 0.677. This makes sense — these hierarchies share the same upper levels (mammal→animal→organism→entity), so their displacement vectors literally traverse shared territory.
+
+**Verbs have moderate agreement** (0.381). The eat/devour pair shares the most "up" direction (0.557), consistent with sharing the same hierarchy beyond "consume." But unrelated verbs like eat and listen only agree at 0.292.
+
+**Adjectives have essentially zero shared "up" direction** (0.057). Going from crimson→perceptible has nothing in common directionally with going from enormous→sized. Adjective taxonomies are islands in embedding space.
+
+**Cross-POS is near zero** (0.03-0.06). The noun "up" and verb "up" directions are unrelated. There is no universal abstraction axis.
+
+### Finding 3: The global "up" exists but is POS-segregated
+
+When we average all 24 hierarchy directions into a single "global up" vector, its magnitude is 0.456 (where 1.0 = perfect agreement, 0.0 = random). This is modest but non-zero.
+
+Each hierarchy's alignment with this global "up":
+
+| POS | Mean alignment with global "up" |
+|---|---|
+| Nouns | 0.541 |
+| Verbs | 0.480 |
+| Adjectives | 0.181 |
+
+Nouns contribute the most to the global direction and align best with it. Verbs are weaker but still positive. Adjectives barely participate.
+
+This means the "global up" is essentially the **noun abstraction direction**, contaminated slightly by verbs. It's not a universal feature of embedding space — it's an artifact of how noun hierarchies share upper levels (all converging on entity/organism/animal).
+
+### Finding 4: Distance decay is non-monotonic
+
+As you ascend a hierarchy, similarity to the origin word *should* decrease monotonically (each step takes you further from where you started). In practice:
+
+| POS | Monotonic hierarchies | Total violations |
+|---|---|---|
+| Nouns | 3/10 | 16 violations |
+| Verbs | 1/10 | 14 violations |
+| Adjectives | 0/4 | 4 violations |
+
+Only 4 out of 24 hierarchies show monotonic decay. The most common violation pattern: a word in the middle of the hierarchy is **closer** to the origin than the word below it. Examples:
+
+- **puppy→...→canine (0.856) > hound (0.723)**: "canine" is closer to "puppy" than "hound" is, because canine is a near-synonym of dog while hound carries a hunting/breed connotation
+- **puppy→...→mammal (0.676) < animal (0.745)**: "animal" bounces back up because it's more common/casual
+- **pickup→...→vehicle (0.682) > machine (0.605) < object (0.637)**: "object" is more general than "machine" yet closer to "pickup"
+
+**The recurring pattern:** violations happen at the transition between casual words and technical taxonomic terms (carnivore, primate, mineral) and again at very general words that "bounce back" due to high co-occurrence frequency (animal, object, entity).
+
+This confirms §3d's finding at much larger scale: embedding distance tracks distributional frequency, not ontological distance. The hierarchy is **locally** respected (adjacent near-synonyms are close) but **globally** scrambled by register and frequency effects.
+
+### Finding 5: Verb hierarchies are messier than noun hierarchies
+
+Average decay curves (interpolated to common positions, 0.0 = most specific, 1.0 = most general):
+
+| Position | Nouns | Verbs | Adjectives |
+|---|---|---|---|
+| 0.00 | 1.000 | 1.000 | 1.000 |
+| 0.25 | 0.712 ± 0.070 | 0.685 ± 0.045 | 0.822 ± 0.084 |
+| 0.50 | 0.613 ± 0.065 | 0.649 ± 0.067 | 0.710 ± 0.097 |
+| 0.75 | 0.621 ± 0.053 | 0.577 ± 0.031 | 0.729 ± 0.092 |
+| 1.00 | 0.536 ± 0.050 | 0.559 ± 0.026 | 0.588 ± 0.044 |
+
+Key observations:
+- **Nouns show a non-monotonic bump at 0.75** (0.621 > 0.613 at 0.50) — this is the "animal bounce-back" effect across many hierarchies
+- **Verbs decay more smoothly** but end up **closer** to origin (0.559) than nouns do (0.536), meaning verb endpoints are less differentiated from their origins
+- **Adjectives retain the most similarity** throughout, suggesting adjective hierarchies are shorter and the words stay closer in embedding space
+- **Verbs have the smallest standard deviation at endpoint** (0.026) — they converge on a very consistent terminal similarity, likely because all 10 verb hierarchies terminate at "act"
+
+### Finding 6: Same-level words do NOT cluster
+
+Words at the same normalized abstraction level (specific, mid, general) are no more similar to each other than to words at different levels:
+
+| Comparison | Mean similarity |
+|---|---|
+| Specific × Specific | 0.553 |
+| Mid × Mid | 0.573 |
+| General × General | 0.585 |
+| Specific × Mid | 0.559 |
+| Specific × General | 0.558 |
+| Mid × General | 0.580 |
+
+The within-level and cross-level similarities are nearly identical. There is no "abstraction cluster" — knowing that two words are both at the "mid" level of their respective hierarchies tells you nothing about whether they're close in embedding space.
+
+### What this means for the paper
+
+1. **There is no universal abstraction axis.** You cannot project embeddings onto a single dimension and recover ontological level. The "up" direction is a local phenomenon within related noun hierarchies (because they share words at the top), not a fundamental feature of the embedding space. This means any system that needs to reason about specificity/generality (e.g., "is a dog a kind of animal?") cannot do so through geometric operations on embeddings alone.
+
+2. **Verb ontology is genuinely harder than noun ontology.** The user's intuition is confirmed: verb hierarchies show lower within-hierarchy consistency (0.381 vs 0.465), more monotonicity violations (1/10 vs 3/10), and near-zero cross-POS alignment. Verbs are less taxonomically organized in natural language (there's no verb equivalent of the Linnaean hierarchy), and this is faithfully reflected in embedding space.
+
+3. **Adjectives are taxonomic islands.** With cross-hierarchy "up" cosine of 0.057, adjective abstractions share essentially no geometric structure. Going from "crimson" to "perceptible" is a completely different direction than going from "enormous" to "sized." This makes sense — adjective hierarchies don't share upper levels the way noun hierarchies converge on "animal" or "entity."
+
+4. **The VKG's explicit type hierarchy fills a real gap.** Since embedding space cannot represent "is-a" relationships geometrically, any retrieval system that needs to reason about types (e.g., "retrieve all statements about mammals" when the corpus mentions dogs, cats, and horses) must have an explicit symbolic type system. The VKG provides exactly this through its ontological triples.

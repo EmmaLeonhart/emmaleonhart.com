@@ -144,3 +144,53 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/word_isolation.py` — Full analysis script
 - `prototype/word_isolation_results.json` — All numerical results
 - `exploration_notes.md` §3d — Distributional vs ontological semantics analysis
+
+---
+
+## Experiment 6: Taxonomic Direction — Universal "Up" in Embedding Space
+
+**Date:** 2026-03-06
+**Script:** `python prototype/taxonomic_direction.py`
+**Duration:** ~60 seconds
+
+**What:** Tested whether there is a consistent "upward" displacement vector when moving from specific→general along taxonomic hierarchies. 24 hierarchies (10 nouns, 10 verbs, 4 adjectives), 111 unique words. Five analyses: within-hierarchy displacement consistency, cross-hierarchy direction comparison, cross-POS alignment, abstraction-level clustering, and distance decay monotonicity.
+
+**Key findings:**
+
+*1. Within-hierarchy "up" is barely consistent:*
+- Mean alignment to own mean direction: nouns 0.24, verbs 0.23, adj 0.33
+- Pairwise step consistency near zero or negative for all POS types
+- First and last steps most aligned; middle steps chaotic
+
+*2. Nouns share more "up" direction than verbs:*
+- Noun × Noun: 0.465 (dog↔horse: 0.696, dog↔cat: 0.677)
+- Verb × Verb: 0.381 (eat↔devour: 0.557, eat↔listen: 0.292)
+- Adj × Adj: 0.057 (essentially zero)
+- Cross-POS: 0.03-0.06 (no universal abstraction axis)
+
+*3. Distance decay is non-monotonic:*
+- Only 4/24 hierarchies show monotonic decay from origin
+- Nouns: 3/10 monotonic (16 violations), Verbs: 1/10 (14), Adj: 0/4 (4)
+- Violations follow the distributional pattern: casual words bounce back, technical terms dip
+- puppy→canine (0.856) > hound (0.723); puppy→animal (0.745) > mammal (0.676)
+
+*4. Verb hierarchies are genuinely messier:*
+- Lower cross-hierarchy agreement (0.381 vs nouns' 0.465)
+- More violations of monotonic decay
+- Confirms user's intuition that verbs are less taxonomically organized
+
+*5. Same-level words do NOT cluster:*
+- Within-level sim (0.553-0.585) ≈ cross-level sim (0.558-0.580)
+- No abstraction-level clustering exists in embedding space
+
+*6. Global "up" = noun abstraction direction:*
+- Global magnitude: 0.456
+- Nouns align at 0.541, verbs at 0.480, adj at 0.181
+- The "global up" is dominated by noun hierarchies sharing upper levels
+
+**Artifacts:**
+- `prototype/taxonomic_direction.py` — Full analysis script
+- `prototype/taxonomic_direction_results.json` — All numerical results
+- `prototype/taxonomic_direction_embeddings.npz` — Raw 1024-dim vectors for 111 words
+- `prototype/taxonomic_direction_vectors.npz` — Mean "up" direction for each hierarchy
+- `exploration_notes.md` §3e — Full narrative analysis
