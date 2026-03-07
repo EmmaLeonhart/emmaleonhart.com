@@ -133,6 +133,14 @@ Chronological record of every experiment run in this project. Each entry records
 - dog↔cat at base level: 0.691, but at mammal level: 1.000 (shared word), at animal level: also 1.000
 - Convergence is literal (shared words) not graduated — the model doesn't smoothly merge unrelated hierarchies
 
+*Part 5 — Distributional vs Ontological Semantics (qualitative finding):*
+- dog→animal (0.876) > dog→mammal (0.816) despite mammal being taxonomically closer
+- Embedding distance reflects word co-occurrence frequency, not formal taxonomic distance
+- Words carry register baggage: "dog"/"cat" (informal) vs "feline"/"canine" (taxonomic) vs "carnivoran" (scientific)
+- Hierarchy convergence is literal (shared word = 1.000) not graduated
+- This reinforces the VKG's role: impose logical structure that embedding space can't represent
+
 **Artifacts:**
 - `prototype/word_isolation.py` — Full analysis script
 - `prototype/word_isolation_results.json` — All numerical results
+- `exploration_notes.md` §3d — Distributional vs ontological semantics analysis

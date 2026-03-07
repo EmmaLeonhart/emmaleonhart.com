@@ -294,3 +294,78 @@ The verb has a small but **directionally consistent** effect on embeddings. It a
 - `prototype/semantic_grid_results.json` — Full 27×27 similarity matrix and axis/joint/per-value analysis.
 - `prototype/semantic_grid_results_embeddings.npz` — Raw 1024-dim vectors for all 27 grid propositions. Keys: `vecs`, `sentences`, `subjects`, `predicates`, `objects`.
 - `prototype/verb_structure_results.json` — Displacement consistency, subspace correlation, naturalness, and interaction analysis.
+- `prototype/word_isolation_results.json` — Isolated word embeddings, taxonomic hierarchies, jitter analysis, convergence data.
+
+---
+
+## 3d. Word Isolation, Taxonomic Jitter, and Distributional vs Ontological Semantics
+
+### Words in isolation reverse the proposition-level hierarchy
+
+When we embed the 9 grid words *in isolation* (just the bare word, no sentence context), the within-role similarity ranking **reverses** compared to proposition-level:
+
+| Role | Within-role sim (isolated words) | Pull strength (in propositions) |
+|---|---|---|
+| Predicates | 0.639 (highest) | +0.069 (weakest) |
+| Objects | 0.618 | +0.176 |
+| Subjects | 0.545 (lowest) | +0.240 (strongest) |
+
+Predicates are the *most* similar to each other as bare words ("eat", "carry", "watch" cluster tightly), yet they have the *weakest* pull in propositions. Subjects are the *least* similar as bare words, yet dominate proposition structure.
+
+This makes sense: predicates are functionally similar (all transitive action verbs), so they cluster at the word level. But precisely because they're so similar to each other, swapping one for another barely moves the proposition embedding. Subjects like "cats", "trucks", "children" are maximally dissimilar as words (different semantic domains), so they create the widest separation when composed into propositions.
+
+### Taxonomic hierarchies: distance follows co-occurrence, not logical distance
+
+Embedding dog-related words along the taxonomic hierarchy reveals a critical pattern:
+
+| Pair | Cosine | Taxonomic relationship |
+|---|---|---|
+| dog / canine | 0.947 | Near-synonyms |
+| dog / hound | 0.802 | Hyponym |
+| dog / mammal | 0.816 | 2 levels up |
+| dog / animal | 0.876 | 3 levels up |
+| dog / creature | 0.756 | 4 levels up |
+| puppy / creature | 0.619 | Endpoint to endpoint |
+
+The striking result: **dog→animal (0.876) > dog→mammal (0.816)**, despite "mammal" being the more immediate taxonomic superclass. In any formal ontology, mammal is *closer* to dog than animal is. But in embedding space, "animal" is closer because "dog" and "animal" co-occur far more frequently in everyday language than "dog" and "mammal".
+
+### Embeddings encode distributional semantics, not formal ontology
+
+This reveals a fundamental property of embedding space: **it reflects how humans talk about things, not how things are logically organized.**
+
+The evidence:
+- **"dog" and "cat"** are informal, everyday words → high similarity to broad terms like "animal" (0.876, 0.769 respectively)
+- **"feline" and "canine"** carry a taxonomic/scientific register → they cluster together more tightly (cat/feline: 0.923, dog/canine: 0.947)
+- **"mammal"** is an educational/scientific term that appears more in textbooks than casual speech → lower co-occurrence with casual "dog" than with general "animal"
+- **"carnivoran"** would be even more esoteric, likely clustering with other technical taxonomy terms rather than with the animals it classifies
+
+The embedding distance between two words reflects their **distributional overlap** (do they appear in similar contexts?) rather than their **ontological distance** (how many taxonomic levels separate them?). Words that humans frequently use together end up close, regardless of their formal logical relationship.
+
+### Context compresses predicate differences, amplifies entity differences
+
+When we substitute taxonomic variants into proposition templates, sentence context acts as a selective filter:
+
+- **Predicate jitter is almost invisible**: "Cats eat fish" vs "Cats devour fish" = 0.965, "Cats munch fish" = 0.925. Verb synonyms in context are nearly indistinguishable because the shared subject+object anchor the embedding.
+- **Subject jitter preserves relative ordering**: dog→hound→canine→mammal→animal maintains the same relative distances across all 3 templates (r > 0.86), but the absolute distances are compressed.
+- **Word↔sentence correlation is high**: subject jitter r=0.91, predicate r=0.92, object r=0.76. The word-level distance reliably predicts the sentence-level distance.
+
+This means sentence context doesn't scramble the word-level structure — it selectively attenuates it. Predicates get compressed the most (because they contribute the least to proposition meaning in embedding space), while entity differences are preserved.
+
+### Hierarchy convergence is literal, not graduated
+
+Do "dog→mammal→animal" and "cat→mammal→animal" smoothly converge as they ascend the hierarchy?
+
+**No.** The convergence is abrupt and literal:
+- dog↔cat at base level: 0.691
+- At mammal level: 1.000 (same word)
+- At animal level: 1.000 (same word)
+
+The model doesn't gradually merge the dog and cat "branches" as you go up. They remain distinct until you literally use the same word. There's no smooth interpolation between taxonomic branches — the embedding space doesn't represent the *structure* of the hierarchy, only the *distributional properties* of individual words within it.
+
+### What this means for the paper
+
+This finding strengthens the core thesis in two ways:
+
+1. **Embedding space is systematically wrong about logical distance.** dog→animal being closer than dog→mammal is not noise — it's a predictable consequence of distributional training. Any retrieval system that relies on embedding distance for reasoning will inherit these systematic biases. The VKG corrects this by imposing explicit logical structure through entity-predicate-entity triples.
+
+2. **Register and frequency contaminate semantic relationships.** The same concept at different levels of formality (dog/canine/canis) occupies different regions of embedding space, not because the meaning changed, but because the *contexts of use* changed. A formal ontology (the VKG) treats these as equivalent; an embedding space does not. This is another gap that only explicit symbolic structure can bridge.
