@@ -151,6 +151,7 @@ Seven scenarios across diverse domains, each with a curated corpus, distractors,
 
 ## References
 
+- Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention Is All You Need. *Advances in Neural Information Processing Systems*, 30. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
 - Seshia, S. A., Sadigh, D., & Sastry, S. S. (2022). Toward Verified Artificial Intelligence. *Communications of the ACM*, 65(7). DOI: [10.1145/3503914](https://dl.acm.org/doi/10.1145/3503914)
 
 *[Additional references to be added.]*
