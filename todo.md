@@ -49,13 +49,14 @@
 - [x] E. coli extreme case — Bacteria closer than Enterobacterales (Exp 7)
 - [x] Argument against hyperbolic embeddings — problem is distributional not geometric (§3g)
 - [ ] Distractor trap analysis — Starbucks outscoring Brazilian drought in economic scenario
-- [ ] Pillar 3 finding: 0 formal chains in 2/3 winning scenarios — entity bridging alone is doing the work
-- [ ] 16.9x time overhead analysis
+- [x] Pillar 3 finding: 0 formal chains in 2/3 winning scenarios — entity bridging alone is doing the work (in §6.1)
+- [x] 16.9x time overhead analysis (in §6.4)
 
-### Sections still empty
-- [ ] Related Work — GraphRAG (Microsoft), neurosymbolic AI (Seshia 2022), KG embeddings (TransE/RotatE/ComplEx), proposition-first ontologies, VSAs
-- [ ] Discussion — extraction bottleneck, scalability, cross-domain analogy as future work, "entity-bridged" vs "logic-gated" honest framing
-- [ ] Conclusion
+### Sections now drafted
+- [x] Related Work — GraphRAG, neurosymbolic AI, KG embeddings, computational expressivity, System 1/2
+- [x] Discussion — extraction bottleneck, FSM/dimensional cramming theory, System 1/2, tool use vs architecture, scalability, future directions
+- [x] Conclusion
+- [x] §4.9 Dimensional Cramming: A Unifying Theory (new subsection)
 
 ## Evaluation Gaps (needed to strengthen paper)
 - [ ] Ablation study: Pillar 2 only (bridging, no logic) vs full pipeline — the data already hints bridging alone is sufficient
