@@ -354,22 +354,34 @@
 
   <ul>
     <li><strong>Gender axis (y):</strong> The normalized displacement <em>v</em><sub>woman</sub> &minus; <em>v</em><sub>man</sub>, capturing the gender direction in embedding space.</li>
-    <li><strong>&ldquo;Is cute&rdquo; transformation axis (x):</strong> The average displacement from bare nouns to their &ldquo;The X is cute&rdquo; propositions, computed over 8 calibration nouns. This captures a semantically rich transformation &mdash; adding affective, aesthetic, and evaluative content to a concept.</li>
+    <li><strong>&ldquo;Cute&rdquo; modifier axis (x):</strong> The normalized displacement <em>v</em><sub>cute&thinsp;woman</sub> &minus; <em>v</em><sub>woman</sub> &mdash; the pure semantic contribution of adding &ldquo;cute&rdquo; as a modifier, without syntactic noise from articles or copulas.</li>
   </ul>
 
-  <p>The two axes are reasonably orthogonal (dot product = 0.15), enabling meaningful 2D projection. We embed 38 items spanning six categories: gendered terms, cute entities, neutral/generic words, abstract concepts, simple propositions, and complex multi-clause propositions.</p>
+  <p>The two axes are nearly orthogonal (dot product = &minus;0.09), enabling meaningful 2D projection. We embed 194 items spanning twelve categories &mdash; gendered terms, cute entities, neutral/generic words, abstract concepts, nature, technical terms, actions, emotions, four types of propositions, and 54 intermediate phrases designed to test whether the transition between regions is smooth or cliff-like.</p>
 
-  <p><strong>Results.</strong> The gender axis separates cleanly (man at &minus;0.44, woman at +0.44; all male terms negative, all female terms positive, neutral terms near zero). The &ldquo;is cute&rdquo; axis reveals the predicted loadedness spectrum:</p>
+  <p><strong>Voronoi tessellation.</strong> Rather than plotting concepts as points, we construct a Voronoi diagram where each concept owns a <em>region</em> &mdash; the set of all points closer to it than to any other concept. This mirrors how softmax partitions logit space into decision regions. Cell area directly encodes loadedness: large cells indicate underloaded regions (sparse, generic), small cells indicate overloaded regions (concepts crammed together).</p>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="../prototype/semantic_topology_full.png" alt="Voronoi tessellation of 194 concepts projected onto gender and cute axes, colored by semantic category" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 1.</strong> Voronoi tessellation of 194 concepts in the gender &times; &ldquo;cute&rdquo; plane. Category coloring reveals spatial clustering: technical/abstract/neutral terms (left, tiny cells) vs. cute propositions (right, large cells).</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="../prototype/semantic_topology_heatmap.png" alt="Voronoi cell area heatmap showing semantic loadedness - red for overloaded (small cells), green for underloaded (large cells)" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 2.</strong> Loadedness heatmap. Cell area on log scale: green = large cells (underloaded), red = small cells (overloaded). The dense green cluster at center-left contains technical, abstract, and neutral terms crammed into tiny Voronoi cells. Edge regions are sparse.</figcaption>
+  </figure>
+
+  <p><strong>Results.</strong> The gender axis separates cleanly (man at &minus;0.44, woman at +0.44). The cute axis reveals the predicted loadedness spectrum:</p>
 
   <ul>
-    <li><strong>Underloaded region</strong> (x &lt; &minus;0.3): salt (&minus;0.41), rock (&minus;0.39), entropy (&minus;0.40), king (&minus;0.39) &mdash; semantically generic words with minimal affective content.</li>
-    <li><strong>Mid-range</strong> (x &asymp; &minus;0.1): cute animals in isolation (puppy &minus;0.08, kitten &minus;0.08, duckling &minus;0.07) &mdash; distributionally associated with cuteness but not syntactically loaded with it.</li>
-    <li><strong>Loaded region</strong> (x &gt; 0.2): explicit propositions &ldquo;The kitten is cute&rdquo; (0.28), &ldquo;The puppy is cute&rdquo; (0.26) &mdash; the transformation vector points directly at its own construction.</li>
+    <li><strong>Most overloaded</strong> (smallest cells): technical terms (mean area 0.000186), abstract concepts (0.000338), neutral propositions (0.000204) &mdash; dozens of concepts crammed into tiny slivers of the projection.</li>
+    <li><strong>Mid-range:</strong> cute animals in isolation (puppy, kitten, duckling) and nature terms &mdash; moderate cell sizes with smooth transitions.</li>
+    <li><strong>Most underloaded</strong> (largest cells): gendered terms (mean 0.018), &ldquo;X is cute&rdquo; propositions (mean 0.010), strength propositions (mean 0.005) &mdash; a few concepts owning vast territory.</li>
   </ul>
 
-  <p>Two findings are noteworthy. First, the gap between bare &ldquo;kitten&rdquo; (&minus;0.08) and &ldquo;The kitten is cute&rdquo; (+0.28) is 0.36 &mdash; larger than any other displacement on this axis, confirming that the propositional frame (&ldquo;is cute&rdquo;) adds substantial semantic content that the word alone does not carry. This is exactly the kind of predicate-driven information that our earlier experiments showed is under-represented: adding a predicate shifts the vector dramatically along a direction that the bare noun barely registers on.</p>
+  <p>The 54 intermediate phrases confirm that the transition between regions is <strong>completely smooth</strong>. The kitten gradient illustrates this: bare &ldquo;kitten&rdquo; (x&thinsp;=&thinsp;&minus;0.01) &rarr; &ldquo;the small fluffy kitten&rdquo; (+0.08) &rarr; &ldquo;kittens are cute&rdquo; (+0.20) &rarr; &ldquo;cute kitten&rdquo; (+0.22) &rarr; &ldquo;the cute kitten&rdquo; (+0.23) &rarr; &ldquo;a very cute kitten&rdquo; (+0.26). No cliff anywhere &mdash; each step adds a small increment of semantic load along the cute axis. This confirms the prediction from &sect;4.9: the compression landscape has smooth gradients, not sharp boundaries.</p>
 
-  <p>Second, complex multi-clause propositions (&ldquo;De-icing salts applied to road surfaces cause corrosion...&rdquo;) land in the mid-range (&minus;0.13 to &minus;0.17), <em>not</em> at the extremes. This is consistent with dimensional cramming: these propositions contain too much information for the embedding to represent coherently along any single axis, so they project weakly onto both interpretable directions &mdash; semantically dense but geometrically diffuse. The overloaded region is not &ldquo;far out&rdquo; but &ldquo;washed out.&rdquo;</p>
+  <p>The area ratio between the most overloaded (wavelength: 0.000026) and most underloaded (gentleman: 0.084) cells is <strong>3,200&times;</strong>. A single gendered word owns more projection territory than dozens of technical terms combined. This is dimensional cramming made visible: the embedding model allocates enormous representational capacity to high-signal concepts while compressing &ldquo;less interesting&rdquo; distinctions into negligible regions.</p>
 
   <h2>5. Benchmark Evaluation</h2>
 
