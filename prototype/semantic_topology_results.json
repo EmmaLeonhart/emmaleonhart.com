@@ -1,5 +1,5 @@
 {
-  "n_items": 140,
+  "n_items": 194,
   "items": [
     {
       "label": "man",
@@ -980,6 +980,384 @@
       "category": "prop_complex",
       "x_cute": -0.19642849266529083,
       "y_gender": -0.009880520403385162
+    },
+    {
+      "label": "cute kitten",
+      "text": "cute kitten",
+      "category": "gradient",
+      "x_cute": 0.24918054044246674,
+      "y_gender": 0.07779678702354431
+    },
+    {
+      "label": "a cute kitten",
+      "text": "a cute kitten",
+      "category": "gradient",
+      "x_cute": 0.2658390402793884,
+      "y_gender": 0.07746967673301697
+    },
+    {
+      "label": "the cute kitten",
+      "text": "the cute kitten",
+      "category": "gradient",
+      "x_cute": 0.27190905809402466,
+      "y_gender": 0.07575046271085739
+    },
+    {
+      "label": "a very cute kitten",
+      "text": "a very cute kitten",
+      "category": "gradient",
+      "x_cute": 0.28988656401634216,
+      "y_gender": 0.0782623216509819
+    },
+    {
+      "label": "the small fluffy kitten",
+      "text": "the small fluffy kitten",
+      "category": "gradient",
+      "x_cute": 0.1237640231847763,
+      "y_gender": 0.031424421817064285
+    },
+    {
+      "label": "kittens are cute",
+      "text": "kittens are cute",
+      "category": "gradient",
+      "x_cute": 0.2196669578552246,
+      "y_gender": 0.05246192216873169
+    },
+    {
+      "label": "the kitten looks cute",
+      "text": "the kitten looks cute",
+      "category": "gradient",
+      "x_cute": 0.2867964804172516,
+      "y_gender": 0.08102201670408249
+    },
+    {
+      "label": "that kitten is adorable",
+      "text": "that kitten is adorable",
+      "category": "gradient",
+      "x_cute": 0.24546599388122559,
+      "y_gender": 0.02931268885731697
+    },
+    {
+      "label": "cute puppy",
+      "text": "cute puppy",
+      "category": "gradient",
+      "x_cute": 0.23868051171302795,
+      "y_gender": 0.040401436388492584
+    },
+    {
+      "label": "a cute puppy",
+      "text": "a cute puppy",
+      "category": "gradient",
+      "x_cute": 0.25520092248916626,
+      "y_gender": 0.044362664222717285
+    },
+    {
+      "label": "the cute puppy",
+      "text": "the cute puppy",
+      "category": "gradient",
+      "x_cute": 0.26144200563430786,
+      "y_gender": 0.03604152798652649
+    },
+    {
+      "label": "a very cute puppy",
+      "text": "a very cute puppy",
+      "category": "gradient",
+      "x_cute": 0.2750087082386017,
+      "y_gender": 0.03895911946892738
+    },
+    {
+      "label": "the little puppy",
+      "text": "the little puppy",
+      "category": "gradient",
+      "x_cute": 0.07154446840286255,
+      "y_gender": 0.002478785812854767
+    },
+    {
+      "label": "puppies are cute",
+      "text": "puppies are cute",
+      "category": "gradient",
+      "x_cute": 0.17744594812393188,
+      "y_gender": 0.02682732418179512
+    },
+    {
+      "label": "the puppy looks adorable",
+      "text": "the puppy looks adorable",
+      "category": "gradient",
+      "x_cute": 0.26719292998313904,
+      "y_gender": 0.03550044447183609
+    },
+    {
+      "label": "cute baby",
+      "text": "cute baby",
+      "category": "gradient",
+      "x_cute": 0.2228504717350006,
+      "y_gender": 0.08009184896945953
+    },
+    {
+      "label": "a cute baby",
+      "text": "a cute baby",
+      "category": "gradient",
+      "x_cute": 0.2337123155593872,
+      "y_gender": 0.07769383490085602
+    },
+    {
+      "label": "the cute baby",
+      "text": "the cute baby",
+      "category": "gradient",
+      "x_cute": 0.24423663318157196,
+      "y_gender": 0.08266731351613998
+    },
+    {
+      "label": "babies are cute",
+      "text": "babies are cute",
+      "category": "gradient",
+      "x_cute": 0.18624433875083923,
+      "y_gender": 0.06534634530544281
+    },
+    {
+      "label": "cute bunny",
+      "text": "cute bunny",
+      "category": "gradient",
+      "x_cute": 0.27084898948669434,
+      "y_gender": 0.06999075412750244
+    },
+    {
+      "label": "a cute bunny",
+      "text": "a cute bunny",
+      "category": "gradient",
+      "x_cute": 0.2894871234893799,
+      "y_gender": 0.05733148381114006
+    },
+    {
+      "label": "the bunny is adorable",
+      "text": "the bunny is adorable",
+      "category": "gradient",
+      "x_cute": 0.319391131401062,
+      "y_gender": 0.03552882373332977
+    },
+    {
+      "label": "cute duckling",
+      "text": "cute duckling",
+      "category": "gradient",
+      "x_cute": 0.22956709563732147,
+      "y_gender": 0.052107565104961395
+    },
+    {
+      "label": "the duckling is adorable",
+      "text": "the duckling is adorable",
+      "category": "gradient",
+      "x_cute": 0.2864735722541809,
+      "y_gender": 0.050477586686611176
+    },
+    {
+      "label": "cute penguin",
+      "text": "cute penguin",
+      "category": "gradient",
+      "x_cute": 0.21238622069358826,
+      "y_gender": 0.013039544224739075
+    },
+    {
+      "label": "the penguin is adorable",
+      "text": "the penguin is adorable",
+      "category": "gradient",
+      "x_cute": 0.2720489799976349,
+      "y_gender": -0.006063722539693117
+    },
+    {
+      "label": "cute lamb",
+      "text": "cute lamb",
+      "category": "gradient",
+      "x_cute": 0.18634313344955444,
+      "y_gender": 0.018078573048114777
+    },
+    {
+      "label": "cute hamster",
+      "text": "cute hamster",
+      "category": "gradient",
+      "x_cute": 0.25524234771728516,
+      "y_gender": 0.0362418070435524
+    },
+    {
+      "label": "cute panda",
+      "text": "cute panda",
+      "category": "gradient",
+      "x_cute": 0.2403774857521057,
+      "y_gender": 0.030763033777475357
+    },
+    {
+      "label": "the panda is adorable",
+      "text": "the panda is adorable",
+      "category": "gradient",
+      "x_cute": 0.28298646211624146,
+      "y_gender": 0.01524302363395691
+    },
+    {
+      "label": "adorable animal",
+      "text": "adorable animal",
+      "category": "gradient",
+      "x_cute": 0.24162259697914124,
+      "y_gender": 0.04164206236600876
+    },
+    {
+      "label": "a sweet creature",
+      "text": "a sweet creature",
+      "category": "gradient",
+      "x_cute": 0.1196918711066246,
+      "y_gender": -0.005210953298956156
+    },
+    {
+      "label": "cuddly pet",
+      "text": "cuddly pet",
+      "category": "gradient",
+      "x_cute": 0.08149534463882446,
+      "y_gender": 0.008512048982083797
+    },
+    {
+      "label": "a lovable animal",
+      "text": "a lovable animal",
+      "category": "gradient",
+      "x_cute": 0.1544112116098404,
+      "y_gender": -0.004464369732886553
+    },
+    {
+      "label": "pretty flowers",
+      "text": "pretty flowers",
+      "category": "gradient",
+      "x_cute": 0.04184424877166748,
+      "y_gender": 0.11617094278335571
+    },
+    {
+      "label": "beautiful sunset",
+      "text": "beautiful sunset",
+      "category": "gradient",
+      "x_cute": -0.10176710784435272,
+      "y_gender": 0.029177561402320862
+    },
+    {
+      "label": "lovely garden",
+      "text": "lovely garden",
+      "category": "gradient",
+      "x_cute": 0.006359328515827656,
+      "y_gender": 0.05139804631471634
+    },
+    {
+      "label": "charming smile",
+      "text": "charming smile",
+      "category": "gradient",
+      "x_cute": 0.13147342205047607,
+      "y_gender": 0.049422744661569595
+    },
+    {
+      "label": "delightful melody",
+      "text": "delightful melody",
+      "category": "gradient",
+      "x_cute": -0.018178323283791542,
+      "y_gender": -0.00528020691126585
+    },
+    {
+      "label": "endearing personality",
+      "text": "endearing personality",
+      "category": "gradient",
+      "x_cute": 0.09653301537036896,
+      "y_gender": 0.022790580987930298
+    },
+    {
+      "label": "strong man",
+      "text": "strong man",
+      "category": "gradient",
+      "x_cute": -0.23864565789699554,
+      "y_gender": -0.27603068947792053
+    },
+    {
+      "label": "a strong man",
+      "text": "a strong man",
+      "category": "gradient",
+      "x_cute": -0.2125679850578308,
+      "y_gender": -0.2762598991394043
+    },
+    {
+      "label": "the strong man",
+      "text": "the strong man",
+      "category": "gradient",
+      "x_cute": -0.22213444113731384,
+      "y_gender": -0.2766243815422058
+    },
+    {
+      "label": "powerful king",
+      "text": "powerful king",
+      "category": "gradient",
+      "x_cute": -0.21497227251529694,
+      "y_gender": -0.16467848420143127
+    },
+    {
+      "label": "a powerful queen",
+      "text": "a powerful queen",
+      "category": "gradient",
+      "x_cute": -0.13968321681022644,
+      "y_gender": 0.262015700340271
+    },
+    {
+      "label": "the warrior is brave",
+      "text": "the warrior is brave",
+      "category": "gradient",
+      "x_cute": -0.11380074173212051,
+      "y_gender": -0.07310689240694046
+    },
+    {
+      "label": "fierce warrior",
+      "text": "fierce warrior",
+      "category": "gradient",
+      "x_cute": -0.2227357029914856,
+      "y_gender": 0.02916938252747059
+    },
+    {
+      "label": "heavy rock",
+      "text": "heavy rock",
+      "category": "gradient",
+      "x_cute": -0.34182894229888916,
+      "y_gender": -0.08840000629425049
+    },
+    {
+      "label": "a heavy rock",
+      "text": "a heavy rock",
+      "category": "gradient",
+      "x_cute": -0.20969051122665405,
+      "y_gender": -0.07901890575885773
+    },
+    {
+      "label": "the rock is large",
+      "text": "the rock is large",
+      "category": "gradient",
+      "x_cute": -0.09442232549190521,
+      "y_gender": -0.04796234145760536
+    },
+    {
+      "label": "cold water",
+      "text": "cold water",
+      "category": "gradient",
+      "x_cute": -0.21981912851333618,
+      "y_gender": -0.010709647089242935
+    },
+    {
+      "label": "the mountain is tall",
+      "text": "the mountain is tall",
+      "category": "gradient",
+      "x_cute": -0.07570043206214905,
+      "y_gender": -0.03938774764537811
+    },
+    {
+      "label": "a flat table",
+      "text": "a flat table",
+      "category": "gradient",
+      "x_cute": -0.1290428340435028,
+      "y_gender": 0.009852712973952293
+    },
+    {
+      "label": "dark concrete",
+      "text": "dark concrete",
+      "category": "gradient",
+      "x_cute": -0.20543447136878967,
+      "y_gender": -0.03378155082464218
     }
   ]
 }

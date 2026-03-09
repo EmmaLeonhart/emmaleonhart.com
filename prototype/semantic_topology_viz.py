@@ -16,10 +16,11 @@ import sys
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon
+from matplotlib.patches import Polygon as MplPolygon
 from matplotlib.collections import PatchCollection
 from scipy.spatial import Voronoi
 import matplotlib.colors as mcolors
+from shapely.geometry import Polygon as ShapelyPolygon, box as shapely_box
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from prototype.pillar2_mapping import embed_texts
@@ -244,42 +245,136 @@ def build_dense_word_set():
         ("Deforestation reduces\ncarbon sequestration",
          "Tropical deforestation reduces terrestrial carbon sequestration capacity while simultaneously releasing stored carbon into the atmosphere",
          "prop_complex"),
+
+        # === GRADIENT: bare noun -> adjective-noun -> phrase -> proposition ===
+        # These fill in the gap between bare nouns and full "X is cute" propositions
+        # to test whether the transition is smooth or cliff-like.
+
+        # Kitten gradient
+        ("cute kitten", "cute kitten", "gradient"),
+        ("a cute kitten", "a cute kitten", "gradient"),
+        ("the cute kitten", "the cute kitten", "gradient"),
+        ("a very cute kitten", "a very cute kitten", "gradient"),
+        ("the small fluffy kitten", "the small fluffy kitten", "gradient"),
+        ("kittens are cute", "kittens are cute", "gradient"),
+        ("the kitten looks cute", "the kitten looks cute", "gradient"),
+        ("that kitten is adorable", "that kitten is adorable", "gradient"),
+
+        # Puppy gradient
+        ("cute puppy", "cute puppy", "gradient"),
+        ("a cute puppy", "a cute puppy", "gradient"),
+        ("the cute puppy", "the cute puppy", "gradient"),
+        ("a very cute puppy", "a very cute puppy", "gradient"),
+        ("the little puppy", "the little puppy", "gradient"),
+        ("puppies are cute", "puppies are cute", "gradient"),
+        ("the puppy looks adorable", "the puppy looks adorable", "gradient"),
+
+        # Baby gradient
+        ("cute baby", "cute baby", "gradient"),
+        ("a cute baby", "a cute baby", "gradient"),
+        ("the cute baby", "the cute baby", "gradient"),
+        ("babies are cute", "babies are cute", "gradient"),
+
+        # Other animal gradients (sparser, for coverage)
+        ("cute bunny", "cute bunny", "gradient"),
+        ("a cute bunny", "a cute bunny", "gradient"),
+        ("the bunny is adorable", "the bunny is adorable", "gradient"),
+        ("cute duckling", "cute duckling", "gradient"),
+        ("the duckling is adorable", "the duckling is adorable", "gradient"),
+        ("cute penguin", "cute penguin", "gradient"),
+        ("the penguin is adorable", "the penguin is adorable", "gradient"),
+        ("cute lamb", "cute lamb", "gradient"),
+        ("cute hamster", "cute hamster", "gradient"),
+        ("cute panda", "cute panda", "gradient"),
+        ("the panda is adorable", "the panda is adorable", "gradient"),
+
+        # Mixed affective phrases (fill the mid-right region)
+        ("adorable animal", "adorable animal", "gradient"),
+        ("a sweet creature", "a sweet creature", "gradient"),
+        ("cuddly pet", "cuddly pet", "gradient"),
+        ("a lovable animal", "a lovable animal", "gradient"),
+        ("pretty flowers", "pretty flowers", "gradient"),
+        ("beautiful sunset", "beautiful sunset", "gradient"),
+        ("lovely garden", "lovely garden", "gradient"),
+        ("charming smile", "charming smile", "gradient"),
+        ("delightful melody", "delightful melody", "gradient"),
+        ("endearing personality", "endearing personality", "gradient"),
+
+        # Strength/power gradient (fill the sparse strong-proposition area)
+        ("strong man", "strong man", "gradient"),
+        ("a strong man", "a strong man", "gradient"),
+        ("the strong man", "the strong man", "gradient"),
+        ("powerful king", "powerful king", "gradient"),
+        ("a powerful queen", "a powerful queen", "gradient"),
+        ("the warrior is brave", "the warrior is brave", "gradient"),
+        ("fierce warrior", "fierce warrior", "gradient"),
+
+        # Neutral description gradient
+        ("heavy rock", "heavy rock", "gradient"),
+        ("a heavy rock", "a heavy rock", "gradient"),
+        ("the rock is large", "the rock is large", "gradient"),
+        ("cold water", "cold water", "gradient"),
+        ("the mountain is tall", "the mountain is tall", "gradient"),
+        ("a flat table", "a flat table", "gradient"),
+        ("dark concrete", "dark concrete", "gradient"),
     ]
     return items
 
 
-def voronoi_finite_polygons_2d(vor, radius=None):
-    """Reconstruct infinite Voronoi regions as finite polygons.
+def voronoi_finite_polygons_2d(vor, bbox):
+    """Reconstruct Voronoi regions as finite polygons clipped to a bounding box.
 
-    Adapted from scipy docs — clips infinite regions to a bounding box.
+    Uses Shapely for proper polygon-box intersection, avoiding degenerate
+    cells at the convex hull edges.
+
+    Args:
+        vor: scipy.spatial.Voronoi object
+        bbox: (x_min, y_min, x_max, y_max) bounding box
+
+    Returns:
+        List of (N,2) numpy arrays, one polygon per input point.
+        Empty array if the cell couldn't be reconstructed.
     """
-    if vor.points.shape[1] != 2:
-        raise ValueError("Requires 2D input")
-
-    new_regions = []
-    new_vertices = vor.vertices.tolist()
+    x_min, y_min, x_max, y_max = bbox
+    clip_box = shapely_box(x_min, y_min, x_max, y_max)
 
     center = vor.points.mean(axis=0)
-    if radius is None:
-        radius = vor.points.ptp(axis=0).max() * 2
+    radius = max(x_max - x_min, y_max - y_min) * 4  # extend well beyond bbox
 
-    # Construct a map from ridge_point pairs to ridge_vertices
+    # Map from ridge_point pairs to ridge_vertices
     all_ridges = {}
     for (p1, p2), (v1, v2) in zip(vor.ridge_points, vor.ridge_vertices):
         all_ridges.setdefault(p1, []).append((p2, v1, v2))
         all_ridges.setdefault(p2, []).append((p1, v1, v2))
 
-    for p1, region_idx in enumerate(vor.point_region):
+    polygons = []
+
+    for p_idx in range(len(vor.points)):
+        region_idx = vor.point_region[p_idx]
         vertices = vor.regions[region_idx]
 
-        if all(v >= 0 for v in vertices):
-            # Finite region
-            new_regions.append(vertices)
+        if not vertices:
+            polygons.append(np.array([]))
             continue
 
-        # Reconstruct infinite region
-        ridges = all_ridges.get(p1, [])
-        new_region = [v for v in vertices if v >= 0]
+        if all(v >= 0 for v in vertices):
+            # Finite region — just clip to bbox
+            poly_coords = vor.vertices[vertices]
+            try:
+                sp = ShapelyPolygon(poly_coords)
+                clipped = sp.intersection(clip_box)
+                if clipped.is_empty or clipped.geom_type not in ('Polygon',):
+                    polygons.append(np.array([]))
+                else:
+                    polygons.append(np.array(clipped.exterior.coords[:-1]))
+            except Exception:
+                polygons.append(np.array([]))
+            continue
+
+        # Infinite region — reconstruct by extending infinite ridges
+        ridges = all_ridges.get(p_idx, [])
+        finite_verts = [v for v in vertices if v >= 0]
+        new_vertices_list = [vor.vertices[v].tolist() for v in finite_verts]
 
         for p2, v1, v2 in ridges:
             if v2 < 0:
@@ -287,27 +382,40 @@ def voronoi_finite_polygons_2d(vor, radius=None):
             if v1 >= 0:
                 continue
 
-            # Compute far point for infinite ridge
-            t = vor.points[p2] - vor.points[p1]
+            # Extend infinite ridge outward
+            t = vor.points[p2] - vor.points[p_idx]
             t /= np.linalg.norm(t)
-            n = np.array([-t[1], t[0]])  # normal
+            n = np.array([-t[1], t[0]])  # perpendicular
 
-            midpoint = vor.points[[p1, p2]].mean(axis=0)
+            midpoint = vor.points[[p_idx, p2]].mean(axis=0)
             direction = np.sign(np.dot(midpoint - center, n)) * n
             far_point = vor.vertices[v2] + direction * radius
+            new_vertices_list.append(far_point.tolist())
 
-            new_region.append(len(new_vertices))
-            new_vertices.append(far_point.tolist())
+        if len(new_vertices_list) < 3:
+            polygons.append(np.array([]))
+            continue
 
-        # Sort region vertices by angle
-        vs = np.asarray([new_vertices[v] for v in new_region])
+        # Sort by angle around centroid
+        vs = np.array(new_vertices_list)
         c = vs.mean(axis=0)
         angles = np.arctan2(vs[:, 1] - c[1], vs[:, 0] - c[0])
-        new_region = [new_region[i] for i in np.argsort(angles)]
+        vs = vs[np.argsort(angles)]
 
-        new_regions.append(new_region)
+        # Clip to bounding box using Shapely
+        try:
+            sp = ShapelyPolygon(vs)
+            if not sp.is_valid:
+                sp = sp.buffer(0)  # fix self-intersections
+            clipped = sp.intersection(clip_box)
+            if clipped.is_empty or clipped.geom_type not in ('Polygon',):
+                polygons.append(np.array([]))
+            else:
+                polygons.append(np.array(clipped.exterior.coords[:-1]))
+        except Exception:
+            polygons.append(np.array([]))
 
-    return new_regions, np.asarray(new_vertices)
+    return polygons
 
 
 def run_topology():
@@ -383,6 +491,7 @@ def plot_voronoi(results, points):
         "prop_strong":   "#C0392B",
         "prop_neutral":  "#7F8C8D",
         "prop_complex":  "#6C3483",
+        "gradient":      "#F4D03F",
     }
 
     category_labels = {
@@ -398,36 +507,47 @@ def plot_voronoi(results, points):
         "prop_strong":   "Strength propositions",
         "prop_neutral":  "Neutral propositions",
         "prop_complex":  "Complex propositions",
+        "gradient":      "Intermediate phrases",
     }
 
-    vor = Voronoi(points)
-    regions, vertices = voronoi_finite_polygons_2d(vor, radius=0.3)
-
-    # Clip to bounding box
+    # Bounding box with padding
     x_min, x_max = points[:, 0].min() - 0.08, points[:, 0].max() + 0.08
     y_min, y_max = points[:, 1].min() - 0.08, points[:, 1].max() + 0.08
+    bbox = (x_min, y_min, x_max, y_max)
+
+    vor = Voronoi(points)
+    polygons = voronoi_finite_polygons_2d(vor, bbox)
+
+    # Compute cell areas using Shapely (accurate for clipped polygons)
+    cell_areas = []
+    for poly in polygons:
+        if len(poly) < 3:
+            cell_areas.append(0.0)
+        else:
+            cell_areas.append(float(ShapelyPolygon(poly).area))
+    cell_areas = np.array(cell_areas)
+
+    # Verify coverage
+    n_valid = np.sum(cell_areas > 0)
+    n_missing = len(results) - n_valid
+    print(f"  {n_valid}/{len(results)} cells reconstructed"
+          + (f" ({n_missing} failed)" if n_missing else " (all good)"))
 
     # === PLOT 1: Full topology with labels ===
     fig, ax = plt.subplots(1, 1, figsize=(20, 14))
 
-    # Draw Voronoi cells
-    for i, region in enumerate(regions):
-        if not region:
+    for i, polygon in enumerate(polygons):
+        if len(polygon) < 3:
             continue
-        polygon = vertices[region]
-        # Clip to bounding box
-        polygon = np.clip(polygon, [x_min, y_min], [x_max, y_max])
-
         cat = results[i]["category"]
         color = category_colors.get(cat, "#CCCCCC")
-        # Convert to RGBA with transparency
         rgba = list(mcolors.to_rgba(color))
         rgba[3] = 0.35
 
-        poly_patch = Polygon(polygon, closed=True,
-                             facecolor=rgba,
-                             edgecolor="white",
-                             linewidth=0.8)
+        poly_patch = MplPolygon(polygon, closed=True,
+                                facecolor=rgba,
+                                edgecolor="white",
+                                linewidth=0.8)
         ax.add_patch(poly_patch)
 
     # Draw points and labels
@@ -439,7 +559,6 @@ def plot_voronoi(results, points):
                 markeredgecolor="black", markeredgewidth=0.3,
                 zorder=5)
 
-        # Label — smaller font for dense plot
         fontsize = 5.5 if cat.startswith("prop_") else 6
         ax.annotate(r["label"],
                     (r["x_cute"], r["y_gender"]),
@@ -451,14 +570,13 @@ def plot_voronoi(results, points):
 
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
-    ax.set_xlabel('"Is Cute" Transformation Axis →\n(low = semantically generic → high = semantically loaded)',
+    ax.set_xlabel('"Is Cute" Transformation Axis\n(low = semantically generic, high = semantically loaded)',
                   fontsize=11)
-    ax.set_ylabel('← Male          Gender Axis          Female →', fontsize=11)
+    ax.set_ylabel('<-- Male          Gender Axis          Female -->', fontsize=11)
     ax.set_title(f'Semantic Topology: Voronoi Tessellation of Embedding Space\n'
-                 f'({len(results)} concepts, mxbai-embed-large 1024-dim, projected onto gender × "is cute")',
+                 f'({len(results)} concepts, mxbai-embed-large 1024-dim, projected onto gender x "is cute")',
                  fontsize=13, fontweight='bold')
 
-    # Legend
     handles = []
     for cat, label in category_labels.items():
         color = category_colors[cat]
@@ -476,49 +594,23 @@ def plot_voronoi(results, points):
     # === PLOT 2: Topology colored by cell AREA (loadedness heatmap) ===
     fig2, ax2 = plt.subplots(1, 1, figsize=(20, 14))
 
-    # Compute cell areas
-    cell_areas = []
-    valid_polygons = []
-    valid_indices = []
-    for i, region in enumerate(regions):
-        if not region:
-            cell_areas.append(0)
-            continue
-        polygon = vertices[region]
-        polygon = np.clip(polygon, [x_min, y_min], [x_max, y_max])
-
-        # Shoelace formula for polygon area
-        n = len(polygon)
-        if n < 3:
-            cell_areas.append(0)
-            continue
-        area = 0.5 * abs(sum(polygon[j][0] * polygon[(j+1) % n][1] -
-                             polygon[(j+1) % n][0] * polygon[j][1]
-                             for j in range(n)))
-        cell_areas.append(area)
-        valid_polygons.append(polygon)
-        valid_indices.append(i)
-
-    cell_areas = np.array(cell_areas)
-
-    # Normalize for colormap (log scale to handle range)
     valid_areas = cell_areas[cell_areas > 0]
     log_areas = np.log10(valid_areas + 1e-6)
     norm = plt.Normalize(vmin=log_areas.min(), vmax=log_areas.max())
     cmap = plt.cm.RdYlGn_r  # Red = small (overloaded), Green = large (underloaded)
 
-    for polygon, idx in zip(valid_polygons, valid_indices):
-        area = cell_areas[idx]
-        log_area = np.log10(area + 1e-6)
+    for i, polygon in enumerate(polygons):
+        if len(polygon) < 3 or cell_areas[i] <= 0:
+            continue
+        log_area = np.log10(cell_areas[i] + 1e-6)
         color = cmap(norm(log_area))
 
-        poly_patch = Polygon(polygon, closed=True,
-                             facecolor=(*color[:3], 0.6),
-                             edgecolor="white",
-                             linewidth=0.5)
+        poly_patch = MplPolygon(polygon, closed=True,
+                                facecolor=(*color[:3], 0.6),
+                                edgecolor="white",
+                                linewidth=0.5)
         ax2.add_patch(poly_patch)
 
-    # Labels
     for i, r in enumerate(results):
         ax2.plot(r["x_cute"], r["y_gender"], "o",
                  color="black", markersize=2.5, zorder=5)
@@ -532,17 +624,16 @@ def plot_voronoi(results, points):
 
     ax2.set_xlim(x_min, x_max)
     ax2.set_ylim(y_min, y_max)
-    ax2.set_xlabel('"Is Cute" Transformation Axis →', fontsize=11)
-    ax2.set_ylabel('← Male          Gender Axis          Female →', fontsize=11)
+    ax2.set_xlabel('"Is Cute" Transformation Axis', fontsize=11)
+    ax2.set_ylabel('<-- Male          Gender Axis          Female -->', fontsize=11)
     ax2.set_title('Semantic Loadedness Heatmap: Voronoi Cell Area\n'
                   '(Red = small cells = overloaded / Green = large cells = underloaded)',
                   fontsize=13, fontweight='bold')
 
-    # Colorbar
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax2, shrink=0.6, pad=0.02)
-    cbar.set_label("log₁₀(cell area) — smaller = more overloaded", fontsize=9)
+    cbar.set_label("log10(cell area) -- smaller = more overloaded", fontsize=9)
 
     plt.tight_layout()
     path2 = os.path.join(os.path.dirname(__file__), "semantic_topology_heatmap.png")
@@ -553,27 +644,19 @@ def plot_voronoi(results, points):
 
 def analyze_cell_areas(results, points):
     """Analyze Voronoi cell areas by category."""
-    vor = Voronoi(points)
-    regions, vertices = voronoi_finite_polygons_2d(vor, radius=0.3)
-
     x_min, x_max = points[:, 0].min() - 0.08, points[:, 0].max() + 0.08
     y_min, y_max = points[:, 1].min() - 0.08, points[:, 1].max() + 0.08
+    bbox = (x_min, y_min, x_max, y_max)
+
+    vor = Voronoi(points)
+    polygons = voronoi_finite_polygons_2d(vor, bbox)
 
     cell_areas = []
-    for i, region in enumerate(regions):
-        if not region:
-            cell_areas.append(0)
-            continue
-        polygon = vertices[region]
-        polygon = np.clip(polygon, [x_min, y_min], [x_max, y_max])
-        n = len(polygon)
-        if n < 3:
-            cell_areas.append(0)
-            continue
-        area = 0.5 * abs(sum(polygon[j][0] * polygon[(j+1) % n][1] -
-                             polygon[(j+1) % n][0] * polygon[j][1]
-                             for j in range(n)))
-        cell_areas.append(area)
+    for poly in polygons:
+        if len(poly) < 3:
+            cell_areas.append(0.0)
+        else:
+            cell_areas.append(float(ShapelyPolygon(poly).area))
 
     cell_areas = np.array(cell_areas)
 
