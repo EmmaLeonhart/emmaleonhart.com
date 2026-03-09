@@ -344,3 +344,33 @@ Chronological record of every experiment run in this project. Each entry records
 **Artifacts:**
 - `prototype/linnaean_hierarchy_large_results.json`
 - `prototype/linnaean_hierarchy_large_embeddings.npz`
+
+---
+
+## Experiment 13: Semantic Loadedness 2D Visualization
+
+**Date:** 2026-03-08
+**Script:** `python prototype/semantic_loadedness_viz.py`
+**Duration:** ~1 minute
+
+**What:** 2D projection of 38 words and phrases onto two interpretable axes: (1) gender direction = normalize(v_woman − v_man), (2) "is cute" transformation = average displacement from bare nouns to "The X is cute" propositions. Tests whether the resulting 2D plane reveals a semantic loadedness spectrum from underloaded (generic) through neurosymbolic (structured) to overloaded (dense).
+
+**Key findings:**
+- **Axis orthogonality:** dot product = 0.15 — reasonably independent axes
+- **Gender axis separates cleanly:** man (-0.44) vs woman (+0.44), all male terms negative, all female terms positive, neutral/abstract near zero
+- **"Is cute" axis reveals loadedness spectrum:**
+  - Explicit "X is cute" propositions highest (0.26–0.28) — the transformation direction itself scores highest
+  - Cute animals (puppy, kitten, duckling) cluster mid-right (-0.05 to -0.09) — semantically associated but not syntactically loaded
+  - Neutral/abstract words far left (-0.27 to -0.41) — minimal cuteness content
+  - Complex propositions land mid-range (-0.13 to -0.17) — dense but not along the "cute" direction
+- **Interesting patterns:**
+  - "teddy bear" is the highest single word on the cute axis (0.049) — the only bare noun above zero
+  - "salt" is the lowest (-0.41) — maximally generic/underloaded
+  - King and queen show the gendered split: king (-0.39, -0.19) vs queen (-0.33, +0.11) — queen slightly more "cute-loaded" and female
+  - Girl/princess cluster together at (-0.17, +0.19) — nearly identical position, confirming distributional similarity
+- **The "transformation" itself is the strongest signal:** "The kitten is cute" (0.28) vs bare "kitten" (-0.08) — the act of embedding the proposition shifts dramatically along its own axis
+
+**Artifacts:**
+- `prototype/semantic_loadedness_results.json`
+- `prototype/semantic_loadedness_plot.png`
+- `prototype/semantic_loadedness_words_only.png`

@@ -349,6 +349,28 @@
 
   <p>Viewed through the lens of computational expressivity: a fixed-dimensional embedding is a finite-state representation. It has no mechanism for unbounded composition, no way to represent &ldquo;A entails B entails C&rdquo; as a <em>chain</em> rather than a <em>centroid</em>. When a multi-hop query requires traversing such a chain, cosine similarity retrieves the centroid &mdash; typically the endpoint or a topically related distractor &mdash; and misses the intermediate steps. The VKG escapes this limitation by representing propositions as discrete nodes with explicit relational edges, restoring the structural information that the compression discards.</p>
 
+  <h3>4.10 Semantic Loadedness: Visualizing the Compression Landscape</h3>
+  <p>The dimensional cramming theory predicts that embedding space should exhibit a <em>spectrum of semantic loadedness</em>: some regions are semantically underloaded (generic, content-poor), while others are overloaded (too much information compressed into nearby vectors). To test this, we construct a 2D projection using two interpretable axes:</p>
+
+  <ul>
+    <li><strong>Gender axis (y):</strong> The normalized displacement <em>v</em><sub>woman</sub> &minus; <em>v</em><sub>man</sub>, capturing the gender direction in embedding space.</li>
+    <li><strong>&ldquo;Is cute&rdquo; transformation axis (x):</strong> The average displacement from bare nouns to their &ldquo;The X is cute&rdquo; propositions, computed over 8 calibration nouns. This captures a semantically rich transformation &mdash; adding affective, aesthetic, and evaluative content to a concept.</li>
+  </ul>
+
+  <p>The two axes are reasonably orthogonal (dot product = 0.15), enabling meaningful 2D projection. We embed 38 items spanning six categories: gendered terms, cute entities, neutral/generic words, abstract concepts, simple propositions, and complex multi-clause propositions.</p>
+
+  <p><strong>Results.</strong> The gender axis separates cleanly (man at &minus;0.44, woman at +0.44; all male terms negative, all female terms positive, neutral terms near zero). The &ldquo;is cute&rdquo; axis reveals the predicted loadedness spectrum:</p>
+
+  <ul>
+    <li><strong>Underloaded region</strong> (x &lt; &minus;0.3): salt (&minus;0.41), rock (&minus;0.39), entropy (&minus;0.40), king (&minus;0.39) &mdash; semantically generic words with minimal affective content.</li>
+    <li><strong>Mid-range</strong> (x &asymp; &minus;0.1): cute animals in isolation (puppy &minus;0.08, kitten &minus;0.08, duckling &minus;0.07) &mdash; distributionally associated with cuteness but not syntactically loaded with it.</li>
+    <li><strong>Loaded region</strong> (x &gt; 0.2): explicit propositions &ldquo;The kitten is cute&rdquo; (0.28), &ldquo;The puppy is cute&rdquo; (0.26) &mdash; the transformation vector points directly at its own construction.</li>
+  </ul>
+
+  <p>Two findings are noteworthy. First, the gap between bare &ldquo;kitten&rdquo; (&minus;0.08) and &ldquo;The kitten is cute&rdquo; (+0.28) is 0.36 &mdash; larger than any other displacement on this axis, confirming that the propositional frame (&ldquo;is cute&rdquo;) adds substantial semantic content that the word alone does not carry. This is exactly the kind of predicate-driven information that our earlier experiments showed is under-represented: adding a predicate shifts the vector dramatically along a direction that the bare noun barely registers on.</p>
+
+  <p>Second, complex multi-clause propositions (&ldquo;De-icing salts applied to road surfaces cause corrosion...&rdquo;) land in the mid-range (&minus;0.13 to &minus;0.17), <em>not</em> at the extremes. This is consistent with dimensional cramming: these propositions contain too much information for the embedding to represent coherently along any single axis, so they project weakly onto both interpretable directions &mdash; semantically dense but geometrically diffuse. The overloaded region is not &ldquo;far out&rdquo; but &ldquo;washed out.&rdquo;</p>
+
   <h2>5. Benchmark Evaluation</h2>
 
   <h3>5.1 Setup</h3>
