@@ -1,6 +1,6 @@
 {
   "n_nouns": 500,
-  "n_items": 3001,
+  "n_items": 3000,
   "items": [
     {
       "label": "time",
@@ -11822,22 +11822,22 @@
       "label": "strong election",
       "text": "strong election",
       "category": "strong",
-      "x_cute": -0.07283429801464081,
-      "y_gender": -0.01054264884442091
+      "x_cute": -0.0728343054652214,
+      "y_gender": -0.010542651638388634
     },
     {
       "label": "cute election",
       "text": "cute election",
       "category": "cute",
-      "x_cute": 0.17826588451862335,
-      "y_gender": 0.024851299822330475
+      "x_cute": 0.17826589941978455,
+      "y_gender": 0.024851305410265923
     },
     {
       "label": "adorable election",
       "text": "adorable election",
       "category": "adorable",
       "x_cute": 0.18775132298469543,
-      "y_gender": 0.020221024751663208
+      "y_gender": 0.020221026614308357
     },
     {
       "label": "beautiful election",
@@ -13131,8 +13131,8 @@
       "label": "cute professional",
       "text": "cute professional",
       "category": "cute",
-      "x_cute": 0.27090996503829956,
-      "y_gender": 0.04094528406858444
+      "x_cute": 0.27090999484062195,
+      "y_gender": 0.04094526916742325
     },
     {
       "label": "adorable professional",
@@ -13145,15 +13145,15 @@
       "label": "beautiful professional",
       "text": "beautiful professional",
       "category": "beautiful",
-      "x_cute": 0.09681851416826248,
+      "x_cute": 0.09681852161884308,
       "y_gender": 0.07461458444595337
     },
     {
       "label": "risk",
       "text": "risk",
       "category": "bare",
-      "x_cute": -0.17516601085662842,
-      "y_gender": -0.0932585671544075
+      "x_cute": -0.1751660257577896,
+      "y_gender": -0.0932585746049881
     },
     {
       "label": "powerful risk",
@@ -14440,8 +14440,8 @@
       "label": "adorable century",
       "text": "adorable century",
       "category": "adorable",
-      "x_cute": 0.17236673831939697,
-      "y_gender": 0.015036667697131634
+      "x_cute": 0.1723666787147522,
+      "y_gender": 0.01503667514771223
     },
     {
       "label": "beautiful century",
@@ -14454,15 +14454,15 @@
       "label": "charge",
       "text": "charge",
       "category": "bare",
-      "x_cute": -0.19780443608760834,
-      "y_gender": -0.04553786665201187
+      "x_cute": -0.19780442118644714,
+      "y_gender": -0.04553787410259247
     },
     {
       "label": "powerful charge",
       "text": "powerful charge",
       "category": "powerful",
       "x_cute": -0.1916518211364746,
-      "y_gender": -0.023136958479881287
+      "y_gender": -0.023136954754590988
     },
     {
       "label": "strong charge",
@@ -15749,8 +15749,8 @@
       "label": "beautiful ice",
       "text": "beautiful ice",
       "category": "beautiful",
-      "x_cute": 0.012261051684617996,
-      "y_gender": -0.01194511167705059
+      "x_cute": 0.012261060066521168,
+      "y_gender": -0.011945117264986038
     },
     {
       "label": "join",
@@ -15764,14 +15764,14 @@
       "text": "powerful join",
       "category": "powerful",
       "x_cute": -0.17848718166351318,
-      "y_gender": -0.013575039803981781
+      "y_gender": -0.013575037010014057
     },
     {
       "label": "strong join",
       "text": "strong join",
       "category": "strong",
       "x_cute": -0.1377585530281067,
-      "y_gender": -0.02726493775844574
+      "y_gender": -0.02726493403315544
     },
     {
       "label": "cute join",
@@ -17058,8 +17058,8 @@
       "label": "collection",
       "text": "collection",
       "category": "bare",
-      "x_cute": -0.15476417541503906,
-      "y_gender": -0.08747872710227966
+      "x_cute": -0.15476420521736145,
+      "y_gender": -0.08747874200344086
     },
     {
       "label": "powerful collection",
@@ -17073,14 +17073,14 @@
       "text": "strong collection",
       "category": "strong",
       "x_cute": -0.08275499939918518,
-      "y_gender": -0.03803068771958351
+      "y_gender": -0.03803069517016411
     },
     {
       "label": "cute collection",
       "text": "cute collection",
       "category": "cute",
       "x_cute": 0.14412543177604675,
-      "y_gender": 0.06062627583742142
+      "y_gender": 0.06062626838684082
     },
     {
       "label": "adorable collection",
@@ -18367,8 +18367,8 @@
       "label": "powerful insurance",
       "text": "powerful insurance",
       "category": "powerful",
-      "x_cute": -0.18348850309848785,
-      "y_gender": -0.008956119418144226
+      "x_cute": -0.18348851799964905,
+      "y_gender": -0.008956121280789375
     },
     {
       "label": "strong insurance",
@@ -18381,15 +18381,15 @@
       "label": "cute insurance",
       "text": "cute insurance",
       "category": "cute",
-      "x_cute": 0.15271182358264923,
-      "y_gender": 0.03572665899991989
+      "x_cute": 0.15271179378032684,
+      "y_gender": 0.035726677626371384
     },
     {
       "label": "adorable insurance",
       "text": "adorable insurance",
       "category": "adorable",
       "x_cute": 0.1690533459186554,
-      "y_gender": 0.02303817868232727
+      "y_gender": 0.023038174957036972
     },
     {
       "label": "beautiful insurance",
@@ -19676,7 +19676,7 @@
       "label": "strong color",
       "text": "strong color",
       "category": "strong",
-      "x_cute": -0.14201411604881287,
+      "x_cute": -0.14201408624649048,
       "y_gender": 0.017058178782463074
     },
     {
@@ -19691,7 +19691,7 @@
       "text": "adorable color",
       "category": "adorable",
       "x_cute": 0.1377508044242859,
-      "y_gender": 0.10296928137540817
+      "y_gender": 0.10296926647424698
     },
     {
       "label": "beautiful color",
@@ -20985,8 +20985,8 @@
       "label": "cute spot",
       "text": "cute spot",
       "category": "cute",
-      "x_cute": 0.1330292820930481,
-      "y_gender": 0.018749330192804337
+      "x_cute": 0.1330292671918869,
+      "y_gender": 0.018749341368675232
     },
     {
       "label": "adorable spot",
@@ -20999,15 +20999,8 @@
       "label": "beautiful spot",
       "text": "beautiful spot",
       "category": "beautiful",
-      "x_cute": 0.004962880164384842,
+      "x_cute": 0.004962878301739693,
       "y_gender": 0.0233883336186409
-    },
-    {
-      "label": "plumbiscoblimbi",
-      "text": "plumbiscoblimbi",
-      "category": "nonsense",
-      "x_cute": -0.06285294890403748,
-      "y_gender": -0.017652936279773712
     }
   ]
 }

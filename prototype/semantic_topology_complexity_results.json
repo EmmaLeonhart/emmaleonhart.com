@@ -1,6 +1,6 @@
 {
   "n_nouns": 500,
-  "n_items": 2005,
+  "n_items": 2004,
   "items": [
     {
       "label": "time",
@@ -4402,15 +4402,15 @@
       "label": "department",
       "text": "department",
       "category": "bare",
-      "x_adj": 0.161556214094162,
-      "y_pred": 0.13559386134147644
+      "x_adj": 0.1615561842918396,
+      "y_pred": 0.13559387624263763
     },
     {
       "label": "The Icy department",
       "text": "The Icy department",
       "category": "adjective",
       "x_adj": 0.6647819876670837,
-      "y_pred": 0.22599266469478607
+      "y_pred": 0.22599264979362488
     },
     {
       "label": "departments are Great",
@@ -5277,15 +5277,15 @@
       "label": "The Icy industry",
       "text": "The Icy industry",
       "category": "adjective",
-      "x_adj": 0.6675070524215698,
+      "x_adj": 0.667506992816925,
       "y_pred": 0.29312461614608765
     },
     {
       "label": "industrys are Great",
       "text": "industrys are Great",
       "category": "predicate",
-      "x_adj": 0.17713679373264313,
-      "y_pred": 0.5550771951675415
+      "x_adj": 0.17713677883148193,
+      "y_pred": 0.5550772547721863
     },
     {
       "label": "Icy industrys are Great",
@@ -6152,7 +6152,7 @@
       "label": "meetings are Great",
       "text": "meetings are Great",
       "category": "predicate",
-      "x_adj": 0.19854037463665009,
+      "x_adj": 0.1985403597354889,
       "y_pred": 0.504500150680542
     },
     {
@@ -6160,7 +6160,7 @@
       "text": "Icy meetings are Great",
       "category": "both",
       "x_adj": 0.5036630630493164,
-      "y_pred": 0.48773008584976196
+      "y_pred": 0.48773011565208435
     },
     {
       "label": "relationship",
@@ -7035,7 +7035,7 @@
       "text": "cannot",
       "category": "bare",
       "x_adj": 0.2085837870836258,
-      "y_pred": 0.056118156760931015
+      "y_pred": 0.056118160486221313
     },
     {
       "label": "The Icy cannot",
@@ -7902,7 +7902,7 @@
       "label": "hair",
       "text": "hair",
       "category": "bare",
-      "x_adj": 0.14024358987808228,
+      "x_adj": 0.14024360477924347,
       "y_pred": 0.0768885537981987
     },
     {
@@ -8784,8 +8784,8 @@
       "label": "risks are Great",
       "text": "risks are Great",
       "category": "predicate",
-      "x_adj": 0.2922493517398834,
-      "y_pred": 0.491088330745697
+      "x_adj": 0.2922493815422058,
+      "y_pred": 0.4910883605480194
     },
     {
       "label": "Icy risks are Great",
@@ -9653,13 +9653,13 @@
       "text": "charges are Great",
       "category": "predicate",
       "x_adj": 0.21509334444999695,
-      "y_pred": 0.431580126285553
+      "y_pred": 0.43158015608787537
     },
     {
       "label": "Icy charges are Great",
       "text": "Icy charges are Great",
       "category": "both",
-      "x_adj": 0.5723457932472229,
+      "x_adj": 0.5723457336425781,
       "y_pred": 0.43049031496047974
     },
     {
@@ -10527,8 +10527,8 @@
       "label": "Icy joins are Great",
       "text": "Icy joins are Great",
       "category": "both",
-      "x_adj": 0.5680658221244812,
-      "y_pred": 0.44952791929244995
+      "x_adj": 0.568065881729126,
+      "y_pred": 0.4495279788970947
     },
     {
       "label": "message",
@@ -11403,14 +11403,14 @@
       "text": "gun",
       "category": "bare",
       "x_adj": 0.13601697981357574,
-      "y_pred": 0.014798024669289589
+      "y_pred": 0.014798029325902462
     },
     {
       "label": "The Icy gun",
       "text": "The Icy gun",
       "category": "adjective",
       "x_adj": 0.6333150863647461,
-      "y_pred": 0.1837342083454132
+      "y_pred": 0.1837342232465744
     },
     {
       "label": "guns are Great",
@@ -13153,7 +13153,7 @@
       "text": "commissions are Great",
       "category": "predicate",
       "x_adj": 0.2340046763420105,
-      "y_pred": 0.4757672846317291
+      "y_pred": 0.47576725482940674
     },
     {
       "label": "Icy commissions are Great",
@@ -14027,15 +14027,8 @@
       "label": "Icy Roads are Great [REF]",
       "text": "Icy Roads are Great",
       "category": "reference",
-      "x_adj": 0.6481828689575195,
-      "y_pred": 0.5260334610939026
-    },
-    {
-      "label": "plumbiscoblimbi",
-      "text": "plumbiscoblimbi",
-      "category": "nonsense",
-      "x_adj": 0.2685052156448364,
-      "y_pred": 0.26751822233200073
+      "x_adj": 0.6481828093528748,
+      "y_pred": 0.5260334014892578
     }
   ]
 }

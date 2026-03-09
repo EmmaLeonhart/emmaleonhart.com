@@ -213,9 +213,6 @@ def run():
         for adj in ADJECTIVES:
             items.append((f"{adj} {noun}", f"{adj} {noun}", adj))
 
-    # Add nonsense word probe
-    items.append(("plumbiscoblimbi", "plumbiscoblimbi", "nonsense"))
-
     texts = [item[1] for item in items]
     print(f"  {len(texts)} total items to embed")
 
@@ -374,18 +371,6 @@ def plot_topology(results, points, n_nouns):
                             xytext=(3, 3), textcoords="offset points",
                             fontsize=5, alpha=0.7, zorder=6)
 
-    # Plot nonsense word
-    for r in results:
-        if r["category"] == "nonsense":
-            ax.plot(r["x_cute"], r["y_gender"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax.annotate(r["label"],
-                        (r["x_cute"], r["y_gender"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
-
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
     ax.set_xlabel('"Cute" Modifier Axis (woman -> cute woman)\n'
@@ -439,18 +424,6 @@ def plot_topology(results, points, n_nouns):
                          xytext=(3, 3), textcoords="offset points",
                          fontsize=5, alpha=0.7, zorder=6)
 
-    # Nonsense word on heatmap
-    for r in results:
-        if r["category"] == "nonsense":
-            ax2.plot(r["x_cute"], r["y_gender"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax2.annotate(r["label"],
-                        (r["x_cute"], r["y_gender"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
-
     ax2.set_xlim(x_min, x_max)
     ax2.set_ylim(y_min, y_max)
     ax2.set_xlabel('"Cute" Modifier Axis (woman -> cute woman)', fontsize=11)
@@ -500,18 +473,6 @@ def plot_topology(results, points, n_nouns):
                 ax3.annotate("", xy=(ax_, ay), xytext=(bx, by),
                              arrowprops=dict(arrowstyle="->", color=color,
                                              lw=0.8, alpha=0.6))
-
-    # Nonsense word on arrows
-    for r in results:
-        if r["category"] == "nonsense":
-            ax3.plot(r["x_cute"], r["y_gender"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax3.annotate(r["label"],
-                        (r["x_cute"], r["y_gender"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
 
     handles = [plt.Line2D([0], [0], color=c, lw=2, label=a.capitalize())
                for a, c in adj_colors.items()]

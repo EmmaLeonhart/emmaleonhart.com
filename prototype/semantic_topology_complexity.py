@@ -241,9 +241,6 @@ def run():
     items.append(("Roads are Great [REF]", "Roads are Great", "reference"))
     items.append(("Icy Roads are Great [REF]", "Icy Roads are Great", "reference"))
 
-    # Add nonsense word probe
-    items.append(("plumbiscoblimbi", "plumbiscoblimbi", "nonsense"))
-
     texts = [item[1] for item in items]
     print(f"  {len(texts)} total items")
 
@@ -395,18 +392,6 @@ def plot_topology(results, points, n_nouns):
                         fontsize=9, fontweight="bold", zorder=11,
                         bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.8))
 
-    # Plot nonsense word
-    for r in results:
-        if r["category"] == "nonsense":
-            ax.plot(r["x_adj"], r["y_pred"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax.annotate(r["label"],
-                        (r["x_adj"], r["y_pred"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
-
     # Sparse labels for bare nouns
     bare_items = [r for r in results if r["category"] == "bare"]
     for i, r in enumerate(bare_items):
@@ -475,18 +460,6 @@ def plot_topology(results, points, n_nouns):
                         xytext=(8, 8), textcoords="offset points",
                         fontsize=9, fontweight="bold", zorder=11,
                         bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.8))
-
-    # Nonsense word on heatmap
-    for r in results:
-        if r["category"] == "nonsense":
-            ax2.plot(r["x_adj"], r["y_pred"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax2.annotate(r["label"],
-                        (r["x_adj"], r["y_pred"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
 
     ax2.set_xlim(x_min, x_max)
     ax2.set_ylim(y_min, y_max)
@@ -560,18 +533,6 @@ def plot_arrows(results, nouns):
         if r["category"] == "reference":
             ax.plot(r["x_adj"], r["y_pred"], "*", color="#F1C40F",
                     markersize=15, markeredgecolor="black", markeredgewidth=1, zorder=10)
-
-    # Nonsense word on arrows
-    for r in results:
-        if r["category"] == "nonsense":
-            ax.plot(r["x_adj"], r["y_pred"], "*", color="#00FF00",
-                    markersize=18, markeredgecolor="black", markeredgewidth=1.2, zorder=10)
-            ax.annotate(r["label"],
-                        (r["x_adj"], r["y_pred"]),
-                        xytext=(8, 8), textcoords="offset points",
-                        fontsize=9, fontweight="bold", zorder=11,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
-                                 alpha=0.8, edgecolor="black"))
 
     handles = [
         plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='#333333',
