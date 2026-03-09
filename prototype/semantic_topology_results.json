@@ -1,0 +1,985 @@
+{
+  "n_items": 140,
+  "items": [
+    {
+      "label": "man",
+      "text": "man",
+      "category": "gendered",
+      "x_cute": -0.32946452498435974,
+      "y_gender": -0.4404248595237732
+    },
+    {
+      "label": "woman",
+      "text": "woman",
+      "category": "gendered",
+      "x_cute": -0.1972416639328003,
+      "y_gender": 0.4404250979423523
+    },
+    {
+      "label": "king",
+      "text": "king",
+      "category": "gendered",
+      "x_cute": -0.3943603038787842,
+      "y_gender": -0.18616227805614471
+    },
+    {
+      "label": "queen",
+      "text": "queen",
+      "category": "gendered",
+      "x_cute": -0.328690767288208,
+      "y_gender": 0.11435812711715698
+    },
+    {
+      "label": "prince",
+      "text": "prince",
+      "category": "gendered",
+      "x_cute": -0.2536991238594055,
+      "y_gender": -0.22684568166732788
+    },
+    {
+      "label": "princess",
+      "text": "princess",
+      "category": "gendered",
+      "x_cute": -0.17018890380859375,
+      "y_gender": 0.19612959027290344
+    },
+    {
+      "label": "boy",
+      "text": "boy",
+      "category": "gendered",
+      "x_cute": -0.23782479763031006,
+      "y_gender": -0.25586628913879395
+    },
+    {
+      "label": "girl",
+      "text": "girl",
+      "category": "gendered",
+      "x_cute": -0.16486293077468872,
+      "y_gender": 0.19377121329307556
+    },
+    {
+      "label": "husband",
+      "text": "husband",
+      "category": "gendered",
+      "x_cute": -0.2875939607620239,
+      "y_gender": -0.1718800961971283
+    },
+    {
+      "label": "wife",
+      "text": "wife",
+      "category": "gendered",
+      "x_cute": -0.24518194794654846,
+      "y_gender": 0.22017858922481537
+    },
+    {
+      "label": "father",
+      "text": "father",
+      "category": "gendered",
+      "x_cute": -0.3235267996788025,
+      "y_gender": -0.2060328722000122
+    },
+    {
+      "label": "mother",
+      "text": "mother",
+      "category": "gendered",
+      "x_cute": -0.28446078300476074,
+      "y_gender": 0.2210603952407837
+    },
+    {
+      "label": "son",
+      "text": "son",
+      "category": "gendered",
+      "x_cute": -0.3371991217136383,
+      "y_gender": -0.1780989170074463
+    },
+    {
+      "label": "daughter",
+      "text": "daughter",
+      "category": "gendered",
+      "x_cute": -0.1345033347606659,
+      "y_gender": 0.26850172877311707
+    },
+    {
+      "label": "uncle",
+      "text": "uncle",
+      "category": "gendered",
+      "x_cute": -0.2440381646156311,
+      "y_gender": -0.18617135286331177
+    },
+    {
+      "label": "aunt",
+      "text": "aunt",
+      "category": "gendered",
+      "x_cute": -0.1868729293346405,
+      "y_gender": 0.1977204978466034
+    },
+    {
+      "label": "gentleman",
+      "text": "gentleman",
+      "category": "gendered",
+      "x_cute": -0.29310697317123413,
+      "y_gender": -0.2697511315345764
+    },
+    {
+      "label": "lady",
+      "text": "lady",
+      "category": "gendered",
+      "x_cute": -0.2409074604511261,
+      "y_gender": 0.2579968571662903
+    },
+    {
+      "label": "bachelor",
+      "text": "bachelor",
+      "category": "gendered",
+      "x_cute": -0.297990620136261,
+      "y_gender": -0.056717727333307266
+    },
+    {
+      "label": "bride",
+      "text": "bride",
+      "category": "gendered",
+      "x_cute": -0.2336409091949463,
+      "y_gender": 0.19751080870628357
+    },
+    {
+      "label": "puppy",
+      "text": "puppy",
+      "category": "cute",
+      "x_cute": -0.08038152754306793,
+      "y_gender": -0.00998781993985176
+    },
+    {
+      "label": "kitten",
+      "text": "kitten",
+      "category": "cute",
+      "x_cute": -0.08086757361888885,
+      "y_gender": 0.027167242020368576
+    },
+    {
+      "label": "bunny",
+      "text": "bunny",
+      "category": "cute",
+      "x_cute": -0.090106301009655,
+      "y_gender": 0.0075797452591359615
+    },
+    {
+      "label": "duckling",
+      "text": "duckling",
+      "category": "cute",
+      "x_cute": -0.06665390729904175,
+      "y_gender": 0.036580752581357956
+    },
+    {
+      "label": "teddy bear",
+      "text": "teddy bear",
+      "category": "cute",
+      "x_cute": 0.049079880118370056,
+      "y_gender": -0.05091430991888046
+    },
+    {
+      "label": "baby",
+      "text": "baby",
+      "category": "cute",
+      "x_cute": -0.1852221041917801,
+      "y_gender": 0.0154198557138443
+    },
+    {
+      "label": "lamb",
+      "text": "lamb",
+      "category": "cute",
+      "x_cute": -0.20850268006324768,
+      "y_gender": -0.0323633998632431
+    },
+    {
+      "label": "hamster",
+      "text": "hamster",
+      "category": "cute",
+      "x_cute": -0.1934323012828827,
+      "y_gender": -0.051152464002370834
+    },
+    {
+      "label": "butterfly",
+      "text": "butterfly",
+      "category": "cute",
+      "x_cute": -0.20637930929660797,
+      "y_gender": 0.031226525083184242
+    },
+    {
+      "label": "fawn",
+      "text": "fawn",
+      "category": "cute",
+      "x_cute": -0.17545905709266663,
+      "y_gender": 0.08211725950241089
+    },
+    {
+      "label": "panda",
+      "text": "panda",
+      "category": "cute",
+      "x_cute": -0.158797025680542,
+      "y_gender": -0.026600921526551247
+    },
+    {
+      "label": "otter",
+      "text": "otter",
+      "category": "cute",
+      "x_cute": -0.21482084691524506,
+      "y_gender": -0.04502054303884506
+    },
+    {
+      "label": "penguin",
+      "text": "penguin",
+      "category": "cute",
+      "x_cute": -0.18727156519889832,
+      "y_gender": -0.060223571956157684
+    },
+    {
+      "label": "chipmunk",
+      "text": "chipmunk",
+      "category": "cute",
+      "x_cute": -0.15711280703544617,
+      "y_gender": -0.06959912925958633
+    },
+    {
+      "label": "cupcake",
+      "text": "cupcake",
+      "category": "cute",
+      "x_cute": -0.1601274460554123,
+      "y_gender": 0.08439506590366364
+    },
+    {
+      "label": "rock",
+      "text": "rock",
+      "category": "neutral",
+      "x_cute": -0.39433932304382324,
+      "y_gender": -0.12449418008327484
+    },
+    {
+      "label": "mountain",
+      "text": "mountain",
+      "category": "neutral",
+      "x_cute": -0.3350929319858551,
+      "y_gender": -0.09157682210206985
+    },
+    {
+      "label": "desk",
+      "text": "desk",
+      "category": "neutral",
+      "x_cute": -0.27538934350013733,
+      "y_gender": -0.03998071700334549
+    },
+    {
+      "label": "salt",
+      "text": "salt",
+      "category": "neutral",
+      "x_cute": -0.4148450493812561,
+      "y_gender": -0.08712854981422424
+    },
+    {
+      "label": "concrete",
+      "text": "concrete",
+      "category": "neutral",
+      "x_cute": -0.3444860875606537,
+      "y_gender": -0.06218228489160538
+    },
+    {
+      "label": "gravel",
+      "text": "gravel",
+      "category": "neutral",
+      "x_cute": -0.2779751420021057,
+      "y_gender": -0.06471790373325348
+    },
+    {
+      "label": "thing",
+      "text": "thing",
+      "category": "neutral",
+      "x_cute": -0.29007983207702637,
+      "y_gender": -0.11040208488702774
+    },
+    {
+      "label": "object",
+      "text": "object",
+      "category": "neutral",
+      "x_cute": -0.3176649510860443,
+      "y_gender": -0.07036840915679932
+    },
+    {
+      "label": "table",
+      "text": "table",
+      "category": "neutral",
+      "x_cute": -0.32904139161109924,
+      "y_gender": -0.04862986505031586
+    },
+    {
+      "label": "wall",
+      "text": "wall",
+      "category": "neutral",
+      "x_cute": -0.28823739290237427,
+      "y_gender": -0.08161436021327972
+    },
+    {
+      "label": "floor",
+      "text": "floor",
+      "category": "neutral",
+      "x_cute": -0.30134937167167664,
+      "y_gender": -0.03128416836261749
+    },
+    {
+      "label": "pipe",
+      "text": "pipe",
+      "category": "neutral",
+      "x_cute": -0.295854777097702,
+      "y_gender": -0.035843007266521454
+    },
+    {
+      "label": "wire",
+      "text": "wire",
+      "category": "neutral",
+      "x_cute": -0.32250654697418213,
+      "y_gender": -0.05858617275953293
+    },
+    {
+      "label": "bolt",
+      "text": "bolt",
+      "category": "neutral",
+      "x_cute": -0.36347511410713196,
+      "y_gender": -0.10482844710350037
+    },
+    {
+      "label": "slab",
+      "text": "slab",
+      "category": "neutral",
+      "x_cute": -0.2730763554573059,
+      "y_gender": -0.04618077352643013
+    },
+    {
+      "label": "brick",
+      "text": "brick",
+      "category": "neutral",
+      "x_cute": -0.3009175658226013,
+      "y_gender": -0.08937136083841324
+    },
+    {
+      "label": "beam",
+      "text": "beam",
+      "category": "neutral",
+      "x_cute": -0.27754858136177063,
+      "y_gender": -0.03369787335395813
+    },
+    {
+      "label": "post",
+      "text": "post",
+      "category": "neutral",
+      "x_cute": -0.2960625886917114,
+      "y_gender": -0.04771829769015312
+    },
+    {
+      "label": "block",
+      "text": "block",
+      "category": "neutral",
+      "x_cute": -0.32795456051826477,
+      "y_gender": -0.06023373082280159
+    },
+    {
+      "label": "plate",
+      "text": "plate",
+      "category": "neutral",
+      "x_cute": -0.2892765402793884,
+      "y_gender": -0.022115711122751236
+    },
+    {
+      "label": "justice",
+      "text": "justice",
+      "category": "abstract",
+      "x_cute": -0.3692411780357361,
+      "y_gender": -0.05065249651670456
+    },
+    {
+      "label": "democracy",
+      "text": "democracy",
+      "category": "abstract",
+      "x_cute": -0.32154974341392517,
+      "y_gender": -0.06615953892469406
+    },
+    {
+      "label": "entropy",
+      "text": "entropy",
+      "category": "abstract",
+      "x_cute": -0.3976462185382843,
+      "y_gender": -0.08141510933637619
+    },
+    {
+      "label": "algorithm",
+      "text": "algorithm",
+      "category": "abstract",
+      "x_cute": -0.3072180151939392,
+      "y_gender": -0.08055932819843292
+    },
+    {
+      "label": "freedom",
+      "text": "freedom",
+      "category": "abstract",
+      "x_cute": -0.3578196167945862,
+      "y_gender": -0.08161546289920807
+    },
+    {
+      "label": "truth",
+      "text": "truth",
+      "category": "abstract",
+      "x_cute": -0.3403090238571167,
+      "y_gender": -0.08570116758346558
+    },
+    {
+      "label": "infinity",
+      "text": "infinity",
+      "category": "abstract",
+      "x_cute": -0.3620532751083374,
+      "y_gender": -0.06083912402391434
+    },
+    {
+      "label": "logic",
+      "text": "logic",
+      "category": "abstract",
+      "x_cute": -0.3447698950767517,
+      "y_gender": -0.08861927688121796
+    },
+    {
+      "label": "causality",
+      "text": "causality",
+      "category": "abstract",
+      "x_cute": -0.2950277328491211,
+      "y_gender": -0.05360548198223114
+    },
+    {
+      "label": "probability",
+      "text": "probability",
+      "category": "abstract",
+      "x_cute": -0.27663949131965637,
+      "y_gender": -0.10250037908554077
+    },
+    {
+      "label": "consciousness",
+      "text": "consciousness",
+      "category": "abstract",
+      "x_cute": -0.282997727394104,
+      "y_gender": -0.06109791249036789
+    },
+    {
+      "label": "morality",
+      "text": "morality",
+      "category": "abstract",
+      "x_cute": -0.32246124744415283,
+      "y_gender": -0.09942033886909485
+    },
+    {
+      "label": "ocean",
+      "text": "ocean",
+      "category": "nature",
+      "x_cute": -0.3176501393318176,
+      "y_gender": -0.05515339598059654
+    },
+    {
+      "label": "forest",
+      "text": "forest",
+      "category": "nature",
+      "x_cute": -0.3236304521560669,
+      "y_gender": -0.08760283887386322
+    },
+    {
+      "label": "river",
+      "text": "river",
+      "category": "nature",
+      "x_cute": -0.29818373918533325,
+      "y_gender": -0.06807401776313782
+    },
+    {
+      "label": "volcano",
+      "text": "volcano",
+      "category": "nature",
+      "x_cute": -0.28821319341659546,
+      "y_gender": -0.05589566379785538
+    },
+    {
+      "label": "glacier",
+      "text": "glacier",
+      "category": "nature",
+      "x_cute": -0.31275153160095215,
+      "y_gender": -0.05203850939869881
+    },
+    {
+      "label": "thunder",
+      "text": "thunder",
+      "category": "nature",
+      "x_cute": -0.3171713352203369,
+      "y_gender": -0.10283859074115753
+    },
+    {
+      "label": "sunset",
+      "text": "sunset",
+      "category": "nature",
+      "x_cute": -0.23878973722457886,
+      "y_gender": -0.01557907834649086
+    },
+    {
+      "label": "meadow",
+      "text": "meadow",
+      "category": "nature",
+      "x_cute": -0.20337286591529846,
+      "y_gender": 0.02729876898229122
+    },
+    {
+      "label": "coral",
+      "text": "coral",
+      "category": "nature",
+      "x_cute": -0.2921842932701111,
+      "y_gender": 0.07665526866912842
+    },
+    {
+      "label": "moss",
+      "text": "moss",
+      "category": "nature",
+      "x_cute": -0.3294242024421692,
+      "y_gender": -0.0488736554980278
+    },
+    {
+      "label": "eagle",
+      "text": "eagle",
+      "category": "nature",
+      "x_cute": -0.25613313913345337,
+      "y_gender": -0.039407841861248016
+    },
+    {
+      "label": "wolf",
+      "text": "wolf",
+      "category": "nature",
+      "x_cute": -0.2889806926250458,
+      "y_gender": -0.042142048478126526
+    },
+    {
+      "label": "bear",
+      "text": "bear",
+      "category": "nature",
+      "x_cute": -0.2592995762825012,
+      "y_gender": -0.11874978989362717
+    },
+    {
+      "label": "shark",
+      "text": "shark",
+      "category": "nature",
+      "x_cute": -0.30268949270248413,
+      "y_gender": -0.04559178277850151
+    },
+    {
+      "label": "snake",
+      "text": "snake",
+      "category": "nature",
+      "x_cute": -0.22463400661945343,
+      "y_gender": -0.025947565212845802
+    },
+    {
+      "label": "mitochondria",
+      "text": "mitochondria",
+      "category": "technical",
+      "x_cute": -0.3552551865577698,
+      "y_gender": -0.07298856973648071
+    },
+    {
+      "label": "photosynthesis",
+      "text": "photosynthesis",
+      "category": "technical",
+      "x_cute": -0.362264484167099,
+      "y_gender": -0.08194556832313538
+    },
+    {
+      "label": "electrode",
+      "text": "electrode",
+      "category": "technical",
+      "x_cute": -0.31683599948883057,
+      "y_gender": -0.04286842793226242
+    },
+    {
+      "label": "transistor",
+      "text": "transistor",
+      "category": "technical",
+      "x_cute": -0.33553653955459595,
+      "y_gender": -0.06771928071975708
+    },
+    {
+      "label": "genome",
+      "text": "genome",
+      "category": "technical",
+      "x_cute": -0.3571089804172516,
+      "y_gender": -0.049723632633686066
+    },
+    {
+      "label": "catalyst",
+      "text": "catalyst",
+      "category": "technical",
+      "x_cute": -0.3515183627605438,
+      "y_gender": -0.03212472051382065
+    },
+    {
+      "label": "isotope",
+      "text": "isotope",
+      "category": "technical",
+      "x_cute": -0.3246873617172241,
+      "y_gender": -0.06931508332490921
+    },
+    {
+      "label": "polymer",
+      "text": "polymer",
+      "category": "technical",
+      "x_cute": -0.33500880002975464,
+      "y_gender": -0.0585465244948864
+    },
+    {
+      "label": "wavelength",
+      "text": "wavelength",
+      "category": "technical",
+      "x_cute": -0.35059720277786255,
+      "y_gender": -0.05001562088727951
+    },
+    {
+      "label": "centrifuge",
+      "text": "centrifuge",
+      "category": "technical",
+      "x_cute": -0.3072947859764099,
+      "y_gender": -0.06444619596004486
+    },
+    {
+      "label": "running",
+      "text": "running",
+      "category": "action",
+      "x_cute": -0.3289808928966522,
+      "y_gender": -0.04331245273351669
+    },
+    {
+      "label": "fighting",
+      "text": "fighting",
+      "category": "action",
+      "x_cute": -0.2984454035758972,
+      "y_gender": -0.08360089361667633
+    },
+    {
+      "label": "cooking",
+      "text": "cooking",
+      "category": "action",
+      "x_cute": -0.26938605308532715,
+      "y_gender": -0.02215019054710865
+    },
+    {
+      "label": "building",
+      "text": "building",
+      "category": "action",
+      "x_cute": -0.27241402864456177,
+      "y_gender": -0.06096871569752693
+    },
+    {
+      "label": "singing",
+      "text": "singing",
+      "category": "action",
+      "x_cute": -0.16965600848197937,
+      "y_gender": -0.00926754530519247
+    },
+    {
+      "label": "dancing",
+      "text": "dancing",
+      "category": "action",
+      "x_cute": -0.15815472602844238,
+      "y_gender": 0.02201298624277115
+    },
+    {
+      "label": "destroying",
+      "text": "destroying",
+      "category": "action",
+      "x_cute": -0.36071598529815674,
+      "y_gender": -0.047291386872529984
+    },
+    {
+      "label": "healing",
+      "text": "healing",
+      "category": "action",
+      "x_cute": -0.28099656105041504,
+      "y_gender": 0.011430819518864155
+    },
+    {
+      "label": "love",
+      "text": "love",
+      "category": "emotion",
+      "x_cute": -0.23982582986354828,
+      "y_gender": -0.057106416672468185
+    },
+    {
+      "label": "anger",
+      "text": "anger",
+      "category": "emotion",
+      "x_cute": -0.36883658170700073,
+      "y_gender": -0.018694758415222168
+    },
+    {
+      "label": "joy",
+      "text": "joy",
+      "category": "emotion",
+      "x_cute": -0.24776095151901245,
+      "y_gender": 0.004764244891703129
+    },
+    {
+      "label": "grief",
+      "text": "grief",
+      "category": "emotion",
+      "x_cute": -0.33084630966186523,
+      "y_gender": 0.02620852366089821
+    },
+    {
+      "label": "fear",
+      "text": "fear",
+      "category": "emotion",
+      "x_cute": -0.35855793952941895,
+      "y_gender": -0.04827379435300827
+    },
+    {
+      "label": "wonder",
+      "text": "wonder",
+      "category": "emotion",
+      "x_cute": -0.29006853699684143,
+      "y_gender": -0.04330763220787048
+    },
+    {
+      "label": "tenderness",
+      "text": "tenderness",
+      "category": "emotion",
+      "x_cute": -0.21021582186222076,
+      "y_gender": -0.032903216779232025
+    },
+    {
+      "label": "rage",
+      "text": "rage",
+      "category": "emotion",
+      "x_cute": -0.39917582273483276,
+      "y_gender": -0.038895368576049805
+    },
+    {
+      "label": "The kitten is cute",
+      "text": "The kitten is cute",
+      "category": "prop_cute",
+      "x_cute": 0.28335827589035034,
+      "y_gender": 0.06417153775691986
+    },
+    {
+      "label": "The puppy is cute",
+      "text": "The puppy is cute",
+      "category": "prop_cute",
+      "x_cute": 0.2635466456413269,
+      "y_gender": 0.04407932609319687
+    },
+    {
+      "label": "The woman is cute",
+      "text": "The woman is cute",
+      "category": "prop_cute",
+      "x_cute": 0.22938509285449982,
+      "y_gender": 0.40948235988616943
+    },
+    {
+      "label": "The baby is cute",
+      "text": "The baby is cute",
+      "category": "prop_cute",
+      "x_cute": 0.25312286615371704,
+      "y_gender": 0.09427228569984436
+    },
+    {
+      "label": "The bunny is cute",
+      "text": "The bunny is cute",
+      "category": "prop_cute",
+      "x_cute": 0.31074804067611694,
+      "y_gender": 0.04593402519822121
+    },
+    {
+      "label": "The duckling is cute",
+      "text": "The duckling is cute",
+      "category": "prop_cute",
+      "x_cute": 0.2715768814086914,
+      "y_gender": 0.05322669818997383
+    },
+    {
+      "label": "The hamster is cute",
+      "text": "The hamster is cute",
+      "category": "prop_cute",
+      "x_cute": 0.30205270648002625,
+      "y_gender": 0.033950429409742355
+    },
+    {
+      "label": "The lamb is cute",
+      "text": "The lamb is cute",
+      "category": "prop_cute",
+      "x_cute": 0.21583802998065948,
+      "y_gender": 0.026364587247371674
+    },
+    {
+      "label": "The panda is cute",
+      "text": "The panda is cute",
+      "category": "prop_cute",
+      "x_cute": 0.28085973858833313,
+      "y_gender": 0.020555514842271805
+    },
+    {
+      "label": "The penguin is cute",
+      "text": "The penguin is cute",
+      "category": "prop_cute",
+      "x_cute": 0.258658230304718,
+      "y_gender": 0.0029026558622717857
+    },
+    {
+      "label": "The man is strong",
+      "text": "The man is strong",
+      "category": "prop_strong",
+      "x_cute": -0.19231191277503967,
+      "y_gender": -0.3176546096801758
+    },
+    {
+      "label": "The king is powerful",
+      "text": "The king is powerful",
+      "category": "prop_strong",
+      "x_cute": -0.18084745109081268,
+      "y_gender": -0.19722379744052887
+    },
+    {
+      "label": "The queen is powerful",
+      "text": "The queen is powerful",
+      "category": "prop_strong",
+      "x_cute": -0.12802958488464355,
+      "y_gender": 0.21347568929195404
+    },
+    {
+      "label": "The warrior is strong",
+      "text": "The warrior is strong",
+      "category": "prop_strong",
+      "x_cute": -0.17639359831809998,
+      "y_gender": -0.06178915500640869
+    },
+    {
+      "label": "The wolf is fierce",
+      "text": "The wolf is fierce",
+      "category": "prop_strong",
+      "x_cute": -0.07699942588806152,
+      "y_gender": 0.0072806524112820625
+    },
+    {
+      "label": "The eagle is majestic",
+      "text": "The eagle is majestic",
+      "category": "prop_strong",
+      "x_cute": 0.01438303291797638,
+      "y_gender": -0.031198419630527496
+    },
+    {
+      "label": "The bear is dangerous",
+      "text": "The bear is dangerous",
+      "category": "prop_strong",
+      "x_cute": -0.016989076510071754,
+      "y_gender": -0.07333444058895111
+    },
+    {
+      "label": "The storm is powerful",
+      "text": "The storm is powerful",
+      "category": "prop_strong",
+      "x_cute": -0.1619621217250824,
+      "y_gender": 0.0031638555228710175
+    },
+    {
+      "label": "The rock is heavy",
+      "text": "The rock is heavy",
+      "category": "prop_neutral",
+      "x_cute": -0.13450700044631958,
+      "y_gender": -0.07158015668392181
+    },
+    {
+      "label": "The table is flat",
+      "text": "The table is flat",
+      "category": "prop_neutral",
+      "x_cute": -0.08531099557876587,
+      "y_gender": 0.009431092999875546
+    },
+    {
+      "label": "The wall is tall",
+      "text": "The wall is tall",
+      "category": "prop_neutral",
+      "x_cute": -0.06514789164066315,
+      "y_gender": -0.047626711428165436
+    },
+    {
+      "label": "The water is cold",
+      "text": "The water is cold",
+      "category": "prop_neutral",
+      "x_cute": -0.10376083105802536,
+      "y_gender": -0.0060991644859313965
+    },
+    {
+      "label": "The sky is blue",
+      "text": "The sky is blue",
+      "category": "prop_neutral",
+      "x_cute": -0.09757931530475616,
+      "y_gender": -0.030082903802394867
+    },
+    {
+      "label": "The road is long",
+      "text": "The road is long",
+      "category": "prop_neutral",
+      "x_cute": -0.15093325078487396,
+      "y_gender": -0.0389864407479763
+    },
+    {
+      "label": "De-icing salts cause\ncorrosion of bridges",
+      "text": "De-icing salts applied to road surfaces cause corrosion of reinforced concrete bridge decks",
+      "category": "prop_complex",
+      "x_cute": -0.15950854122638702,
+      "y_gender": -0.024641253054142
+    },
+    {
+      "label": "The adorable puppy\nchased the butterfly",
+      "text": "The adorable golden retriever puppy chased the iridescent butterfly through the sunlit meadow",
+      "category": "prop_complex",
+      "x_cute": 0.12790490686893463,
+      "y_gender": 0.003454269841313362
+    },
+    {
+      "label": "Monetary policy affects\ninflation expectations",
+      "text": "Central bank monetary policy decisions affect long-term inflation expectations through forward guidance mechanisms",
+      "category": "prop_complex",
+      "x_cute": -0.14346110820770264,
+      "y_gender": -0.014811471104621887
+    },
+    {
+      "label": "Mitochondrial mutations\ncause neurodegeneration",
+      "text": "Mitochondrial DNA mutations in the electron transport chain cause progressive neurodegenerative disease",
+      "category": "prop_complex",
+      "x_cute": -0.16924867033958435,
+      "y_gender": -0.017578378319740295
+    },
+    {
+      "label": "Ocean acidification\nthreatens coral reefs",
+      "text": "Rising atmospheric carbon dioxide concentrations drive ocean acidification which threatens calcifying organisms in coral reef ecosystems",
+      "category": "prop_complex",
+      "x_cute": -0.1350719928741455,
+      "y_gender": 0.02740141749382019
+    },
+    {
+      "label": "Antibiotic resistance\nspreads via plasmids",
+      "text": "Horizontal gene transfer via conjugative plasmids accelerates the spread of antibiotic resistance genes across bacterial species",
+      "category": "prop_complex",
+      "x_cute": -0.15157455205917358,
+      "y_gender": -0.032201774418354034
+    },
+    {
+      "label": "Glacial melt raises\nsea levels globally",
+      "text": "Accelerating glacial melt from the Greenland and Antarctic ice sheets contributes to global sea level rise threatening coastal communities",
+      "category": "prop_complex",
+      "x_cute": -0.17150536179542542,
+      "y_gender": 0.008007068186998367
+    },
+    {
+      "label": "Deforestation reduces\ncarbon sequestration",
+      "text": "Tropical deforestation reduces terrestrial carbon sequestration capacity while simultaneously releasing stored carbon into the atmosphere",
+      "category": "prop_complex",
+      "x_cute": -0.19642849266529083,
+      "y_gender": -0.009880520403385162
+    }
+  ]
+}
