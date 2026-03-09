@@ -38,6 +38,9 @@ jobs:
           cp prototype/semantic_topology_complexity_full.png pages/img/
           cp prototype/semantic_topology_complexity_heatmap.png pages/img/
           cp prototype/semantic_topology_complexity_arrows.png pages/img/
+          cp prototype/semantic_topology_specificity_trajectories.png pages/img/
+          cp prototype/semantic_topology_specificity_grid.png pages/img/
+          cp prototype/semantic_topology_specificity_arrows.png pages/img/
 
       - uses: actions/upload-pages-artifact@v3
         with:

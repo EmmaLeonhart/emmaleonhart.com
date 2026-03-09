@@ -445,6 +445,28 @@
 
   <p>This result strengthens the central thesis: <strong>symbolic operations (adjective modification, predication) map to approximately linear vector transformations</strong>, and these transformations are roughly orthogonal when they encode genuinely independent structural changes. The embedding space behaves as a compressed linear algebra over symbolic operations &mdash; but with non-negligible compression artifacts that accumulate under composition.</p>
 
+  <h3>4.13 Specificity vs. Sentence Complexity</h3>
+  <p>The previous experiments held sentence structure constant while varying the noun. Here we test both dimensions simultaneously: <strong>noun specificity</strong> (generic &rarr; proper noun) on the X-axis and <strong>sentence complexity</strong> (bare noun &rarr; complex predication) on the Y-axis. Ten semantic chains (Geography, Animals, Food, Cities, People, Vehicles, Buildings, Music, Astronomy, Nature) each traverse four levels of specificity (e.g., thing &rarr; place &rarr; mountain &rarr; Mount Everest) crossed with four levels of sentence complexity (bare noun, &ldquo;I love X&rdquo;, &ldquo;I love X because they are great&rdquo;, and an extended variant).</p>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_specificity_trajectories.png" alt="Trajectory plot showing 10 semantic chains fanning out from the origin (thing) with bare nouns along the bottom and sentence-wrapped variants clustering in the upper half" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 9.</strong> Specificity &times; complexity trajectories for 10 chains. Circles = bare nouns, squares = &ldquo;I love X&rdquo;, triangles = &ldquo;I love X because...&rdquo;, diamonds = extended. Bare nouns spread widely along X (specificity) but sentence-wrapped variants cluster tightly in the upper half.</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_specificity_grid.png" alt="Grid plot showing mean positions averaged across all chains: bare nouns form a diagonal, while sentence-wrapped variants collapse to a narrow horizontal band at Y~0.67-0.87" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 10.</strong> Mean positions by specificity level &times; complexity level, averaged across all 10 chains. Bare nouns (grey) spread cleanly from generic to specific. But &ldquo;I love X&rdquo; (blue) collapses to a <em>flat horizontal line</em> at Y &asymp; 0.67 &mdash; the sentence template overwhelms noun identity. Higher complexity levels (red, purple) add diminishing vertical displacement.</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_specificity_arrows.png" alt="Displacement arrows from bare nouns to extended sentences, all pointing steeply upward regardless of specificity" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 11.</strong> Displacement arrows from bare noun to most complex sentence for each item in all 10 chains. Arrows point steeply upward regardless of specificity &mdash; the sentence template dominates the transformation.</figcaption>
+  </figure>
+
+  <p>Three patterns emerge. First, <strong>sentence complexity saturates rapidly</strong>: the jump from bare noun to &ldquo;I love X&rdquo; accounts for most of the Y displacement (~0.4 units), while adding &ldquo;because they are great&rdquo; contributes only ~0.1 more, and extending the clause further adds almost nothing. The embedding model treats sentence structure as a coarse categorical signal, not a graded one. Second, <strong>specificity is compressed by sentence templates</strong>: bare nouns spread from X = 0.0 (&ldquo;thing&rdquo;) to X = 1.0 (&ldquo;Mount Everest&rdquo;), but once wrapped in &ldquo;I love X because...&rdquo;, all nouns compress to X = 0.3&ndash;0.5. The sentence template acts as an information bottleneck that discards noun identity. Third, <strong>the &ldquo;simple&rdquo; complexity line is nearly flat</strong> &mdash; &ldquo;I love things&rdquo;, &ldquo;I love dogs&rdquo;, and &ldquo;I love Mount Everest&rdquo; all project to Y &asymp; 0.67, regardless of how different their nouns are.</p>
+
+  <p>This is precisely the failure mode that motivates the VKG: <strong>embedding models compress away noun identity when sentence structure takes over</strong>. A retrieval system that searches by vector similarity over sentence embeddings will treat &ldquo;I love mountains because they are great&rdquo; and &ldquo;I love pizza because it is great&rdquo; as near-neighbours &mdash; because the shared template dominates &mdash; while failing to connect &ldquo;Mount Everest&rdquo; (bare noun) with &ldquo;I love Mount Everest because it is great&rdquo; (sentence), despite referring to the same entity. The VKG solves this by extracting explicit entity mentions and linking them structurally, independent of the sentence template.</p>
+
   <h2>5. Benchmark Evaluation</h2>
 
   <h3>5.1 Setup</h3>
