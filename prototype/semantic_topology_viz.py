@@ -37,11 +37,9 @@ def compute_axes():
     gender_vecs = embed_texts(["woman", "man"])
     gender_axis = normalize(gender_vecs[0] - gender_vecs[1])
 
-    # "Is cute" transformation axis
-    nouns = ["cat", "dog", "baby", "flower", "bird", "rabbit", "frog", "rock"]
-    bare_vecs = embed_texts(nouns)
-    prop_vecs = embed_texts([f"The {n} is cute" for n in nouns])
-    cute_axis = normalize(np.mean(prop_vecs - bare_vecs, axis=0))
+    # "Cute" modifier axis: pure displacement from "woman" to "cute woman"
+    cute_vecs = embed_texts(["cute woman", "woman"])
+    cute_axis = normalize(cute_vecs[0] - cute_vecs[1])
 
     dot = float(np.dot(gender_axis, cute_axis))
     print(f"  Axis orthogonality: dot = {dot:.4f}")
