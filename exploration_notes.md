@@ -139,7 +139,7 @@ The "cute animals" family clustered closest to the "robin syllogism" family (cen
 
 ### The core argument, supported by data
 
-1. **Embedding space encodes topical similarity, not logical structure.** The "inhibits" family (0.450 mean) proves this directly — identical relational structure across domains is nearly invisible to embeddings.
+1. **Embedding space encodes logical structure with non-uniform fidelity.** The "inhibits" family (0.450 mean) shows that identical relational structure across domains is severely under-represented. Embeddings DO encode structure (additive compositionality, consistent verb displacements), but entity/topical information receives ~3.5x more representational capacity than relational/predicate information.
 
 2. **Multi-hop chains decay in embedding space.** Causal chain endpoints (0.476) are barely more similar than random cross-domain sentences. Standard RAG will miss chain steps that are essential but topically distant from the query.
 

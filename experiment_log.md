@@ -138,7 +138,7 @@ Chronological record of every experiment run in this project. Each entry records
 - Embedding distance reflects word co-occurrence frequency, not formal taxonomic distance
 - Words carry register baggage: "dog"/"cat" (informal) vs "feline"/"canine" (taxonomic) vs "carnivoran" (scientific)
 - Hierarchy convergence is literal (shared word = 1.000) not graduated
-- This reinforces the VKG's role: impose logical structure that embedding space can't represent
+- This reinforces the VKG's role: give predicates first-class representation that the embedding space systematically under-allocates
 
 **Artifacts:**
 - `prototype/word_isolation.py` — Full analysis script
