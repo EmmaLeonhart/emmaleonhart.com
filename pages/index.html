@@ -383,6 +383,41 @@
 
   <p>The area ratio between the most overloaded (wavelength: 0.000026) and most underloaded (gentleman: 0.084) cells is <strong>3,200&times;</strong>. A single gendered word owns more projection territory than dozens of technical terms combined. This is dimensional cramming made visible: the embedding model allocates enormous representational capacity to high-signal concepts while compressing &ldquo;less interesting&rdquo; distinctions into negligible regions.</p>
 
+  <h3>4.11 Large-Scale Validation: 500 Nouns &times; 5 Adjective Modifiers</h3>
+  <p>To rule out sampling bias, we repeat the topology analysis with an unbiased, frequency-ranked sample: the 500 most common English nouns (from wordfreq), each embedded in six forms &mdash; bare noun plus five adjective-modified phrases (&ldquo;powerful X&rdquo;, &ldquo;strong X&rdquo;, &ldquo;cute X&rdquo;, &ldquo;adorable X&rdquo;, &ldquo;beautiful X&rdquo;) &mdash; yielding 3,000 total embeddings.</p>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_large_heatmap.png" alt="Voronoi heatmap of 3,000 embeddings from 500 common nouns showing dense green core of bare nouns surrounded by sparse red edges" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 3.</strong> Loadedness heatmap for 3,000 embeddings (500 nouns &times; 6 variants). The dense green ellipse at center contains bare nouns and &ldquo;powerful&rdquo;/&ldquo;strong&rdquo; variants packed tightly together. The sparse red periphery is occupied by &ldquo;cute&rdquo;/&ldquo;adorable&rdquo; variants that have been shifted far from their base nouns.</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_large_full.png" alt="Voronoi tessellation of 3,000 embeddings colored by category showing bare nouns clustered at center with cute/adorable variants displaced to the right" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 4.</strong> Category-colored Voronoi tessellation. Dark grey = bare nouns (dense center), pink = &ldquo;cute&rdquo;/&ldquo;adorable&rdquo; variants (displaced right), purple = &ldquo;beautiful&rdquo; (intermediate), red/orange = &ldquo;powerful&rdquo;/&ldquo;strong&rdquo; (barely displaced from bare nouns).</figcaption>
+  </figure>
+
+  <p><strong>Adjective modification acts as a consistent translation vector.</strong> Each adjective shifts all 500 nouns by approximately the same displacement:</p>
+
+  <table>
+    <thead>
+      <tr><th>Adjective</th><th>&Delta;X (cute axis)</th><th>&Delta;Y (gender axis)</th><th>Magnitude</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>cute</td><td>+0.344</td><td>+0.088</td><td>0.355</td></tr>
+      <tr><td>adorable</td><td>+0.347</td><td>+0.080</td><td>0.356</td></tr>
+      <tr><td>beautiful</td><td>+0.183</td><td>+0.082</td><td>0.201</td></tr>
+      <tr><td>strong</td><td>+0.032</td><td>+0.027</td><td>0.042</td></tr>
+      <tr><td>powerful</td><td>&minus;0.009</td><td>+0.030</td><td>0.031</td></tr>
+    </tbody>
+  </table>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_large_arrows.png" alt="Displacement arrows showing how each adjective shifts 30 sample nouns in the 2D projection - cute/adorable arrows point strongly right while powerful/strong arrows are short stubs" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 5.</strong> Adjective displacement arrows for 30 sample nouns. Pink/magenta arrows (cute/adorable) point consistently rightward along the cute axis. Purple (beautiful) points moderately right. Red/orange (powerful/strong) are short stubs &mdash; nearly orthogonal to the cute direction.</figcaption>
+  </figure>
+
+  <p>Three findings emerge. First, <strong>synonyms map to near-identical vectors</strong>: &ldquo;cute&rdquo; and &ldquo;adorable&rdquo; produce displacements of 0.344 and 0.347 respectively &mdash; indistinguishable in direction and magnitude. Second, <strong>&ldquo;powerful&rdquo; and &ldquo;strong&rdquo; are orthogonal to &ldquo;cute&rdquo;</strong> on this plane, shifting nouns by only 0.031&ndash;0.042 (an order of magnitude less), confirming that the axes capture genuinely independent semantic dimensions. Third, the displacement is <strong>noun-independent</strong>: adding &ldquo;cute&rdquo; to &ldquo;time&rdquo; shifts it by approximately the same vector as adding &ldquo;cute&rdquo; to &ldquo;rock&rdquo; or &ldquo;sister&rdquo;. This is precisely the behaviour predicted if adjective modification corresponds to a linear transformation in embedding space &mdash; a vector operation mapping to a symbolic operation.</p>
+
   <h2>5. Benchmark Evaluation</h2>
 
   <h3>5.1 Setup</h3>
