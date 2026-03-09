@@ -418,6 +418,33 @@
 
   <p>Three findings emerge. First, <strong>synonyms map to near-identical vectors</strong>: &ldquo;cute&rdquo; and &ldquo;adorable&rdquo; produce displacements of 0.344 and 0.347 respectively &mdash; indistinguishable in direction and magnitude. Second, <strong>&ldquo;powerful&rdquo; and &ldquo;strong&rdquo; are orthogonal to &ldquo;cute&rdquo;</strong> on this plane, shifting nouns by only 0.031&ndash;0.042 (an order of magnitude less), confirming that the axes capture genuinely independent semantic dimensions. Third, the displacement is <strong>noun-independent</strong>: adding &ldquo;cute&rdquo; to &ldquo;time&rdquo; shifts it by approximately the same vector as adding &ldquo;cute&rdquo; to &ldquo;rock&rdquo; or &ldquo;sister&rdquo;. This is precisely the behaviour predicted if adjective modification corresponds to a linear transformation in embedding space &mdash; a vector operation mapping to a symbolic operation.</p>
 
+  <h3>4.12 Two Dimensions of Complexity: Adjective vs. Predicate</h3>
+  <p>The previous experiments projected onto axes defined by social dimensions (gender, cuteness). To test whether the topology generalizes to <em>structural</em> complexity, we define two new axes using a single anchor noun &ldquo;Road&rdquo;:</p>
+  <ul>
+    <li><strong>X-axis (adjective complexity):</strong> normalize(embed(&ldquo;The Icy Road&rdquo;) &minus; embed(&ldquo;Road&rdquo;)) &mdash; the direction of adding a descriptive modifier</li>
+    <li><strong>Y-axis (predicate complexity):</strong> normalize(embed(&ldquo;Roads are Great&rdquo;) &minus; embed(&ldquo;Road&rdquo;)) &mdash; the direction of embedding the noun in a full predication</li>
+  </ul>
+  <p>The two axes have dot product 0.27, indicating moderate but tolerable correlation. The same 500 most common English nouns are embedded in four forms: bare noun, &ldquo;The Icy X&rdquo; (adjective only), &ldquo;Xs are Great&rdquo; (predicate only), and &ldquo;Icy Xs are Great&rdquo; (both).</p>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_complexity_full.png" alt="Voronoi tessellation of 2,004 embeddings on complexity axes showing four clean quadrants: bare nouns bottom-left, adjective variants bottom-right, predicate variants top-left, both top-right" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 6.</strong> Category-colored Voronoi tessellation on complexity axes. Four clean quadrants emerge: grey = bare nouns (bottom-left), blue = adjective-modified (bottom-right), red = predicate-embedded (top-left), purple = both (top-right). The four reference points (Road, The Icy Road, Roads are Great, Icy Roads are Great) mark the expected corners.</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_complexity_heatmap.png" alt="Complexity loadedness heatmap showing four dense clusters at quadrant centers separated by sparse red transition zones" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 7.</strong> Loadedness heatmap on complexity axes. Four dense green clusters correspond to the four transformation categories, separated by sparse red transition zones. The transition between categories is smooth but rapid &mdash; embedding space allocates distinct regions for each level of structural complexity.</figcaption>
+  </figure>
+
+  <figure style="margin: 2em 0; text-align: center;">
+    <img src="img/semantic_topology_complexity_arrows.png" alt="Displacement arrows showing adjective modification pointing rightward, predicate embedding pointing upward, and both pointing diagonally" style="max-width: 100%; border: 1px solid #ddd;">
+    <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 8.</strong> Complexity displacement arrows for 30 sample nouns. Blue arrows (adjective) point consistently rightward, red arrows (predicate) point upward, purple arrows (both) point diagonally &mdash; confirming the two complexity dimensions are approximately independent.</figcaption>
+  </figure>
+
+  <p><strong>Additivity test.</strong> If adjective modification and predicate embedding are independent linear operations, &ldquo;Icy Xs are Great&rdquo; should project to approximately the sum of the adjective and predicate displacements. The reference point &ldquo;Icy Roads are Great&rdquo; lands at (0.648, 0.526) versus the additive prediction (0.720, 0.636), giving a ratio of 0.90 on X and 0.83 on Y. The combined transformation recovers ~85&ndash;90% of the expected displacement &mdash; sub-additive, but close enough to confirm approximate linearity. The shortfall is consistent with mild dimensional interference when two modifications compete for the same representational capacity.</p>
+
+  <p>This result strengthens the central thesis: <strong>symbolic operations (adjective modification, predication) map to approximately linear vector transformations</strong>, and these transformations are roughly orthogonal when they encode genuinely independent structural changes. The embedding space behaves as a compressed linear algebra over symbolic operations &mdash; but with non-negligible compression artifacts that accumulate under composition.</p>
+
   <h2>5. Benchmark Evaluation</h2>
 
   <h3>5.1 Setup</h3>

@@ -374,3 +374,32 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/semantic_loadedness_results.json`
 - `prototype/semantic_loadedness_plot.png`
 - `prototype/semantic_loadedness_words_only.png`
+
+---
+
+## Experiment 14: Complexity Axes — Adjective vs. Predicate Topology
+
+**Date:** 2026-03-08
+**Script:** `python prototype/semantic_topology_complexity.py`
+**Duration:** ~20 seconds (2,004 embeddings at 9.7ms/item)
+
+**What:** Two dimensions of structural complexity using "Road" as origin. X-axis = normalize(embed("The Icy Road") - embed("Road")) captures adjective modification. Y-axis = normalize(embed("Roads are Great") - embed("Road")) captures predicate embedding. 500 most common nouns embedded in 4 forms: bare, "The Icy X" (adjective), "Xs are Great" (predicate), "Icy Xs are Great" (both). Tests whether adjective and predicate complexity are independent linear transformations and whether they compose additively.
+
+**Key findings:**
+- **Axis orthogonality:** dot = 0.274 — moderate correlation but reasonably independent
+- **Clean four-quadrant separation:** bare nouns bottom-left, adjective variants bottom-right, predicate variants top-left, both top-right
+- **Additivity is approximate:** "Icy Roads are Great" lands at (0.648, 0.526) vs additive prediction (0.720, 0.636) — 90% X, 83% Y
+- **Mean category positions confirm separation:**
+  - Bare: (0.159, 0.128) — bottom-left
+  - Adjective: (0.663, 0.242) — rightward shift
+  - Predicate: (0.220, 0.486) — upward shift
+  - Both: (0.569, 0.464) — diagonal, sub-additive
+- **RMS additivity error:** 0.228 — the combined transformation loses ~15-17% due to dimensional interference
+- **Displacement arrows:** blue (adjective) points consistently right, red (predicate) points up, purple (both) points diagonally — confirming independent dimensions
+
+**Artifacts:**
+- `prototype/semantic_topology_complexity.py`
+- `prototype/semantic_topology_complexity_results.json`
+- `prototype/semantic_topology_complexity_full.png`
+- `prototype/semantic_topology_complexity_heatmap.png`
+- `prototype/semantic_topology_complexity_arrows.png`
