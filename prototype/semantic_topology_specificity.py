@@ -168,6 +168,20 @@ def main():
             text_to_idx[name] = len(unique_texts)
             unique_texts.append(name)
 
+    # Add made-up word as a special probe
+    NONSENSE_WORD = "plumbiscoblimbi"
+    items.append({
+        "text": NONSENSE_WORD,
+        "chain": "nonsense",
+        "color": "#00FF00",
+        "spec_idx": -1,
+        "comp_level": "ref",
+        "noun": NONSENSE_WORD,
+    })
+    if NONSENSE_WORD not in text_to_idx:
+        text_to_idx[NONSENSE_WORD] = len(unique_texts)
+        unique_texts.append(NONSENSE_WORD)
+
     # Add chain items
     for chain_name, chain_color, nouns in CHAINS:
         for spec_idx, (noun, plural, pronoun) in enumerate(nouns):
@@ -278,6 +292,17 @@ def main():
                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#FFD700",
                             alpha=0.8, edgecolor="black"))
 
+    # Plot nonsense word
+    nonsense_items = [it for it in items if it["chain"] == "nonsense"]
+    for it in nonsense_items:
+        ax.scatter(it["x"], it["y"], c="#00FF00", marker="*", s=250,
+                  zorder=6, edgecolors="black", linewidth=1.2)
+        ax.annotate(it["text"], (it["x"], it["y"]),
+                   textcoords="offset points", xytext=(8, 8),
+                   fontsize=9, fontweight="bold", color="#006600",
+                   bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
+                            alpha=0.8, edgecolor="black"))
+
     # Label some interesting non-reference points
     # Label the most specific items at highest complexity
     for chain_name, chain_color, nouns in CHAINS:
@@ -371,6 +396,16 @@ def main():
                        textcoords="offset points", xytext=(0, -20),
                        fontsize=8, ha="center", color="#555")
 
+    # Plot nonsense word on grid
+    for it in nonsense_items:
+        ax.scatter(it["x"], it["y"], c="#00FF00", marker="*", s=250,
+                  zorder=6, edgecolors="black", linewidth=1.2)
+        ax.annotate(it["text"], (it["x"], it["y"]),
+                   textcoords="offset points", xytext=(8, -15),
+                   fontsize=9, fontweight="bold", color="#006600",
+                   bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
+                            alpha=0.8, edgecolor="black"))
+
     ax.legend(fontsize=9, title="Complexity level")
     ax.set_xlabel("Specificity Axis (thing -> Mount Everest)", fontsize=11)
     ax.set_ylabel("Sentence Complexity Axis", fontsize=11)
@@ -411,6 +446,16 @@ def main():
                    fontweight="bold",
                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#FFD700",
                             alpha=0.8))
+
+    # Plot nonsense word on arrows
+    for it in nonsense_items:
+        ax.scatter(it["x"], it["y"], c="#00FF00", marker="*", s=250,
+                  zorder=6, edgecolors="black", linewidth=1.2)
+        ax.annotate(it["text"], (it["x"], it["y"]),
+                   textcoords="offset points", xytext=(8, 8),
+                   fontsize=9, fontweight="bold", color="#006600",
+                   bbox=dict(boxstyle="round,pad=0.3", facecolor="#00FF00",
+                            alpha=0.8, edgecolor="black"))
 
     # Legend
     chain_handles = [Line2D([0], [0], color=c, linewidth=2, label=n)
