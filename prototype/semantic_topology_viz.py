@@ -568,11 +568,11 @@ def plot_voronoi(results, points):
 
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
-    ax.set_xlabel('"Is Cute" Transformation Axis\n(low = semantically generic, high = semantically loaded)',
+    ax.set_xlabel('"Cute" Modifier Axis (woman -> cute woman)\n(low = semantically generic, high = semantically loaded)',
                   fontsize=11)
     ax.set_ylabel('<-- Male          Gender Axis          Female -->', fontsize=11)
     ax.set_title(f'Semantic Topology: Voronoi Tessellation of Embedding Space\n'
-                 f'({len(results)} concepts, mxbai-embed-large 1024-dim, projected onto gender x "is cute")',
+                 f'({len(results)} concepts, mxbai-embed-large 1024-dim, projected onto gender x "cute" modifier)',
                  fontsize=13, fontweight='bold')
 
     handles = []
@@ -622,7 +622,7 @@ def plot_voronoi(results, points):
 
     ax2.set_xlim(x_min, x_max)
     ax2.set_ylim(y_min, y_max)
-    ax2.set_xlabel('"Is Cute" Transformation Axis', fontsize=11)
+    ax2.set_xlabel('"Cute" Modifier Axis (woman -> cute woman)', fontsize=11)
     ax2.set_ylabel('<-- Male          Gender Axis          Female -->', fontsize=11)
     ax2.set_title('Semantic Loadedness Heatmap: Voronoi Cell Area\n'
                   '(Red = small cells = overloaded / Green = large cells = underloaded)',
