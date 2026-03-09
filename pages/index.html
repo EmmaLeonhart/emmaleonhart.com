@@ -277,20 +277,22 @@
   <p>Before evaluating the full pipeline, we characterize <em>why</em> standard RAG fails on multi-hop queries by probing the geometry of the embedding space.</p>
 
   <h3>4.1 Axis Hierarchy: Subjects &gt;&gt; Objects &gt;&gt; Predicates</h3>
-  <p>Using a controlled 3&times;3&times;3 semantic grid (3 subjects &times; 3 predicates &times; 3 objects, 27 propositions), we measured the contribution of each axis to embedding similarity:</p>
+  <p>Using a controlled semantic grid, we measured the contribution of each axis to embedding similarity. The initial 3&times;3&times;3 grid (27 propositions) was replicated at 8&times;8&times;8 scale (512 propositions, 130,816 pairwise comparisons):</p>
 
   <table>
     <thead>
-      <tr><th>Axis</th><th>Mean separation</th><th>Relative strength</th></tr>
+      <tr><th>Axis</th><th>3&times;3&times;3 separation</th><th>8&times;8&times;8 separation</th><th>3&times;3&times;3 relative</th><th>8&times;8&times;8 relative</th></tr>
     </thead>
     <tbody>
-      <tr><td>Subject</td><td>+0.240</td><td>3.5&times;</td></tr>
-      <tr><td>Object</td><td>+0.176</td><td>2.6&times;</td></tr>
-      <tr><td>Predicate</td><td>+0.069</td><td>1.0&times; (baseline)</td></tr>
+      <tr><td>Subject</td><td>+0.240</td><td>+0.249</td><td>3.5&times;</td><td>2.2&times;</td></tr>
+      <tr><td>Object</td><td>+0.176</td><td>+0.186</td><td>2.6&times;</td><td>1.6&times;</td></tr>
+      <tr><td>Predicate</td><td>+0.069</td><td>+0.113</td><td>1.0&times;</td><td>1.0&times;</td></tr>
     </tbody>
   </table>
 
-  <p>Embedding models allocate dimensions to encode <em>what things are about</em> (entities/topics), not <em>what relationship holds</em> (predicates). This is optimal for topical retrieval but wrong for logical reasoning, where predicates are arguably most important. The VKG rebalances this by giving predicates explicit first-class representation.</p>
+  <p>The S &gt; O &gt; P hierarchy is robust across scale. With more diverse verbs (8 vs 3), predicate separation increased from +0.069 to +0.113 &mdash; the embedding space <em>does</em> encode predicate information, just with systematically less fidelity than entity information. The joint analysis confirms additive compositionality: sharing 0 axes yields mean similarity 0.381, 1 shared yields 0.565, 2 shared yields 0.766 &mdash; a clean staircase. Further decomposition by combination type reveals SO (0.835) &gt; SP (0.762) &gt; PO (0.702), showing that sharing both entity positions without matching the predicate still produces very high similarity.</p>
+
+  <p>Verbs act as consistent displacement vectors: swapping one verb for another across all 64 subject/object contexts produces displacement vectors with mean pairwise cosine 0.725 and mean alignment to group direction 0.853 (28 verb pairs tested). The internal similarity structure within each verb&rsquo;s 64 propositions is nearly identical across verbs (mean Pearson r = 0.939). The embedding space treats predicates as <em>translations</em> that shift the entity cluster without deforming it &mdash; a kind of finite-state logical operation, systematic but compressed relative to entities.</p>
 
   <h3>4.2 The Syllogism Gap</h3>
   <p>In the classic Socrates syllogism, the two <em>premises</em> &mdash; &ldquo;All men are mortal&rdquo; and &ldquo;Socrates is a man&rdquo; &mdash; are the most distant pair in embedding space (0.560), yet they are precisely the two sentences needed together to derive the conclusion. The conclusion &ldquo;Socrates is mortal&rdquo; sits near &ldquo;Socrates is a man&rdquo; (0.879) because they share an entity, not because the model understands entailment.</p>
@@ -315,7 +317,7 @@
   <p>Four sentences sharing the predicate &ldquo;inhibits&rdquo; across pharmacology, botany, economics, and governance domains have a mean similarity of only 0.450 &mdash; barely above random. Identical relational structure is invisible to embeddings when the domains differ.</p>
 
   <h3>4.5 No Universal Abstraction Axis</h3>
-  <p>Testing 24 taxonomic hierarchies across nouns, verbs, and adjectives: there is no single &ldquo;up&rdquo; direction in embedding space corresponding to increasing abstraction. Noun hierarchies share moderate agreement (0.465) because they converge on shared words (&ldquo;animal&rdquo;, &ldquo;entity&rdquo;), but cross-POS agreement is near zero (0.03&ndash;0.06). Embedding geometry is distributional, not ontological.</p>
+  <p>Testing 50 taxonomic hierarchies (20 noun, 20 verb, 10 adjective, 218 unique words &mdash; scaled up from 24 hierarchies): there is no single &ldquo;up&rdquo; direction in embedding space corresponding to increasing abstraction. Noun hierarchies share moderate agreement (0.476), verb hierarchies less (0.408), adjective hierarchies least (0.157). Cross-POS agreement is near zero (noun&times;verb = 0.057, adj&times;noun = 0.022). Only 6/50 hierarchies (12%) show monotonic distance decay from origin to terminal word. Same-abstraction-level words do not cluster: within-level similarity (0.552&ndash;0.572) approximately equals cross-level similarity (0.553&ndash;0.565). Embedding geometry is distributional, not ontological.</p>
 
   <h3>4.6 Distributional vs. Ontological Distance</h3>
   <p>dog&rarr;animal (0.876) scores higher than dog&rarr;mammal (0.816), despite mammal being taxonomically closer. Embedding distance reflects co-occurrence frequency, not formal taxonomic distance. Word register matters: &ldquo;dog&rdquo; (informal), &ldquo;canine&rdquo; (taxonomic), and &ldquo;carnivoran&rdquo; (scientific) occupy different regions of the space.</p>
@@ -323,7 +325,7 @@
   <h3>4.7 Linnaean Taxonomy: Register Consistency Does Not Help</h3>
   <p>One might hypothesize that the distributional confounds in Section 4.6 arise from mixing informal and scientific registers within a single hierarchy (puppy&rarr;dog&rarr;canine&rarr;mammal&rarr;animal). We tested this by using purely formal Linnaean taxonomy &mdash; <em>Canis lupus familiaris</em> &rarr; <em>Canis</em> &rarr; <em>Canidae</em> &rarr; <em>Carnivora</em> &rarr; <em>Mammalia</em> &rarr; <em>Vertebrata</em> &rarr; <em>Chordata</em> &rarr; <em>Animalia</em> &rarr; <em>Eukaryota</em> &mdash; across 10 organisms.</p>
 
-  <p><strong>Result:</strong> Only 1/10 Linnaean hierarchies show monotonic distance decay (vs. 3/10 for common English names). The &ldquo;Animalia bounce&rdquo; is universal &mdash; every animal hierarchy shows <em>Animalia</em> closer to the species name than <em>Chordata</em> is, because &ldquo;Animalia&rdquo; appears in far more contexts (legal, philosophical, educational) than &ldquo;Chordata&rdquo; (biology textbooks only).</p>
+  <p><strong>Result:</strong> Only 1/20 Linnaean hierarchies show monotonic distance decay (0/15 for common English names). Scaling from 10 to 20 Linnaean organisms and 6 to 15 common-name organisms confirms the finding: the violation rate is stable at ~2 violations per Linnaean hierarchy and ~3 per common-name hierarchy. The &ldquo;Animalia bounce&rdquo; is universal &mdash; every animal hierarchy shows <em>Animalia</em> closer to the species name than <em>Chordata</em> is, because &ldquo;Animalia&rdquo; appears in far more contexts (legal, philosophical, educational) than &ldquo;Chordata&rdquo; (biology textbooks only).</p>
 
   <p>The most extreme case is <em>E. coli</em>: &ldquo;Bacteria&rdquo; (0.806) is closer to &ldquo;Escherichia coli&rdquo; than &ldquo;Enterobacterales&rdquo; (0.567) is &mdash; the hierarchy is <em>inverted</em> for the top four levels. This is because &ldquo;E. coli&rdquo; and &ldquo;Bacteria&rdquo; massively co-occur in general science writing, while &ldquo;E. coli&rdquo; and &ldquo;Enterobacterales&rdquo; co-occur almost exclusively in taxonomy databases.</p>
 

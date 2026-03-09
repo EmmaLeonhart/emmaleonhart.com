@@ -237,3 +237,110 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/linnaean_hierarchy_results.json` — All numerical results
 - `prototype/linnaean_hierarchy_embeddings.npz` — Raw 1024-dim vectors for all terms
 - `exploration_notes.md` §3f — Full narrative analysis
+
+---
+
+## Experiment 8: Large-Scale Replication — 8×8×8 Semantic Grid
+
+**Date:** 2026-03-08
+**Script:** `python prototype/semantic_grid_large.py`
+**Duration:** ~2 minutes
+
+**What:** Scaled-up replication of the 3×3×3 semantic grid with 8 subjects × 8 predicates × 8 objects = 512 propositions (vs 27 original). 130,816 pairwise comparisons. Same analysis framework: axis contribution, joint analysis, per-value pull, extreme pairs.
+
+**Key findings:**
+- **S > O > P hierarchy CONFIRMED:** Subject +0.249, Object +0.186, Predicate +0.113
+- Ratios shifted from 3.5x/2.6x/1.0x to 2.2x/1.6x/1.0x — predicate contribution stronger with more diverse verbs
+- Joint staircase replicated: 0-shared=0.381, 1-shared=0.565, 2-shared=0.766 (original: 0.361, 0.546, 0.750)
+- New axis combination analysis: SO (0.835) > SP (0.762) > PO (0.702) — sharing subject+object is strongest
+- "Whales" pulls hardest among subjects (+0.310), "paint" pulls hardest among predicates (+0.167)
+- Carry/collect near-synonymy confirmed: "Trucks carry shadows" vs "Trucks collect shadows" = 0.965
+
+**Artifacts:**
+- `prototype/semantic_grid_large_results.json`
+- `prototype/semantic_grid_large_results_embeddings.npz`
+
+---
+
+## Experiment 9: Large-Scale Replication — Verb Structure (8×8×8)
+
+**Date:** 2026-03-08
+**Script:** `python prototype/verb_structure_large.py`
+**Duration:** <1 second (reuses grid embeddings)
+
+**What:** Verb displacement, subspace correlation, and interaction analysis using 8×8×8 grid. 28 verb pairs (vs 3), 64 S/O contexts each (vs 9). Naturalness omitted (512 hand-labels impractical; original finding r=-0.031 showed no signal).
+
+**Key findings:**
+- **Verb displacement consistency CONFIRMED:** Mean pairwise cosine 0.725 (original 0.671), mean alignment 0.853 (original 0.841)
+- Same-subject displacements more consistent (0.80) than same-object (0.81) and neither (0.72) — context still helps
+- **Subspace geometry nearly identical across verbs:** Mean cross-verb Pearson r=0.939 (original 0.958). Range [0.894, 0.976] — all verb pairs
+- paint→hide has highest displacement consistency (0.801), carry→watch lowest (0.638)
+- S×P interaction range [0.686, 0.841] std=0.029 — minimal interaction, confirming approximate additivity
+
+**Artifacts:**
+- `prototype/verb_structure_large_results.json`
+
+---
+
+## Experiment 10: Large-Scale Replication — Word Isolation
+
+**Date:** 2026-03-08
+**Script:** `python prototype/word_isolation_large.py`
+**Duration:** ~2 minutes
+
+**What:** Expanded from 7 to 15 taxonomic hierarchies (8 noun + 7 verb synonym), 24 grid words, 24 jitter templates (vs 9). Tests whether the within-role similarity reversal and context compression hold at scale.
+
+**Key findings:**
+- **Within-role reversal CONFIRMED:** predicates (0.614) > objects (0.589) > subjects (0.523) in isolation — exactly reversed from proposition-level
+- **Jitter correlation by role:** subject r=0.909 (original 0.91), predicate r=0.215 (original 0.92!), object r=0.720 (original 0.76)
+- **Major finding:** Predicate jitter correlation DROPPED dramatically (0.92→0.22) with more diverse verbs. The original eat/consume/devour synonyms were too similar; with the full eat/consume/devour/ingest/munch/dine/feast set across 8 different S/O contexts, predicate substitution is nearly invisible to embeddings (most sentences >0.85 similarity regardless of verb choice)
+- "Eat" ↔ "fish" collocational association (0.708) is the strongest cross-role pair, confirming distributional encoding
+- Convergence remains literal: shared superclass words = 1.000, non-shared neighbors = ~0.55
+
+**Artifacts:**
+- `prototype/word_isolation_large_results.json`
+
+---
+
+## Experiment 11: Large-Scale Replication — Taxonomic Direction (50 hierarchies)
+
+**Date:** 2026-03-08
+**Script:** `python prototype/taxonomic_direction_large.py`
+**Duration:** ~2 minutes
+
+**What:** Expanded from 24 to 50 hierarchies (20 noun, 20 verb, 10 adjective), 218 unique words. Tests the "no universal abstraction axis" finding with 2× more data.
+
+**Key findings:**
+- **No universal abstraction axis CONFIRMED:** Cross-POS agreement near zero (noun×verb=0.057, adj×noun=0.022, adj×verb=0.029)
+- Noun within-group: 0.476 (original 0.465), Verb: 0.408 (original 0.381), Adj: 0.157 (original 0.057)
+- Adjective "up" direction increased significantly (0.057→0.157) with more hierarchies — some adjective pairs share "perceptible" at the top
+- Global up magnitude: 0.431 (original 0.456) — slightly lower with more diverse hierarchies
+- Only 6/50 hierarchies monotonic (3 noun, 2 verb, 1 adj) — 12% rate, consistent with original (4/24 = 17%)
+- Same-level words still DON'T cluster: within-bin sim ≈ cross-bin sim (0.552-0.572 vs 0.553-0.565)
+
+**Artifacts:**
+- `prototype/taxonomic_direction_large_results.json`
+- `prototype/taxonomic_direction_large_embeddings.npz`
+- `prototype/taxonomic_direction_large_vectors.npz`
+
+---
+
+## Experiment 12: Large-Scale Replication — Linnaean Hierarchy (20+15 organisms)
+
+**Date:** 2026-03-08
+**Script:** `python prototype/linnaean_hierarchy_large.py`
+**Duration:** ~2 minutes
+
+**What:** Expanded from 10 Linnaean + 6 common to 20 Linnaean + 15 common name hierarchies. Added elephant, dolphin, eagle, cobra, blue whale, bee, wheat, rose, panda, crocodile.
+
+**Key findings:**
+- **Non-monotonicity CONFIRMED at scale:** Linnaean 1/20 monotonic (39 violations), Common 0/15 monotonic (45 violations)
+- Violation rate stable: Linnaean 1.95/hierarchy (original 1.9), Common 3.0/hierarchy (original 3.0)
+- Common names consistently worse: 45 violations vs 39 for Linnaean, confirming register mixing adds noise
+- Cross-hierarchy "up" direction: Linnaean all=0.382 (original 0.360), Eukaryotes=0.416 (original 0.426)
+- New convergence pairs confirm literal pattern: blue whale vs bottlenose dolphin species sim=0.427, both Cetacea shared → instant 1.000
+- Honey bee vs fruit fly have highest species-level cross-species sim (0.698) — both common model organisms in biology literature (distributional!)
+
+**Artifacts:**
+- `prototype/linnaean_hierarchy_large_results.json`
+- `prototype/linnaean_hierarchy_large_embeddings.npz`
