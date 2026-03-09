@@ -23,6 +23,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+
+      # Copy figures from prototype/ into pages/img/ for deployment
+      - name: Copy figures
+        run: |
+          mkdir -p pages/img
+          cp prototype/semantic_topology_full.png pages/img/
+          cp prototype/semantic_topology_heatmap.png pages/img/
+          cp prototype/semantic_loadedness_plot.png pages/img/ 2>/dev/null || true
+          cp prototype/semantic_loadedness_words_only.png pages/img/ 2>/dev/null || true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: pages

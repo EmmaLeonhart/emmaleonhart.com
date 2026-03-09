@@ -6,20 +6,20 @@
 
   <!-- Open Graph / Discord embed -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Beyond Proximity: Virtual Knowledge Graphs for Logic-Gated Retrieval">
+  <meta property="og:title" content="Beyond Proximity: Mapping the Topology of Neurosymbolic Space">
   <meta property="og:description" content="Standard RAG retrieves by vector proximity, which fails on multi-hop causal reasoning. We propose a neurosymbolic architecture that constructs a Virtual Knowledge Graph at runtime and retrieves reasoning chains through entity bridging. On a 7-scenario benchmark, the neurosymbolic pipeline achieves 69% coverage vs 62% for standard RAG, with gains up to +50% on causal cascades.">
   <meta property="og:url" content="https://emma-leonhart.github.io/arxiv-neurosymbolic-paper/">
   <meta property="og:site_name" content="arXiv draft">
 
   <!-- Twitter/X card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Beyond Proximity: Virtual Knowledge Graphs for Logic-Gated Retrieval">
+  <meta name="twitter:title" content="Beyond Proximity: Mapping the Topology of Neurosymbolic Space">
   <meta name="twitter:description" content="Standard RAG retrieves by vector proximity, which fails on multi-hop causal reasoning. We propose a neurosymbolic architecture that constructs a Virtual Knowledge Graph at runtime and retrieves reasoning chains through entity bridging. On a 7-scenario benchmark, the neurosymbolic pipeline achieves 69% coverage vs 62% for standard RAG, with gains up to +50% on causal cascades.">
 
   <!-- Standard meta description -->
   <meta name="description" content="Standard RAG retrieves by vector proximity, which fails on multi-hop causal reasoning. We propose a neurosymbolic architecture that constructs a Virtual Knowledge Graph at runtime and retrieves reasoning chains through entity bridging.">
 
-  <title>Beyond Proximity: Virtual Knowledge Graphs as a Semantic Space for Logic-Gated Retrieval</title>
+  <title>Beyond Proximity: Mapping the Topology of Neurosymbolic Space</title>
   <style>
     :root {
       --text: #1a1a2e;
@@ -208,7 +208,7 @@
 <body>
 <div class="container">
 
-  <h1>Beyond Proximity: Virtual Knowledge Graphs as a Semantic Space for Logic-Gated Retrieval</h1>
+  <h1>Beyond Proximity: Mapping the Topology of Neurosymbolic Space</h1>
   <p class="subtitle">Working draft &mdash; forthcoming arXiv submission</p>
 
   <div class="abstract">
@@ -225,7 +225,7 @@
 
   <h3>Contributions</h3>
   <ol>
-    <li>A proposition-first neurosymbolic RAG architecture with runtime VKG construction and logic-gated retrieval.</li>
+    <li>A proposition-first neurosymbolic RAG architecture with runtime VKG construction, where vector transformations map to symbolic operations through entity bridging.</li>
     <li>Empirical evidence that embedding models (mxbai-embed-large, 1024-dim) encode entities 3.5&times; more strongly than predicates &mdash; explaining why relational structure is systematically under-represented in vector search.</li>
     <li>A proof sketch establishing that transformers are finite-state machines (not Turing-complete), with the VKG serving as the external tape that enables unbounded compositional reasoning.</li>
     <li>A 7-scenario benchmark demonstrating that entity bridging through the VKG recovers chain steps that standard RAG systematically misses.</li>
@@ -362,12 +362,12 @@
   <p><strong>Voronoi tessellation.</strong> Rather than plotting concepts as points, we construct a Voronoi diagram where each concept owns a <em>region</em> &mdash; the set of all points closer to it than to any other concept. This mirrors how softmax partitions logit space into decision regions. Cell area directly encodes loadedness: large cells indicate underloaded regions (sparse, generic), small cells indicate overloaded regions (concepts crammed together).</p>
 
   <figure style="margin: 2em 0; text-align: center;">
-    <img src="../prototype/semantic_topology_full.png" alt="Voronoi tessellation of 194 concepts projected onto gender and cute axes, colored by semantic category" style="max-width: 100%; border: 1px solid #ddd;">
+    <img src="img/semantic_topology_full.png" alt="Voronoi tessellation of 194 concepts projected onto gender and cute axes, colored by semantic category" style="max-width: 100%; border: 1px solid #ddd;">
     <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 1.</strong> Voronoi tessellation of 194 concepts in the gender &times; &ldquo;cute&rdquo; plane. Category coloring reveals spatial clustering: technical/abstract/neutral terms (left, tiny cells) vs. cute propositions (right, large cells).</figcaption>
   </figure>
 
   <figure style="margin: 2em 0; text-align: center;">
-    <img src="../prototype/semantic_topology_heatmap.png" alt="Voronoi cell area heatmap showing semantic loadedness - red for overloaded (small cells), green for underloaded (large cells)" style="max-width: 100%; border: 1px solid #ddd;">
+    <img src="img/semantic_topology_heatmap.png" alt="Voronoi cell area heatmap showing semantic loadedness - red for overloaded (small cells), green for underloaded (large cells)" style="max-width: 100%; border: 1px solid #ddd;">
     <figcaption style="margin-top: 0.5em; font-size: 0.9em; color: #555;"><strong>Figure 2.</strong> Loadedness heatmap. Cell area on log scale: green = large cells (underloaded), red = small cells (overloaded). The dense green cluster at center-left contains technical, abstract, and neutral terms crammed into tiny Voronoi cells. Edge regions are sparse.</figcaption>
   </figure>
 
