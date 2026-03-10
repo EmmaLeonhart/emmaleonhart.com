@@ -14,7 +14,13 @@
       "Bash(cd \"C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\axiv-neurosymbolic-paper\" && rm -rf .git/refs/original/ && git reflog expire --expire=now --all && git gc --prune=now --aggressive 2>&1)",
       "Bash(pip install:*)",
       "Bash(tail:*)",
-      "Bash(\"C:\\\\Users\\\\ambie\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\":*)"
+      "Bash(\"C:\\\\Users\\\\ambie\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\":*)",
+      "WebFetch(domain:projector.tensorflow.org)",
+      "WebSearch",
+      "Bash(ls:*)",
+      "WebFetch(domain:arxiv.org)",
+      "Bash(python3:*)",
+      "Bash(wc:*)"
     ]
   }
 }
