@@ -20,7 +20,13 @@
       "Bash(ls:*)",
       "WebFetch(domain:arxiv.org)",
       "Bash(python3:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cd C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\axiv-neurosymbolic-paper:*)",
+      "WebFetch(domain:emmaleonhart.com)",
+      "WebFetch(domain:emma-leonhart.github.io)",
+      "Bash(head:*)",
+      "Bash(curl:*)"
     ]
   }
 }
