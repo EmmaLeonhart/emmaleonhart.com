@@ -303,6 +303,42 @@
   <h3>4.2 The Syllogism Gap</h3>
   <p>In the classic Socrates syllogism, the two <em>premises</em> &mdash; &ldquo;All men are mortal&rdquo; and &ldquo;Socrates is a man&rdquo; &mdash; are the most distant pair in embedding space (0.560), yet they are precisely the two sentences needed together to derive the conclusion. The conclusion &ldquo;Socrates is mortal&rdquo; sits near &ldquo;Socrates is a man&rdquo; (0.879) because they share an entity, not because the model understands entailment.</p>
 
+  <p>To test this systematically, we constructed a 10&times;10&times;10 combinatorial grid of syllogisms, all following the uniform template: P1 = &ldquo;All {class} are {adjective}&rdquo;, P2 = &ldquo;{member} is a {class}&rdquo;, C = &ldquo;{member} is {adjective}&rdquo;. Ten unambiguous proper nouns (Socrates, Aristotle, Einstein, Mozart, Shakespeare, Cleopatra, Darwin, Galileo, Confucius, Archimedes) crossed with 10 classes and 10 adjectives yield 1,000 syllogisms from only 300 unique sentences (since P1 depends only on class+adjective, P2 on member+class, C on member+adjective).</p>
+
+  <table>
+    <thead>
+      <tr><th>Pair</th><th>Shares</th><th>Role in sentence</th><th>Mean similarity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P2 &harr; C</td><td>member</td><td>subject in both</td><td>0.779</td></tr>
+      <tr><td>P1 &harr; P2</td><td>class</td><td>subject in P1, object in P2</td><td>0.572</td></tr>
+      <tr><td>P1 &harr; C</td><td>adjective</td><td>predicate in both</td><td>0.548</td></tr>
+    </tbody>
+  </table>
+
+  <p>P2 &harr; C is the strongest pair in 1,000/1,000 cases. The axis hierarchy from &sect;4.1 explains the ordering directly: the conclusion shares a <em>subject</em> (member) with P2 (+0.279 pull), but only a <em>predicate</em> (adjective) with P1 (+0.161 pull). The universal premise P1 is the most isolated sentence in the triad &mdash; a retrieval system querying for the conclusion would rank P2 first but P1 is the blind spot.</p>
+
+  <h3>4.2.1 The Syllogism as Regression</h3>
+  <p>The pairwise similarities above characterize the problem, but the deeper question is whether the embedding space contains the information needed to <em>construct</em> C from P1 and P2. We reframe this as a regression: given the embeddings of P1 and P2 (or of bare words), predict the embedding of C, using cosine similarity to the actual C as the evaluation metric.</p>
+
+  <table>
+    <thead>
+      <tr><th>Model</th><th>Params</th><th>Mean cos(C&#x302;, C)</th><th>Interpretation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&alpha;&middot;member + &beta;&middot;adj + &mu;</td><td>1,026</td><td>0.948 (CV)</td><td>Bare words + sentence template</td></tr>
+      <tr><td>P2 + (adj &minus; class)</td><td>0</td><td>0.881</td><td>Syllogism = vector substitution</td></tr>
+      <tr><td>&alpha;&middot;member + &beta;&middot;adj</td><td>2</td><td>0.873</td><td>Bare word composition</td></tr>
+      <tr><td>&alpha;P1 + &beta;P2</td><td>2</td><td>0.790</td><td>Premise blend (&alpha;&asymp;0.15, &beta;&asymp;0.69)</td></tr>
+      <tr><td>P2 alone</td><td>0</td><td>0.779</td><td>Baseline</td></tr>
+      <tr><td>P2 + &gamma;P1</td><td>1</td><td>0.777</td><td>&gamma; &asymp; 0: P1 adds nothing</td></tr>
+    </tbody>
+  </table>
+
+  <p>Three findings stand out. First, <strong>P1 contributes nothing</strong>: fitting C &asymp; P2 + &gamma;P1 yields &gamma; &asymp; &minus;0.02 &mdash; the universal premise is informationally redundant for constructing the conclusion. Even in the four-input kitchen-sink model (&alpha;P1 + &beta;P2 + &gamma;&middot;member + &delta;&middot;adj), the P1 coefficient is &minus;0.002. Second, <strong>bare words beat full premises</strong>: &alpha;&middot;member + &beta;&middot;adj (0.873) outperforms &alpha;P1 + &beta;P2 (0.790). The sentence syntax (&ldquo;All &hellip; are &hellip;&rdquo;, &ldquo;&hellip; is a &hellip;&rdquo;) adds noise, not signal. Third, the zero-parameter structural model <strong>S1 = P2 + (adj &minus; class) = 0.881</strong> reveals the syllogism as literal vector substitution: take the membership premise, subtract the class embedding, add the adjective embedding. In the five-input model, the learned class coefficient is &minus;0.464 &mdash; the regression independently discovers the same subtraction.</p>
+
+  <p>The conclusion is that the information for syllogistic inference <em>exists</em> in the embedding space (0.948 recoverable) but is <em>not accessible via similarity search</em>. A retrieval system cannot perform vector arithmetic &mdash; it can only rank by cosine to a query. The gap is not missing information but the wrong <strong>access pattern</strong>: similarity versus composition. This is precisely the gap the VKG bridges by extracting propositions and reasoning symbolically over them.</p>
+
   <h3>4.3 Causal Chain Decay</h3>
   <p>For the altitude &rarr; pressure &rarr; boiling chain:</p>
 
