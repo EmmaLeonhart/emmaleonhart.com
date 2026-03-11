@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dot Product Visualizer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --panel: #12121a;
+    --border: #1e1e2e;
+    --col-a: #f97316;
+    --col-b: #38bdf8;
+    --col-proj: #a78bfa;
+    --col-perp: #34d399;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --positive: #34d399;
+    --negative: #f43f5e;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  h1 span { color: var(--col-a); }
+  h1 span.b { color: var(--col-b); }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: -12px;
+  }
+
+  .layout {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 960px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  canvas {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: crosshair;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .sidebar {
+    flex: 1;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .card-title {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .vector-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  .dot-a { color: var(--col-a); font-weight: 700; }
+  .dot-b { color: var(--col-b); font-weight: 700; }
+  .dot-proj { color: var(--col-proj); font-weight: 700; }
+  .muted { color: var(--muted); }
+
+  .formula-block {
+    background: #0f0f17;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    border-left: 3px solid var(--border);
+  }
+
+  .formula-block.geo { border-left-color: var(--col-proj); }
+  .formula-block.alg { border-left-color: var(--col-b); }
+
+  .result-big {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.03em;
+    transition: color 0.3s;
+    text-align: center;
+    padding: 6px 0;
+  }
+
+  .insight-box {
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s;
+  }
+
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .legend-line {
+    width: 24px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .legend-line.dashed {
+    background: repeating-linear-gradient(90deg, currentColor 0, currentColor 4px, transparent 4px, transparent 8px);
+    height: 2px;
+  }
+
+  .angle-arc-label {
+    font-size: 0.7rem;
+  }
+
+  #angleBar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  #angleBarFill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--positive), #facc15, var(--negative));
+    transition: width 0.1s;
+  }
+  #angleLabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<h1><span>A</span> · <span class="b">B</span> — Dot Product</h1>
+<p class="subtitle">drag the vector tips &nbsp;|&nbsp; watch everything update live</p>
+
+<div class="layout">
+  <canvas id="c" width="520" height="520"></canvas>
+
+  <div class="sidebar">
+
+    <div class="card">
+      <div class="card-title">Vectors</div>
+      <div class="vector-row"><span class="dot-a">A</span><span class="muted">= (</span><span id="ax">6</span><span class="muted">,</span><span id="ay">0</span><span class="muted">)&nbsp;&nbsp;|A| =</span><span id="am">6.00</span></div>
+      <div class="vector-row"><span class="dot-b">B</span><span class="muted">= (</span><span id="bx">2</span><span class="muted">,</span><span id="by">2</span><span class="muted">)&nbsp;&nbsp;|B| =</span><span id="bm">2.83</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Result</div>
+      <div id="resultBig" class="result-big">12</div>
+      <div id="insightBox" class="insight-box"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Algebraic formula</div>
+      <div class="formula-block alg">
+        A·B = <span class="dot-a">a<sub>x</sub></span>·<span class="dot-b">b<sub>x</sub></span> + <span class="dot-a">a<sub>y</sub></span>·<span class="dot-b">b<sub>y</sub></span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;= <span id="fAlg">...</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Geometric formula</div>
+      <div class="formula-block geo">
+        A·B = |A||B| cos θ<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;= <span id="fGeo">...</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Angle θ</div>
+      <div id="angleVal" style="font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:600; margin-bottom:6px;">45.0°</div>
+      <div id="angleBar"><div id="angleBarFill" style="width:25%"></div></div>
+      <div id="angleLabel"><span>0°</span><span>90° ← zero here</span><span>180°</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Legend</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-line" style="background:var(--col-a)"></div><span style="color:var(--col-a)">A</span>&nbsp;— vector A</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--col-b)"></div><span style="color:var(--col-b)">B</span>&nbsp;— vector B</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--col-proj)"></div><span style="color:var(--col-proj)">proj</span>&nbsp;— projection of A onto B</div>
+        <div class="legend-item"><div class="legend-line dashed" style="color:var(--col-proj)"></div>drop line from A tip to B</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--col-perp); height:2px; border-top: 2px dashed var(--col-perp); background:none"></div>⊥ marker when 90°</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const CX = W/2, CY = H/2;
+const SCALE = 40;
+
+let vA = {x: 6, y: 0};
+let vB = {x: 2, y: 2};
+let dragging = null;
+
+function toCanvas(v) { return {x: CX + v.x * SCALE, y: CY - v.y * SCALE}; }
+function toWorld(p)  { return {x: (p.x - CX) / SCALE, y: -(p.y - CY) / SCALE}; }
+
+function drawArrow(x1,y1,x2,y2,color,width=2.5,label='',labelColor='') {
+  const dx = x2-x1, dy = y2-y1;
+  const len = Math.hypot(dx,dy);
+  if(len < 1) return;
+  const ux = dx/len, uy = dy/len;
+  const hw = 10, hh = 5;
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+  // arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - ux*hw + uy*hh, y2 - uy*hw - ux*hh);
+  ctx.lineTo(x2 - ux*hw - uy*hh, y2 - uy*hw + ux*hh);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  if(label) {
+    ctx.font = 'bold 14px Syne, sans-serif';
+    ctx.fillStyle = labelColor || color;
+    ctx.fillText(label, x2 + ux*14 + 4, y2 + uy*14 + 4);
+  }
+}
+
+function drawDashed(x1,y1,x2,y2,color,dash=[6,5]) {
+  ctx.beginPath();
+  ctx.setLineDash(dash);
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function dot(a,b) { return a.x*b.x + a.y*b.y; }
+function mag(v)   { return Math.hypot(v.x, v.y); }
+
+function draw() {
+  ctx.clearRect(0,0,W,H);
+
+  // grid
+  ctx.lineWidth = 1;
+  for(let gx = 0; gx <= W; gx += SCALE) {
+    ctx.strokeStyle = gx === CX ? '#2a2a3e' : '#16161f';
+    ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+  }
+  for(let gy = 0; gy <= H; gy += SCALE) {
+    ctx.strokeStyle = gy === CY ? '#2a2a3e' : '#16161f';
+    ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+  }
+
+  // axis labels
+  ctx.font = '10px JetBrains Mono, monospace';
+  ctx.fillStyle = '#2a2a40';
+  for(let i = -6; i <= 6; i++) {
+    if(i===0) continue;
+    ctx.fillText(i, CX + i*SCALE - 5, CY + 14);
+    ctx.fillText(i, CX + 4, CY - i*SCALE + 4);
+  }
+
+  const pA = toCanvas(vA);
+  const pB = toCanvas(vB);
+  const mA = mag(vA), mB = mag(vB);
+  const dpVal = dot(vA, vB);
+
+  // --- Projection of A onto B ---
+  let projLen = 0, projPt = {x:CX, y:CY}, projEndCanvas = {x:CX, y:CY};
+  if(mB > 0.001) {
+    const bUnit = {x: vB.x/mB, y: vB.y/mB};
+    projLen = dpVal / mB; // signed scalar projection
+    const projWorld = {x: bUnit.x * projLen, y: bUnit.y * projLen};
+    projPt = toCanvas(projWorld);
+    projEndCanvas = projPt;
+
+    // draw projection vector (on B's line)
+    if(Math.abs(projLen) > 0.05) {
+      ctx.beginPath();
+      ctx.moveTo(CX, CY);
+      ctx.lineTo(projEndCanvas.x, projEndCanvas.y);
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // arrowhead on projection
+      const px = projEndCanvas.x - CX, py = projEndCanvas.y - CY;
+      const pl = Math.hypot(px,py);
+      if(pl > 8) {
+        const pux = px/pl, puy = py/pl;
+        ctx.beginPath();
+        ctx.moveTo(projEndCanvas.x, projEndCanvas.y);
+        ctx.lineTo(projEndCanvas.x - pux*9 + puy*4, projEndCanvas.y - puy*9 - pux*4);
+        ctx.lineTo(projEndCanvas.x - pux*9 - puy*4, projEndCanvas.y - puy*9 + pux*4);
+        ctx.closePath();
+        ctx.fillStyle = '#a78bfa';
+        ctx.fill();
+      }
+
+      // label projection
+      ctx.font = '11px JetBrains Mono, monospace';
+      ctx.fillStyle = '#a78bfa';
+      const midPx = (CX + projEndCanvas.x)/2;
+      const midPy = (CY + projEndCanvas.y)/2;
+      const perpX = -(projEndCanvas.y - CY)/pl * 18;
+      const perpY =  (projEndCanvas.x - CX)/pl * 18;
+      ctx.fillText(`proj = ${projLen.toFixed(2)}`, midPx + perpX - 20, midPy + perpY);
+    }
+
+    // dashed drop line from A tip to its foot on B
+    drawDashed(pA.x, pA.y, projEndCanvas.x, projEndCanvas.y, '#a78bfa88', [5,4]);
+
+    // right-angle marker at foot if nearly perpendicular
+    const cosT = mA > 0 && mB > 0 ? dpVal/(mA*mB) : 1;
+    const theta = Math.acos(Math.max(-1,Math.min(1,cosT)));
+    if(Math.abs(theta - Math.PI/2) < 0.12) {
+      const bx = bUnit.x * 10, by = -bUnit.y * 10;
+      const ax = -(vA.y/mA)*10, ay = (vA.x/mA)*10; // perpendicular to B direction... just use small box
+      ctx.beginPath();
+      ctx.strokeStyle = '#34d39988';
+      ctx.lineWidth = 1.5;
+      const sx = projEndCanvas.x, sy = projEndCanvas.y;
+      const nx = bUnit.x*10, ny = -bUnit.y*10; // along B
+      const ox = bUnit.y*10, oy = bUnit.x*10;  // perp to B (in canvas coords)
+      ctx.moveTo(sx + nx, sy + ny);
+      ctx.lineTo(sx + nx - ox, sy + ny - oy);
+      ctx.lineTo(sx - ox, sy - oy);
+      ctx.stroke();
+    }
+  }
+
+  // parallelogram fill (area = |cross product|)
+  const cosT2 = mA > 0 && mB > 0 ? dpVal/(mA*mB) : 1;
+  const theta2 = Math.acos(Math.max(-1,Math.min(1,cosT2)));
+  const area = mA * mB * Math.abs(Math.sin(theta2));
+  const alpha = Math.min(0.12, area / 80);
+  ctx.beginPath();
+  ctx.moveTo(CX, CY);
+  ctx.lineTo(pA.x, pA.y);
+  ctx.lineTo(pA.x + (pB.x - CX), pA.y + (pB.y - CY));
+  ctx.lineTo(pB.x, pB.y);
+  ctx.closePath();
+  ctx.fillStyle = `rgba(100,100,200,${alpha})`;
+  ctx.fill();
+
+  // angle arc
+  if(mA > 0.1 && mB > 0.1) {
+    const angA = Math.atan2(-vA.y, vA.x);
+    const angB = Math.atan2(-vB.y, vB.x);
+    const arcR = 28;
+    ctx.beginPath();
+    ctx.arc(CX, CY, arcR, Math.min(angA,angB), Math.max(angA,angB));
+    ctx.strokeStyle = '#facc1588';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([3,3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // θ label
+    const midAng = (angA + angB) / 2;
+    ctx.font = '12px Syne, sans-serif';
+    ctx.fillStyle = '#facc15';
+    ctx.fillText('θ', CX + Math.cos(midAng)*40, CY + Math.sin(midAng)*40);
+  }
+
+  // vectors
+  drawArrow(CX, CY, pA.x, pA.y, '#f97316', 3, 'A', '#f97316');
+  drawArrow(CX, CY, pB.x, pB.y, '#38bdf8', 3, 'B', '#38bdf8');
+
+  // dot handles
+  for(const [p, col] of [[pA,'#f97316'],[pB,'#38bdf8']]) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 7, 0, Math.PI*2);
+    ctx.fillStyle = col;
+    ctx.fill();
+    ctx.strokeStyle = '#0a0a0f';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  // update UI
+  const cosT = mA > 0 && mB > 0 ? dpVal/(mA*mB) : 1;
+  const thetaDeg = Math.acos(Math.max(-1,Math.min(1,cosT))) * 180/Math.PI;
+
+  document.getElementById('ax').textContent = vA.x.toFixed(1);
+  document.getElementById('ay').textContent = vA.y.toFixed(1);
+  document.getElementById('bx').textContent = vB.x.toFixed(1);
+  document.getElementById('by').textContent = vB.y.toFixed(1);
+  document.getElementById('am').textContent = mA.toFixed(2);
+  document.getElementById('bm').textContent = mB.toFixed(2);
+
+  const resultEl = document.getElementById('resultBig');
+  resultEl.textContent = dpVal.toFixed(2);
+  resultEl.style.color = dpVal > 0.05 ? 'var(--positive)' : dpVal < -0.05 ? 'var(--negative)' : '#facc15';
+
+  document.getElementById('fAlg').textContent =
+    `(${vA.x.toFixed(1)})(${vB.x.toFixed(1)}) + (${vA.y.toFixed(1)})(${vB.y.toFixed(1)}) = ${dpVal.toFixed(2)}`;
+  document.getElementById('fGeo').textContent =
+    `${mA.toFixed(2)} × ${mB.toFixed(2)} × cos(${thetaDeg.toFixed(1)}°) = ${dpVal.toFixed(2)}`;
+
+  document.getElementById('angleVal').textContent = thetaDeg.toFixed(1) + '°';
+  document.getElementById('angleBarFill').style.width = (thetaDeg/180*100)+'%';
+
+  // insight
+  const ib = document.getElementById('insightBox');
+  let msg, bg, border;
+  if(Math.abs(thetaDeg - 90) < 5) {
+    msg = '⊥ Nearly perpendicular — dot product ≈ 0. A casts no shadow onto B.';
+    bg = '#1a1a12'; border = '#facc15';
+  } else if(dpVal > 0) {
+    msg = `✓ Positive: A's shadow falls along B (same side). θ < 90°.`;
+    bg = '#0f1a14'; border = 'var(--positive)';
+  } else {
+    msg = `✗ Negative: A's shadow falls opposite to B. θ > 90°.`;
+    bg = '#1a0f11'; border = 'var(--negative)';
+  }
+  ib.style.background = bg;
+  ib.style.borderLeft = `3px solid ${border}`;
+  ib.textContent = msg;
+}
+
+// interaction
+function getPos(e) {
+  const r = canvas.getBoundingClientRect();
+  const cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+  const cy = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
+  return {x: cx * W/r.width, y: cy * H/r.height};
+}
+
+function snap(v) { return {x: Math.round(v.x*2)/2, y: Math.round(v.y*2)/2}; }
+
+function startDrag(e) {
+  e.preventDefault();
+  const p = getPos(e);
+  const pA = toCanvas(vA), pB = toCanvas(vB);
+  if(Math.hypot(p.x-pA.x, p.y-pA.y) < 18) dragging = 'A';
+  else if(Math.hypot(p.x-pB.x, p.y-pB.y) < 18) dragging = 'B';
+}
+
+function moveDrag(e) {
+  if(!dragging) return;
+  e.preventDefault();
+  const p = getPos(e);
+  const w = snap(toWorld(p));
+  const clamped = {x: Math.max(-7,Math.min(7,w.x)), y: Math.max(-5,Math.min(5,w.y))};
+  if(dragging==='A') vA = clamped;
+  else vB = clamped;
+  draw();
+}
+
+function endDrag() { dragging = null; }
+
+canvas.addEventListener('mousedown', startDrag);
+canvas.addEventListener('mousemove', moveDrag);
+canvas.addEventListener('mouseup', endDrag);
+canvas.addEventListener('touchstart', startDrag, {passive:false});
+canvas.addEventListener('touchmove', moveDrag, {passive:false});
+canvas.addEventListener('touchend', endDrag);
+
+draw();
+</script>
+</body>
+</html>
