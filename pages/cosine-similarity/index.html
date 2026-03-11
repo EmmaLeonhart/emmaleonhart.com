@@ -22,7 +22,7 @@
       padding: 40px 24px;
     }
     .container {
-      max-width: 800px;
+      max-width: 1060px;
       width: 100%;
     }
     .back {
@@ -43,15 +43,20 @@
     .subtitle {
       color: #8888a0;
       font-size: 0.95rem;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       line-height: 1.5;
     }
+    .main-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
     .canvas-wrap {
-      width: 100%;
+      flex: 0 0 auto;
+      width: 380px;
       border: 1px solid #1e1e2a;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 20px;
       background: #0a0a0f;
     }
     canvas {
@@ -60,55 +65,57 @@
       touch-action: none;
     }
     #info {
+      flex: 1;
+      min-width: 0;
       background: #12121a;
       border: 1px solid #1e1e2a;
       border-radius: 8px;
-      padding: 20px;
+      padding: 16px;
     }
     .info-grid {
       display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
     .info-vec {
       flex: 1;
-      padding: 10px 14px;
+      padding: 8px 10px;
       background: #0e0e16;
       border-radius: 6px;
       border-left: 3px solid;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-      line-height: 1.6;
+      line-height: 1.5;
     }
     .dot-w { color: #38bdf8; font-weight: 700; }
     .dot-t { color: #facc15; font-weight: 700; }
     .section-label {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: #666880;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .work-card {
       background: #0e0e16;
       border-radius: 6px;
-      padding: 16px 20px;
-      margin-bottom: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
       font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
     }
     .work-step {
       display: flex;
       justify-content: center;
       align-items: baseline;
-      line-height: 2.2;
+      line-height: 2;
     }
     .work-step.dim { color: #666880; }
     .work-result {
       text-align: center;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      padding-top: 6px;
+      padding-top: 4px;
       border-top: 1px solid #1e1e2a;
       margin-top: 4px;
       transition: color 0.3s;
@@ -116,49 +123,49 @@
     .threshold-line {
       text-align: center;
       font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-      font-size: 0.9rem;
-      padding: 8px 0;
-      margin-bottom: 12px;
+      font-size: 0.82rem;
+      padding: 6px 0;
+      margin-bottom: 10px;
     }
     .status-card {
       border-radius: 8px;
-      padding: 16px 20px;
-      margin-bottom: 16px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
       border: 2px solid;
       text-align: center;
       transition: all 0.3s;
     }
     .status-label {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 800;
       letter-spacing: 1px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .status-detail {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #9898ac;
     }
     .insight-box {
       border-radius: 6px;
-      padding: 10px 12px;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      margin-bottom: 16px;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      margin-bottom: 12px;
       transition: all 0.3s;
     }
     .angle-row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .angle-bar-wrap { flex: 1; }
     .info-detail {
       color: #8888a0;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       white-space: nowrap;
     }
     #angleBar {
-      height: 6px;
+      height: 5px;
       border-radius: 3px;
       background: #1e1e2a;
       overflow: hidden;
@@ -170,17 +177,25 @@
       transition: width 0.1s;
     }
     #angleLabel {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: #666880;
-      margin-top: 4px;
+      margin-top: 3px;
       display: flex;
       justify-content: space-between;
+    }
+    @media (max-width: 740px) {
+      .main-layout {
+        flex-direction: column;
+      }
+      .canvas-wrap {
+        width: 100%;
+      }
     }
     @media (max-width: 480px) {
       body { padding: 24px 12px; }
       h1 { font-size: 1.3rem; }
       .info-grid { flex-direction: column; }
-      .work-card { padding: 12px 10px; font-size: 0.85rem; }
+      .work-card { padding: 10px 8px; font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -188,31 +203,31 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Cosine Similarity & AI</h1>
-    <p class="subtitle">A smart sprinkler uses cosine similarity to decide: does the weather "point toward" ideal watering conditions? Only the direction matters &mdash; not the intensity. Drag the weather vector to explore.</p>
-    <div class="canvas-wrap">
-      <canvas id="canvas"></canvas>
-    </div>
-    <div id="info">
-      <div class="info-grid">
-        <div class="info-vec" style="border-left-color: #38bdf8;">
-          <span class="dot-w">Weather</span> = (<span id="wx">0</span>, <span id="wy">5</span>)
-        </div>
-        <div class="info-vec" style="border-left-color: #facc15;">
-          <span class="dot-t">Target</span> = (6, 0) <span style="color:#666880;font-size:0.8em">fixed</span>
-        </div>
+    <p class="subtitle">A smart sprinkler uses cosine similarity to decide: does the weather "point toward" ideal watering conditions? Only direction matters &mdash; not intensity. Drag the weather vector to explore.</p>
+    <div class="main-layout">
+      <div class="canvas-wrap">
+        <canvas id="canvas"></canvas>
       </div>
-      <div class="section-label">Cosine Similarity</div>
-      <div id="work" class="work-card">
-        <!-- JS builds the step-by-step work here -->
-      </div>
-      <div id="threshold-compare" class="threshold-line"></div>
-      <div id="sprinkler-status" class="status-card"></div>
-      <div id="insightBox" class="insight-box"></div>
-      <div class="angle-row">
-        <div class="info-detail">&theta; = <span id="angleVal" style="font-weight:600;">90.0&deg;</span></div>
-        <div class="angle-bar-wrap">
-          <div id="angleBar"><div id="angleBarFill" style="width:100%"></div></div>
-          <div id="angleLabel"><span>0&deg;</span><span>45&deg;</span><span>90&deg;</span></div>
+      <div id="info">
+        <div class="info-grid">
+          <div class="info-vec" style="border-left-color: #38bdf8;">
+            <span class="dot-w">Weather</span> = (<span id="wx">0</span>, <span id="wy">5</span>)
+          </div>
+          <div class="info-vec" style="border-left-color: #facc15;">
+            <span class="dot-t">Target</span> = (6, 0) <span style="color:#666880;font-size:0.8em">fixed</span>
+          </div>
+        </div>
+        <div class="section-label">Cosine Similarity</div>
+        <div id="work" class="work-card"></div>
+        <div id="threshold-compare" class="threshold-line"></div>
+        <div id="sprinkler-status" class="status-card"></div>
+        <div id="insightBox" class="insight-box"></div>
+        <div class="angle-row">
+          <div class="info-detail">&theta; = <span id="angleVal" style="font-weight:600;">90.0&deg;</span></div>
+          <div class="angle-bar-wrap">
+            <div id="angleBar"><div id="angleBarFill" style="width:100%"></div></div>
+            <div id="angleLabel"><span>0&deg;</span><span>45&deg;</span><span>90&deg;</span></div>
+          </div>
         </div>
       </div>
     </div>

@@ -39,9 +39,9 @@ function dot(a, b) { return a.x * b.x + a.y * b.y; }
 function mag(v) { return Math.hypot(v.x, v.y); }
 function resize() {
     const container = canvas.parentElement;
-    const w = Math.min(container.clientWidth, 800);
+    const w = container.clientWidth;
     // Compute scale from available width
-    SCALE = Math.max(30, Math.min(55, (w - PAD_LEFT - PAD_RIGHT) / MAX_VAL));
+    SCALE = Math.max(25, Math.min(50, (w - PAD_LEFT - PAD_RIGHT) / MAX_VAL));
     const h = PAD_TOP + MAX_VAL * SCALE + PAD_BOTTOM;
     const dpr = window.devicePixelRatio || 1;
     W = w;
