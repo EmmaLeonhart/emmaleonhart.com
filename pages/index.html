@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Embedding geometry, knowledge graphs, and Wikidata integration.">
+  <meta property="og:description" content="Software developer — AI tooling, knowledge graphs, Wikidata, and open-source SDKs.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
-  <meta name="twitter:description" content="Embedding geometry, knowledge graphs, and Wikidata integration.">
-  <meta name="description" content="Emma Leonhart — embedding geometry, knowledge graphs, and Wikidata integration.">
+  <meta name="twitter:description" content="Software developer — AI tooling, knowledge graphs, Wikidata, and open-source SDKs.">
+  <meta name="description" content="Emma Leonhart — software developer working on AI tooling, knowledge graphs, Wikidata integration, and open-source SDKs.">
   <title>Emma Leonhart</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,6 +77,46 @@
       color: #707088;
       line-height: 1.5;
     }
+    .project-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      color: #7c8cf8;
+      background: rgba(124, 140, 248, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-right: 4px;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .tool {
+      display: block;
+      padding: 12px 16px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .tool:hover {
+      border-color: #3a3a50;
+      background: #16161f;
+    }
+    .tool-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #b0b0cc;
+      margin-bottom: 2px;
+    }
+    .tool-desc {
+      font-size: 0.78rem;
+      color: #707088;
+      line-height: 1.4;
+    }
     .bio {
       font-size: 0.95rem;
       line-height: 1.7;
@@ -108,29 +148,75 @@
 <body>
   <div class="container">
     <h1>Emma Leonhart</h1>
-    <p class="tagline">Embedding geometry, knowledge graphs, and structured data on the open web.</p>
+    <p class="tagline">Software developer &mdash; AI tooling, knowledge graphs, Wikidata, and open-source libraries.</p>
 
     <div class="section">
       <h2>Projects</h2>
-      <a class="project" href="/embeddings/">
-        <div class="project-title">Embedding Space Viewer</div>
-        <div class="project-desc">Interactive Voronoi map of 485 word embeddings projected onto custom semantic axes. Explores how distributional semantics organizes words in high-dimensional space.</div>
+      <a class="project" href="https://github.com/EmmaLeonhart/vibecoding-tutorial">
+        <div class="project-title">Vibecoding Tutorial</div>
+        <div class="project-desc">A beginner-friendly guide to vibecoding with AI. Covers good habits like unit testing, project structure, and working effectively with AI assistants.</div>
+        <span class="project-tag">Tutorial</span>
       </a>
-      <a class="project" href="/dotproduct/">
-        <div class="project-title">Dot Product Visualizer</div>
-        <div class="project-desc">Interactive 2D canvas for exploring the dot product. Drag two vectors to see projection, angle, and the geometry behind A&middot;B in real time.</div>
+      <a class="project" href="https://github.com/EmmaLeonhart/cleanvibe">
+        <div class="project-title">cleanvibe</div>
+        <div class="project-desc">Python library that helps bootstrap well-documented vibecoding projects with clean structure from the start.</div>
+        <span class="project-tag">Python</span>
       </a>
-      <a class="project" href="/crossproduct/">
-        <div class="project-title">Cross Product Visualizer</div>
-        <div class="project-desc">Interactive 2D canvas for the cross product. Drag two vectors to see the parallelogram area, rotation direction, and how A&times;B relates to 3D orientation.</div>
+      <a class="project" href="https://github.com/EmmaLeonhart/claw.py">
+        <div class="project-title">claw.py</div>
+        <div class="project-desc">Library for creating exportable OpenClaw context &mdash; portable, structured context for AI agent sessions.</div>
+        <span class="project-tag">Python</span><span class="project-tag">AI Tooling</span>
       </a>
+      <a class="project" href="https://github.com/EmmaLeonhart/OpenKrill">
+        <div class="project-title">OpenKrill</div>
+        <div class="project-desc">Kubernetes deployment for running multiple OpenClaw agent instances in parallel, with a shared API server and persistent .claw archives.</div>
+        <span class="project-tag">Kubernetes</span><span class="project-tag">AI Tooling</span>
+      </a>
+      <a class="project" href="https://github.com/EmmaLeonhart/secretarybird-assistant">
+        <div class="project-title">Secretarybird Assistant</div>
+        <div class="project-desc">Business assistant using Electron + OpenClaw to help non-technical business owners organize data and workflows. Built for Girls in Tech UBCO hackathon 2026.</div>
+        <span class="project-tag">Electron</span><span class="project-tag">Hackathon</span>
+      </a>
+      <a class="project" href="https://github.com/EmmaLeonhart/pramana-python-sdk">
+        <div class="project-title">Pramana SDKs</div>
+        <div class="project-desc">Multi-language SDK ecosystem (Python, .NET, Go, Java, npm, Rust) for the Pramana knowledge graph &mdash; exact-arithmetic value types with deterministic IDs.</div>
+        <span class="project-tag">Python</span><span class="project-tag">C#</span><span class="project-tag">Go</span><span class="project-tag">Rust</span>
+      </a>
+      <a class="project" href="https://github.com/EmmaLeonhart/WikiSQL">
+        <div class="project-title">WikiSQL</div>
+        <div class="project-desc">Query Wikidata with SQL instead of SPARQL &mdash; making the world's largest knowledge graph more accessible.</div>
+        <span class="project-tag">SQL</span><span class="project-tag">Wikidata</span>
+      </a>
+      <a class="project" href="https://github.com/EmmaLeonhart/Planetarium">
+        <div class="project-title">Planetarium</div>
+        <div class="project-desc">Desktop planetarium application for Windows &mdash; observe the night sky, track planets, and explore constellations in real time.</div>
+        <span class="project-tag">C#</span><span class="project-tag">Desktop</span>
+      </a>
+    </div>
+
+    <div class="section">
+      <h2>Interactive Explainers</h2>
+      <div class="tools-grid">
+        <a class="tool" href="/embeddings/">
+          <div class="tool-title">Embedding Viewer</div>
+          <div class="tool-desc">Voronoi map of 485 word embeddings with custom axis projection</div>
+        </a>
+        <a class="tool" href="/dotproduct/">
+          <div class="tool-title">Dot Product</div>
+          <div class="tool-desc">Drag vectors to see projection, angle, and both formulas live</div>
+        </a>
+        <a class="tool" href="/crossproduct/">
+          <div class="tool-title">Cross Product</div>
+          <div class="tool-desc">Drag vectors to see parallelogram area and rotation direction</div>
+        </a>
+      </div>
     </div>
 
     <div class="section">
       <h2>About</h2>
       <div class="bio">
-        <p>I study the geometry of embedding spaces &mdash; how language models organize meaning, where they succeed, and where they systematically fail. My current work maps the internal structure of embedding models to understand why vector-similarity retrieval breaks down on logical reasoning tasks.</p>
-        <p>I also work on Wikidata integration for Japanese cultural heritage, building structured linked-data pipelines for Shinto shrines and historical records.</p>
+        <p>I build AI tooling, knowledge graph infrastructure, and open-source libraries. Most of my work involves making AI agents more useful in practice &mdash; from context management (OpenClaw) to structured data pipelines (Wikidata, Pramana).</p>
+        <p>I also maintain the <a href="https://shinto.miraheze.org/" style="color:#7c8cf8;text-decoration:none;">Encyclopedia of Shinto</a>, integrating shrine data with Wikidata for structured linked-data coverage of Japan's shrine network.</p>
       </div>
     </div>
 
