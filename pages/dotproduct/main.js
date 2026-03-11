@@ -19,7 +19,7 @@ let ctx;
 let vecA = { x: 4, y: 2 };
 let vecB = { x: 2, y: 3 };
 let dragging = null;
-const SCALE = 40;
+let SCALE = 40;
 let W = 0, H = 0;
 let CX = 0, CY = 0;
 function toCanvas(v) {
@@ -34,11 +34,12 @@ function toWorld(px, py) {
 function dot(a, b) { return a.x * b.x + a.y * b.y; }
 function mag(v) { return Math.hypot(v.x, v.y); }
 function resize() {
-    const wrap = canvas.parentElement;
-    const size = Math.min(wrap.clientWidth, 560);
+    const container = canvas.parentElement;
+    const w = Math.min(container.clientWidth, 800);
+    const h = Math.min(w, 600);
     const dpr = window.devicePixelRatio || 1;
-    W = size;
-    H = size;
+    W = w;
+    H = h;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
     canvas.style.width = W + 'px';
@@ -46,6 +47,7 @@ function resize() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     CX = W / 2;
     CY = H / 2;
+    SCALE = Math.max(30, Math.min(50, W / 16));
     draw();
 }
 // ============================================================
