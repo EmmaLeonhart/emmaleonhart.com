@@ -60,3 +60,4 @@ This project builds on:
 - Python scripts use `python` (not `python3`) on this Windows system
 - Commit messages explain *why*, not just what
 - README.md must always reflect current project state
+- **Cosine similarity is a loss function, not an analysis.** When designing experiments, cosine similarity should be used as the error metric for evaluating models (regression, synthesis, etc.), not as the primary analytical tool. Comparing pairwise cosine similarities between sentences is rarely the right first step — instead, frame the question as a transformation, regression, or logical operation, and use cosine to measure how well the predicted output matches the target.
