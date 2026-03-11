@@ -38,8 +38,8 @@ function toCanvas(v: Vec2): Vec2 {
 
 function toWorld(px: number, py: number): Vec2 {
   return {
-    x: Math.round((px - CX) / SCALE * 2) / 2,
-    y: Math.round(-(py - CY) / SCALE * 2) / 2,
+    x: Math.round((px - CX) / SCALE),
+    y: Math.round(-(py - CY) / SCALE),
   };
 }
 
@@ -255,19 +255,19 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
   const cosT = mA > 0 && mB > 0 ? dpVal / (mA * mB) : 1;
   const thetaDeg = Math.acos(Math.max(-1, Math.min(1, cosT))) * 180 / Math.PI;
 
-  setText('ax', vecA.x.toFixed(1));
-  setText('ay', vecA.y.toFixed(1));
-  setText('bx', vecB.x.toFixed(1));
-  setText('by', vecB.y.toFixed(1));
+  setText('ax', String(vecA.x));
+  setText('ay', String(vecA.y));
+  setText('bx', String(vecB.x));
+  setText('by', String(vecB.y));
   setText('am', mA.toFixed(2));
   setText('bm', mB.toFixed(2));
 
   const resultEl = document.getElementById('resultBig')!;
-  resultEl.textContent = dpVal.toFixed(2);
-  resultEl.style.color = dpVal > 0.05 ? COLORS.positive : dpVal < -0.05 ? COLORS.negative : COLORS.zero;
+  resultEl.textContent = String(dpVal);
+  resultEl.style.color = dpVal > 0 ? COLORS.positive : dpVal < 0 ? COLORS.negative : COLORS.zero;
 
-  setText('fAlg', `(${vecA.x.toFixed(1)})(${vecB.x.toFixed(1)}) + (${vecA.y.toFixed(1)})(${vecB.y.toFixed(1)}) = ${dpVal.toFixed(2)}`);
-  setText('fGeo', `${mA.toFixed(2)} \u00D7 ${mB.toFixed(2)} \u00D7 cos(${thetaDeg.toFixed(1)}\u00B0) = ${dpVal.toFixed(2)}`);
+  setText('fAlg', `(${vecA.x})(${vecB.x}) + (${vecA.y})(${vecB.y}) = ${dpVal}`);
+  setText('fGeo', `${mA.toFixed(2)} \u00D7 ${mB.toFixed(2)} \u00D7 cos(${thetaDeg.toFixed(1)}\u00B0) = ${dpVal}`);
 
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
   (document.getElementById('angleBarFill') as HTMLElement).style.width = (thetaDeg / 180 * 100) + '%';
