@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Keys, Queries & Values">
+  <meta property="og:description" content="Interactive demo of transformer self-attention — see how tokens decide which other tokens matter.">
+  <meta property="og:url" content="https://emmaleonhart.com/attention/">
+  <meta name="description" content="Interactive transformer attention explainer. Click tokens to see queries, keys, values, and attention weights on 'The cat is eating.'">
+  <title>Keys, Queries & Values</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+    }
+    .container { max-width: 900px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      color: #8888a0;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .sentence {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      color: #666880;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    /* Token chips */
+    #token-chips {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .token-chip {
+      padding: 8px 18px;
+      background: #12121a;
+      border: 2px solid #1e1e2a;
+      border-radius: 8px;
+      color: #b0b0cc;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .token-chip:hover {
+      border-color: #3a3a50;
+      background: #16161f;
+    }
+    .token-chip.selected {
+      border-color: #7c8cf8;
+      background: rgba(124, 140, 248, 0.1);
+      color: #e8e8f0;
+    }
+
+    /* Main layout: side-by-side */
+    .main-layout {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    /* Left panel: attention bars */
+    .panel-left {
+      flex: 0 0 250px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .panel-label {
+      font-size: 0.85rem;
+      color: #8888a0;
+      margin-bottom: 12px;
+    }
+    .attn-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .attn-row.peak { background: rgba(52, 211, 153, 0.06); }
+    .attn-name {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      color: #b0b0cc;
+      width: 32px;
+      flex-shrink: 0;
+    }
+    .attn-track {
+      flex: 1;
+      height: 8px;
+      background: #1e1e2a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .attn-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .attn-pct {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.78rem;
+      width: 50px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Right panel: math breakdown */
+    .panel-right {
+      flex: 1;
+      min-width: 0;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    /* Vector display cells */
+    .vec-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .vec-cell {
+      flex: 1;
+      background: #0e0e16;
+      border-radius: 5px;
+      padding: 6px 8px;
+      text-align: center;
+      border: 1px solid #1e1e2a;
+      transition: all 0.2s;
+    }
+    .vec-cell.active {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.06);
+    }
+    .dl {
+      display: block;
+      font-size: 0.6rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+    .dv {
+      display: block;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9rem;
+      color: #d0d0dc;
+    }
+    .vec-cell.active .dv { color: #34d399; }
+    .intuition {
+      font-size: 0.8rem;
+      color: #8888a0;
+      font-style: italic;
+      margin-bottom: 14px;
+      padding-left: 2px;
+    }
+
+    /* Dot product cells */
+    .dots-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .dot-cell {
+      flex: 1;
+      text-align: center;
+      background: #0e0e16;
+      border-radius: 5px;
+      padding: 6px 4px;
+      border: 1px solid #1e1e2a;
+      transition: all 0.2s;
+    }
+    .dot-cell.dot-peak {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.08);
+    }
+    .dt {
+      display: block;
+      font-size: 0.65rem;
+      color: #666880;
+      margin-bottom: 2px;
+    }
+    .dn {
+      display: block;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9rem;
+      color: #b0b0cc;
+    }
+    .dot-cell.dot-peak .dn { color: #34d399; font-weight: 600; }
+
+    /* Scaling + softmax flow */
+    .flow-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .fv {
+      flex: 1;
+      text-align: center;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      color: #b0b0cc;
+    }
+    .flow-arrow {
+      text-align: center;
+      color: #666880;
+      font-size: 0.75rem;
+      margin: 2px 0 6px;
+    }
+
+    /* Insight box */
+    .insight-box {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: rgba(52, 211, 153, 0.04);
+      border-left: 3px solid #34d399;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #9898ac;
+    }
+
+    /* Heatmap */
+    .heatmap-section { margin-top: 8px; }
+    .heatmap-title {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    #heatmap {
+      display: grid;
+      grid-template-columns: 40px repeat(5, 1fr);
+      gap: 3px;
+      max-width: 400px;
+    }
+    .hm-corner { /* empty top-left */ }
+    .hm-ch {
+      text-align: center;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.72rem;
+      color: #666880;
+      padding: 4px 0;
+    }
+    .hm-rh {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.72rem;
+      color: #666880;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 6px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .hm-rh:hover, .hm-rh.hm-active { color: #e8e8f0; }
+    .hm-cell {
+      text-align: center;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.7rem;
+      padding: 8px 2px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .hm-cell.hm-sel {
+      outline: 2px solid #7c8cf8;
+      outline-offset: -1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .main-layout { flex-direction: column; }
+      .panel-left { flex: none; width: 100%; }
+      #heatmap { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      body { padding: 24px 12px; }
+      h1 { font-size: 1.3rem; }
+      .vec-row, .dots-row, .flow-row { flex-wrap: wrap; }
+      .vec-cell, .dot-cell { min-width: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Home</a>
+    <h1>Keys, Queries & Values</h1>
+    <p class="subtitle">How transformers decide which words matter to each other. Click a token to see its attention pattern.</p>
+    <div class="sentence">"The cat is eating" &rarr; [The, cat, is, eat, ing]</div>
+    <div id="token-chips"></div>
+    <div class="main-layout">
+      <div class="panel-left" id="attn-bars"></div>
+      <div class="panel-right" id="math-panel"></div>
+    </div>
+    <div class="heatmap-section">
+      <div class="heatmap-title">Full Attention Map</div>
+      <div id="heatmap"></div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
