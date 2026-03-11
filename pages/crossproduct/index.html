@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cross Product Visualizer">
+  <meta property="og:description" content="Interactive 2D visualization of the cross product — drag vectors and see the parallelogram area, direction, and sign.">
+  <meta property="og:url" content="https://emmaleonhart.com/crossproduct/">
+  <meta name="description" content="Interactive cross product visualizer. Drag two vectors on a 2D canvas to explore the parallelogram area, rotation direction, and the geometry behind A×B.">
+  <title>Cross Product Visualizer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      color: #8888a0;
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .canvas-wrap {
+      width: 100%;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #0a0a0f;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      touch-action: none;
+    }
+    #info {
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .info-grid {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .info-vec {
+      flex: 1;
+      padding: 10px 14px;
+      background: #0e0e16;
+      border-radius: 6px;
+      border-left: 3px solid;
+      font-size: 0.9rem;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      line-height: 1.6;
+    }
+    .info-result {
+      font-size: 0.95rem;
+    }
+    .info-main {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    }
+    .info-main strong {
+      font-size: 1.15rem;
+    }
+    .info-detail {
+      color: #8888a0;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
+    @media (max-width: 480px) {
+      body { padding: 24px 12px; }
+      h1 { font-size: 1.3rem; }
+      .info-grid { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Home</a>
+    <h1>Cross Product Visualizer</h1>
+    <p class="subtitle">Drag the vector tips to see how the cross product changes. The shaded parallelogram shows the area, and the color indicates direction (blue = counterclockwise, red = clockwise).</p>
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div id="info"></div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
