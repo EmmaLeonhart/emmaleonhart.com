@@ -16,8 +16,8 @@ const COLORS = {
 };
 let canvas;
 let ctx;
-let vecA = { x: 4, y: 2 };
-let vecB = { x: 2, y: 3 };
+let vecA = { x: 6, y: 0 };
+let vecB = { x: 3, y: 3 };
 let dragging = null;
 let SCALE = 40;
 let W = 0, H = 0;
