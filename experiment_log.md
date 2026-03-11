@@ -507,3 +507,67 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/syllogism_gap_grid.py` — Full analysis script
 - `prototype/syllogism_gap_grid_results.json` — All numerical results
 - `prototype/syllogism_gap_grid_embeddings.npz` — Raw 1024-dim vectors for 330 texts
+
+---
+
+## Experiment 15c: Syllogism Regression — Can C be constructed from P1, P2?
+
+**Date:** 2026-03-10
+**Script:** `python prototype/syllogism_regression.py`
+**Duration:** <1 second (loads embeddings from 15b, no API calls)
+
+**What:** Reframed the syllogism gap as a regression problem. Instead of asking "are premises similar?", ask "can we construct the conclusion C from the premises P1, P2 (or from bare word embeddings)?" Tested 14 models: 3 baselines, 2 structural (zero-param vector arithmetic), 6 fitted regressions (1-5 global scalars), 2 rich models (1024+ params with leave-one-member-out CV). Cosine(C_pred, C_actual) as metric across all 1000 syllogisms.
+
+**Key findings:**
+
+*1. P1 (the universal premise) contributes NOTHING:*
+- P2 alone: 0.779. P2 + γP1: 0.777 (γ = -0.023, essentially zero)
+- αP1 + βP2: 0.790 (α=0.153, β=0.692 — P2 dominates)
+- In the 4-input kitchen sink (R4), α for P1 is -0.002 — literally zero
+- The universal premise is informationally redundant for constructing C
+
+*2. Bare words beat premises:*
+- α·member + β·adj: 0.873 >> αP1 + βP2: 0.790
+- The bare word embeddings of member name and adjective compose better than full sentence embeddings
+- Sentence structure ("All ... are ...", "... is a ...") adds noise, not signal
+
+*3. S1 = P2 + (adj − class) is the star (0.881, ZERO fitted params):*
+- Literal vector arithmetic: take P2 ("{member} is a {class}"), subtract the class embedding, add the adjective embedding → predicts C at 0.881
+- This is "swap class for adjective in the membership premise" — the syllogism as vector substitution
+- Beats all fitted scalar models except the kitchen sink with 5 inputs
+
+*4. The template bias μ captures "is":*
+- R3 (α·m + β·adj): 0.873
+- R6 (α·m + β·adj + μ, CV): 0.948 (+0.075)
+- The 1024-dim bias vector μ captures the "{X} is {Y}" sentence template that bare words lack
+- This is the best model overall, achieving 0.948 cosine with cross-validation
+
+*5. Subtracting the class is the key transformation:*
+- R4b (5 inputs): coefficients are α_P1=0.122, β_P2=0.542, γ_m=0.344, δ_adj=0.436, **ε_class=-0.464**
+- The class coefficient is strongly negative — the model learns to SUBTRACT the class
+- Confirms S1: the syllogism = remove class, add adjective
+
+*6. R5 (P2 + constant displacement μ) is mediocre (0.820 CV):*
+- A fixed displacement from P2 doesn't generalize because the displacement depends on which adjective and class are involved — there is no single "apply universal" vector
+
+**Model ranking (mean cosine to actual C):**
+| Model | Params | Cosine | Key insight |
+|---|---|---|---|
+| R6: α·m + β·adj + μ (CV) | 1026 | 0.948 | Best: words + template |
+| R4b: all 5 inputs | 5 | 0.937 | Class coefficient negative |
+| S1: P2 + (adj − class) | 0 | 0.881 | Syllogism = substitution |
+| R3: α·member + β·adj | 2 | 0.873 | Words beat premises |
+| B3: bare member | 0 | 0.827 | Member alone is strong baseline |
+| R5: P2 + μ (CV) | 1024 | 0.820 | No universal displacement |
+| R1: αP1 + βP2 | 2 | 0.790 | P1 barely helps |
+| B1: P2 alone | 0 | 0.779 | The baseline |
+
+**Implications for the paper:**
+- The information for syllogistic inference EXISTS in embedding space (0.948 achievable) but is NOT accessible via similarity search
+- A retrieval system can't do vector arithmetic — it can only rank by cosine to a query
+- The VKG/logic layer bridges this by extracting propositions and reasoning symbolically over them
+- The "gap" isn't missing information, it's the wrong ACCESS PATTERN (similarity vs composition)
+
+**Artifacts:**
+- `prototype/syllogism_regression.py` — Regression analysis script
+- `prototype/syllogism_regression_results.json` — All model results and fitted coefficients
