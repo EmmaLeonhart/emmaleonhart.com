@@ -117,6 +117,31 @@
       margin-top: 4px;
       transition: color 0.3s;
     }
+    .section-label {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .geo-line {
+      line-height: 1.9;
+      font-size: 0.88rem;
+      color: #9898ac;
+    }
+    .geo-line .label {
+      color: #666880;
+      display: inline-block;
+      min-width: 70px;
+    }
+    .geo-line .eq { color: #666880; }
+    .geo-check {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #1e1e2a;
+      font-size: 0.88rem;
+      color: #9898ac;
+    }
     .insight-box {
       border-radius: 6px;
       padding: 10px 12px;
@@ -170,7 +195,7 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Dot Product Visualizer</h1>
-    <p class="subtitle">Drag the vector tips to explore the dot product. The more two vectors point in the same direction, the larger the result. When perpendicular, it's zero.</p>
+    <p class="subtitle">The dot product measures how aligned two vectors are, weighted by their magnitudes. Bigger vectors can make up for less alignment. Drag the tips to explore.</p>
     <div class="canvas-wrap">
       <canvas id="canvas"></canvas>
     </div>
@@ -183,8 +208,13 @@
           <span class="dot-b">B</span> = (<span id="bx">3</span>, <span id="by">3</span>)
         </div>
       </div>
+      <div class="section-label">Algebraic</div>
       <div id="work" class="work-card">
         <!-- JS builds the step-by-step work here -->
+      </div>
+      <div class="section-label">Geometric</div>
+      <div id="geo" class="work-card">
+        <!-- JS builds magnitudes, cosine similarity, check here -->
       </div>
       <div id="insightBox" class="insight-box"></div>
       <div class="angle-row">

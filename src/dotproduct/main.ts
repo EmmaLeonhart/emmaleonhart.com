@@ -284,21 +284,64 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
     '</div>' +
     '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>';
 
+  // Build geometric breakdown
+  const ax2 = vecA.x * vecA.x, ay2 = vecA.y * vecA.y;
+  const bx2 = vecB.x * vecB.x, by2 = vecB.y * vecB.y;
+  const sumA = ax2 + ay2, sumB = bx2 + by2;
+  const cosVal = mA > 0 && mB > 0 ? cosT : 0;
+
+  const geo = document.getElementById('geo')!;
+  geo.innerHTML =
+    // Magnitude A via Pythagorean theorem
+    '<div class="geo-line">' +
+      '<span class="label"><span class="dot-a">|A|</span></span>' +
+      '<span class="eq">= \u221A(</span>' +
+      '<span class="dot-a">' + vecA.x + '</span>\u00B2 + ' +
+      '<span class="dot-a">' + vecA.y + '</span>\u00B2' +
+      '<span class="eq">) = \u221A(' + ax2 + ' + ' + ay2 + ') = \u221A' + sumA + ' = </span>' +
+      '<span class="dot-a">' + mA.toFixed(2) + '</span>' +
+    '</div>' +
+    // Magnitude B via Pythagorean theorem
+    '<div class="geo-line">' +
+      '<span class="label"><span class="dot-b">|B|</span></span>' +
+      '<span class="eq">= \u221A(</span>' +
+      '<span class="dot-b">' + vecB.x + '</span>\u00B2 + ' +
+      '<span class="dot-b">' + vecB.y + '</span>\u00B2' +
+      '<span class="eq">) = \u221A(' + bx2 + ' + ' + by2 + ') = \u221A' + sumB + ' = </span>' +
+      '<span class="dot-b">' + mB.toFixed(2) + '</span>' +
+    '</div>' +
+    // Cosine similarity
+    '<div class="geo-line" style="margin-top:8px">' +
+      '<span class="label">cos \u03B8</span>' +
+      '<span class="eq">= A\u00B7B / (<span class="dot-a">|A|</span> \u00D7 <span class="dot-b">|B|</span>)</span>' +
+    '</div>' +
+    '<div class="geo-line">' +
+      '<span class="label"></span>' +
+      '<span class="eq">= ' + dpVal + ' / (' + mA.toFixed(2) + ' \u00D7 ' + mB.toFixed(2) + ') = </span>' +
+      '<strong>' + cosVal.toFixed(4) + '</strong>' +
+    '</div>' +
+    // Geometric check: |A| × |B| × cos θ = same answer
+    '<div class="geo-check">' +
+      '<span class="dot-a">|A|</span> \u00D7 <span class="dot-b">|B|</span> \u00D7 cos \u03B8 = ' +
+      mA.toFixed(2) + ' \u00D7 ' + mB.toFixed(2) + ' \u00D7 ' + cosVal.toFixed(4) +
+      ' = <strong style="color:' + resultColor + '">' + dpVal + '</strong>' +
+    '</div>';
+
   // Angle
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
   (document.getElementById('angleBarFill') as HTMLElement).style.width = (thetaDeg / 180 * 100) + '%';
 
-  // Insight box — focus on direction intuition
+  // Insight box
   const ib = document.getElementById('insightBox')!;
   let msg: string, bg: string, border: string;
   if (Math.abs(thetaDeg - 90) < 5) {
-    msg = '\u22A5 Perpendicular \u2014 A and B point in completely independent directions. Result is zero.';
+    msg = '\u22A5 Perpendicular \u2014 all of A\u2019s magnitude is sideways to B. No matter how big the vectors are, zero alignment means zero dot product.';
     bg = '#1a1a12'; border = COLORS.zero;
   } else if (dpVal > 0) {
-    msg = '\u2713 Positive \u2014 A and B point in similar directions. The more aligned, the bigger the number.';
+    msg = '\u2713 Positive \u2014 A and B point in similar directions. The result depends on both alignment (cos \u03B8) and magnitude (|A|\u00D7|B|) \u2014 more magnitude can make up for less alignment.';
     bg = '#0f1a14'; border = COLORS.positive;
   } else {
-    msg = '\u2717 Negative \u2014 A and B point in opposite directions.';
+    msg = '\u2717 Negative \u2014 A and B point in opposite directions. The magnitudes still scale the result, but the sign flips because cos \u03B8 is negative.';
     bg = '#1a0f11'; border = COLORS.negative;
   }
   ib.style.background = bg;
