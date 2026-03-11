@@ -455,3 +455,55 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/syllogism_gap.py` — Full analysis script
 - `prototype/syllogism_gap_results.json` — All numerical results
 - `prototype/syllogism_gap_embeddings.npz` — Raw 1024-dim vectors for 80 texts
+
+---
+
+## Experiment 15b: Syllogism Gap Grid — 10×10×10 Systematic Test
+
+**Date:** 2026-03-10
+**Script:** `python prototype/syllogism_gap_grid.py`
+**Duration:** ~30 seconds (330 embeddings, 1000 syllogism combinations)
+
+**What:** Rebuilt the syllogism gap test with a perfectly uniform template and full combinatorial grid. Template: "All {class_plural} are {adjective}" + "{member} is a {class_singular}" → "{member} is {adjective}". 10 unambiguous proper-noun members (Socrates, Aristotle, Einstein, Mozart, Shakespeare, Cleopatra, Darwin, Galileo, Confucius, Archimedes) × 10 classes (human, bird, cat, dog, flower, insect, reptile, mammal, vehicle, mineral) × 10 adjectives (mortal, beautiful, dangerous, ancient, fragile, powerful, mysterious, resilient, valuable, complex) = 1000 syllogisms. Only 300 unique sentences (P1 depends on class+adj, P2 on member+class, C on member+adj) + 30 bare words = 330 embeddings. Five analyses: gap rate, per-component breakdown, bare word pull, displacement consistency, shared component structural analysis.
+
+**Key findings:**
+
+*1. P2↔C is ALWAYS the strongest pair (1000/1000):*
+- Mean P2↔C = 0.779, P1↔P2 = 0.572, P1↔C = 0.548
+- P2↔C never weakest. P1↔C weakest 72.1%, P1↔P2 weakest 27.9%
+- The universal premise (P1) is isolated from BOTH the membership statement AND the conclusion
+- This is WORSE than the original claim: P1 is the retrieval blind spot
+
+*2. The S > O > P hierarchy explains the gap completely:*
+- P2↔C share member as SUBJECT in both → strongest (0.779)
+- P1↔P2 share class, but in different syntactic roles (subject in P1, object in P2) → moderate (0.572)
+- P1↔C share adjective as PREDICATE in both → weakest (0.548)
+- Within-sentence pull: same subject Δ=+0.279, same object Δ=+0.144, same predicate Δ=+0.161
+- Ratio: S=1.7x, O=0.9x, P=1.0x — subject dominance confirmed
+
+*3. Bare word pull replicates S > O > P:*
+- Member→P2/C (subject role): +0.342 mean pull
+- Class→P1 (subject role): +0.244 pull
+- Class→P2 (object role): +0.214 pull (same word, weaker in object position)
+- Adjective→P1/C (predicate role): +0.220 pull
+- The class word shows role-dependent pull: +0.244 as subject (P1) vs +0.214 as object (P2)
+
+*4. Class "human" is the strongest gap (100% rate):*
+- P1↔P2 = 0.482, P1↔C = 0.614, P2↔C = 0.853
+- "All humans are {adj}" is maximally generic → lowest similarity to member statements
+- "mineral" and "flower" have near-zero gap rate (1%) — these domain-specific words pull P1↔P2 together
+
+*5. Displacement directions are NOT universal:*
+- P2→C pairwise cosine = 0.197 — low cross-syllogism consistency
+- But conditioning on shared adjective raises to 0.580, shared class to 0.550
+- Each syllogism's bridge is shaped by its specific content, not a latent "apply universal" axis
+
+*6. Cross-role class pull is the key structural insight:*
+- The class word appears as SUBJECT in P1 ("All {class} are...") and as OBJECT in P2 ("{member} is a {class}")
+- Subject pull (+0.238) > Object pull (+0.144) for the same word in different positions
+- This role asymmetry is why P1 and P2 don't cluster despite sharing the class word
+
+**Artifacts:**
+- `prototype/syllogism_gap_grid.py` — Full analysis script
+- `prototype/syllogism_gap_grid_results.json` — All numerical results
+- `prototype/syllogism_gap_grid_embeddings.npz` — Raw 1024-dim vectors for 330 texts
