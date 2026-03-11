@@ -403,3 +403,55 @@ Chronological record of every experiment run in this project. Each entry records
 - `prototype/semantic_topology_complexity_full.png`
 - `prototype/semantic_topology_complexity_heatmap.png`
 - `prototype/semantic_topology_complexity_arrows.png`
+
+---
+
+## Experiment 15: Syllogism Gap — 20-Syllogism Systematic Test
+
+**Date:** 2026-03-10
+**Script:** `python prototype/syllogism_gap.py`
+**Duration:** ~30 seconds (80 embeddings)
+
+**What:** Systematic test of the "syllogism gap" claim (Section 4.2) across 20 diverse syllogisms. All follow the classical form: Universal(Class, Property) + Member(Individual, Class) → Property(Individual). Domains: biology (6), chemistry (2), geography (2), profession (2), philosophy, astronomy, geology, pharmacology, recreation, linguistics, music, computing. Six analyses: pairwise similarities, displacement vectors, cross-syllogism displacement consistency, within-domain vs cross-domain, individual name proximity, proper noun vs generic.
+
+**Key findings:**
+
+*1. Syllogism gap confirmed — 16/20 (80%):*
+- P1↔P2 is the weakest pair in 16/20 syllogisms
+- Mean similarities: P1↔P2=0.664, P1↔C=0.722, P2↔C=0.876
+- The conclusion is ALWAYS closer to P2 (membership statement) than to P1 (universal)
+- Socrates P1↔P2 = 0.560 — matches Experiment 2 exactly
+
+*2. P2↔C is by far the strongest link:*
+- Mean P2↔C = 0.876 (std 0.050) — the individual carries through
+- Mean displacement |P2→C| = 0.488 — smallest displacement, confirming proximity
+- Mean |P1→P2| = 0.817 — largest displacement (premises are far apart)
+
+*3. No universal "apply universal" direction:*
+- P2→C pairwise cosine = 0.054 — near zero cross-syllogism consistency
+- P1→C slightly higher (0.293), P1→P2 moderate (0.252)
+- Each syllogism's bridging operation is domain-specific, not a latent axis
+
+*4. Domain effects are minimal:*
+- Within-domain P2→C consistency: 0.075 vs cross-domain: 0.052 (delta +0.023)
+- No strong domain clustering of displacement directions
+
+*5. Names gravitate to P2 (16/20):*
+- Mean Name↔P2 = 0.857 vs Name↔C = 0.819 vs Name↔P1 = 0.550
+- The membership statement (P2) is essentially "X is a Y" — dominated by the individual name
+- 4 cases closest to C: rex, johnson, chen, beethoven (conclusion also contains name)
+
+*6. Proper nouns show LARGER gap than generics:*
+- Proper noun gap (P2↔C − P1↔P2): +0.254, confirmed 10/10
+- Generic term gap: +0.169, confirmed 10/10
+- Proper nouns have lower P1↔P2 (0.641 vs 0.688) because they share less vocabulary with the universal
+
+*4 exceptions (P1↔C weakest instead):*
+- rex: P1↔P2 ≈ P1↔C (0.592 vs 0.592) — essentially tied
+- johnson, chen: "All teachers/surgeons are educators/doctors" very close to "Ms. Johnson/Dr. Chen is an educator/doctor" because the profession words dominate
+- beethoven: "All symphonies are musical compositions" ≈ "Beethoven's Fifth is a musical composition" — shared predicate phrase
+
+**Artifacts:**
+- `prototype/syllogism_gap.py` — Full analysis script
+- `prototype/syllogism_gap_results.json` — All numerical results
+- `prototype/syllogism_gap_embeddings.npz` — Raw 1024-dim vectors for 80 texts
