@@ -1,5 +1,6 @@
 // Cosine Similarity Interactive Visualizer
 // Smart sprinkler demo: cosine similarity as AI decision criterion
+// First-quadrant only (positive sunniness & raininess)
 export {};
 
 interface Vec2 { x: number; y: number; }
@@ -30,16 +31,22 @@ let dragging = false;
 
 let SCALE = 40;
 let W = 0, H = 0;
-let CX = 0, CY = 0;
+let OX = 0, OY = 0; // origin position (bottom-left area)
+
+const PAD_LEFT = 30;
+const PAD_BOTTOM = 24;
+const PAD_TOP = 20;
+const PAD_RIGHT = 20;
+const MAX_VAL = 7;
 
 function toCanvas(v: Vec2): Vec2 {
-  return { x: CX + v.x * SCALE, y: CY - v.y * SCALE };
+  return { x: OX + v.x * SCALE, y: OY - v.y * SCALE };
 }
 
 function toWorld(px: number, py: number): Vec2 {
   return {
-    x: Math.round((px - CX) / SCALE),
-    y: Math.round(-(py - CY) / SCALE),
+    x: Math.round((px - OX) / SCALE),
+    y: Math.round(-(py - OY) / SCALE),
   };
 }
 
@@ -49,7 +56,9 @@ function mag(v: Vec2): number { return Math.hypot(v.x, v.y); }
 function resize(): void {
   const container = canvas.parentElement!;
   const w = Math.min(container.clientWidth, 800);
-  const h = Math.min(w, 600);
+  // Compute scale from available width
+  SCALE = Math.max(30, Math.min(55, (w - PAD_LEFT - PAD_RIGHT) / MAX_VAL));
+  const h = PAD_TOP + MAX_VAL * SCALE + PAD_BOTTOM;
   const dpr = window.devicePixelRatio || 1;
   W = w; H = h;
   canvas.width = W * dpr;
@@ -57,9 +66,8 @@ function resize(): void {
   canvas.style.width = W + 'px';
   canvas.style.height = H + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  CX = W / 2;
-  CY = H / 2;
-  SCALE = Math.max(30, Math.min(50, W / 16));
+  OX = PAD_LEFT;
+  OY = H - PAD_BOTTOM;
   draw();
 }
 
@@ -101,73 +109,76 @@ function drawArrow(x1: number, y1: number, x2: number, y2: number, color: string
 function draw(): void {
   ctx.clearRect(0, 0, W, H);
 
-  // Grid
+  // Grid (first quadrant only)
   ctx.lineWidth = 1;
-  for (let gx = CX % SCALE; gx <= W; gx += SCALE) {
-    ctx.strokeStyle = Math.abs(gx - CX) < 1 ? COLORS.axis : COLORS.grid;
-    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  for (let i = 0; i <= MAX_VAL; i++) {
+    const gx = OX + i * SCALE;
+    ctx.strokeStyle = i === 0 ? COLORS.axis : COLORS.grid;
+    ctx.beginPath(); ctx.moveTo(gx, OY); ctx.lineTo(gx, PAD_TOP); ctx.stroke();
   }
-  for (let gy = CY % SCALE; gy <= H; gy += SCALE) {
-    ctx.strokeStyle = Math.abs(gy - CY) < 1 ? COLORS.axis : COLORS.grid;
-    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  for (let i = 0; i <= MAX_VAL; i++) {
+    const gy = OY - i * SCALE;
+    ctx.strokeStyle = i === 0 ? COLORS.axis : COLORS.grid;
+    ctx.beginPath(); ctx.moveTo(OX, gy); ctx.lineTo(W - PAD_RIGHT, gy); ctx.stroke();
   }
 
-  // Decision zone wedge (symmetric about x-axis)
-  const zr = Math.max(W, H);
+  // Decision zone wedge (from x-axis up to threshold angle)
+  const zr = Math.max(W, H) * 1.5;
+  ctx.save();
   ctx.beginPath();
-  ctx.moveTo(CX, CY);
-  ctx.arc(CX, CY, zr, -THRESHOLD_ANGLE, THRESHOLD_ANGLE);
+  ctx.rect(OX, 0, W, OY); // clip to first quadrant area
+  ctx.clip();
+  ctx.beginPath();
+  ctx.moveTo(OX, OY);
+  ctx.arc(OX, OY, zr, -THRESHOLD_ANGLE, 0);
   ctx.closePath();
   ctx.fillStyle = COLORS.onZone;
   ctx.fill();
+  ctx.restore();
 
-  // Threshold lines (dashed)
+  // Threshold line (dashed, 45° from origin)
   ctx.setLineDash([6, 4]);
   ctx.strokeStyle = COLORS.threshold;
   ctx.lineWidth = 1.5;
-  for (const sign of [-1, 1]) {
-    ctx.beginPath();
-    ctx.moveTo(CX, CY);
-    ctx.lineTo(CX + Math.cos(sign * THRESHOLD_ANGLE) * zr, CY + Math.sin(sign * THRESHOLD_ANGLE) * zr);
-    ctx.stroke();
-  }
+  ctx.beginPath();
+  ctx.moveTo(OX, OY);
+  ctx.lineTo(OX + Math.cos(THRESHOLD_ANGLE) * zr, OY - Math.sin(THRESHOLD_ANGLE) * zr);
+  ctx.stroke();
   ctx.setLineDash([]);
 
-  // Zone labels in first quadrant
+  // Zone labels
   ctx.font = '11px "Segoe UI", system-ui, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = 'rgba(52, 211, 153, 0.35)';
-  ctx.fillText('ON ZONE', CX + 130, CY - 25);
+  ctx.fillText('ON ZONE', OX + 5 * SCALE, OY - 1.2 * SCALE);
   ctx.fillStyle = 'rgba(244, 63, 94, 0.25)';
-  ctx.fillText('OFF ZONE', CX + 70, CY - 130);
+  ctx.fillText('OFF ZONE', OX + 2 * SCALE, OY - 5 * SCALE);
 
   // Axis labels
   ctx.font = '12px "Segoe UI", system-ui, sans-serif';
   ctx.fillStyle = '#4a4a60';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
-  ctx.fillText('Sunniness \u2192', W - 10, CY + 8);
+  ctx.fillText('Sunniness \u2192', W - PAD_RIGHT, OY + 6);
   ctx.textAlign = 'left';
   ctx.textBaseline = 'bottom';
-  ctx.fillText('\u2191 Raininess', CX + 8, 20);
+  ctx.fillText('\u2191 Raininess', OX + 6, PAD_TOP - 2);
 
   // Axis numbers
   ctx.font = '10px "Segoe UI", system-ui, sans-serif';
   ctx.fillStyle = COLORS.axisLabel;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  for (let i = -7; i <= 7; i++) {
-    if (i === 0) continue;
-    const px = CX + i * SCALE;
-    if (px > 5 && px < W - 5) ctx.fillText(String(i), px, CY + 4);
+  for (let i = 1; i <= MAX_VAL; i++) {
+    const px = OX + i * SCALE;
+    if (px < W - 5) ctx.fillText(String(i), px, OY + 4);
   }
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
-  for (let i = -7; i <= 7; i++) {
-    if (i === 0) continue;
-    const py = CY - i * SCALE;
-    if (py > 5 && py < H - 5) ctx.fillText(String(i), CX - 5, py);
+  for (let i = 1; i <= MAX_VAL; i++) {
+    const py = OY - i * SCALE;
+    if (py > 5) ctx.fillText(String(i), OX - 5, py);
   }
 
   const pTarget = toCanvas(target);
@@ -178,12 +189,12 @@ function draw(): void {
 
   // Angle arc
   if (mW > 0.1) {
-    const angW = Math.atan2(-weather.y, weather.x);
+    const angW = Math.atan2(-weather.y, weather.x); // canvas angle (y flipped)
     const angT = 0;
     const start = Math.min(angW, angT);
     const end = Math.max(angW, angT);
     ctx.beginPath();
-    ctx.arc(CX, CY, 28, start, end);
+    ctx.arc(OX, OY, 28, start, end);
     ctx.strokeStyle = COLORS.arcColor;
     ctx.lineWidth = 2;
     ctx.setLineDash([3, 3]);
@@ -195,14 +206,14 @@ function draw(): void {
     ctx.fillStyle = COLORS.arcText;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('\u03B8', CX + Math.cos(midAng) * 42, CY + Math.sin(midAng) * 42);
+    ctx.fillText('\u03B8', OX + Math.cos(midAng) * 42, OY + Math.sin(midAng) * 42);
   }
 
   // Target vector (fixed, yellow)
-  drawArrow(CX, CY, pTarget.x, pTarget.y, COLORS.target, 2.5, 'Target');
+  drawArrow(OX, OY, pTarget.x, pTarget.y, COLORS.target, 2.5, 'Target');
 
   // Weather vector (draggable, blue)
-  drawArrow(CX, CY, pWeather.x, pWeather.y, COLORS.weather, 3, 'Weather');
+  drawArrow(OX, OY, pWeather.x, pWeather.y, COLORS.weather, 3, 'Weather');
 
   // Drag handle on weather
   ctx.beginPath();
@@ -272,9 +283,9 @@ function updateUI(cosSim: number, mW: number, mT: number, dpVal: number): void {
       '<div class="status-detail">Weather direction points away from ideal conditions \u2014 save water.</div>';
   }
 
-  // Angle
+  // Angle bar (0° to 90° since first quadrant only)
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
-  (document.getElementById('angleBarFill') as HTMLElement).style.width = (thetaDeg / 180 * 100) + '%';
+  (document.getElementById('angleBarFill') as HTMLElement).style.width = Math.min(100, thetaDeg / 90 * 100) + '%';
 
   // Insight box
   const ib = document.getElementById('insightBox')!;
@@ -293,11 +304,8 @@ function updateUI(cosSim: number, mW: number, mT: number, dpVal: number): void {
     msg = 'The weather vector is within 45\u00B0 of the target direction. Cosine similarity measures direction, not intensity \u2014 a gentle sunny day and a blazing one get the same score if the sun-to-rain ratio matches.';
     bg = '#0f1a14'; border = COLORS.positive;
   } else if (Math.abs(thetaDeg - 90) < 5) {
-    msg = 'Perpendicular \u2014 cos \u03B8 = 0. The weather is orthogonal to the target: no directional relationship at all.';
+    msg = 'Perpendicular \u2014 cos \u03B8 = 0. The weather is pure rain, zero sun. Completely orthogonal to the target.';
     bg = '#1a1a12'; border = '#facc15';
-  } else if (cosSim < 0) {
-    msg = 'Negative cosine similarity \u2014 the weather points opposite to "sunny & dry." In AI terms, this is the strongest possible disagreement between two directions.';
-    bg = '#1a0f11'; border = COLORS.negative;
   } else {
     msg = 'The weather vector points too far from "sunny & dry." The cosine similarity dropped below the threshold, so the AI keeps the sprinkler off. Drag closer to the x-axis to turn it on.';
     bg = '#1a0f11'; border = COLORS.negative;
@@ -346,8 +354,8 @@ function onPointerMove(e: MouseEvent | TouchEvent): void {
   const p = getPointerPos('touches' in e ? e.touches[0] : e);
   const w = toWorld(p.x, p.y);
   weather = {
-    x: Math.max(-7, Math.min(7, w.x)),
-    y: Math.max(-7, Math.min(7, w.y)),
+    x: Math.max(0, Math.min(MAX_VAL, w.x)),
+    y: Math.max(0, Math.min(MAX_VAL, w.y)),
   };
   canvas.style.cursor = 'grabbing';
   draw();
