@@ -26,7 +26,7 @@ let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
 const target: Vec2 = { x: 6, y: 0 };
-let weather: Vec2 = { x: 4, y: 3 };
+let weather: Vec2 = { x: 0, y: 5 };
 let dragging = false;
 
 let SCALE = 40;

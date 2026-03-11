@@ -16,7 +16,7 @@ const THRESHOLD_COS = Math.cos(THRESHOLD_ANGLE); // ≈ 0.7071
 let canvas;
 let ctx;
 const target = { x: 6, y: 0 };
-let weather = { x: 4, y: 3 };
+let weather = { x: 0, y: 5 };
 let dragging = false;
 let SCALE = 40;
 let W = 0, H = 0;
