@@ -571,3 +571,47 @@ Chronological record of every experiment run in this project. Each entry records
 **Artifacts:**
 - `prototype/syllogism_regression.py` — Regression analysis script
 - `prototype/syllogism_regression_results.json` — All model results and fitted coefficients
+
+---
+
+## Experiment 15d: Proposition Synthesis via Bridge Removal
+
+**Date:** 2026-03-10
+**Script:** `python prototype/syllogism_synthesis.py`
+**Duration:** <1 second (loads embeddings from 15b)
+
+**What:** Reframed the syllogism as a logical operation (resolution) rather than regression. The process: (1) detect the shared entity (bridge) between P1 and P2, (2) remove the bridge from the premises, (3) compose the residuals to synthesize the conclusion. Tested bridge removal via subtraction, projection, and scaling; automatic bridge detection via three heuristics; and end-to-end synthesis without knowing the bridge identity.
+
+**Key findings:**
+
+*1. Bridge detection is near-perfect (99.9%):*
+- Heuristic: the bridge is the bare word with highest min(cos_to_P1, cos_to_P2)
+- Correctly identifies the class as the shared entity in 999/1000 cases
+- Alternative heuristics: mean cosine = 88.6%, product = 94.2%
+- The embedding space CAN detect shared entities between propositions
+
+*2. But synthesis from sentence residuals fails:*
+- (P1-K) + (P2-K) = 0.385 — symmetric bridge removal is catastrophic
+- P2 + (P1-K) = 0.761 — worse than P2 alone (0.779)
+- The problem: P1-K doesn't cleanly isolate the adjective. It has cosine only 0.115 to bare_adj but retains 65% variance in template noise ("All ... are ...")
+- Scaled regression confirms: α(P1-K) + β(P2-K) learns α≈0.02 (discard P1 residual)
+
+*3. Bare word swap still wins:*
+- P2 + (bare_adj - bare_class) = 0.881 — the best zero-param model
+- Using bare words bypasses sentence template contamination
+- Projection (P2 + proj⊥K(P1) = 0.788) is slightly better than subtraction (0.761) but still below bare words
+
+*4. Residual analysis reveals the asymmetry:*
+- P2-K → cos to bare_member = 0.376 (member signal preserved)
+- P1-K → cos to bare_adjective = 0.115 (adjective signal barely survives)
+- The "All ... are ..." template in P1 dominates; subtraction removes the class but leaves massive template residual
+
+*5. The VKG motivation crystallized:*
+- Bridge detection works (99.9%) — the embedding space knows which entities are shared
+- But synthesis from raw sentences fails — templates contaminate residuals
+- This is WHY Pillar 1 (propositional extraction into S/P/O triples) is necessary: it strips templates before Pillar 2's entity bridging operates on clean semantic components
+- The architecture isn't a workaround — it's the only way to do proposition synthesis in embedding space
+
+**Artifacts:**
+- `prototype/syllogism_synthesis.py` — Bridge removal analysis script
+- `prototype/syllogism_synthesis_results.json` — All model results

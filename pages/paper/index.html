@@ -337,7 +337,28 @@
 
   <p>Three findings stand out. First, <strong>P1 contributes nothing</strong>: fitting C &asymp; P2 + &gamma;P1 yields &gamma; &asymp; &minus;0.02 &mdash; the universal premise is informationally redundant for constructing the conclusion. Even in the four-input kitchen-sink model (&alpha;P1 + &beta;P2 + &gamma;&middot;member + &delta;&middot;adj), the P1 coefficient is &minus;0.002. Second, <strong>bare words beat full premises</strong>: &alpha;&middot;member + &beta;&middot;adj (0.873) outperforms &alpha;P1 + &beta;P2 (0.790). The sentence syntax (&ldquo;All &hellip; are &hellip;&rdquo;, &ldquo;&hellip; is a &hellip;&rdquo;) adds noise, not signal. Third, the zero-parameter structural model <strong>S1 = P2 + (adj &minus; class) = 0.881</strong> reveals the syllogism as literal vector substitution: take the membership premise, subtract the class embedding, add the adjective embedding. In the five-input model, the learned class coefficient is &minus;0.464 &mdash; the regression independently discovers the same subtraction.</p>
 
-  <p>The conclusion is that the information for syllogistic inference <em>exists</em> in the embedding space (0.948 recoverable) but is <em>not accessible via similarity search</em>. A retrieval system cannot perform vector arithmetic &mdash; it can only rank by cosine to a query. The gap is not missing information but the wrong <strong>access pattern</strong>: similarity versus composition. This is precisely the gap the VKG bridges by extracting propositions and reasoning symbolically over them.</p>
+  <p>The conclusion is that the information for syllogistic inference <em>exists</em> in the embedding space (0.948 recoverable) but is <em>not accessible via similarity search</em>. A retrieval system cannot perform vector arithmetic &mdash; it can only rank by cosine to a query. The gap is not missing information but the wrong <strong>access pattern</strong>: similarity versus composition.</p>
+
+  <h3>4.2.2 Proposition Synthesis via Bridge Removal</h3>
+  <p>The regression framing treats syllogistic inference as curve-fitting. But a syllogism is a <em>logical operation</em>: identify the shared entity (bridge), resolve on it, and compose what remains. In embedding space, this corresponds to: (1) detect the bridge entity between two propositions, (2) remove it, (3) compose the residuals.</p>
+
+  <p><strong>Bridge detection works.</strong> Given P1 and P2 plus the bare word embeddings of member, class, and adjective, the bridge can be identified as the word with the highest minimum cosine similarity to both premises. This simple heuristic correctly identifies the class as the shared entity in 999/1,000 cases (99.9%).</p>
+
+  <p><strong>But synthesis from sentence residuals fails.</strong> The natural operation &mdash; remove the bridge from both premises, compose the residuals &mdash; performs poorly. Subtracting the class embedding from P1 does not cleanly isolate the adjective property; it leaves behind the &ldquo;All &hellip; are &hellip;&rdquo; template noise. The residual P1 &minus; K has cosine only 0.115 to the bare adjective (the intended content) and retains 65% of the original variance in template structure. When these noisy residuals are composed, performance drops to 0.385 &mdash; <em>worse</em> than P2 alone (0.779). A fitted regression on the residuals confirms this: &alpha;(P1 &minus; K) + &beta;(P2 &minus; K) learns &alpha; &asymp; 0.02 (effectively discarding P1&rsquo;s residual entirely) while &beta; &asymp; 0.54.</p>
+
+  <table>
+    <thead>
+      <tr><th>Synthesis model</th><th>Params</th><th>cos(&Ccedil;, C)</th><th>Interpretation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P2 + (bare_adj &minus; bare_class)</td><td>0</td><td>0.881</td><td>Bare word swap &mdash; best</td></tr>
+      <tr><td>P2 + proj<sub>&perp;K</sub>(P1)</td><td>0</td><td>0.788</td><td>Projection: remove K direction from P1</td></tr>
+      <tr><td>P2 + (P1 &minus; K)</td><td>0</td><td>0.761</td><td>Raw bridge removal from P1</td></tr>
+      <tr><td>(P1 &minus; K) + (P2 &minus; K)</td><td>0</td><td>0.385</td><td>Symmetric removal &mdash; catastrophic</td></tr>
+    </tbody>
+  </table>
+
+  <p>The pattern is clear: synthesis works only when the bridge is removed using <strong>bare word embeddings</strong> (0.881), not using sentence embeddings (0.761 or worse). Sentence templates &mdash; &ldquo;All &hellip; are &hellip;&rdquo;, &ldquo;&hellip; is a &hellip;&rdquo; &mdash; are confounds that contaminate the residuals when you try to subtract semantic content from full sentences. This is precisely why the VKG architecture requires <strong>Pillar 1</strong> (propositional extraction): extracting (subject, predicate, object) triples strips the syntactic template before Pillar 2&rsquo;s entity bridging operates on clean semantic components. The embedding space <em>can</em> detect which entities are shared (99.9%), but it <em>cannot</em> compose new propositions from sentence-level residuals without first decomposing into symbolic parts.</p>
 
   <h3>4.3 Causal Chain Decay</h3>
   <p>For the altitude &rarr; pressure &rarr; boiling chain:</p>
