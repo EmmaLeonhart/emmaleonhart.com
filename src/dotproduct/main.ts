@@ -259,30 +259,46 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
   setText('ay', String(vecA.y));
   setText('bx', String(vecB.x));
   setText('by', String(vecB.y));
-  setText('am', mA.toFixed(2));
-  setText('bm', mB.toFixed(2));
 
-  const resultEl = document.getElementById('resultBig')!;
-  resultEl.textContent = String(dpVal);
-  resultEl.style.color = dpVal > 0 ? COLORS.positive : dpVal < 0 ? COLORS.negative : COLORS.zero;
+  // Build step-by-step algebraic work
+  const px = vecA.x * vecB.x;
+  const py = vecA.y * vecB.y;
+  const resultColor = dpVal > 0 ? COLORS.positive : dpVal < 0 ? COLORS.negative : COLORS.zero;
 
-  setText('fAlg', `(${vecA.x})(${vecB.x}) + (${vecA.y})(${vecB.y}) = ${dpVal}`);
-  setText('fGeo', `${mA.toFixed(2)} \u00D7 ${mB.toFixed(2)} \u00D7 cos(${thetaDeg.toFixed(1)}\u00B0) = ${dpVal}`);
+  const work = document.getElementById('work')!;
+  work.innerHTML =
+    '<div class="work-step dim">' +
+      '<span class="term"><span class="dot-a">a<sub>x</sub></span> \u00B7 <span class="dot-b">b<sub>x</sub></span></span>' +
+      '<span class="op">+</span>' +
+      '<span class="term"><span class="dot-a">a<sub>y</sub></span> \u00B7 <span class="dot-b">b<sub>y</sub></span></span>' +
+    '</div>' +
+    '<div class="work-step">' +
+      '<span class="term"><span class="dot-a">' + vecA.x + '</span> \u00B7 <span class="dot-b">' + vecB.x + '</span></span>' +
+      '<span class="op">+</span>' +
+      '<span class="term"><span class="dot-a">' + vecA.y + '</span> \u00B7 <span class="dot-b">' + vecB.y + '</span></span>' +
+    '</div>' +
+    '<div class="work-step">' +
+      '<span class="term">' + px + '</span>' +
+      '<span class="op">+</span>' +
+      '<span class="term">' + py + '</span>' +
+    '</div>' +
+    '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>';
 
+  // Angle
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
   (document.getElementById('angleBarFill') as HTMLElement).style.width = (thetaDeg / 180 * 100) + '%';
 
-  // Insight box
+  // Insight box — focus on direction intuition
   const ib = document.getElementById('insightBox')!;
   let msg: string, bg: string, border: string;
   if (Math.abs(thetaDeg - 90) < 5) {
-    msg = '\u22A5 Nearly perpendicular \u2014 dot product \u2248 0. A casts no shadow onto B.';
+    msg = '\u22A5 Perpendicular \u2014 A and B point in completely independent directions. Result is zero.';
     bg = '#1a1a12'; border = COLORS.zero;
   } else if (dpVal > 0) {
-    msg = '\u2713 Positive: A\'s shadow falls along B (same side). \u03B8 < 90\u00B0.';
+    msg = '\u2713 Positive \u2014 A and B point in similar directions. The more aligned, the bigger the number.';
     bg = '#0f1a14'; border = COLORS.positive;
   } else {
-    msg = '\u2717 Negative: A\'s shadow falls opposite to B. \u03B8 > 90\u00B0.';
+    msg = '\u2717 Negative \u2014 A and B point in opposite directions.';
     bg = '#1a0f11'; border = COLORS.negative;
   }
   ib.style.background = bg;
