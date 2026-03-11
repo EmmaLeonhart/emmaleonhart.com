@@ -24,8 +24,8 @@ const COLORS = {
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
-let vecA: Vec2 = { x: 4, y: 2 };
-let vecB: Vec2 = { x: 2, y: 3 };
+let vecA: Vec2 = { x: 6, y: 0 };
+let vecB: Vec2 = { x: 3, y: 3 };
 let dragging: 'A' | 'B' | null = null;
 
 let SCALE = 40;
