@@ -16,8 +16,8 @@ const COLORS = {
 let canvas;
 let ctx;
 let infoPanel;
-let vecA = { x: 3, y: 1 };
-let vecB = { x: 1, y: 3 };
+let vecA = { x: 2, y: 0 };
+let vecB = { x: 0, y: 2 };
 let dragging = null;
 let gridSpacing = 40;
 let canvasOrigin = { x: 0, y: 0 };

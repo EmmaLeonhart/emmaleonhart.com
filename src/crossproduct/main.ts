@@ -27,8 +27,8 @@ let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let infoPanel: HTMLElement;
 
-let vecA: Vec2 = { x: 3, y: 1 };
-let vecB: Vec2 = { x: 1, y: 3 };
+let vecA: Vec2 = { x: 2, y: 0 };
+let vecB: Vec2 = { x: 0, y: 2 };
 
 let dragging: 'A' | 'B' | null = null;
 let gridSpacing = 40;

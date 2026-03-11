@@ -109,11 +109,23 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Dot Product Visualizer</h1>
-    <p class="subtitle">Drag the vector tips to explore how the dot product, angle, and projection change. Vectors snap to integer grid points.</p>
+    <p class="subtitle">The dot product measures how much two vectors point in the same direction. Drag the vector tips to see it change in real time.</p>
     <div class="canvas-wrap">
       <canvas id="canvas"></canvas>
     </div>
     <div id="info"></div>
+    <div id="explainer" style="margin-top:20px; background:#12121a; border:1px solid #1e1e2a; border-radius:8px; padding:20px; font-size:0.88rem; color:#9898ac; line-height:1.7;">
+      <strong style="color:#e8e8f0; font-size:0.95rem;">How it works</strong>
+      <p style="margin-top:8px;">The <strong style="color:#d0d0dc;">dot product</strong> of two vectors A and B equals:</p>
+      <p style="margin:8px 0; font-family:'Cascadia Code','Fira Code','Consolas',monospace; color:#d0d0dc;">A &middot; B = |A| &times; |B| &times; cos(&theta;)</p>
+      <p>where &theta; is the angle between them. This gives you three intuitive cases:</p>
+      <ul style="margin:10px 0 10px 20px;">
+        <li><strong style="color:#4ecdc4;">Same direction</strong> (&theta; &lt; 90&deg;) &rarr; positive dot product</li>
+        <li><strong style="color:#8888a0;">Perpendicular</strong> (&theta; = 90&deg;) &rarr; dot product is exactly zero</li>
+        <li><strong style="color:#f87c7c;">Opposite directions</strong> (&theta; &gt; 90&deg;) &rarr; negative dot product</li>
+      </ul>
+      <p>The <strong style="color:#d0d0dc;">projection</strong> (the thick translucent line) shows how much of A lies along B's direction. Try dragging A perpendicular to B and watch the projection vanish.</p>
+    </div>
   </div>
   <script type="module" src="main.js"></script>
 </body>

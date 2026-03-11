@@ -1,75 +1,45 @@
-# TODO — Neurosymbolic GraphRAG Paper
+# TODO — emmaleonhart.com
 
-## Prototype (Done)
-- [x] Knowledge base with curated corpus and ground truth
-- [x] Pillar 1: Propositional extraction via DeepSeek-R1
-- [x] Pillar 2: VKG construction with entity bridging
-- [x] Pillar 3: Logic engine (chain search, contradiction detection, pruning)
-- [x] Standard RAG baseline
-- [x] Full neurosymbolic pipeline
-- [x] Side-by-side demo (100% vs 75% ground truth coverage)
-- [x] 7 benchmark scenarios across diverse domains
-- [x] Benchmark runner with JSON export
+## Verify Existing Pages
+- [ ] Test dot product visualizer — vectors draggable, math updates, projection renders correctly
+- [ ] Test cross product visualizer — parallelogram area, sign colors, rotation direction
+- [ ] Test embedding space viewer — Voronoi cells render, custom axes work, search works
+- [ ] Test all pages on mobile (touch drag, responsive layout)
+- [ ] Verify all internal links work (home → projects, project → home)
 
-## Experiments Completed
-- [x] **Exp 1: 7-Scenario Benchmark** — NS 69% vs Std 62%, wins on entity-bridging scenarios, loses on extraction failures
-- [x] **Exp 2: 5 Proposition Families** — Socrates gap (0.560), causal chain decay (0.476 endpoints), predicate blindness (0.450 mean for "inhibits")
-- [x] **Exp 3: Semantic Grid (3×3×3)** — Axis hierarchy S(3.5x) > O(2.6x) > P(1.0x), clean staircase at 0/1/2 shared axes
-- [x] **Exp 4: Verb Structure** — Verbs are consistent translations (0.84 alignment), subspace r=0.958, naturalness NOT encoded (r=-0.031)
-- [x] **Exp 5: Word Isolation & Taxonomic Jitter** — Within-role similarity REVERSES between word-level and proposition-level; context compresses predicates, amplifies entities; hierarchy convergence is literal not graduated; distributional vs ontological semantics (dog→animal > dog→mammal)
-- [x] **Exp 6: Taxonomic Direction (24 hierarchies)** — No universal "up" axis; noun "up" ≠ verb "up" ≠ adj "up"; only 4/24 monotonic; same-level words don't cluster
-- [x] **Exp 7: Linnaean Taxonomy** — Consistent register does NOT fix non-monotonicity; "Animalia bounce" is universal; E. coli extreme case (Bacteria 0.806 > Enterobacterales 0.567)
-- [x] **Theoretical argument: Hyperbolic embeddings won't help** — Problem is distributional, not geometric; hyperbolic space trained on same corpus inherits same biases
+## Refactor & Cleanup
+- [x] Refactor dot product and cross product to TypeScript
+- [ ] Refactor embedding viewer to TypeScript
+- [ ] Remove paper-specific language from embedding viewer
+- [ ] Add consistent `<meta>` tags across all pages
+- [ ] Unify CSS variables across pages (colors, fonts, spacing)
 
-## Paper Draft Status (README.md)
+## Potential New Project Showcases
+- [ ] **Matrix transformation visualizer** — drag 2D points, see how a 2x2 matrix transforms them (eigenvectors, determinant, shear)
+- [ ] **Fourier series playground** — draw a shape, see it decomposed into sine/cosine components with sliders for number of terms
+- [ ] **Sorting algorithm visualizer** — side-by-side comparison of bubble sort, quicksort, merge sort with step-through controls
+- [ ] **Neural network playground** — tiny 2D classifier (like TensorFlow Playground but simpler, custom-built)
+- [ ] **Bezier curve editor** — drag control points, see de Casteljau construction animated
+- [ ] **Graph algorithm explorer** — build a graph, run BFS/DFS/Dijkstra, see traversal animated
+- [ ] **Regex debugger** — type a regex and a test string, see match groups highlighted with step-by-step engine state
+- [ ] **Cellular automata sandbox** — Conway's Game of Life + Rule 110 + custom rules, with drawing tools
+- [ ] **Color space explorer** — pick a color, see it mapped across RGB, HSL, LAB, and OKLab with conversion formulas shown
+- [ ] **Probability distribution viewer** — interactive PDF/CDF for normal, Poisson, binomial, etc. with parameter sliders
+- [ ] **Convolution visualizer** — step through 1D/2D convolution with kernel sliding animation
+- [ ] **PCA step-by-step** — upload 2D data points, see covariance matrix, eigenvectors, and projection animated
+- [ ] **Quaternion rotation demo** — 3D object with quaternion sliders showing gimbal lock avoidance vs Euler angles
+- [ ] **Waveform synthesizer** — combine sine waves with amplitude/frequency/phase controls, hear the result
+- [ ] **Binary/hex/float explorer** — type a number, see its IEEE 754 representation, bit manipulation
+- [ ] **Markov chain text generator** — paste text, build transition matrix, generate new text, visualize chain
+- [ ] **A* pathfinding demo** — draw obstacles on a grid, watch A* find the path with open/closed set visualization
+- [ ] **Signal processing demo** — apply filters (low-pass, high-pass, bandpass) to audio/waveforms interactively
+- [ ] **Type theory explorer** — visualize type hierarchies, subtyping, and generic type resolution
+- [ ] **Lambda calculus reducer** — type lambda expressions, see beta reduction steps animated
 
-### Sections with draft content
-- [x] Abstract
-- [x] Introduction (motivation, thesis, contributions)
-- [x] Method — 3-pillar architecture overview
-- [x] §4.1 Axis Hierarchy (S >> O >> P)
-- [x] §4.2 Syllogism Gap
-- [x] §4.3 Causal Chain Decay
-- [x] §4.4 Predicate Blindness Across Domains
-- [x] §4.5 No Universal Abstraction Axis
-- [x] §4.6 Distributional vs Ontological Distance
-- [x] §5 Benchmark results table and analysis
-- [x] Paper structure / section outline
-
-### Findings NOT YET in the paper draft
-- [ ] Verb displacement consistency — verbs as translation vectors, not deformations (Exp 4)
-- [ ] Verb-conditioned subspace preservation (r=0.958) — entity bridging is robust because verbs don't deform S/O structure (Exp 4)
-- [ ] Naturalness not encoded — absurd combos sit equally within verb clusters (Exp 4)
-- [ ] Compositionality is real but lopsided — S+P+O additive with unequal weights (Exp 3+4)
-- [ ] Within-role similarity reversal — predicates most similar in isolation, weakest in propositions (Exp 5)
-- [ ] Context compression — predicate synonyms nearly invisible in sentences (devour/eat = 0.965) (Exp 5)
-- [ ] Hierarchy convergence is literal, not graduated — branches snap to identity at shared words (Exp 5+7)
-- [x] Linnaean taxonomy results — register consistency doesn't fix non-monotonicity (Exp 7)
-- [x] "Animalia bounce" as universal pattern (Exp 7)
-- [x] E. coli extreme case — Bacteria closer than Enterobacterales (Exp 7)
-- [x] Argument against hyperbolic embeddings — problem is distributional not geometric (§3g)
-- [ ] Distractor trap analysis — Starbucks outscoring Brazilian drought in economic scenario
-- [x] Pillar 3 finding: 0 formal chains in 2/3 winning scenarios — entity bridging alone is doing the work (in §6.1)
-- [x] 16.9x time overhead analysis (in §6.4)
-
-### Sections now drafted
-- [x] Related Work — GraphRAG, neurosymbolic AI, KG embeddings, computational expressivity, System 1/2
-- [x] Discussion — extraction bottleneck, FSM/dimensional cramming theory, System 1/2, tool use vs architecture, scalability, future directions
-- [x] Conclusion
-- [x] §4.9 Dimensional Cramming: A Unifying Theory (new subsection)
-
-## Evaluation Gaps (needed to strengthen paper)
-- [ ] Ablation study: Pillar 2 only (bridging, no logic) vs full pipeline — the data already hints bridging alone is sufficient
-- [ ] Test with a better extraction model — confirm losses are component failures, not architecture failures
-- [ ] Consider a public benchmark dataset for external validity
-
-## Paper Preparation
-- [ ] Choose paper title (12 candidates in `paper_names.md`)
-- [ ] Set up LaTeX template (arXiv compatible)
-
-## Polish
-- [ ] Figures: architecture overview diagram, VKG example, pipeline flow
-- [ ] Figures: embedding geometry visualizations (PCA projections, similarity heatmaps)
-- [ ] Tables formatted for LaTeX
-- [ ] Proofread and revise
-- [ ] Submit to arXiv
+## Site Infrastructure
+- [ ] Add favicon
+- [ ] Add Open Graph images for social sharing
+- [ ] Consider adding a project index/gallery page with thumbnails
+- [ ] Add analytics (privacy-respecting, like Plausible or self-hosted)
+- [ ] Set up GitHub Actions to auto-compile TypeScript on push
+- [ ] Add 404 page
