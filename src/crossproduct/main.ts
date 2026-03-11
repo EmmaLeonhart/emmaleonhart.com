@@ -27,8 +27,8 @@ let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let infoPanel: HTMLElement;
 
-let vecA: Vec2 = { x: 2, y: 0 };
-let vecB: Vec2 = { x: 0, y: 2 };
+let vecA: Vec2 = { x: 3, y: 0 };
+let vecB: Vec2 = { x: 0, y: 3 };
 
 let dragging: 'A' | 'B' | null = null;
 let gridSpacing = 40;
@@ -139,6 +139,18 @@ function drawParallelogram(): void {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
+
+  // Area label in the center of the parallelogram
+  const cx = (o.x + a.x + ab.x + b.x) / 4;
+  const cy = (o.y + a.y + ab.y + b.y) / 4;
+  const area = Math.abs(c);
+  ctx.fillStyle = isPositive ? COLORS.positive : COLORS.negative;
+  ctx.globalAlpha = 0.85;
+  ctx.font = 'bold 16px "Segoe UI", system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('area = ' + area, cx, cy);
+  ctx.globalAlpha = 1;
 }
 
 function drawArrow(from: Vec2, to: Vec2, color: string, lineWidth: number = 2.5): void {

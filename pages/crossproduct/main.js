@@ -16,8 +16,8 @@ const COLORS = {
 let canvas;
 let ctx;
 let infoPanel;
-let vecA = { x: 2, y: 0 };
-let vecB = { x: 0, y: 2 };
+let vecA = { x: 3, y: 0 };
+let vecB = { x: 0, y: 3 };
 let dragging = null;
 let gridSpacing = 40;
 let canvasOrigin = { x: 0, y: 0 };
@@ -116,6 +116,17 @@ function drawParallelogram() {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    // Area label in the center of the parallelogram
+    const cx = (o.x + a.x + ab.x + b.x) / 4;
+    const cy = (o.y + a.y + ab.y + b.y) / 4;
+    const area = Math.abs(c);
+    ctx.fillStyle = isPositive ? COLORS.positive : COLORS.negative;
+    ctx.globalAlpha = 0.85;
+    ctx.font = 'bold 16px "Segoe UI", system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('area = ' + area, cx, cy);
+    ctx.globalAlpha = 1;
 }
 function drawArrow(from, to, color, lineWidth = 2.5) {
     const headLen = 12;
