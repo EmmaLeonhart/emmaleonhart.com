@@ -252,7 +252,7 @@ function draw() {
 // ============================================================
 // UI
 // ============================================================
-function makeSlider(container, key, labelHtml, value, min, max, onChange) {
+function makeSlider(container, key, labelHtml, value, min, max, onChange, customUpdate) {
     const row = document.createElement('div');
     row.className = 'slider-row';
     const label = document.createElement('span');
@@ -273,7 +273,7 @@ function makeSlider(container, key, labelHtml, value, min, max, onChange) {
         val.textContent = v.toFixed(2);
         val.style.color = v >= 0 ? COLORS.posWeight : COLORS.negWeight;
         onChange(v);
-        update();
+        (customUpdate || update)();
     });
     row.appendChild(label);
     row.appendChild(slider);
@@ -287,6 +287,38 @@ function buildSliders() {
     for (let i = 0; i < N_IN; i++) {
         makeSlider(container, null, `x<sub>${i + 1}</sub>`, inputs[i], -1, 1, v => { inputs[i] = v; });
     }
+}
+function buildHiddenSliders() {
+    const container = $('hidden-sliders');
+    container.innerHTML = '';
+    for (let h = 0; h < N_HID; h++) {
+        makeSlider(container, `hid_${h}`, `h<sub>${h+1}</sub>`, hiddenAct[h], -2, 2,
+            v => { hiddenAct[h] = v; }, updateOutputOnly);
+    }
+}
+function syncHiddenSliders() {
+    for (let h = 0; h < N_HID; h++) {
+        const ref = weightSliderRefs[`hid_${h}`];
+        if (!ref) continue;
+        ref.slider.value = String(hiddenAct[h]);
+        ref.val.textContent = hiddenAct[h].toFixed(2);
+        ref.val.style.color = hiddenAct[h] >= 0 ? COLORS.posWeight : COLORS.negWeight;
+    }
+}
+function updateOutputOnly() {
+    outputRaw = [];
+    outputVal = [];
+    for (let o = 0; o < N_OUT; o++) {
+        let sum = bO[o];
+        for (let h = 0; h < N_HID; h++) {
+            sum += hiddenAct[h] * wHO[o][h];
+        }
+        outputRaw[o] = sum;
+        outputVal[o] = sum;
+    }
+    draw();
+    buildMathPanel();
+    updateOutput();
 }
 function buildWeightSliders() {
     const container = $('weight-sliders');
@@ -415,6 +447,7 @@ function updateOutput() {
 }
 function update() {
     forward();
+    syncHiddenSliders();
     draw();
     buildMathPanel();
     updateOutput();
@@ -446,6 +479,7 @@ function init() {
     initWeights();
     forward();
     buildSliders();
+    buildHiddenSliders();
     buildWeightSliders();
     // Activation toggle buttons
     document.querySelectorAll('.ctrl-btn[data-fn]').forEach(btn => {
