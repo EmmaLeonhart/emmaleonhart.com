@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Multilayer Perceptron">
+  <meta property="og:description" content="Interactive demo of the basic neural network — drag inputs and weights to see how signals flow through layers.">
+  <meta property="og:url" content="https://emmaleonhart.com/mlp/">
+  <meta name="description" content="Interactive multilayer perceptron visualizer. Drag inputs and weights to see forward propagation, activation functions, and how neural networks compute.">
+  <title>Multilayer Perceptron</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+    }
+    .container { max-width: 900px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      color: #8888a0;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Canvas */
+    .canvas-wrap {
+      width: 100%;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #0a0a0f;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      touch-action: none;
+    }
+
+    /* Controls row */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      padding: 8px 18px;
+      background: #12121a;
+      border: 2px solid #1e1e2a;
+      border-radius: 8px;
+      color: #b0b0cc;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ctrl-btn:hover {
+      border-color: #3a3a50;
+      background: #16161f;
+    }
+    .ctrl-btn.active {
+      border-color: #7c8cf8;
+      background: rgba(124, 140, 248, 0.1);
+      color: #e8e8f0;
+    }
+
+    /* Main layout: side-by-side */
+    .main-layout {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    /* Left panel: inputs & output */
+    .panel-left {
+      flex: 0 0 220px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    /* Right panel: math */
+    .panel-right {
+      flex: 1;
+      min-width: 0;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    /* Slider rows */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .slider-label {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      color: #b0b0cc;
+      width: 24px;
+      flex-shrink: 0;
+    }
+    .slider-val {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #7c8cf8;
+      height: 4px;
+    }
+
+    /* Output display */
+    .output-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #0e0e16;
+      border-radius: 6px;
+      border-left: 3px solid #34d399;
+    }
+    .output-label {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .output-val {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 1.1rem;
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    /* Math breakdown */
+    .neuron-card {
+      background: #0e0e16;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border: 1px solid #1e1e2a;
+      transition: border-color 0.2s;
+    }
+    .neuron-card.highlighted {
+      border-color: #3a3a50;
+    }
+    .neuron-title {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .neuron-math {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.78rem;
+      color: #9898ac;
+      line-height: 1.7;
+    }
+    .val-pos { color: #34d399; }
+    .val-neg { color: #f43f5e; }
+    .val-zero { color: #666880; }
+
+    /* Insight box */
+    .insight-box {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: rgba(52, 211, 153, 0.04);
+      border-left: 3px solid #34d399;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #9898ac;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .main-layout { flex-direction: column; }
+      .panel-left { flex: none; width: 100%; }
+    }
+    @media (max-width: 480px) {
+      body { padding: 24px 12px; }
+      h1 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Home</a>
+    <h1>Multilayer Perceptron</h1>
+    <p class="subtitle">The basic neural network. Drag the input sliders to see how signals multiply by weights, sum at each neuron, and pass through activation functions.</p>
+    <div class="controls">
+      <button class="ctrl-btn active" data-fn="relu">ReLU</button>
+      <button class="ctrl-btn" data-fn="sigmoid">Sigmoid</button>
+      <button class="ctrl-btn" data-fn="tanh">Tanh</button>
+      <button class="ctrl-btn" id="btn-randomize">Randomize weights</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="main-layout">
+      <div class="panel-left">
+        <div class="section-label">Inputs</div>
+        <div id="input-sliders"></div>
+        <div class="output-box">
+          <div class="output-label">Network output</div>
+          <div class="output-val" id="output-val">0.00</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="section-label">Forward pass</div>
+        <div id="math-panel"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
