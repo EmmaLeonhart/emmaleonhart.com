@@ -39,8 +39,6 @@ const COLORS = {
     labelText: '#9898ac',
 };
 function $(id) { return document.getElementById(id); }
-// Slider element refs for syncing after randomize
-const weightSliderRefs = {};
 // ============================================================
 // ACTIVATION FUNCTIONS
 // ============================================================
@@ -252,118 +250,36 @@ function draw() {
 // ============================================================
 // UI
 // ============================================================
-function makeSlider(container, key, labelHtml, value, min, max, onChange, customUpdate) {
-    const row = document.createElement('div');
-    row.className = 'slider-row';
-    const label = document.createElement('span');
-    label.className = 'slider-label';
-    label.innerHTML = labelHtml;
-    const slider = document.createElement('input');
-    slider.type = 'range';
-    slider.min = String(min);
-    slider.max = String(max);
-    slider.step = '0.05';
-    slider.value = String(value);
-    const val = document.createElement('span');
-    val.className = 'slider-val';
-    val.textContent = value.toFixed(2);
-    val.style.color = value >= 0 ? COLORS.posWeight : COLORS.negWeight;
-    slider.addEventListener('input', () => {
-        const v = parseFloat(slider.value);
-        val.textContent = v.toFixed(2);
-        val.style.color = v >= 0 ? COLORS.posWeight : COLORS.negWeight;
-        onChange(v);
-        (customUpdate || update)();
-    });
-    row.appendChild(label);
-    row.appendChild(slider);
-    row.appendChild(val);
-    container.appendChild(row);
-    if (key) weightSliderRefs[key] = { slider, val };
-}
 function buildSliders() {
     const container = $('input-sliders');
     container.innerHTML = '';
     for (let i = 0; i < N_IN; i++) {
-        makeSlider(container, null, `x<sub>${i + 1}</sub>`, inputs[i], -1, 1, v => { inputs[i] = v; });
+        const row = document.createElement('div');
+        row.className = 'slider-row';
+        const label = document.createElement('span');
+        label.className = 'slider-label';
+        label.textContent = `x${i + 1}`;
+        const slider = document.createElement('input');
+        slider.type = 'range';
+        slider.min = '-1';
+        slider.max = '1';
+        slider.step = '0.05';
+        slider.value = String(inputs[i]);
+        const val = document.createElement('span');
+        val.className = 'slider-val';
+        val.textContent = inputs[i].toFixed(2);
+        val.style.color = inputs[i] >= 0 ? COLORS.posWeight : COLORS.negWeight;
+        slider.addEventListener('input', () => {
+            inputs[i] = parseFloat(slider.value);
+            val.textContent = inputs[i].toFixed(2);
+            val.style.color = inputs[i] >= 0 ? COLORS.posWeight : COLORS.negWeight;
+            update();
+        });
+        row.appendChild(label);
+        row.appendChild(slider);
+        row.appendChild(val);
+        container.appendChild(row);
     }
-}
-function buildHiddenSliders() {
-    const container = $('hidden-sliders');
-    container.innerHTML = '';
-    for (let h = 0; h < N_HID; h++) {
-        makeSlider(container, `hid_${h}`, `h<sub>${h+1}</sub>`, hiddenAct[h], -2, 2,
-            v => { hiddenAct[h] = v; }, updateOutputOnly);
-    }
-}
-function syncHiddenSliders() {
-    for (let h = 0; h < N_HID; h++) {
-        const ref = weightSliderRefs[`hid_${h}`];
-        if (!ref) continue;
-        ref.slider.value = String(hiddenAct[h]);
-        ref.val.textContent = hiddenAct[h].toFixed(2);
-        ref.val.style.color = hiddenAct[h] >= 0 ? COLORS.posWeight : COLORS.negWeight;
-    }
-}
-function updateOutputOnly() {
-    outputRaw = [];
-    outputVal = [];
-    for (let o = 0; o < N_OUT; o++) {
-        let sum = bO[o];
-        for (let h = 0; h < N_HID; h++) {
-            sum += hiddenAct[h] * wHO[o][h];
-        }
-        outputRaw[o] = sum;
-        outputVal[o] = sum;
-    }
-    draw();
-    buildMathPanel();
-    updateOutput();
-}
-function buildWeightSliders() {
-    const container = $('weight-sliders');
-    container.innerHTML = '';
-    for (let h = 0; h < N_HID; h++) {
-        const lbl = document.createElement('div');
-        lbl.className = 'section-label' + (h > 0 ? ' nudge' : '');
-        lbl.textContent = `Neuron h${h + 1}`;
-        container.appendChild(lbl);
-        for (let i = 0; i < N_IN; i++) {
-            makeSlider(container, `wIH_${h}_${i}`,
-                `w<sub>${h+1}${i+1}</sub>`, wIH[h][i], -2, 2,
-                v => { wIH[h][i] = v; });
-        }
-        makeSlider(container, `bH_${h}`,
-            `b<sub>${h+1}</sub>`, bH[h], -2, 2,
-            v => { bH[h] = v; });
-    }
-    const outLbl = document.createElement('div');
-    outLbl.className = 'section-label nudge';
-    outLbl.textContent = 'Output neuron';
-    container.appendChild(outLbl);
-    for (let h = 0; h < N_HID; h++) {
-        makeSlider(container, `wHO_${h}`,
-            `v<sub>${h+1}</sub>`, wHO[0][h], -2, 2,
-            v => { wHO[0][h] = v; });
-    }
-    makeSlider(container, 'bO',
-        `b<sub>o</sub>`, bO[0], -2, 2,
-        v => { bO[0] = v; });
-}
-function syncWeightSliders() {
-    function set(key, v) {
-        const ref = weightSliderRefs[key];
-        if (!ref) return;
-        ref.slider.value = String(v);
-        ref.val.textContent = v.toFixed(2);
-        ref.val.style.color = v >= 0 ? COLORS.posWeight : COLORS.negWeight;
-    }
-    for (let h = 0; h < N_HID; h++) {
-        for (let i = 0; i < N_IN; i++) set(`wIH_${h}_${i}`, wIH[h][i]);
-        set(`bH_${h}`, bH[h]);
-    }
-    for (let h = 0; h < N_HID; h++) set(`wHO_${h}`, wHO[0][h]);
-    set('bO', bO[0]);
 }
 function valSpan(v) {
     const cls = v > 0.001 ? 'val-pos' : v < -0.001 ? 'val-neg' : 'val-zero';
@@ -447,7 +363,6 @@ function updateOutput() {
 }
 function update() {
     forward();
-    syncHiddenSliders();
     draw();
     buildMathPanel();
     updateOutput();
@@ -479,8 +394,6 @@ function init() {
     initWeights();
     forward();
     buildSliders();
-    buildHiddenSliders();
-    buildWeightSliders();
     // Activation toggle buttons
     document.querySelectorAll('.ctrl-btn[data-fn]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -490,10 +403,9 @@ function init() {
             update();
         });
     });
-    // Randomize button — reinit weights then sync sliders
+    // Randomize button
     $('btn-randomize').addEventListener('click', () => {
         initWeights();
-        syncWeightSliders();
         update();
     });
     window.addEventListener('resize', resize);
