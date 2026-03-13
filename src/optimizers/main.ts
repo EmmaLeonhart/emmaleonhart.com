@@ -158,8 +158,8 @@ function heatColor(t: number): [number, number, number] {
 
 function buildSurfaceImage(): void {
   const v = VIEW[surface];
-  const cw = Math.round(W);
-  const ch = Math.round(H);
+  const cw = Math.round(W * dpr);
+  const ch = Math.round(H * dpr);
   const img = ctx.createImageData(cw, ch);
   const data = img.data;
 
@@ -388,7 +388,7 @@ function stepOptimizer(o: OptimizerState): void {
   o.x = Math.max(v.xmin, Math.min(v.xmax, o.x));
   o.y = Math.max(v.ymin, Math.min(v.ymax, o.y));
 
-  if (o.key !== 'adam') o.steps++;
+  if (o.key !== 'adam' && o.key !== 'adamw') o.steps++;
   o.trail.push({ x: o.x, y: o.y });
 }
 
@@ -398,12 +398,15 @@ function stepOptimizer(o: OptimizerState): void {
 
 function draw(): void {
   ctx.save();
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  // Draw precomputed surface
+  // putImageData ignores transforms — write directly to backing store
   if (surfaceImage) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.putImageData(surfaceImage, 0, 0);
   }
+
+  // All subsequent drawing uses DPR scaling
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   // Contour lines
   drawContours();
