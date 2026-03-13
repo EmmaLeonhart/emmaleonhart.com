@@ -9,7 +9,7 @@ function $(id: string): HTMLElement { return document.getElementById(id)!; }
 // ============================================================
 
 type SurfaceType = 'bowl' | 'valley' | 'saddle' | 'beale';
-type OptType = 'gd' | 'sgd' | 'momentum' | 'adagrad' | 'rmsprop' | 'adam';
+type OptType = 'gd' | 'sgd' | 'momentum' | 'adagrad' | 'rmsprop' | 'adam' | 'adamw';
 
 interface OptimizerState {
   name: string;
@@ -43,13 +43,14 @@ const OPT_DEFS: { key: OptType; name: string; color: string }[] = [
   { key: 'adagrad',  name: 'AdaGrad',          color: '#f59e0b' },
   { key: 'rmsprop',  name: 'RMSProp',          color: '#f43f5e' },
   { key: 'adam',      name: 'Adam',             color: '#34d399' },
+  { key: 'adamw',    name: 'AdamW',            color: '#fb923c' },
 ];
 
 const INSIGHTS: Record<SurfaceType, string> = {
-  bowl:   'All optimizers converge on a simple convex bowl, but adaptive methods (Adam, RMSProp) take a more direct path to the minimum.',
-  valley: 'The elongated valley causes vanilla GD to zig-zag. Momentum smooths the oscillation, while Adam adapts the learning rate per dimension for a straighter path.',
-  saddle: 'Pure GD gets stuck at the saddle point where the gradient is zero. SGD\'s noise and momentum\'s inertia help escape. Adam combines both advantages.',
-  beale:  'Beale\'s function has a narrow curved valley. Adaptive methods shine here because different directions need very different step sizes.',
+  bowl:   'All optimizers converge on a simple convex bowl, but adaptive methods (Adam, RMSProp) take a more direct path. AdamW adds weight decay that pulls parameters toward zero — on a bowl centered at the origin, this actually helps convergence.',
+  valley: 'The elongated valley causes vanilla GD to zig-zag. Momentum smooths the oscillation, while Adam adapts the learning rate per dimension. AdamW\'s decoupled weight decay gently shrinks the parameters independently of the gradient, so it doesn\'t distort the adaptive step sizes the way L2 regularization in Adam would.',
+  saddle: 'Pure GD gets stuck at the saddle point where the gradient is zero. SGD\'s noise and momentum\'s inertia help escape. Adam combines both advantages. AdamW behaves similarly to Adam here — weight decay has little effect near zero.',
+  beale:  'Beale\'s function has a narrow curved valley. Adaptive methods shine because different directions need very different step sizes. AdamW\'s weight decay is decoupled from the gradient, so the adaptive per-dimension learning rates stay clean — unlike L2 in vanilla Adam, which leaks regularization into the moment estimates.',
 };
 
 // ============================================================
@@ -355,6 +356,29 @@ function stepOptimizer(o: OptimizerState): void {
       const vyh = o.gy / (1 - Math.pow(beta2, t));
       o.x -= lr * mxh / (Math.sqrt(vxh) + eps);
       o.y -= lr * myh / (Math.sqrt(vyh) + eps);
+      break;
+    }
+
+    case 'adamw': {
+      // AdamW: decoupled weight decay — decay is applied directly to params,
+      // NOT through the gradient like L2 regularization in Adam
+      const wd = 0.01;
+      o.steps++;
+      const tw = o.steps;
+      o.mx = beta1 * o.mx + (1 - beta1) * gx;
+      o.my = beta1 * o.my + (1 - beta1) * gy;
+      o.gx = beta2 * o.gx + (1 - beta2) * gx * gx;
+      o.gy = beta2 * o.gy + (1 - beta2) * gy * gy;
+      const mxhw = o.mx / (1 - Math.pow(beta1, tw));
+      const myhw = o.my / (1 - Math.pow(beta1, tw));
+      const vxhw = o.gx / (1 - Math.pow(beta2, tw));
+      const vyhw = o.gy / (1 - Math.pow(beta2, tw));
+      // Weight decay step: shrink params toward zero BEFORE the Adam update
+      o.x -= lr * wd * o.x;
+      o.y -= lr * wd * o.y;
+      // Adam update step
+      o.x -= lr * mxhw / (Math.sqrt(vxhw) + eps);
+      o.y -= lr * myhw / (Math.sqrt(vyhw) + eps);
       break;
     }
   }
