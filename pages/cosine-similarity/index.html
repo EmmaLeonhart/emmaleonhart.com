@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Cosine Similarity & AI">
-  <meta property="og:description" content="Interactive demo of cosine similarity as a decision criterion — a smart sprinkler that turns on when the weather points toward 'sunny and dry.'">
+  <meta property="og:description" content="Interactive demo of cosine similarity controlling a smart sprinkler — more alignment means more water, showing how AI outputs are continuous, not binary.">
   <meta property="og:url" content="https://emmaleonhart.com/cosine-similarity/">
-  <meta name="description" content="Interactive cosine similarity visualizer. Drag the weather vector and watch a smart sprinkler decide to turn on or off based on directional alignment.">
+  <meta name="description" content="Interactive cosine similarity visualizer. Drag the weather vector and watch a smart sprinkler adjust its intensity based on directional alignment — from off to partial to full blast.">
   <title>Cosine Similarity & AI</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -121,11 +121,18 @@
       transition: color 0.3s;
     }
     .threshold-line {
-      text-align: center;
       font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
       font-size: 0.82rem;
       padding: 6px 0;
       margin-bottom: 10px;
+    }
+    .threshold-detail {
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .threshold-scale {
+      text-align: center;
+      font-size: 0.72rem;
     }
     .status-card {
       border-radius: 8px;
@@ -153,18 +160,22 @@
       margin-bottom: 12px;
       transition: all 0.3s;
     }
-    .angle-row {
+    .bar-section {
+      margin-bottom: 10px;
+    }
+    .bar-row {
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 6px;
     }
-    .angle-bar-wrap { flex: 1; }
+    .bar-wrap { flex: 1; }
     .info-detail {
       color: #8888a0;
       font-size: 0.82rem;
       white-space: nowrap;
     }
-    #angleBar {
+    .bar-track {
       height: 5px;
       border-radius: 3px;
       background: #1e1e2a;
@@ -176,7 +187,13 @@
       background: linear-gradient(90deg, #34d399, #facc15, #f43f5e);
       transition: width 0.1s;
     }
-    #angleLabel {
+    #intensityBarFill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #1e1e2a, #38bdf8, #34d399);
+      transition: width 0.1s;
+    }
+    .bar-labels {
       font-size: 0.65rem;
       color: #666880;
       margin-top: 3px;
@@ -203,7 +220,7 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Cosine Similarity & AI</h1>
-    <p class="subtitle">A smart sprinkler uses cosine similarity to decide: does the weather "point toward" ideal watering conditions? Only direction matters &mdash; not intensity. Drag the weather vector to explore.</p>
+    <p class="subtitle">A smart sprinkler uses cosine similarity to control how much water to use. The closer the weather aligns with "sunny and dry," the harder it sprinkles &mdash; not just on or off, but a smooth gradient. Drag the weather vector to explore.</p>
     <div class="main-layout">
       <div class="canvas-wrap">
         <canvas id="canvas"></canvas>
@@ -222,11 +239,20 @@
         <div id="threshold-compare" class="threshold-line"></div>
         <div id="sprinkler-status" class="status-card"></div>
         <div id="insightBox" class="insight-box"></div>
-        <div class="angle-row">
-          <div class="info-detail">&theta; = <span id="angleVal" style="font-weight:600;">90.0&deg;</span></div>
-          <div class="angle-bar-wrap">
-            <div id="angleBar"><div id="angleBarFill" style="width:100%"></div></div>
-            <div id="angleLabel"><span>0&deg;</span><span>45&deg;</span><span>90&deg;</span></div>
+        <div class="bar-section">
+          <div class="bar-row">
+            <div class="info-detail">Intensity: <span id="intensityVal" style="font-weight:600;">0%</span></div>
+            <div class="bar-wrap">
+              <div class="bar-track"><div id="intensityBarFill" style="width:0%"></div></div>
+              <div class="bar-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="info-detail">&theta; = <span id="angleVal" style="font-weight:600;">90.0&deg;</span></div>
+            <div class="bar-wrap">
+              <div class="bar-track"><div id="angleBarFill" style="width:100%"></div></div>
+              <div class="bar-labels"><span>0&deg;</span><span>45&deg;</span><span>90&deg;</span></div>
+            </div>
           </div>
         </div>
       </div>

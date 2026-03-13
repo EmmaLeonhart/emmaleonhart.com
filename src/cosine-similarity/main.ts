@@ -1,5 +1,6 @@
 // Cosine Similarity Interactive Visualizer
-// Smart sprinkler demo: cosine similarity as AI decision criterion
+// Smart sprinkler demo: cosine similarity controls sprinkler INTENSITY
+// Continuous output — more similarity = more water
 // First-quadrant only (positive sunniness & raininess)
 export {};
 
@@ -9,6 +10,7 @@ const COLORS = {
   target: '#facc15',
   weather: '#38bdf8',
   onZone: 'rgba(52, 211, 153, 0.06)',
+  midZone: 'rgba(250, 204, 21, 0.04)',
   threshold: 'rgba(136, 136, 160, 0.4)',
   arcColor: 'rgba(250, 204, 21, 0.5)',
   arcText: '#facc15',
@@ -16,11 +18,15 @@ const COLORS = {
   axis: '#2a2a3e',
   axisLabel: '#2a2a40',
   positive: '#34d399',
+  warning: '#facc15',
   negative: '#f43f5e',
 };
 
-const THRESHOLD_ANGLE = Math.PI / 4;
-const THRESHOLD_COS = Math.cos(THRESHOLD_ANGLE); // ≈ 0.7071
+// Two thresholds for continuous behavior
+const HIGH_ANGLE = Math.PI / 6;       // 30° — full blast
+const LOW_ANGLE = Math.PI * 5 / 12;   // 75° — completely off
+const HIGH_COS = Math.cos(HIGH_ANGLE);
+const LOW_COS = Math.cos(LOW_ANGLE);
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -31,13 +37,24 @@ let dragging = false;
 
 let SCALE = 40;
 let W = 0, H = 0;
-let OX = 0, OY = 0; // origin position (bottom-left area)
+let OX = 0, OY = 0;
 
 const PAD_LEFT = 30;
 const PAD_BOTTOM = 24;
 const PAD_TOP = 20;
 const PAD_RIGHT = 20;
 const MAX_VAL = 7;
+
+// Water droplet animation
+interface Droplet {
+  x: number;
+  y: number;
+  vy: number;
+  opacity: number;
+  size: number;
+}
+let droplets: Droplet[] = [];
+let lastDropletTime = 0;
 
 function toCanvas(v: Vec2): Vec2 {
   return { x: OX + v.x * SCALE, y: OY - v.y * SCALE };
@@ -53,10 +70,16 @@ function toWorld(px: number, py: number): Vec2 {
 function dot(a: Vec2, b: Vec2): number { return a.x * b.x + a.y * b.y; }
 function mag(v: Vec2): number { return Math.hypot(v.x, v.y); }
 
+function sprinklerIntensity(cosSim: number): number {
+  // Continuous: 0 below LOW_COS, 1 above HIGH_COS, linear between
+  if (cosSim >= HIGH_COS) return 1.0;
+  if (cosSim <= LOW_COS) return 0.0;
+  return (cosSim - LOW_COS) / (HIGH_COS - LOW_COS);
+}
+
 function resize(): void {
   const container = canvas.parentElement!;
   const w = container.clientWidth;
-  // Compute scale from available width
   SCALE = Math.max(25, Math.min(50, (w - PAD_LEFT - PAD_RIGHT) / MAX_VAL));
   const h = PAD_TOP + MAX_VAL * SCALE + PAD_BOTTOM;
   const dpr = window.devicePixelRatio || 1;
@@ -104,12 +127,64 @@ function drawArrow(x1: number, y1: number, x2: number, y2: number, color: string
 }
 
 // ============================================================
+// WATER DROPLET ANIMATION
+// ============================================================
+function updateDroplets(intensity: number): void {
+  const now = performance.now();
+
+  // Spawn new droplets based on intensity
+  const spawnRate = intensity * 120; // ms between spawns (lower = more)
+  if (intensity > 0.01 && now - lastDropletTime > (150 - spawnRate)) {
+    const count = Math.ceil(intensity * 3);
+    for (let i = 0; i < count; i++) {
+      droplets.push({
+        x: W - 70 + Math.random() * 50,
+        y: 10 + Math.random() * 10,
+        vy: 1 + Math.random() * 2 * intensity,
+        opacity: 0.3 + intensity * 0.7,
+        size: 1.5 + intensity * 2.5,
+      });
+    }
+    lastDropletTime = now;
+  }
+
+  // Update existing droplets
+  for (let i = droplets.length - 1; i >= 0; i--) {
+    const d = droplets[i];
+    d.y += d.vy;
+    d.vy += 0.15;
+    d.opacity -= 0.008;
+    if (d.y > H || d.opacity <= 0) {
+      droplets.splice(i, 1);
+    }
+  }
+}
+
+function drawDroplets(): void {
+  for (const d of droplets) {
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(56, 189, 248, ${d.opacity})`;
+    ctx.fill();
+  }
+}
+
+// ============================================================
 // MAIN DRAW
 // ============================================================
 function draw(): void {
   ctx.clearRect(0, 0, W, H);
 
-  // Grid (first quadrant only)
+  const mW = mag(weather), mT = mag(target);
+  const dpVal = dot(weather, target);
+  const cosSim = mW > 0.001 && mT > 0.001 ? dpVal / (mW * mT) : 0;
+  const intensity = sprinklerIntensity(cosSim);
+
+  // Update and draw water animation
+  updateDroplets(intensity);
+  drawDroplets();
+
+  // Grid
   ctx.lineWidth = 1;
   for (let i = 0; i <= MAX_VAL; i++) {
     const gx = OX + i * SCALE;
@@ -122,28 +197,49 @@ function draw(): void {
     ctx.beginPath(); ctx.moveTo(OX, gy); ctx.lineTo(W - PAD_RIGHT, gy); ctx.stroke();
   }
 
-  // Decision zone wedge (from x-axis up to threshold angle)
+  // Three-zone wedges
   const zr = Math.max(W, H) * 1.5;
   ctx.save();
   ctx.beginPath();
-  ctx.rect(OX, 0, W, OY); // clip to first quadrant area
+  ctx.rect(OX, 0, W, OY);
   ctx.clip();
+
+  // Full-blast zone (0° to HIGH_ANGLE)
   ctx.beginPath();
   ctx.moveTo(OX, OY);
-  ctx.arc(OX, OY, zr, -THRESHOLD_ANGLE, 0);
+  ctx.arc(OX, OY, zr, -HIGH_ANGLE, 0);
   ctx.closePath();
   ctx.fillStyle = COLORS.onZone;
   ctx.fill();
-  ctx.restore();
 
-  // Threshold line (dashed, 45° from origin)
-  ctx.setLineDash([6, 4]);
-  ctx.strokeStyle = COLORS.threshold;
-  ctx.lineWidth = 1.5;
+  // Partial zone (HIGH_ANGLE to LOW_ANGLE)
   ctx.beginPath();
   ctx.moveTo(OX, OY);
-  ctx.lineTo(OX + Math.cos(THRESHOLD_ANGLE) * zr, OY - Math.sin(THRESHOLD_ANGLE) * zr);
+  ctx.arc(OX, OY, zr, -LOW_ANGLE, -HIGH_ANGLE);
+  ctx.closePath();
+  ctx.fillStyle = COLORS.midZone;
+  ctx.fill();
+
+  ctx.restore();
+
+  // Threshold lines
+  ctx.setLineDash([6, 4]);
+  ctx.lineWidth = 1.5;
+
+  // High threshold (full blast line)
+  ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+  ctx.beginPath();
+  ctx.moveTo(OX, OY);
+  ctx.lineTo(OX + Math.cos(HIGH_ANGLE) * zr, OY - Math.sin(HIGH_ANGLE) * zr);
   ctx.stroke();
+
+  // Low threshold (off line)
+  ctx.strokeStyle = 'rgba(244, 63, 94, 0.25)';
+  ctx.beginPath();
+  ctx.moveTo(OX, OY);
+  ctx.lineTo(OX + Math.cos(LOW_ANGLE) * zr, OY - Math.sin(LOW_ANGLE) * zr);
+  ctx.stroke();
+
   ctx.setLineDash([]);
 
   // Zone labels
@@ -151,9 +247,12 @@ function draw(): void {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = 'rgba(52, 211, 153, 0.35)';
-  ctx.fillText('ON ZONE', OX + 5 * SCALE, OY - 1.2 * SCALE);
+  ctx.fillText('FULL BLAST', OX + 5.5 * SCALE, OY - 1.0 * SCALE);
+  ctx.fillStyle = 'rgba(250, 204, 21, 0.3)';
+  const midAngle = (HIGH_ANGLE + LOW_ANGLE) / 2;
+  ctx.fillText('PARTIAL', OX + Math.cos(midAngle) * 3.8 * SCALE, OY - Math.sin(midAngle) * 3.8 * SCALE);
   ctx.fillStyle = 'rgba(244, 63, 94, 0.25)';
-  ctx.fillText('OFF ZONE', OX + 2 * SCALE, OY - 5 * SCALE);
+  ctx.fillText('OFF', OX + 1.2 * SCALE, OY - 5.5 * SCALE);
 
   // Axis labels
   ctx.font = '12px "Segoe UI", system-ui, sans-serif';
@@ -183,13 +282,10 @@ function draw(): void {
 
   const pTarget = toCanvas(target);
   const pWeather = toCanvas(weather);
-  const mW = mag(weather), mT = mag(target);
-  const dpVal = dot(weather, target);
-  const cosSim = mW > 0.001 && mT > 0.001 ? dpVal / (mW * mT) : 0;
 
   // Angle arc
   if (mW > 0.1) {
-    const angW = Math.atan2(-weather.y, weather.x); // canvas angle (y flipped)
+    const angW = Math.atan2(-weather.y, weather.x);
     const angT = 0;
     const start = Math.min(angW, angT);
     const end = Math.max(angW, angT);
@@ -209,13 +305,13 @@ function draw(): void {
     ctx.fillText('\u03B8', OX + Math.cos(midAng) * 42, OY + Math.sin(midAng) * 42);
   }
 
-  // Target vector (fixed, yellow)
+  // Target vector
   drawArrow(OX, OY, pTarget.x, pTarget.y, COLORS.target, 2.5, 'Target');
 
-  // Weather vector (draggable, blue)
+  // Weather vector
   drawArrow(OX, OY, pWeather.x, pWeather.y, COLORS.weather, 3, 'Weather');
 
-  // Drag handle on weather
+  // Drag handle
   ctx.beginPath();
   ctx.arc(pWeather.x, pWeather.y, 7, 0, Math.PI * 2);
   ctx.fillStyle = COLORS.weather;
@@ -224,21 +320,31 @@ function draw(): void {
   ctx.lineWidth = 2;
   ctx.stroke();
 
-  updateUI(cosSim, mW, mT, dpVal);
+  updateUI(cosSim, mW, mT, dpVal, intensity);
+
+  // Request animation frame for continuous droplet animation
+  if (intensity > 0.01 || droplets.length > 0) {
+    requestAnimationFrame(() => draw());
+  }
 }
 
 // ============================================================
 // UI UPDATE
 // ============================================================
-function updateUI(cosSim: number, mW: number, mT: number, dpVal: number): void {
+function updateUI(cosSim: number, mW: number, mT: number, dpVal: number, intensity: number): void {
   const thetaDeg = Math.acos(Math.max(-1, Math.min(1, cosSim))) * 180 / Math.PI;
-  const isOn = cosSim >= THRESHOLD_COS;
-  const resultColor = isOn ? COLORS.positive : COLORS.negative;
+  const pct = Math.round(intensity * 100);
+
+  // Pick color based on intensity
+  let resultColor: string;
+  if (intensity > 0.8) resultColor = COLORS.positive;
+  else if (intensity > 0.01) resultColor = COLORS.warning;
+  else resultColor = COLORS.negative;
 
   setText('wx', String(weather.x));
   setText('wy', String(weather.y));
 
-  // Step-by-step cosine similarity
+  // Cosine similarity work
   const work = document.getElementById('work')!;
   const denom = mW * mT;
 
@@ -259,31 +365,49 @@ function updateUI(cosSim: number, mW: number, mT: number, dpVal: number): void {
       'cos \u03B8 = ' + cosSim.toFixed(4) +
     '</div>';
 
-  // Threshold comparison
+  // Threshold comparison — now shows the intensity mapping
   const thresh = document.getElementById('threshold-compare')!;
   thresh.innerHTML =
-    '<span style="color:' + resultColor + ';font-weight:600">' + cosSim.toFixed(4) + '</span>' +
-    ' ' + (isOn ? '\u2265' : '<') + ' ' +
-    '<span style="color:#8888a0">' + THRESHOLD_COS.toFixed(4) + '</span>' +
-    '<span style="color:#666880"> (45\u00B0 threshold)</span>';
+    '<div class="threshold-detail">' +
+      '<span style="color:' + resultColor + ';font-weight:600">' + cosSim.toFixed(4) + '</span>' +
+      ' \u2192 intensity: <span style="color:' + resultColor + ';font-weight:700">' + pct + '%</span>' +
+    '</div>' +
+    '<div class="threshold-scale">' +
+      '<span style="color:#f43f5e">off &lt; ' + LOW_COS.toFixed(2) + '</span>' +
+      '<span style="color:#666880">\u00A0\u00A0|\u00A0\u00A0</span>' +
+      '<span style="color:#facc15">partial</span>' +
+      '<span style="color:#666880">\u00A0\u00A0|\u00A0\u00A0</span>' +
+      '<span style="color:#34d399">' + HIGH_COS.toFixed(2) + ' &lt; full</span>' +
+    '</div>';
 
-  // Sprinkler status
+  // Sprinkler status — continuous
   const status = document.getElementById('sprinkler-status')!;
-  if (isOn) {
+  if (intensity > 0.8) {
     status.style.background = '#0f1a14';
     status.style.borderColor = COLORS.positive;
     status.innerHTML =
-      '<div class="status-label" style="color:' + COLORS.positive + '">SPRINKLER ON</div>' +
-      '<div class="status-detail">Weather direction aligns with "sunny & dry" \u2014 water the lawn.</div>';
+      '<div class="status-label" style="color:' + COLORS.positive + '">SPRINKLER: FULL BLAST (' + pct + '%)</div>' +
+      '<div class="status-detail">Weather direction closely matches "sunny & dry" \u2014 maximum watering.</div>';
+  } else if (intensity > 0.01) {
+    status.style.background = '#1a1a12';
+    status.style.borderColor = COLORS.warning;
+    status.innerHTML =
+      '<div class="status-label" style="color:' + COLORS.warning + '">SPRINKLER: PARTIAL (' + pct + '%)</div>' +
+      '<div class="status-detail">Weather is somewhat sunny \u2014 sprinkler runs at reduced intensity. More sun = more water.</div>';
   } else {
     status.style.background = '#1a0f11';
     status.style.borderColor = COLORS.negative;
     status.innerHTML =
-      '<div class="status-label" style="color:' + COLORS.negative + '">SPRINKLER OFF</div>' +
-      '<div class="status-detail">Weather direction points away from ideal conditions \u2014 save water.</div>';
+      '<div class="status-label" style="color:' + COLORS.negative + '">SPRINKLER OFF (0%)</div>' +
+      '<div class="status-detail">Weather direction points too far from ideal conditions \u2014 save water.</div>';
   }
 
-  // Angle bar (0° to 90° since first quadrant only)
+  // Intensity bar
+  const intensityBar = document.getElementById('intensityBarFill') as HTMLElement;
+  intensityBar.style.width = pct + '%';
+  setText('intensityVal', pct + '%');
+
+  // Angle bar
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
   (document.getElementById('angleBarFill') as HTMLElement).style.width = Math.min(100, thetaDeg / 90 * 100) + '%';
 
@@ -295,19 +419,19 @@ function updateUI(cosSim: number, mW: number, mT: number, dpVal: number): void {
     msg = 'Zero vector \u2014 no weather reading. Cosine similarity is undefined at the origin.';
     bg = '#1a1a12'; border = '#facc15';
   } else if (Math.abs(thetaDeg) < 3) {
-    msg = 'Perfect alignment \u2014 the weather points exactly toward "sunny & dry." Try making the vector longer or shorter: cos \u03B8 stays the same. Cosine similarity ignores magnitude entirely.';
+    msg = 'Perfect alignment \u2014 the weather points exactly toward "sunny & dry," so the sprinkler runs at 100%. Try making the vector longer or shorter: the intensity stays the same. Cosine similarity ignores magnitude, so a gentle sunny day and a blazing one produce the same water flow.';
     bg = '#0f1a14'; border = COLORS.positive;
-  } else if (Math.abs(thetaDeg - 45) < 3) {
-    msg = 'Right at the 45\u00B0 decision boundary. The weather is equally sunny and rainy. A tiny nudge either way flips the sprinkler \u2014 this is exactly how AI classification boundaries work.';
+  } else if (intensity > 0.01 && intensity < 0.99) {
+    msg = `The sprinkler is running at ${pct}% power. Unlike a simple on/off switch, this system responds continuously \u2014 the closer the weather aligns with "sunny & dry," the more water flows. This is how real ML systems work: outputs are gradients, not binary switches.`;
     bg = '#1a1a12'; border = '#facc15';
-  } else if (isOn) {
-    msg = 'The weather vector is within 45\u00B0 of the target direction. Cosine similarity measures direction, not intensity \u2014 a gentle sunny day and a blazing one get the same score if the sun-to-rain ratio matches.';
+  } else if (intensity >= 0.99) {
+    msg = 'The weather vector is within 30\u00B0 of the target direction \u2014 full blast. The sprinkler responds to direction, not magnitude: a light sunny breeze and intense sun produce the same 100% output, as long as the sun-to-rain ratio matches.';
     bg = '#0f1a14'; border = COLORS.positive;
   } else if (Math.abs(thetaDeg - 90) < 5) {
-    msg = 'Perpendicular \u2014 cos \u03B8 = 0. The weather is pure rain, zero sun. Completely orthogonal to the target.';
+    msg = 'Perpendicular \u2014 cos \u03B8 = 0. The weather is pure rain, zero sun. Completely orthogonal to the target direction, so the sprinkler stays firmly off.';
     bg = '#1a1a12'; border = '#facc15';
   } else {
-    msg = 'The weather vector points too far from "sunny & dry." The cosine similarity dropped below the threshold, so the AI keeps the sprinkler off. Drag closer to the x-axis to turn it on.';
+    msg = 'The weather vector is more than 75\u00B0 from "sunny & dry." The cosine similarity is below the minimum threshold, so the sprinkler saves water. Drag toward the x-axis to start seeing partial watering kick in.';
     bg = '#1a0f11'; border = COLORS.negative;
   }
 

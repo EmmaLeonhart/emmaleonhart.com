@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Recurrent Neural Network">
+  <meta property="og:description" content="Interactive demo of how RNNs process sequences — watch hidden state carry memory from one time step to the next.">
+  <meta property="og:url" content="https://emmaleonhart.com/rnn/">
+  <meta name="description" content="Interactive recurrent neural network visualizer. See how hidden states flow through time, carrying information from earlier inputs to later outputs.">
+  <title>Recurrent Neural Network</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+    }
+    .container { max-width: 960px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .subtitle {
+      color: #8888a0;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .canvas-wrap {
+      width: 100%;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #0a0a0f;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      touch-action: none;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      padding: 8px 18px;
+      background: #12121a;
+      border: 2px solid #1e1e2a;
+      border-radius: 8px;
+      color: #b0b0cc;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ctrl-btn:hover {
+      border-color: #3a3a50;
+      background: #16161f;
+    }
+    .ctrl-btn.active {
+      border-color: #7c8cf8;
+      background: rgba(124, 140, 248, 0.1);
+      color: #e8e8f0;
+    }
+    .ctrl-sep {
+      width: 1px;
+      background: #1e1e2a;
+      align-self: stretch;
+      margin: 0 4px;
+    }
+    .main-layout {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .panel-left {
+      flex: 0 0 200px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .panel-right {
+      flex: 1;
+      min-width: 0;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 14px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      color: #666880;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .step-inputs {
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e1e2a;
+    }
+    .step-inputs:last-child { border-bottom: none; }
+    .step-label {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: #f59e0b;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .slider-label {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: #b0b0cc;
+      min-width: 20px;
+      flex-shrink: 0;
+    }
+    .slider-val {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.72rem;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #7c8cf8;
+      height: 4px;
+    }
+    .step-card {
+      background: #0e0e16;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid #1e1e2a;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .step-card:hover { border-color: #3a3a50; }
+    .step-card.active {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.04);
+    }
+    .step-title {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #f59e0b;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .neuron-line {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.7rem;
+      color: #9898ac;
+      line-height: 1.8;
+      word-break: break-all;
+    }
+    .out-line {
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px solid #1e1e2a;
+    }
+    .val-pos { color: #34d399; }
+    .val-neg { color: #f43f5e; }
+    .val-zero { color: #666880; }
+    .insight-box {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: rgba(245, 158, 11, 0.04);
+      border-left: 3px solid #f59e0b;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #9898ac;
+    }
+    @media (max-width: 700px) {
+      .main-layout { flex-wrap: wrap; }
+      .panel-left { flex: 1 1 100%; max-height: 300px; }
+      .panel-right { flex: 1 1 100%; }
+    }
+    @media (max-width: 480px) {
+      body { padding: 24px 12px; }
+      h1 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Home</a>
+    <h1>Recurrent Neural Network</h1>
+    <p class="subtitle">RNNs process sequences step by step, carrying a hidden state forward through time. The same weights are shared at every step — the network learns to <em>remember</em>. Click a time step card to highlight it.</p>
+    <div class="controls">
+      <button class="ctrl-btn active" data-fn="tanh">Tanh</button>
+      <button class="ctrl-btn" data-fn="relu">ReLU</button>
+      <div class="ctrl-sep"></div>
+      <button class="ctrl-btn" data-steps="2">2 steps</button>
+      <button class="ctrl-btn active" data-steps="3">3 steps</button>
+      <button class="ctrl-btn" data-steps="4">4 steps</button>
+      <button class="ctrl-btn" data-steps="5">5 steps</button>
+      <div class="ctrl-sep"></div>
+      <button class="ctrl-btn" id="btn-randomize">Randomize</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="main-layout">
+      <div class="panel-left">
+        <div class="section-label">Inputs per step</div>
+        <div id="input-sliders"></div>
+      </div>
+      <div class="panel-right">
+        <div class="section-label">Forward pass (click to highlight)</div>
+        <div id="math-panel"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
