@@ -265,65 +265,122 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
   const py = vecA.y * vecB.y;
   const resultColor = dpVal > 0 ? COLORS.positive : dpVal < 0 ? COLORS.negative : COLORS.zero;
 
+  // Check 1D case for simplified display
+  const bothYZero = vecA.y === 0 && vecB.y === 0;
+  const bothXZero = vecA.x === 0 && vecB.x === 0;
+  const is1D = (bothYZero && (vecA.x !== 0 || vecB.x !== 0)) || (bothXZero && (vecA.y !== 0 || vecB.y !== 0));
+
   const work = document.getElementById('work')!;
-  work.innerHTML =
-    '<div class="work-step dim">' +
-      '<span class="term"><span class="dot-a">a<sub>x</sub></span> \u00B7 <span class="dot-b">b<sub>x</sub></span></span>' +
-      '<span class="op">+</span>' +
-      '<span class="term"><span class="dot-a">a<sub>y</sub></span> \u00B7 <span class="dot-b">b<sub>y</sub></span></span>' +
-    '</div>' +
-    '<div class="work-step">' +
-      '<span class="term"><span class="dot-a">' + vecA.x + '</span> \u00B7 <span class="dot-b">' + vecB.x + '</span></span>' +
-      '<span class="op">+</span>' +
-      '<span class="term"><span class="dot-a">' + vecA.y + '</span> \u00B7 <span class="dot-b">' + vecB.y + '</span></span>' +
-    '</div>' +
-    '<div class="work-step">' +
-      '<span class="term">' + px + '</span>' +
-      '<span class="op">+</span>' +
-      '<span class="term">' + py + '</span>' +
-    '</div>' +
-    '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>';
+
+  if (is1D) {
+    // Simplified: show that it's just plain multiplication
+    const aVal = bothYZero ? vecA.x : vecA.y;
+    const bVal = bothYZero ? vecB.x : vecB.y;
+    const axis = bothYZero ? 'x' : 'y';
+    const zeroAxis = bothYZero ? 'y' : 'x';
+    work.innerHTML =
+      '<div class="work-note">Both vectors are zero on the ' + zeroAxis + '-axis, so the sum has only one term:</div>' +
+      '<div class="work-step dim">' +
+        '<span class="term"><span class="dot-a">a<sub>' + axis + '</sub></span> \u00D7 <span class="dot-b">b<sub>' + axis + '</sub></span></span>' +
+        '<span class="op">+</span>' +
+        '<span class="term struck">0 \u00D7 0</span>' +
+      '</div>' +
+      '<div class="work-step">' +
+        '<span class="term"><span class="dot-a">' + aVal + '</span> \u00D7 <span class="dot-b">' + bVal + '</span></span>' +
+      '</div>' +
+      '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>' +
+      '<div class="work-note collapse-note">This is just regular multiplication. The dot product reduces to scalar \u00D7 scalar when vectors share a single axis.</div>';
+  } else {
+    work.innerHTML =
+      '<div class="work-step dim">' +
+        '<span class="term"><span class="dot-a">a<sub>x</sub></span> \u00B7 <span class="dot-b">b<sub>x</sub></span></span>' +
+        '<span class="op">+</span>' +
+        '<span class="term"><span class="dot-a">a<sub>y</sub></span> \u00B7 <span class="dot-b">b<sub>y</sub></span></span>' +
+      '</div>' +
+      '<div class="work-step">' +
+        '<span class="term"><span class="dot-a">' + vecA.x + '</span> \u00B7 <span class="dot-b">' + vecB.x + '</span></span>' +
+        '<span class="op">+</span>' +
+        '<span class="term"><span class="dot-a">' + vecA.y + '</span> \u00B7 <span class="dot-b">' + vecB.y + '</span></span>' +
+      '</div>' +
+      '<div class="work-step">' +
+        '<span class="term">' + px + '</span>' +
+        '<span class="op">+</span>' +
+        '<span class="term">' + py + '</span>' +
+      '</div>' +
+      '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>';
+  }
 
   // Build geometric breakdown — three ingredients, then multiply
   const ax2 = vecA.x * vecA.x, ay2 = vecA.y * vecA.y;
   const bx2 = vecB.x * vecB.x, by2 = vecB.y * vecB.y;
   const sumA = ax2 + ay2, sumB = bx2 + by2;
   const cosVal = mA > 0 && mB > 0 ? cosT : 0;
-  // Compute the geometric product independently
   const geoProd = mA * mB * cosVal;
 
   const geo = document.getElementById('geo')!;
-  geo.innerHTML =
-    // Step 1: Magnitude A
-    '<div class="geo-step-label">1. How long is A?</div>' +
-    '<div class="geo-line">' +
-      '<span class="dot-a">|A|</span>' +
-      '<span class="eq"> = \u221A(' + ax2 + ' + ' + ay2 + ') = </span>' +
-      '<strong class="dot-a">' + mA.toFixed(2) + '</strong>' +
-    '</div>' +
-    // Step 2: Magnitude B
-    '<div class="geo-step-label">2. How long is B?</div>' +
-    '<div class="geo-line">' +
-      '<span class="dot-b">|B|</span>' +
-      '<span class="eq"> = \u221A(' + bx2 + ' + ' + by2 + ') = </span>' +
-      '<strong class="dot-b">' + mB.toFixed(2) + '</strong>' +
-    '</div>' +
-    // Step 3: Cosine of the angle (from the angle itself, not from dot product)
-    '<div class="geo-step-label">3. How aligned are they?</div>' +
-    '<div class="geo-line">' +
-      '\u03B8 = <strong>' + thetaDeg.toFixed(1) + '\u00B0</strong>' +
-      '<span class="eq">  \u2192  </span>' +
-      'cos \u03B8 = <strong>' + cosVal.toFixed(4) + '</strong>' +
-    '</div>' +
-    // Step 4: THE POINT — multiply all three to get dot product
-    '<div class="geo-result">' +
-      '<span class="dot-a">' + mA.toFixed(2) + '</span>' +
-      ' \u00D7 ' +
-      '<span class="dot-b">' + mB.toFixed(2) + '</span>' +
-      ' \u00D7 ' +
-      cosVal.toFixed(4) +
-      ' = <strong style="color:' + resultColor + '">' + geoProd.toFixed(1) + '</strong>' +
-    '</div>';
+
+  if (is1D) {
+    // In 1D: magnitudes are just absolute values, angle is 0° or 180°, cos θ is ±1
+    const aVal = bothYZero ? vecA.x : vecA.y;
+    const bVal = bothYZero ? vecB.x : vecB.y;
+    const sameSign = (aVal > 0 && bVal > 0) || (aVal < 0 && bVal < 0);
+    geo.innerHTML =
+      '<div class="geo-step-label">1. How long is A?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-a">|A|</span>' +
+        '<span class="eq"> = |' + aVal + '| = </span>' +
+        '<strong class="dot-a">' + Math.abs(aVal) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">2. How long is B?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-b">|B|</span>' +
+        '<span class="eq"> = |' + bVal + '| = </span>' +
+        '<strong class="dot-b">' + Math.abs(bVal) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">3. How aligned are they?</div>' +
+      '<div class="geo-line">' +
+        '\u03B8 = <strong>' + (sameSign ? '0' : '180') + '\u00B0</strong>' +
+        '<span class="eq">  \u2192  </span>' +
+        'cos \u03B8 = <strong>' + (sameSign ? '+1' : '\u22121') + '</strong>' +
+      '</div>' +
+      '<div class="geo-note">On a single axis, vectors are either perfectly aligned (+1) or perfectly opposed (\u22121). The cos \u03B8 just becomes the sign.</div>' +
+      '<div class="geo-result">' +
+        '<span class="dot-a">' + Math.abs(aVal) + '</span>' +
+        ' \u00D7 ' +
+        '<span class="dot-b">' + Math.abs(bVal) + '</span>' +
+        ' \u00D7 ' + (sameSign ? '1' : '(\u22121)') +
+        ' = <strong style="color:' + resultColor + '">' + (aVal * bVal) + '</strong>' +
+      '</div>' +
+      '<div class="geo-note">This is just |a| \u00D7 |b| with a sign \u2014 exactly how regular multiplication works. The dot product IS multiplication, generalized to multiple axes.</div>';
+  } else {
+    geo.innerHTML =
+      '<div class="geo-step-label">1. How long is A?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-a">|A|</span>' +
+        '<span class="eq"> = \u221A(' + ax2 + ' + ' + ay2 + ') = </span>' +
+        '<strong class="dot-a">' + mA.toFixed(2) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">2. How long is B?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-b">|B|</span>' +
+        '<span class="eq"> = \u221A(' + bx2 + ' + ' + by2 + ') = </span>' +
+        '<strong class="dot-b">' + mB.toFixed(2) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">3. How aligned are they?</div>' +
+      '<div class="geo-line">' +
+        '\u03B8 = <strong>' + thetaDeg.toFixed(1) + '\u00B0</strong>' +
+        '<span class="eq">  \u2192  </span>' +
+        'cos \u03B8 = <strong>' + cosVal.toFixed(4) + '</strong>' +
+      '</div>' +
+      '<div class="geo-result">' +
+        '<span class="dot-a">' + mA.toFixed(2) + '</span>' +
+        ' \u00D7 ' +
+        '<span class="dot-b">' + mB.toFixed(2) + '</span>' +
+        ' \u00D7 ' +
+        cosVal.toFixed(4) +
+        ' = <strong style="color:' + resultColor + '">' + geoProd.toFixed(1) + '</strong>' +
+      '</div>';
+  }
 
   // Angle
   setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
@@ -332,11 +389,6 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
   // Insight box
   const ib = document.getElementById('insightBox')!;
   let msg: string, bg: string, border: string;
-
-  // Check for 1D case: both vectors have zero in the same dimension
-  const bothYZero = vecA.y === 0 && vecB.y === 0 && (vecA.x !== 0 || vecB.x !== 0);
-  const bothXZero = vecA.x === 0 && vecB.x === 0 && (vecA.y !== 0 || vecB.y !== 0);
-  const is1D = bothYZero || bothXZero;
 
   if (is1D) {
     const aVal = bothYZero ? vecA.x : vecA.y;
