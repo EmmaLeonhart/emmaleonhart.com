@@ -35,8 +35,8 @@ function dot(a, b) { return a.x * b.x + a.y * b.y; }
 function mag(v) { return Math.hypot(v.x, v.y); }
 function resize() {
     const container = canvas.parentElement;
-    const w = Math.min(container.clientWidth, 800);
-    const h = Math.min(w, 600);
+    const w = container.clientWidth;
+    const h = Math.min(w, 500);
     const dpr = window.devicePixelRatio || 1;
     W = w;
     H = h;
@@ -47,7 +47,7 @@ function resize() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     CX = W / 2;
     CY = H / 2;
-    SCALE = Math.max(30, Math.min(50, W / 16));
+    SCALE = Math.max(25, Math.min(45, W / 14));
     draw();
 }
 // ============================================================
@@ -304,7 +304,23 @@ function updateUI(dpVal, mA, mB) {
     // Insight box
     const ib = document.getElementById('insightBox');
     let msg, bg, border;
-    if (Math.abs(thetaDeg - 90) < 5) {
+    // Check for 1D case: both vectors have zero in the same dimension
+    const bothYZero = vecA.y === 0 && vecB.y === 0 && (vecA.x !== 0 || vecB.x !== 0);
+    const bothXZero = vecA.x === 0 && vecB.x === 0 && (vecA.y !== 0 || vecB.y !== 0);
+    const is1D = bothYZero || bothXZero;
+    if (is1D) {
+        const aVal = bothYZero ? vecA.x : vecA.y;
+        const bVal = bothYZero ? vecB.x : vecB.y;
+        const product = aVal * bVal;
+        const sameSign = (aVal > 0 && bVal > 0) || (aVal < 0 && bVal < 0);
+        const axis = bothYZero ? 'x' : 'y';
+        msg = `Both vectors lie entirely on the ${axis}-axis, so the dot product collapses to simple multiplication: ${aVal} \u00D7 ${bVal} = ${product}. There\u2019s no second axis to add in \u2014 the "sum" in a\u2081b\u2081 + a\u2082b\u2082 has only one nonzero term. `;
+        msg += `Cosine similarity is ${sameSign ? '+1' : '\u22121'} (${sameSign ? 'same' : 'opposite'} direction), confirming that the dot product here is purely about magnitude, not direction. `;
+        msg += `This supports thinking of the dot product as a generalized form of multiplication rather than addition \u2014 in 1D it literally IS multiplication, and the multi-dimensional formula just extends this by summing the per-axis multiplications.`;
+        bg = sameSign ? '#0f1a14' : '#1a0f11';
+        border = sameSign ? COLORS.positive : COLORS.negative;
+    }
+    else if (Math.abs(thetaDeg - 90) < 5) {
         msg = '\u22A5 Perpendicular \u2014 all of A\u2019s magnitude is sideways to B. No matter how big the vectors are, zero alignment means zero dot product.';
         bg = '#1a1a12';
         border = COLORS.zero;
