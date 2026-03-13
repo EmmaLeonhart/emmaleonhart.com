@@ -257,46 +257,44 @@ function updateUI(dpVal, mA, mB) {
             '<span class="term">' + py + '</span>' +
             '</div>' +
             '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>';
-    // Build geometric breakdown
+    // Build geometric breakdown — three ingredients, then multiply
     const ax2 = vecA.x * vecA.x, ay2 = vecA.y * vecA.y;
     const bx2 = vecB.x * vecB.x, by2 = vecB.y * vecB.y;
     const sumA = ax2 + ay2, sumB = bx2 + by2;
     const cosVal = mA > 0 && mB > 0 ? cosT : 0;
+    // Compute the geometric product independently
+    const geoProd = mA * mB * cosVal;
     const geo = document.getElementById('geo');
     geo.innerHTML =
-        // Magnitude A via Pythagorean theorem
-        '<div class="geo-line">' +
-            '<span class="label"><span class="dot-a">|A|</span></span>' +
-            '<span class="eq">= \u221A(</span>' +
-            '<span class="dot-a">' + vecA.x + '</span>\u00B2 + ' +
-            '<span class="dot-a">' + vecA.y + '</span>\u00B2' +
-            '<span class="eq">) = \u221A(' + ax2 + ' + ' + ay2 + ') = \u221A' + sumA + ' = </span>' +
+        // Step 1: Magnitude A
+        '<div class="geo-step-label">1. How long is A?</div>' +
+            '<div class="geo-line">' +
+            '<span class="dot-a">|A|</span>' +
+            '<span class="eq"> = \u221A(' + ax2 + ' + ' + ay2 + ') = </span>' +
+            '<strong class="dot-a">' + mA.toFixed(2) + '</strong>' +
+            '</div>' +
+            // Step 2: Magnitude B
+            '<div class="geo-step-label">2. How long is B?</div>' +
+            '<div class="geo-line">' +
+            '<span class="dot-b">|B|</span>' +
+            '<span class="eq"> = \u221A(' + bx2 + ' + ' + by2 + ') = </span>' +
+            '<strong class="dot-b">' + mB.toFixed(2) + '</strong>' +
+            '</div>' +
+            // Step 3: Cosine of the angle (from the angle itself, not from dot product)
+            '<div class="geo-step-label">3. How aligned are they?</div>' +
+            '<div class="geo-line">' +
+            '\u03B8 = <strong>' + thetaDeg.toFixed(1) + '\u00B0</strong>' +
+            '<span class="eq">  \u2192  </span>' +
+            'cos \u03B8 = <strong>' + cosVal.toFixed(4) + '</strong>' +
+            '</div>' +
+            // Step 4: THE POINT — multiply all three to get dot product
+            '<div class="geo-result">' +
             '<span class="dot-a">' + mA.toFixed(2) + '</span>' +
-            '</div>' +
-            // Magnitude B via Pythagorean theorem
-            '<div class="geo-line">' +
-            '<span class="label"><span class="dot-b">|B|</span></span>' +
-            '<span class="eq">= \u221A(</span>' +
-            '<span class="dot-b">' + vecB.x + '</span>\u00B2 + ' +
-            '<span class="dot-b">' + vecB.y + '</span>\u00B2' +
-            '<span class="eq">) = \u221A(' + bx2 + ' + ' + by2 + ') = \u221A' + sumB + ' = </span>' +
+            ' \u00D7 ' +
             '<span class="dot-b">' + mB.toFixed(2) + '</span>' +
-            '</div>' +
-            // Cosine similarity
-            '<div class="geo-line" style="margin-top:8px">' +
-            '<span class="label">cos \u03B8</span>' +
-            '<span class="eq">= A\u00B7B / (<span class="dot-a">|A|</span> \u00D7 <span class="dot-b">|B|</span>)</span>' +
-            '</div>' +
-            '<div class="geo-line">' +
-            '<span class="label"></span>' +
-            '<span class="eq">= ' + dpVal + ' / (' + mA.toFixed(2) + ' \u00D7 ' + mB.toFixed(2) + ') = </span>' +
-            '<strong>' + cosVal.toFixed(4) + '</strong>' +
-            '</div>' +
-            // Geometric check: |A| × |B| × cos θ = same answer
-            '<div class="geo-check">' +
-            '<span class="dot-a">|A|</span> \u00D7 <span class="dot-b">|B|</span> \u00D7 cos \u03B8 = ' +
-            mA.toFixed(2) + ' \u00D7 ' + mB.toFixed(2) + ' \u00D7 ' + cosVal.toFixed(4) +
-            ' = <strong style="color:' + resultColor + '">' + dpVal + '</strong>' +
+            ' \u00D7 ' +
+            cosVal.toFixed(4) +
+            ' = <strong style="color:' + resultColor + '">' + geoProd.toFixed(1) + '</strong>' +
             '</div>';
     // Angle
     setText('angleVal', thetaDeg.toFixed(1) + '\u00B0');
