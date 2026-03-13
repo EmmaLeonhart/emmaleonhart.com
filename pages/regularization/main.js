@@ -25,6 +25,7 @@ const C = {
 };
 let regType = 'l1';
 let vizType = 'dropout';
+let activeCategory = 'penalty'; // 'penalty' or 'training'
 let lambda = 2.0;
 let alpha = 0.5;
 let dropoutRate = 0.5;
@@ -83,7 +84,8 @@ function bindControls() {
             regType = btn.dataset.reg;
             document.querySelectorAll('[data-reg]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            updateAlphaVisibility();
+            activeCategory = 'penalty';
+            updateCategoryVisibility();
             updateMath();
             updateInsight();
         });
@@ -94,7 +96,8 @@ function bindControls() {
             vizType = btn.dataset.viz;
             document.querySelectorAll('[data-viz]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            updateDropoutVisibility();
+            activeCategory = 'training';
+            updateCategoryVisibility();
             updateMath();
             updateInsight();
         });
@@ -123,19 +126,23 @@ function bindControls() {
         resampleDropout();
         resampleBatch();
     });
-    updateAlphaVisibility();
-    updateDropoutVisibility();
+    updateCategoryVisibility();
     updateMath();
     updateInsight();
 }
-function updateAlphaVisibility() {
-    const wrap = $('alpha-wrap');
-    wrap.style.display = regType === 'elastic' ? 'flex' : 'none';
-}
-function updateDropoutVisibility() {
-    const dWrap = $('dropout-wrap');
-    dWrap.style.display = vizType === 'dropout' ? 'flex' : 'none';
-    $('btn-resample').style.display = vizType === 'dropout' ? 'inline-block' : 'none';
+function updateCategoryVisibility() {
+    const isPenalty = activeCategory === 'penalty';
+    // Canvas visibility
+    $('wrap1').style.display = isPenalty ? 'block' : 'none';
+    $('wrap2').style.display = isPenalty ? 'none' : 'block';
+    // Penalty-specific controls
+    $('lambda-slider').parentElement.style.display = isPenalty ? 'flex' : 'none';
+    $('alpha-wrap').style.display = isPenalty && regType === 'elastic' ? 'flex' : 'none';
+    // Training-specific controls
+    $('dropout-wrap').style.display = !isPenalty && vizType === 'dropout' ? 'flex' : 'none';
+    $('btn-resample').style.display = !isPenalty && vizType === 'dropout' ? 'inline-block' : 'none';
+    // Resize after toggling so canvas dimensions are correct
+    setTimeout(resize, 0);
 }
 function updateMath() {
     const el = $('math-panel');
@@ -146,10 +153,11 @@ function updateMath() {
         dropout: 'p(keep) = 1 \u2013 dropout_rate, scale by 1/(1\u2013p) at train time',
         batchnorm: '\u0177 = \u03b3 \u00b7 (x \u2013 \u03bc) / \u03c3 + \u03b2',
     };
-    const regFormula = formulas[regType];
-    const vizFormula = formulas[vizType === 'dropout' ? 'dropout' : 'batchnorm'];
-    el.innerHTML = `<div style="margin-bottom:6px"><strong>Weight Penalty:</strong> ${regFormula}</div>` +
-        `<div><strong>Regularization:</strong> ${vizFormula}</div>`;
+    if (activeCategory === 'penalty') {
+        el.innerHTML = `<div><strong>Weight Penalty:</strong> ${formulas[regType]}</div>`;
+    } else {
+        el.innerHTML = `<div><strong>Training Regularization:</strong> ${formulas[vizType]}</div>`;
+    }
 }
 function updateInsight() {
     const el = $('insight-box');
@@ -162,7 +170,11 @@ function updateInsight() {
         dropout: 'By randomly killing neurons during training, dropout forces the network to not rely on any single neuron. It\'s like training an ensemble of thinner networks.',
         batchnorm: 'Normalizing activations keeps them in a well-behaved range, which stabilizes training and allows higher learning rates.',
     };
-    el.innerHTML = `<p style="margin:0 0 8px">${regInsights[regType]}</p><p style="margin:0">${vizInsights[vizType]}</p>`;
+    if (activeCategory === 'penalty') {
+        el.innerHTML = `<p style="margin:0">${regInsights[regType]}</p>`;
+    } else {
+        el.innerHTML = `<p style="margin:0">${vizInsights[vizType]}</p>`;
+    }
 }
 // ============================================================
 // DROPOUT / BATCH NORM STATE
@@ -575,16 +587,19 @@ let frameCount = 0;
 let dropTimer = 0;
 function loop(t) {
     frameCount++;
-    // Auto-resample dropout every 90 frames for animation effect
-    if (vizType === 'dropout') {
-        dropTimer++;
-        if (dropTimer >= 90) {
-            dropTimer = 0;
-            resampleDropout();
+    if (activeCategory === 'penalty') {
+        drawCanvas1();
+    } else {
+        // Auto-resample dropout every 90 frames for animation effect
+        if (vizType === 'dropout') {
+            dropTimer++;
+            if (dropTimer >= 90) {
+                dropTimer = 0;
+                resampleDropout();
+            }
         }
+        drawCanvas2();
     }
-    drawCanvas1();
-    drawCanvas2();
     requestAnimationFrame(loop);
 }
 // ============================================================
