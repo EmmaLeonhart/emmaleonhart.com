@@ -31,7 +31,8 @@
       "Bash(git add:*)",
       "Bash(cd \"C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\axiv-neurosymbolic-paper\" && npx tsc 2>&1)",
       "Bash(cd \"C:/Users/Immanuelle/Documents/Github/axiv-neurosymbolic-paper\" && npx tsc 2>&1)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(find \"C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\emmaleonhart.com\" -type f -name \"*.css\" 2>/dev/null | head -20)"
     ]
   }
 }
