@@ -269,6 +269,7 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
   const bothYZero = vecA.y === 0 && vecB.y === 0;
   const bothXZero = vecA.x === 0 && vecB.x === 0;
   const is1D = (bothYZero && (vecA.x !== 0 || vecB.x !== 0)) || (bothXZero && (vecA.y !== 0 || vecB.y !== 0));
+  const isPerp = !is1D && dpVal === 0 && (mA > 0 && mB > 0);
 
   const work = document.getElementById('work')!;
 
@@ -290,6 +291,27 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
       '</div>' +
       '<div class="work-result" style="color:' + resultColor + '">' + dpVal + '</div>' +
       '<div class="work-note collapse-note">This is just regular multiplication. The dot product reduces to scalar \u00D7 scalar when vectors share a single axis.</div>';
+  } else if (isPerp) {
+    // Perpendicular: show that the two terms perfectly cancel
+    work.innerHTML =
+      '<div class="work-note">The two axis contributions cancel exactly:</div>' +
+      '<div class="work-step dim">' +
+        '<span class="term"><span class="dot-a">a<sub>x</sub></span> \u00B7 <span class="dot-b">b<sub>x</sub></span></span>' +
+        '<span class="op">+</span>' +
+        '<span class="term"><span class="dot-a">a<sub>y</sub></span> \u00B7 <span class="dot-b">b<sub>y</sub></span></span>' +
+      '</div>' +
+      '<div class="work-step">' +
+        '<span class="term"><span class="dot-a">' + vecA.x + '</span> \u00B7 <span class="dot-b">' + vecB.x + '</span></span>' +
+        '<span class="op">+</span>' +
+        '<span class="term"><span class="dot-a">' + vecA.y + '</span> \u00B7 <span class="dot-b">' + vecB.y + '</span></span>' +
+      '</div>' +
+      '<div class="work-step">' +
+        '<span class="term">' + (px >= 0 ? '+' : '') + px + '</span>' +
+        '<span class="op">+</span>' +
+        '<span class="term">' + (py >= 0 ? '(+' : '(') + py + ')</span>' +
+      '</div>' +
+      '<div class="work-result" style="color:' + resultColor + '">0</div>' +
+      '<div class="work-note collapse-note">What one axis gives, the other takes back. Perfect cancellation is what perpendicularity looks like in the algebra.</div>';
   } else {
     work.innerHTML =
       '<div class="work-step dim">' +
@@ -352,6 +374,36 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
         ' = <strong style="color:' + resultColor + '">' + (aVal * bVal) + '</strong>' +
       '</div>' +
       '<div class="geo-note">This is just |a| \u00D7 |b| with a sign \u2014 exactly how regular multiplication works. The dot product IS multiplication, generalized to multiple axes.</div>';
+  } else if (isPerp) {
+    // Perpendicular: cos θ = 0 kills everything regardless of magnitudes
+    geo.innerHTML =
+      '<div class="geo-step-label">1. How long is A?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-a">|A|</span>' +
+        '<span class="eq"> = \u221A(' + ax2 + ' + ' + ay2 + ') = </span>' +
+        '<strong class="dot-a">' + mA.toFixed(2) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">2. How long is B?</div>' +
+      '<div class="geo-line">' +
+        '<span class="dot-b">|B|</span>' +
+        '<span class="eq"> = \u221A(' + bx2 + ' + ' + by2 + ') = </span>' +
+        '<strong class="dot-b">' + mB.toFixed(2) + '</strong>' +
+      '</div>' +
+      '<div class="geo-step-label">3. How aligned are they?</div>' +
+      '<div class="geo-line">' +
+        '\u03B8 = <strong>90.0\u00B0</strong>' +
+        '<span class="eq">  \u2192  </span>' +
+        'cos \u03B8 = <strong>0</strong>' +
+      '</div>' +
+      '<div class="geo-note">cos 90\u00B0 = 0, so the entire product is zeroed out. It doesn\u2019t matter how long A or B are \u2014 perpendicular vectors have zero dot product by definition.</div>' +
+      '<div class="geo-result">' +
+        '<span class="dot-a struck">' + mA.toFixed(2) + '</span>' +
+        ' \u00D7 ' +
+        '<span class="dot-b struck">' + mB.toFixed(2) + '</span>' +
+        ' \u00D7 0' +
+        ' = <strong style="color:' + resultColor + '">0</strong>' +
+      '</div>' +
+      '<div class="geo-note">The magnitudes are irrelevant. Perpendicularity is purely a directional property \u2014 cosine similarity is zero, so the dot product must be zero regardless of scale.</div>';
   } else {
     geo.innerHTML =
       '<div class="geo-step-label">1. How long is A?</div>' +
@@ -401,8 +453,10 @@ function updateUI(dpVal: number, mA: number, mB: number): void {
     msg += `This supports thinking of the dot product as a generalized form of multiplication rather than addition \u2014 in 1D it literally IS multiplication, and the multi-dimensional formula just extends this by summing the per-axis multiplications.`;
     bg = sameSign ? '#0f1a14' : '#1a0f11';
     border = sameSign ? COLORS.positive : COLORS.negative;
-  } else if (Math.abs(thetaDeg - 90) < 5) {
-    msg = '\u22A5 Perpendicular \u2014 all of A\u2019s magnitude is sideways to B. No matter how big the vectors are, zero alignment means zero dot product.';
+  } else if (isPerp) {
+    msg = `\u22A5 Perpendicular \u2014 cos 90\u00B0 = 0, so the dot product is zero no matter how large the vectors are. `;
+    msg += `Algebraically, the x-axis contribution (${px}) and y-axis contribution (${py}) cancel exactly. `;
+    msg += `Geometrically, cosine similarity is zero, which wipes out the magnitudes entirely. Perpendicularity is a purely directional property \u2014 scale doesn\u2019t enter into it.`;
     bg = '#1a1a12'; border = COLORS.zero;
   } else if (dpVal > 0) {
     msg = '\u2713 Positive \u2014 A and B point in similar directions. The result depends on both alignment (cos \u03B8) and magnitude (|A|\u00D7|B|) \u2014 more magnitude can make up for less alignment.';
