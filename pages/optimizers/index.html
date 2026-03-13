@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Optimizer Comparison">
-  <meta property="og:description" content="Interactive 2D visualization of gradient descent optimizers racing on different loss surfaces.">
+  <meta property="og:description" content="Interactive 2D visualization of gradient descent optimizers (GD, SGD, Momentum, AdaGrad, RMSProp, Adam, AdamW) racing on different loss surfaces.">
   <meta property="og:url" content="https://emmaleonhart.com/optimizers/">
   <title>Optimizer Comparison</title>
   <style>
@@ -42,7 +42,7 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Optimizer Comparison</h1>
-    <p class="subtitle">Watch six optimizers race across a loss surface. Each uses a different strategy to find the minimum. Toggle optimizers and surfaces to compare their behavior.</p>
+    <p class="subtitle">Watch seven optimizers race across a loss surface. Each uses a different strategy to find the minimum. Toggle optimizers and surfaces to compare their behavior.</p>
     <div class="controls">
       <button class="ctrl-btn active" data-surface="bowl">Bowl</button>
       <button class="ctrl-btn" data-surface="valley">Valley</button>
@@ -59,6 +59,7 @@
       <button class="opt-btn active" data-opt="adagrad" style="--opt-color:#f59e0b; color:#f59e0b">AdaGrad</button>
       <button class="opt-btn active" data-opt="rmsprop" style="--opt-color:#f43f5e; color:#f43f5e">RMSProp</button>
       <button class="opt-btn active" data-opt="adam" style="--opt-color:#34d399; color:#34d399">Adam</button>
+      <button class="opt-btn active" data-opt="adamw" style="--opt-color:#fb923c; color:#fb923c">AdamW</button>
       <div class="ctrl-sep"></div>
       <div class="slider-group">LR: <input type="range" id="lr-slider" min="0.001" max="0.5" step="0.001" value="0.05"> <span id="lr-val">0.050</span></div>
       <div class="slider-group">Speed: <input type="range" id="speed-slider" min="1" max="10" step="1" value="3"> </div>
