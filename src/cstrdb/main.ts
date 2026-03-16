@@ -324,15 +324,15 @@ function draw(): void {
 function buildSteps(): (() => void)[] {
   const steps: (() => void)[] = [];
 
-  // Step 1: Vector search lands on first similar node — John Smith
+  // Step 1: HNSW entry — start at Alice (far from query, chaotic start)
   steps.push(() => {
-    state.visitedVector.add('john1');
-    state.vectorCursor = 'john1';
-    state.currentNode = 'john1';
+    state.visitedVector.add('alice1');
+    state.vectorCursor = 'alice1';
+    state.currentNode = 'alice1';
     state.operations += 1;
     state.steps.push({
-      description: 'Vector traversal lands on John Smith',
-      detail: 'HNSW hop → found "John Smith" (similarity 0.98). Immediately check for :hasFather...',
+      description: 'HNSW entry: Alice Johnson (random start)',
+      detail: 'Vector traversal enters at Alice — far from "John." Greedy search begins...',
       type: 'vector',
       active: true,
       done: false,
@@ -340,13 +340,101 @@ function buildSteps(): (() => void)[] {
     updateStepsUI();
   });
 
-  // Step 2: WHILE still on John, immediately follow his :hasFather chain all 3 hops
-  // This is the key — we don't wait for more vector results
+  // Step 2: Hop to Chen Wei (closer)
   steps.push(() => {
     state.steps[0].active = false;
     state.steps[0].done = true;
+    state.visitedVector.add('chen1');
+    state.activeEdges.add('v:alice1->chen1');
+    state.vectorCursor = 'chen1';
+    state.currentNode = 'chen1';
+    state.operations += 1;
+    state.steps.push({
+      description: 'HNSW hop → Chen Wei (getting closer)',
+      detail: 'Greedy hop through the vector graph. No :hasFather here, keep going...',
+      type: 'vector',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+  });
 
-    // Graph traversal for John: john1 → robert1 → william1 → henry1
+  // Step 3: Hop to Johan Berg — HAS a father! Immediately follow
+  steps.push(() => {
+    state.steps[1].active = false;
+    state.steps[1].done = true;
+    state.visitedVector.add('johan1');
+    state.activeEdges.add('v:chen1->johan1');
+    state.vectorCursor = 'johan1';
+    state.currentNode = 'johan1';
+    state.operations += 1;
+    state.steps.push({
+      description: 'HNSW hop → Johan Berg (sim 0.93) — has :hasFather!',
+      detail: 'Landed on a similar name AND it has :hasFather edges. Follow them NOW, don\'t wait...',
+      type: 'vector',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+  });
+
+  // Step 4: Immediately follow Johan's father chain (vector search hasn't finished!)
+  // state.steps indices: [0]=Alice, [1]=Chen, [2]=Johan. Now adding [3]=Johan chain
+  steps.push(() => {
+    state.steps[2].active = false;
+    state.steps[2].done = true;
+
+    state.visitedGraph.add('johan1');
+    state.visitedGraph.add('erik1');
+    state.fatherEdges.add('g:johan1->erik1');
+    state.visitedGraph.add('olaf1');
+    state.fatherEdges.add('g:erik1->olaf1');
+    state.visitedGraph.add('sven1');
+    state.fatherEdges.add('g:olaf1->sven1');
+    state.currentNode = 'sven1';
+    state.operations += 1;
+    state.results.push({
+      person: 'Johan Berg', greatgrandfather: 'Sven Berg',
+      chain: 'Johan → Erik → Olaf → Sven', similarity: 0.93,
+    });
+    state.steps.push({
+      description: 'Johan\'s :hasFather chain (3 hops, same graph!)',
+      detail: 'Johan → Erik → Olaf → Sven. First result in! Vector search continues...',
+      type: 'both',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+    updateResultsUI();
+  });
+
+  // Step 5: Vector search continues from Johan's neighborhood → John Smith
+  // state.steps: [0,1,2,3]. Adding [4]
+  steps.push(() => {
+    state.steps[3].active = false;
+    state.steps[3].done = true;
+
+    state.visitedVector.add('john1');
+    state.activeEdges.add('v:johan1->john1');
+    state.vectorCursor = 'john1';
+    state.currentNode = 'john1';
+    state.operations += 1;
+    state.steps.push({
+      description: 'HNSW continues → John Smith (sim 0.98)',
+      detail: 'Hopped from Johan to John via vector edge. Has :hasFather — follow immediately...',
+      type: 'vector',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+  });
+
+  // Step 6: Immediately follow John's chain
+  // state.steps: [0..4]. Adding [5]
+  steps.push(() => {
+    state.steps[4].active = false;
+    state.steps[4].done = true;
+
     state.visitedGraph.add('john1');
     state.visitedGraph.add('robert1');
     state.fatherEdges.add('g:john1->robert1');
@@ -362,7 +450,7 @@ function buildSteps(): (() => void)[] {
     });
     state.steps.push({
       description: 'John\'s :hasFather chain (3 hops, same graph)',
-      detail: 'John → Robert → William → Henry. Found great-grandfather! Vector search continues in parallel...',
+      detail: 'John → Robert → William → Henry. Vector search still going...',
       type: 'both',
       active: true,
       done: false,
@@ -371,10 +459,11 @@ function buildSteps(): (() => void)[] {
     updateResultsUI();
   });
 
-  // Step 3: Vector search continues — hops to Jean Dupont
+  // Step 7: Vector search expands John's neighbors → Jean Dupont
+  // state.steps: [0..5]. Adding [6]
   steps.push(() => {
-    state.steps[1].active = false;
-    state.steps[1].done = true;
+    state.steps[5].active = false;
+    state.steps[5].done = true;
 
     state.visitedVector.add('jean1');
     state.activeEdges.add('v:john1->jean1');
@@ -382,8 +471,8 @@ function buildSteps(): (() => void)[] {
     state.currentNode = 'jean1';
     state.operations += 1;
     state.steps.push({
-      description: 'Vector search continues → Jean Dupont',
-      detail: 'HNSW hop → "Jean Dupont" (similarity 0.89). Check :hasFather immediately...',
+      description: 'HNSW expands → Jean Dupont (sim 0.89)',
+      detail: 'Vector neighbor of John. Has :hasFather — follow immediately...',
       type: 'vector',
       active: true,
       done: false,
@@ -391,10 +480,11 @@ function buildSteps(): (() => void)[] {
     updateStepsUI();
   });
 
-  // Step 4: Immediately follow Jean's chain
+  // Step 8: Immediately follow Jean's chain
+  // state.steps: [0..6]. Adding [7]
   steps.push(() => {
-    state.steps[2].active = false;
-    state.steps[2].done = true;
+    state.steps[6].active = false;
+    state.steps[6].done = true;
 
     state.visitedGraph.add('jean1');
     state.visitedGraph.add('pierre1');
@@ -420,59 +510,11 @@ function buildSteps(): (() => void)[] {
     updateResultsUI();
   });
 
-  // Step 5: Vector search continues — hops to Johan Berg
+  // Step 9: Vector search continues → Juan Garcia
+  // state.steps: [0..7]. Adding [8]
   steps.push(() => {
-    state.steps[3].active = false;
-    state.steps[3].done = true;
-
-    state.visitedVector.add('johan1');
-    state.activeEdges.add('v:john1->johan1');
-    state.vectorCursor = 'johan1';
-    state.currentNode = 'johan1';
-    state.operations += 1;
-    state.steps.push({
-      description: 'Vector search continues → Johan Berg',
-      detail: 'HNSW hop → "Johan Berg" (similarity 0.93). Check :hasFather immediately...',
-      type: 'vector',
-      active: true,
-      done: false,
-    });
-    updateStepsUI();
-  });
-
-  // Step 6: Immediately follow Johan's chain
-  steps.push(() => {
-    state.steps[4].active = false;
-    state.steps[4].done = true;
-
-    state.visitedGraph.add('johan1');
-    state.visitedGraph.add('erik1');
-    state.fatherEdges.add('g:johan1->erik1');
-    state.visitedGraph.add('olaf1');
-    state.fatherEdges.add('g:erik1->olaf1');
-    state.visitedGraph.add('sven1');
-    state.fatherEdges.add('g:olaf1->sven1');
-    state.currentNode = 'sven1';
-    state.operations += 1;
-    state.results.push({
-      person: 'Johan Berg', greatgrandfather: 'Sven Berg',
-      chain: 'Johan → Erik → Olaf → Sven', similarity: 0.93,
-    });
-    state.steps.push({
-      description: 'Johan\'s :hasFather chain (3 hops, same graph)',
-      detail: 'Johan → Erik → Olaf → Sven. Vector search still going...',
-      type: 'both',
-      active: true,
-      done: false,
-    });
-    updateStepsUI();
-    updateResultsUI();
-  });
-
-  // Step 7: Vector search continues — hops to Juan Garcia
-  steps.push(() => {
-    state.steps[5].active = false;
-    state.steps[5].done = true;
+    state.steps[7].active = false;
+    state.steps[7].done = true;
 
     state.visitedVector.add('juan1');
     state.activeEdges.add('v:john1->juan1');
@@ -480,8 +522,8 @@ function buildSteps(): (() => void)[] {
     state.currentNode = 'juan1';
     state.operations += 1;
     state.steps.push({
-      description: 'Vector search continues → Juan Garcia',
-      detail: 'HNSW hop → "Juan Garcia" (similarity 0.86). Check :hasFather immediately...',
+      description: 'HNSW expands → Juan Garcia (sim 0.86)',
+      detail: 'Another vector neighbor. Has :hasFather — follow immediately...',
       type: 'vector',
       active: true,
       done: false,
@@ -489,10 +531,11 @@ function buildSteps(): (() => void)[] {
     updateStepsUI();
   });
 
-  // Step 8: Immediately follow Juan's chain — done!
+  // Step 10: Immediately follow Juan's chain — done!
+  // state.steps: [0..8]. Adding [9]
   steps.push(() => {
-    state.steps[6].active = false;
-    state.steps[6].done = true;
+    state.steps[8].active = false;
+    state.steps[8].done = true;
 
     state.visitedGraph.add('juan1');
     state.visitedGraph.add('carlos1');
