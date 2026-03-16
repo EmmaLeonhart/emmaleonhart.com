@@ -24,6 +24,7 @@ interface VectorNode {
   pos: Vec2; // position in vector space viz
   similarity: number;
   json: { graphId: string; fatherId?: string };
+  hnswNeighbors: string[]; // HNSW graph connections
 }
 
 interface GraphPerson {
@@ -33,15 +34,16 @@ interface GraphPerson {
   fatherId?: string;
 }
 
-// Vector space (left half)
+// Vector space (left half) — includes HNSW neighbor connections to show the chaotic traversal
 const vectorNodes: VectorNode[] = [
-  { id: 'v1', name: 'John Smith', pos: { x: 0.35, y: 0.15 }, similarity: 0.98, json: { graphId: 'g-john1', fatherId: 'g-robert1' } },
-  { id: 'v2', name: 'Jean Dupont', pos: { x: 0.30, y: 0.25 }, similarity: 0.89, json: { graphId: 'g-jean1', fatherId: 'g-pierre1' } },
-  { id: 'v3', name: 'Johan Berg', pos: { x: 0.38, y: 0.10 }, similarity: 0.93, json: { graphId: 'g-johan1', fatherId: 'g-erik1' } },
-  { id: 'v4', name: 'Juan Garcia', pos: { x: 0.25, y: 0.30 }, similarity: 0.86, json: { graphId: 'g-juan1', fatherId: 'g-carlos1' } },
-  { id: 'v5', name: 'Alice Johnson', pos: { x: 0.20, y: 0.60 }, similarity: 0.12, json: { graphId: 'g-alice1' } },
-  { id: 'v6', name: 'Bob Williams', pos: { x: 0.15, y: 0.75 }, similarity: 0.08, json: { graphId: 'g-bob1' } },
-  { id: 'v7', name: 'Maria Rodriguez', pos: { x: 0.30, y: 0.50 }, similarity: 0.22, json: { graphId: 'g-maria1' } },
+  { id: 'v1', name: 'John Smith', pos: { x: 0.35, y: 0.15 }, similarity: 0.98, json: { graphId: 'g-john1', fatherId: 'g-robert1' }, hnswNeighbors: ['v2', 'v3', 'v4'] },
+  { id: 'v2', name: 'Jean Dupont', pos: { x: 0.30, y: 0.25 }, similarity: 0.89, json: { graphId: 'g-jean1', fatherId: 'g-pierre1' }, hnswNeighbors: ['v1', 'v4'] },
+  { id: 'v3', name: 'Johan Berg', pos: { x: 0.38, y: 0.10 }, similarity: 0.93, json: { graphId: 'g-johan1', fatherId: 'g-erik1' }, hnswNeighbors: ['v1', 'v8'] },
+  { id: 'v4', name: 'Juan Garcia', pos: { x: 0.25, y: 0.30 }, similarity: 0.86, json: { graphId: 'g-juan1', fatherId: 'g-carlos1' }, hnswNeighbors: ['v1', 'v2'] },
+  { id: 'v5', name: 'Alice Johnson', pos: { x: 0.20, y: 0.60 }, similarity: 0.12, json: { graphId: 'g-alice1' }, hnswNeighbors: ['v6', 'v7', 'v8'] },
+  { id: 'v6', name: 'Bob Williams', pos: { x: 0.15, y: 0.75 }, similarity: 0.08, json: { graphId: 'g-bob1' }, hnswNeighbors: ['v5'] },
+  { id: 'v7', name: 'Maria Rodriguez', pos: { x: 0.30, y: 0.50 }, similarity: 0.22, json: { graphId: 'g-maria1' }, hnswNeighbors: ['v5', 'v8'] },
+  { id: 'v8', name: 'Chen Wei', pos: { x: 0.40, y: 0.40 }, similarity: 0.35, json: { graphId: 'g-chen1' }, hnswNeighbors: ['v3', 'v5', 'v7'] },
 ];
 
 // Graph space (right half) - family trees
@@ -84,6 +86,9 @@ interface HybridState {
   phases: Phase[];
   // Visual state
   activeVectorNodes: Set<string>;
+  vectorCursor: string; // current HNSW position
+  visitedVectorNodes: Set<string>; // nodes the HNSW walk has touched
+  hnswTraversedEdges: Set<string>; // "v1->v2" format
   jsonHighlighted: Set<string>;
   activeGraphNodes: Set<string>;
   traversedGraphEdges: Set<string>;
@@ -103,6 +108,9 @@ function createInitialState(): HybridState {
     currentPhaseIndex: -1,
     phases: [],
     activeVectorNodes: new Set(),
+    vectorCursor: '',
+    visitedVectorNodes: new Set(),
+    hnswTraversedEdges: new Set(),
     jsonHighlighted: new Set(),
     activeGraphNodes: new Set(),
     traversedGraphEdges: new Set(),
@@ -165,10 +173,34 @@ function draw(): void {
   ctx.fillStyle = COLORS.graph;
   ctx.fillText('Graph Database (RDF)', midX + (W - midX) * 0.5, 20);
 
+  // Draw HNSW edges in vector space
+  for (const vn of vectorNodes) {
+    for (const nId of vn.hnswNeighbors) {
+      if (nId < vn.id) continue; // avoid double-draw
+      const nb = vectorNodes.find(v => v.id === nId);
+      if (!nb) continue;
+      const from = toScreen(vn.pos.x, vn.pos.y);
+      const to = toScreen(nb.pos.x, nb.pos.y);
+      const edgeKey = `${vn.id}->${nId}`;
+      const edgeKeyRev = `${nId}->${vn.id}`;
+      const isTraversed = state.hnswTraversedEdges.has(edgeKey) || state.hnswTraversedEdges.has(edgeKeyRev);
+      ctx.strokeStyle = isTraversed ? COLORS.vector + 'cc' : '#1a1a28';
+      ctx.lineWidth = isTraversed ? 2 : 0.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
   // Draw vector nodes
   for (const vn of vectorNodes) {
     const p = toScreen(vn.pos.x, vn.pos.y);
     const isActive = state.activeVectorNodes.has(vn.id);
+    const isCursor = state.vectorCursor === vn.id;
+    const isVisited = state.visitedVectorNodes.has(vn.id);
     const isJsonHighlighted = state.jsonHighlighted.has(vn.id);
 
     let color = COLORS.vector;
@@ -177,17 +209,23 @@ function draw(): void {
     if (isJsonHighlighted) {
       color = COLORS.json;
       radius = 8;
+    } else if (isCursor) {
+      color = '#ffffff';
+      radius = 9;
     } else if (isActive) {
       color = COLORS.vector;
       radius = 8;
+    } else if (isVisited) {
+      color = COLORS.vector + 'aa';
+      radius = 6;
     } else if (state.phase !== 'idle' && !isActive) {
       color = COLORS.nodeDim;
     }
 
-    if (isActive || isJsonHighlighted) {
+    if (isActive || isJsonHighlighted || isCursor) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, radius + 5, 0, Math.PI * 2);
-      ctx.fillStyle = color + '33';
+      ctx.fillStyle = (isCursor ? '#ffffff' : color) + '33';
       ctx.fill();
     }
 
@@ -196,7 +234,7 @@ function draw(): void {
     ctx.fillStyle = color;
     ctx.fill();
 
-    ctx.fillStyle = isActive || isJsonHighlighted ? '#ffffff' : COLORS.textDim;
+    ctx.fillStyle = isActive || isJsonHighlighted || isCursor ? '#ffffff' : COLORS.textDim;
     ctx.font = '9px "Segoe UI", system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
@@ -303,24 +341,67 @@ function draw(): void {
 function buildSteps(): (() => void)[] {
   const steps: (() => void)[] = [];
 
-  // Phase 1: Vector search
+  // Phase 1a: HNSW entry — start at Alice (random entry point, far from query)
   steps.push(() => {
     state.phases.push({
-      title: 'Phase 1: Vector Search (HNSW)',
-      detail: 'Query "John" → HNSW traversal finds 4 similar name vectors',
+      title: 'Phase 1: HNSW Traversal (Vector Search)',
+      detail: 'Enter at Alice Johnson — random entry point, far from "John"',
       status: 'active',
     });
+    state.vectorCursor = 'v5';
+    state.visitedVectorNodes.add('v5');
+    state.operations += 1;
+    updatePhasesUI();
+  });
+
+  // Phase 1b: Hop to Chen Wei (greedy — closer to query)
+  steps.push(() => {
+    state.phases[0].detail = 'Hop → Chen Wei (closer to "John" than Alice)';
+    state.hnswTraversedEdges.add('v5->v8');
+    state.vectorCursor = 'v8';
+    state.visitedVectorNodes.add('v8');
+    state.operations += 1;
+    updatePhasesUI();
+  });
+
+  // Phase 1c: Hop to Johan Berg (getting closer)
+  steps.push(() => {
+    state.phases[0].detail = 'Hop → Johan Berg (similarity 0.93 — getting warm)';
+    state.hnswTraversedEdges.add('v8->v3');
+    state.vectorCursor = 'v3';
+    state.visitedVectorNodes.add('v3');
+    state.activeVectorNodes.add('v3');
+    state.operations += 1;
+    updatePhasesUI();
+  });
+
+  // Phase 1d: Hop to John Smith — expand neighbors, collect results
+  steps.push(() => {
+    state.phases[0].detail = 'Hop → John Smith (0.98)! Expand neighbors: Jean, Juan';
+    state.hnswTraversedEdges.add('v3->v1');
+    state.hnswTraversedEdges.add('v1->v2');
+    state.hnswTraversedEdges.add('v1->v4');
+    state.vectorCursor = 'v1';
+    state.visitedVectorNodes.add('v1');
+    state.visitedVectorNodes.add('v2');
+    state.visitedVectorNodes.add('v4');
     state.activeVectorNodes.add('v1');
     state.activeVectorNodes.add('v2');
-    state.activeVectorNodes.add('v3');
     state.activeVectorNodes.add('v4');
     state.operations += 1;
     updatePhasesUI();
   });
 
-  // Phase 2: Parse JSON metadata
+  // Phase 1e: HNSW done — must now WAIT for all results before proceeding
   steps.push(() => {
     state.phases[0].status = 'done';
+    state.phases[0].detail = 'Done! Found 4 results. Now must parse JSON and switch to graph DB...';
+    state.vectorCursor = '';
+    updatePhasesUI();
+  });
+
+  // Phase 2: Parse JSON metadata
+  steps.push(() => {
     state.phases.push({
       title: 'Phase 2: Parse JSON Documents',
       detail: 'Read JSON metadata from each vector result to find graph IDs',
