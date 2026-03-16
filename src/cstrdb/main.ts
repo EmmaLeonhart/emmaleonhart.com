@@ -1,5 +1,5 @@
-// cstrdb: Integrated Vector-Graph Database Visualization
-// Shows unified traversal where vector similarity and graph relationships coexist in one graph
+// sutraDB: Integrated Vector-Graph Database Visualization
+// Shows async/interleaved traversal — graph hops happen DURING vector search, not after
 export {};
 
 interface Vec2 { x: number; y: number; }
@@ -84,29 +84,31 @@ function dist(a: number[], b: number[]): number {
 }
 
 // --- State ---
-interface CstrdbState {
+interface SutraState {
   phase: 'idle' | 'running' | 'done';
   running: boolean;
   // Active visualization
   currentNode: string;
-  visitedVector: Set<string>; // nodes visited via vector edges
-  visitedGraph: Set<string>;  // nodes visited via :hasFather edges
-  activeEdges: Set<string>;   // "a->b" format
-  fatherEdges: Set<string>;
+  vectorCursor: string; // where the vector traversal currently is
+  visitedVector: Set<string>;
+  visitedGraph: Set<string>;
+  activeEdges: Set<string>;   // "v:a->b" for vector edges
+  fatherEdges: Set<string>;   // "g:a->b" for graph edges
   results: { person: string; greatgrandfather: string; chain: string; similarity: number }[];
-  steps: { description: string; detail: string; type: 'vector' | 'graph' | 'unified'; active: boolean; done: boolean }[];
+  steps: { description: string; detail: string; type: 'vector' | 'graph' | 'both'; active: boolean; done: boolean }[];
   stepQueue: (() => void)[];
   stepIndex: number;
   operations: number;
 }
 
-let state: CstrdbState = createInitialState();
+let state: SutraState = createInitialState();
 
-function createInitialState(): CstrdbState {
+function createInitialState(): SutraState {
   return {
     phase: 'idle',
     running: false,
     currentNode: '',
+    vectorCursor: '',
     visitedVector: new Set(),
     visitedGraph: new Set(),
     activeEdges: new Set(),
@@ -228,6 +230,7 @@ function draw(): void {
     const isVectorVisited = state.visitedVector.has(node.id);
     const isGraphVisited = state.visitedGraph.has(node.id);
     const isCurrent = state.currentNode === node.id;
+    const isVectorCursor = state.vectorCursor === node.id;
     const isResult = state.results.some(r => r.greatgrandfather === node.name);
 
     let color = COLORS.vector;
@@ -238,6 +241,9 @@ function draw(): void {
       radius = 10;
     } else if (isCurrent) {
       color = COLORS.current;
+      radius = 10;
+    } else if (isVectorCursor) {
+      color = COLORS.vector;
       radius = 10;
     } else if (isVectorVisited && isGraphVisited) {
       color = COLORS.unified;
@@ -254,14 +260,14 @@ function draw(): void {
     }
 
     // Glow
-    if (isCurrent || isResult) {
+    if (isCurrent || isResult || isVectorCursor) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, radius + 6, 0, Math.PI * 2);
       ctx.fillStyle = color + '33';
       ctx.fill();
     }
 
-    // Dual-ring for unified nodes
+    // Dual-ring for unified nodes (visited by both vector + graph)
     if (isVectorVisited && isGraphVisited && !isCurrent && !isResult) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, radius + 2, 0, Math.PI * 2);
@@ -276,7 +282,7 @@ function draw(): void {
     ctx.fill();
 
     // Label
-    ctx.fillStyle = (isCurrent || isResult || isVectorVisited || isGraphVisited) ? COLORS.text : COLORS.textDim;
+    ctx.fillStyle = (isCurrent || isResult || isVectorVisited || isGraphVisited || isVectorCursor) ? COLORS.text : COLORS.textDim;
     ctx.font = `${isCurrent || isResult ? 'bold ' : ''}9px "Segoe UI", system-ui, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
@@ -289,7 +295,7 @@ function draw(): void {
     ctx.font = 'bold 11px "Segoe UI", system-ui, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('Unified Query: "John" + :hasFather x3', 8, 8);
+    ctx.fillText('sutraDB: "John" + :hasFather x3', 8, 8);
 
     // Legend
     ctx.font = '9px "Segoe UI", system-ui, sans-serif';
@@ -297,27 +303,36 @@ function draw(): void {
     ctx.fillText('--- vector similarity', 8, 24);
     ctx.fillStyle = COLORS.fatherEdge;
     ctx.fillText('— :hasFather', 140, 24);
+
+    // Show async indicator when both are happening
+    const hasActiveVector = state.steps.some(s => s.type === 'vector' && s.active);
+    const hasActiveGraph = state.steps.some(s => s.type === 'graph' && s.active);
+    const hasActiveBoth = state.steps.some(s => s.type === 'both' && s.active);
+    if (hasActiveBoth || (hasActiveVector && hasActiveGraph)) {
+      ctx.fillStyle = COLORS.unified;
+      ctx.font = 'bold 9px "Cascadia Code", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('vector + graph running concurrently', W - 8, 8);
+    }
   }
 }
 
+// The key change: steps interleave vector discovery with graph traversal.
+// Each time the vector search lands on a similar node, graph traversal
+// kicks off immediately for that node — it doesn't wait for all vector
+// results to come back first.
 function buildSteps(): (() => void)[] {
   const steps: (() => void)[] = [];
-  const queryEmb = [1.0, 0.0];
 
-  // Step 1: Vector traversal finds John-like names
+  // Step 1: Vector search lands on first similar node — John Smith
   steps.push(() => {
     state.visitedVector.add('john1');
-    state.visitedVector.add('jean1');
-    state.visitedVector.add('johan1');
-    state.visitedVector.add('juan1');
-    state.activeEdges.add('v:john1->jean1');
-    state.activeEdges.add('v:john1->johan1');
-    state.activeEdges.add('v:john1->juan1');
+    state.vectorCursor = 'john1';
     state.currentNode = 'john1';
     state.operations += 1;
     state.steps.push({
-      description: 'Vector similarity finds "John"-like names',
-      detail: 'HNSW traversal → John, Jean, Johan, Juan (all within similarity threshold)',
+      description: 'Vector traversal lands on John Smith',
+      detail: 'HNSW hop → found "John Smith" (similarity 0.98). Immediately check for :hasFather...',
       type: 'vector',
       active: true,
       done: false,
@@ -325,76 +340,178 @@ function buildSteps(): (() => void)[] {
     updateStepsUI();
   });
 
-  // Step 2: For EACH similar node, immediately check :hasFather (no JSON, no system switch)
+  // Step 2: WHILE still on John, immediately follow his :hasFather chain all 3 hops
+  // This is the key — we don't wait for more vector results
   steps.push(() => {
     state.steps[0].active = false;
     state.steps[0].done = true;
 
-    // The key insight: as we land on each node, we can IMMEDIATELY see its :hasFather edge
+    // Graph traversal for John: john1 → robert1 → william1 → henry1
     state.visitedGraph.add('john1');
     state.visitedGraph.add('robert1');
     state.fatherEdges.add('g:john1->robert1');
-    state.visitedGraph.add('jean1');
-    state.visitedGraph.add('pierre1');
-    state.fatherEdges.add('g:jean1->pierre1');
-    state.visitedGraph.add('johan1');
-    state.visitedGraph.add('erik1');
-    state.fatherEdges.add('g:johan1->erik1');
-    state.visitedGraph.add('juan1');
-    state.visitedGraph.add('carlos1');
-    state.fatherEdges.add('g:juan1->carlos1');
-    state.currentNode = 'robert1';
-    state.operations += 1; // single unified operation, not 4 separate ones
+    state.visitedGraph.add('william1');
+    state.fatherEdges.add('g:robert1->william1');
+    state.visitedGraph.add('henry1');
+    state.fatherEdges.add('g:william1->henry1');
+    state.currentNode = 'henry1';
+    state.operations += 1;
+    state.results.push({
+      person: 'John Smith', greatgrandfather: 'Henry Smith',
+      chain: 'John → Robert → William → Henry', similarity: 0.98,
+    });
     state.steps.push({
-      description: 'Hop 1: :hasFather (in same graph)',
-      detail: 'Each node already has :hasFather edges — follow them directly. No JSON, no system switch.',
-      type: 'unified',
+      description: 'John\'s :hasFather chain (3 hops, same graph)',
+      detail: 'John → Robert → William → Henry. Found great-grandfather! Vector search continues in parallel...',
+      type: 'both',
       active: true,
       done: false,
     });
     updateStepsUI();
+    updateResultsUI();
   });
 
-  // Step 3: Second hop - grandfather
+  // Step 3: Vector search continues — hops to Jean Dupont
   steps.push(() => {
     state.steps[1].active = false;
     state.steps[1].done = true;
-    for (const [childId, fatherId] of [['robert1', 'william1'], ['pierre1', 'louis1'], ['erik1', 'olaf1'], ['carlos1', 'miguel1']]) {
-      state.visitedGraph.add(fatherId);
-      state.fatherEdges.add(`g:${childId}->${fatherId}`);
-    }
-    state.currentNode = 'william1';
+
+    state.visitedVector.add('jean1');
+    state.activeEdges.add('v:john1->jean1');
+    state.vectorCursor = 'jean1';
+    state.currentNode = 'jean1';
     state.operations += 1;
     state.steps.push({
-      description: 'Hop 2: :hasFather (still in same graph)',
-      detail: 'Robert→William, Pierre→Louis, Erik→Olaf, Carlos→Miguel',
-      type: 'unified',
+      description: 'Vector search continues → Jean Dupont',
+      detail: 'HNSW hop → "Jean Dupont" (similarity 0.89). Check :hasFather immediately...',
+      type: 'vector',
       active: true,
       done: false,
     });
     updateStepsUI();
   });
 
-  // Step 4: Third hop - great-grandfather
+  // Step 4: Immediately follow Jean's chain
   steps.push(() => {
     state.steps[2].active = false;
     state.steps[2].done = true;
-    for (const [childId, fatherId] of [['william1', 'henry1'], ['louis1', 'francois1'], ['olaf1', 'sven1'], ['miguel1', 'antonio1']]) {
-      state.visitedGraph.add(fatherId);
-      state.fatherEdges.add(`g:${childId}->${fatherId}`);
-    }
-    state.currentNode = '';
+
+    state.visitedGraph.add('jean1');
+    state.visitedGraph.add('pierre1');
+    state.fatherEdges.add('g:jean1->pierre1');
+    state.visitedGraph.add('louis1');
+    state.fatherEdges.add('g:pierre1->louis1');
+    state.visitedGraph.add('francois1');
+    state.fatherEdges.add('g:louis1->francois1');
+    state.currentNode = 'francois1';
     state.operations += 1;
-    state.results = [
-      { person: 'John Smith', greatgrandfather: 'Henry Smith', chain: 'John → Robert → William → Henry', similarity: 0.98 },
-      { person: 'Jean Dupont', greatgrandfather: 'Francois Dupont', chain: 'Jean → Pierre → Louis → Francois', similarity: 0.89 },
-      { person: 'Johan Berg', greatgrandfather: 'Sven Berg', chain: 'Johan → Erik → Olaf → Sven', similarity: 0.93 },
-      { person: 'Juan Garcia', greatgrandfather: 'Antonio Garcia', chain: 'Juan → Carlos → Miguel → Antonio', similarity: 0.86 },
-    ];
+    state.results.push({
+      person: 'Jean Dupont', greatgrandfather: 'Francois Dupont',
+      chain: 'Jean → Pierre → Louis → Francois', similarity: 0.89,
+    });
     state.steps.push({
-      description: 'Hop 3: :hasFather → Results!',
-      detail: '4 great-grandfathers found in a single continuous traversal',
-      type: 'unified',
+      description: 'Jean\'s :hasFather chain (3 hops, same graph)',
+      detail: 'Jean → Pierre → Louis → Francois. Vector search still going...',
+      type: 'both',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+    updateResultsUI();
+  });
+
+  // Step 5: Vector search continues — hops to Johan Berg
+  steps.push(() => {
+    state.steps[3].active = false;
+    state.steps[3].done = true;
+
+    state.visitedVector.add('johan1');
+    state.activeEdges.add('v:john1->johan1');
+    state.vectorCursor = 'johan1';
+    state.currentNode = 'johan1';
+    state.operations += 1;
+    state.steps.push({
+      description: 'Vector search continues → Johan Berg',
+      detail: 'HNSW hop → "Johan Berg" (similarity 0.93). Check :hasFather immediately...',
+      type: 'vector',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+  });
+
+  // Step 6: Immediately follow Johan's chain
+  steps.push(() => {
+    state.steps[4].active = false;
+    state.steps[4].done = true;
+
+    state.visitedGraph.add('johan1');
+    state.visitedGraph.add('erik1');
+    state.fatherEdges.add('g:johan1->erik1');
+    state.visitedGraph.add('olaf1');
+    state.fatherEdges.add('g:erik1->olaf1');
+    state.visitedGraph.add('sven1');
+    state.fatherEdges.add('g:olaf1->sven1');
+    state.currentNode = 'sven1';
+    state.operations += 1;
+    state.results.push({
+      person: 'Johan Berg', greatgrandfather: 'Sven Berg',
+      chain: 'Johan → Erik → Olaf → Sven', similarity: 0.93,
+    });
+    state.steps.push({
+      description: 'Johan\'s :hasFather chain (3 hops, same graph)',
+      detail: 'Johan → Erik → Olaf → Sven. Vector search still going...',
+      type: 'both',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+    updateResultsUI();
+  });
+
+  // Step 7: Vector search continues — hops to Juan Garcia
+  steps.push(() => {
+    state.steps[5].active = false;
+    state.steps[5].done = true;
+
+    state.visitedVector.add('juan1');
+    state.activeEdges.add('v:john1->juan1');
+    state.vectorCursor = 'juan1';
+    state.currentNode = 'juan1';
+    state.operations += 1;
+    state.steps.push({
+      description: 'Vector search continues → Juan Garcia',
+      detail: 'HNSW hop → "Juan Garcia" (similarity 0.86). Check :hasFather immediately...',
+      type: 'vector',
+      active: true,
+      done: false,
+    });
+    updateStepsUI();
+  });
+
+  // Step 8: Immediately follow Juan's chain — done!
+  steps.push(() => {
+    state.steps[6].active = false;
+    state.steps[6].done = true;
+
+    state.visitedGraph.add('juan1');
+    state.visitedGraph.add('carlos1');
+    state.fatherEdges.add('g:juan1->carlos1');
+    state.visitedGraph.add('miguel1');
+    state.fatherEdges.add('g:carlos1->miguel1');
+    state.visitedGraph.add('antonio1');
+    state.fatherEdges.add('g:miguel1->antonio1');
+    state.currentNode = '';
+    state.vectorCursor = '';
+    state.operations += 1;
+    state.results.push({
+      person: 'Juan Garcia', greatgrandfather: 'Antonio Garcia',
+      chain: 'Juan → Carlos → Miguel → Antonio', similarity: 0.86,
+    });
+    state.steps.push({
+      description: 'Juan\'s :hasFather chain → All results in!',
+      detail: 'Juan → Carlos → Miguel → Antonio. 4 great-grandfathers found via interleaved traversal.',
+      type: 'both',
       active: false,
       done: true,
     });
@@ -413,8 +530,9 @@ function updateStepsUI(): void {
   for (const step of state.steps) {
     const card = document.createElement('div');
     card.className = `step-card ${step.active ? 'active' : ''} ${step.done ? 'done' : ''}`;
-    const typeColors: Record<string, string> = { vector: '#7c8cf8', graph: '#f87c7c', unified: '#34d399' };
-    const typeBadge = `<span style="display:inline-block;font-size:0.65rem;background:${typeColors[step.type]}22;color:${typeColors[step.type]};padding:1px 5px;border-radius:3px;margin-left:4px;">${step.type}</span>`;
+    const typeColors: Record<string, string> = { vector: '#7c8cf8', graph: '#f87c7c', both: '#34d399' };
+    const typeLabels: Record<string, string> = { vector: 'vector', graph: 'graph', both: 'vector + graph' };
+    const typeBadge = `<span style="display:inline-block;font-size:0.65rem;background:${typeColors[step.type]}22;color:${typeColors[step.type]};padding:1px 5px;border-radius:3px;margin-left:4px;">${typeLabels[step.type]}</span>`;
     card.innerHTML = `
       <div class="label">${step.description} ${typeBadge}</div>
       <div class="value">${step.detail}</div>
@@ -443,9 +561,9 @@ function updateResultsUI(): void {
 
 function updateComparisonUI(): void {
   document.getElementById('trad-ops')!.textContent = '21';
-  document.getElementById('cstrdb-ops')!.textContent = String(state.operations);
+  document.getElementById('sutra-ops')!.textContent = String(state.operations);
   document.getElementById('trad-boundaries')!.textContent = '2';
-  document.getElementById('cstrdb-boundaries')!.textContent = '0';
+  document.getElementById('sutra-boundaries')!.textContent = '0';
 }
 
 function resetState(): void {
@@ -454,7 +572,7 @@ function resetState(): void {
   document.getElementById('results-container')!.innerHTML =
     '<div class="explanation">Click "Run Unified Query" to find great-grandfathers of people named like "John"</div>';
   document.getElementById('trad-ops')!.textContent = '—';
-  document.getElementById('cstrdb-ops')!.textContent = '—';
+  document.getElementById('sutra-ops')!.textContent = '—';
   document.getElementById('trad-boundaries')!.textContent = '—';
   draw();
 }
@@ -477,7 +595,7 @@ function playNext(): void {
   state.stepIndex++;
   draw();
   if (state.running && state.stepIndex < state.stepQueue.length) {
-    setTimeout(playNext, 1000);
+    setTimeout(playNext, 800);
   }
 }
 
