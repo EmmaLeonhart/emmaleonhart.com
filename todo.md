@@ -36,6 +36,21 @@
 - [ ] **Type theory explorer** — visualize type hierarchies, subtyping, and generic type resolution
 - [ ] **Lambda calculus reducer** — type lambda expressions, see beta reduction steps animated
 
+## HTTPS / Custom Domain Fix
+- [ ] At domain registrar, add A records pointing to GitHub Pages IPs:
+  - `185.199.108.153`
+  - `185.199.109.153`
+  - `185.199.110.153`
+  - `185.199.111.153`
+- [ ] Optionally add AAAA records for IPv6:
+  - `2606:50c0:8000::153`
+  - `2606:50c0:8001::153`
+  - `2606:50c0:8002::153`
+  - `2606:50c0:8003::153`
+- [ ] In GitHub repo Settings > Pages, confirm custom domain is set to `emmaleonhart.com`
+- [ ] Wait for DNS check to pass (green checkmark in Settings > Pages)
+- [ ] Enable "Enforce HTTPS" checkbox (greyed out until DNS resolves and SSL cert is provisioned)
+
 ## Site Infrastructure
 - [ ] Add favicon
 - [ ] Add Open Graph images for social sharing
