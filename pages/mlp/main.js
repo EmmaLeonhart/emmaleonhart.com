@@ -281,6 +281,70 @@ function buildSliders() {
         container.appendChild(row);
     }
 }
+let weightSliders = [];
+function makeWeightRow(container, labelText, getVal, setVal) {
+    const row = document.createElement('div');
+    row.className = 'slider-row';
+    const label = document.createElement('span');
+    label.className = 'slider-label';
+    label.textContent = labelText;
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = '-2';
+    slider.max = '2';
+    slider.step = '0.05';
+    slider.value = String(getVal());
+    const val = document.createElement('span');
+    val.className = 'slider-val';
+    const initial = getVal();
+    val.textContent = initial.toFixed(2);
+    val.style.color = initial >= 0 ? COLORS.posWeight : COLORS.negWeight;
+    slider.addEventListener('input', () => {
+        const v = parseFloat(slider.value);
+        setVal(v);
+        val.textContent = v.toFixed(2);
+        val.style.color = v >= 0 ? COLORS.posWeight : COLORS.negWeight;
+        update();
+    });
+    row.appendChild(label);
+    row.appendChild(slider);
+    row.appendChild(val);
+    container.appendChild(row);
+    weightSliders.push({ slider, val, get: getVal });
+}
+function buildWeightSliders() {
+    const container = $('weight-sliders');
+    container.innerHTML = '';
+    weightSliders = [];
+    const ihHeader = document.createElement('div');
+    ihHeader.className = 'section-label';
+    ihHeader.textContent = 'Input → Hidden';
+    container.appendChild(ihHeader);
+    for (let h = 0; h < N_HID; h++) {
+        for (let i = 0; i < N_IN; i++) {
+            makeWeightRow(container, `w${h + 1}${i + 1}`, () => wIH[h][i], (v) => { wIH[h][i] = v; });
+        }
+        makeWeightRow(container, `b h${h + 1}`, () => bH[h], (v) => { bH[h] = v; });
+    }
+    const hoHeader = document.createElement('div');
+    hoHeader.className = 'section-label nudge';
+    hoHeader.textContent = 'Hidden → Output';
+    container.appendChild(hoHeader);
+    for (let o = 0; o < N_OUT; o++) {
+        for (let h = 0; h < N_HID; h++) {
+            makeWeightRow(container, `v${h + 1}`, () => wHO[o][h], (v) => { wHO[o][h] = v; });
+        }
+        makeWeightRow(container, `b y`, () => bO[o], (v) => { bO[o] = v; });
+    }
+}
+function refreshWeightSliders() {
+    for (const ws of weightSliders) {
+        const v = ws.get();
+        ws.slider.value = String(v);
+        ws.val.textContent = v.toFixed(2);
+        ws.val.style.color = v >= 0 ? COLORS.posWeight : COLORS.negWeight;
+    }
+}
 function valSpan(v) {
     const cls = v > 0.001 ? 'val-pos' : v < -0.001 ? 'val-neg' : 'val-zero';
     return `<span class="${cls}">${v.toFixed(2)}</span>`;
@@ -394,6 +458,7 @@ function init() {
     initWeights();
     forward();
     buildSliders();
+    buildWeightSliders();
     // Activation toggle buttons
     document.querySelectorAll('.ctrl-btn[data-fn]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -406,6 +471,7 @@ function init() {
     // Randomize button
     $('btn-randomize').addEventListener('click', () => {
         initWeights();
+        refreshWeightSliders();
         update();
     });
     window.addEventListener('resize', resize);
