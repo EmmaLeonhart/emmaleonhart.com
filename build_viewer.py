@@ -1074,9 +1074,10 @@ html = u'''<!DOCTYPE html>
 </body>
 </html>'''
 
-with open('pages/index.html', 'w', encoding='utf-8') as f:
+output_path = 'pages/embeddings/index.html'
+with open(output_path, 'w', encoding='utf-8') as f:
     f.write(html)
 
 import os
-size = os.path.getsize('pages/index.html')
-print(f"Written {size} bytes ({size/1024:.0f} KB) to pages/index.html")
+size = os.path.getsize(output_path)
+print(f"Written {size} bytes ({size/1024:.0f} KB) to {output_path}")

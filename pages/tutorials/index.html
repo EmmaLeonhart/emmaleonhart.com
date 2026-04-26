@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Interactive ML Tutorials &mdash; Emma Leonhart">
+  <meta property="og:description" content="Hands-on visualizers for vector math, neural networks, training dynamics, and modern architectures. Drag, click, watch the math happen.">
+  <meta property="og:url" content="https://emmaleonhart.com/tutorials/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Interactive ML Tutorials">
+  <meta name="twitter:description" content="Hands-on visualizers for vector math, neural networks, training, and architectures.">
+  <meta name="description" content="Interactive ML tutorials by Emma Leonhart &mdash; vector math, neural networks, training dynamics, and architectures, all explorable in the browser.">
+  <title>Interactive ML Tutorials &mdash; Emma Leonhart</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 64px 24px;
+    }
+    .container { max-width: 760px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, #e8e8f0 0%, #9aa4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 1.05rem;
+      color: #9090a8;
+      margin-bottom: 56px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7c8cf8;
+      margin-bottom: 18px;
+    }
+    .section { margin-bottom: 44px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .tool {
+      display: block;
+      padding: 16px 18px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+    .tool:hover {
+      border-color: #3a3a55;
+      background: #16161f;
+      transform: translateY(-1px);
+    }
+    .tool-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #c0c0dc;
+      margin-bottom: 4px;
+    }
+    .tool-desc {
+      font-size: 0.82rem;
+      color: #777793;
+      line-height: 1.5;
+    }
+    @media (max-width: 480px) {
+      body { padding: 40px 16px; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Emma Leonhart</a>
+    <h1>Interactive ML Tutorials</h1>
+    <p class="tagline">Hands-on visualizers for the math behind machine learning. Drag the inputs, change the weights, watch the gradients flow. Each tutorial is a self-contained page &mdash; pick whichever feels closest to what you want to understand.</p>
+
+    <div class="section">
+      <h2>Vector Math</h2>
+      <div class="grid">
+        <a class="tool" href="/embeddings/">
+          <div class="tool-title">Embedding Viewer</div>
+          <div class="tool-desc">Voronoi map of 485 word embeddings projected onto custom semantic axes.</div>
+        </a>
+        <a class="tool" href="/cosine-similarity/">
+          <div class="tool-title">Cosine Similarity</div>
+          <div class="tool-desc">A smart sprinkler AI that decides by directional alignment.</div>
+        </a>
+        <a class="tool" href="/dotproduct/">
+          <div class="tool-title">Dot Product</div>
+          <div class="tool-desc">Drag vectors to see projection, angle, and both formulas live.</div>
+        </a>
+        <a class="tool" href="/crossproduct/">
+          <div class="tool-title">Cross Product</div>
+          <div class="tool-desc">Parallelogram area and rotation direction for 2D cross product.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Neural Network Basics</h2>
+      <div class="grid">
+        <a class="tool" href="/mlp/">
+          <div class="tool-title">Multilayer Perceptron</div>
+          <div class="tool-desc">Drag inputs to see weights, sums, and activations flow through a neural network.</div>
+        </a>
+        <a class="tool" href="/backpropagation/">
+          <div class="tool-title">Backpropagation</div>
+          <div class="tool-desc">Computational graph with forward and backward pass chain rule.</div>
+        </a>
+        <a class="tool" href="/regression/">
+          <div class="tool-title">Linear vs Logistic Regression</div>
+          <div class="tool-desc">Click to add data points and compare how each method fits.</div>
+        </a>
+        <a class="tool" href="/feature-transforms/">
+          <div class="tool-title">Feature Transforms</div>
+          <div class="tool-desc">Polynomial features turn linear models into curve fitters.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Training Dynamics</h2>
+      <div class="grid">
+        <a class="tool" href="/loss-functions/">
+          <div class="tool-title">Loss Functions</div>
+          <div class="tool-desc">Compare Step, MSE, Cross-Entropy, and Softmax losses interactively.</div>
+        </a>
+        <a class="tool" href="/regularization/">
+          <div class="tool-title">Regularization</div>
+          <div class="tool-desc">L1, L2, Elastic Net weight penalties plus Dropout and Batch Norm.</div>
+        </a>
+        <a class="tool" href="/optimizers/">
+          <div class="tool-title">Optimizers</div>
+          <div class="tool-desc">GD, SGD, Momentum, AdaGrad, RMSProp, Adam, and AdamW racing on loss surfaces.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Architectures</h2>
+      <div class="grid">
+        <a class="tool" href="/cnn/">
+          <div class="tool-title">Convolutional Neural Network</div>
+          <div class="tool-desc">Slide a kernel over input data to see how convolution produces feature maps.</div>
+        </a>
+        <a class="tool" href="/cnn-architectures/">
+          <div class="tool-title">CNN Architecture Timeline</div>
+          <div class="tool-desc">From LeNet to ConvNeXt &mdash; what each architecture introduced.</div>
+        </a>
+        <a class="tool" href="/rnn/">
+          <div class="tool-title">Recurrent Neural Network</div>
+          <div class="tool-desc">Watch hidden state carry memory forward as an RNN processes a sequence.</div>
+        </a>
+        <a class="tool" href="/lstm/">
+          <div class="tool-title">LSTM</div>
+          <div class="tool-desc">Step through forget, input, and output gates of a Long Short-Term Memory cell.</div>
+        </a>
+        <a class="tool" href="/attention/">
+          <div class="tool-title">Keys, Queries &amp; Values</div>
+          <div class="tool-desc">How transformers decide which words matter to each other.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
