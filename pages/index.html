@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Research on geometric tensor languages, vector retrieval, and knowledge graphs &mdash; expressed as a programming language (Sutra), a database (SutraDB), and interactive ML tutorials.">
+  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages, grounded retrieval, and interactive tutorials. Builder of Sutra and SutraDB.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
-  <meta name="twitter:description" content="Research on geometric tensor languages, vector retrieval, and knowledge graphs.">
-  <meta name="description" content="Emma Leonhart researches geometric tensor languages, vector retrieval, and knowledge graphs &mdash; building Sutra, SutraDB, and interactive ML tutorials.">
+  <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra and SutraDB.">
+  <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), SutraDB (grounded retrieval), and interactive ML tutorials.">
   <title>Emma Leonhart</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -457,17 +457,17 @@
   <div class="container">
 
     <div class="hero">
-      <span class="eyebrow">Research &amp; Tools</span>
+      <span class="eyebrow">Research</span>
       <h1>Emma Leonhart</h1>
-      <p class="tagline">I work on the geometry side of AI &mdash; <strong>geometric tensor languages</strong>, <strong>vector retrieval</strong>, and the <strong>knowledge graphs</strong> that ground them. The output is a programming language, a database, and interactive tutorials that show how the math actually works.</p>
+      <p class="tagline">My work sits at the intersection of <strong>neurosymbolic AI</strong>, <strong>AI interpretability</strong>, and <strong>AI safety</strong> &mdash; three problems I see as a single problem. Geometric tensor languages and grounded retrieval are the tools I&rsquo;m building to attack them.</p>
     </div>
 
     <div class="section">
       <h2>About</h2>
       <div class="bio">
-        <p>My main thesis is that what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces &mdash; and that we get more debuggable, more controllable systems when we treat that fact as load-bearing instead of papering over it with simulated symbolic logic.</p>
-        <p>That conviction shows up in three places. <strong>Sutra</strong> is the language I&rsquo;m building to express programs as straight-line tensor arithmetic with no control flow at all. <strong>SutraDB</strong> is the bundled retrieval layer that grounds those programs in real data. <strong>The interactive tutorials</strong> show what is actually happening inside neural networks &mdash; you can&rsquo;t hand-wave a visualization that you have to drag with your mouse.</p>
-        <p>Adjacent work: knowledge graph pipelines for Wikidata and Pramana, lexicographic infrastructure on the Aelaki Wikibase, and context-management libraries for AI agents.</p>
+        <p>I think <strong>neurosymbolic AI</strong>, <strong>interpretability</strong>, and <strong>safety</strong> are the same problem viewed from three angles. A model whose reasoning we can&rsquo;t inspect can&rsquo;t be aligned; a model that can&rsquo;t be grounded in symbolic structure can&rsquo;t be inspected; and the structure has to be load-bearing inside the computation, not bolted on after the fact.</p>
+        <p>My working thesis is that what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces &mdash; and that the path forward is to make that geometry <em>explicit</em>, so it can be read, constrained, and grounded against external symbolic structure. Geometry isn&rsquo;t the goal; it&rsquo;s the substrate that lets the other three goals become tractable.</p>
+        <p>That shows up as <strong>Sutra</strong> (a language where programs are visible tensor arithmetic instead of opaque control flow), <strong>SutraDB</strong> (vector retrieval grounded in a typed knowledge graph), <strong>interactive tutorials</strong> (interpretability you can drag with your mouse), and <strong>knowledge graph infrastructure</strong> on Wikidata, Pramana, and the Aelaki Wikibase &mdash; the symbolic side of the neurosymbolic loop.</p>
       </div>
     </div>
 
@@ -490,44 +490,45 @@
     </div>
 
     <div class="section">
-      <h2>Research Areas</h2>
+      <h2>Research Directions</h2>
       <div class="research-grid">
 
         <a class="research" href="https://sutralang.dev">
           <div class="research-head">
-            <span class="research-title">Geometric Tensor Languages</span>
-            <span class="research-area">Languages</span>
+            <span class="research-title">Neurosymbolic AI</span>
+            <span class="research-area">Goal</span>
           </div>
-          <p class="research-desc">Designing Sutra: a programming language with no control flow, where conditional branches are weighted geometric blends and iteration is rotation in tensor space. Goal: programs that are GPU-native and differentiable by construction.</p>
+          <p class="research-desc">Bringing symbolic structure inside neural computation rather than wrapping it around the outside. Sutra makes the symbolic structure of a program visible <em>as</em> tensor arithmetic; SutraDB pairs each vector with a typed entity in a knowledge graph; Pramana attaches structured citations to model outputs. The connective tissue is geometry &mdash; symbols expressed as positions and rotations in continuous space.</p>
           <div class="research-meta">
-            <span>Sutra compiler &amp; spec</span>
-            <span>IDE tooling (IntelliJ, VS Code)</span>
+            <span>Sutra (geometric tensor language)</span>
+            <span>SutraDB (vectors + RDF)</span>
+            <span>Pramana (structured citations)</span>
+          </div>
+        </a>
+
+        <a class="research" href="/tutorials/">
+          <div class="research-head">
+            <span class="research-title">AI Interpretability</span>
+            <span class="research-area">Goal</span>
+          </div>
+          <p class="research-desc">A model whose reasoning you can&rsquo;t inspect can&rsquo;t be aligned. I attack interpretability two ways: <strong>by construction</strong>, designing languages where the program <em>is</em> its own trace (no control flow to hide behind), and <strong>by demonstration</strong>, building 14 interactive tutorials that turn the math of vector spaces, attention, and gradient flow into something you can drag with your mouse.</p>
+          <div class="research-meta">
+            <span>Sutra: control-flow-free programs</span>
+            <span>14 ML visualizers</span>
+            <span>Embedding viewer</span>
           </div>
         </a>
 
         <a class="research" href="/theory/">
           <div class="research-head">
-            <span class="research-title">Vector Retrieval &amp; Graph Databases</span>
-            <span class="research-area">SutraDB</span>
+            <span class="research-title">AI Safety</span>
+            <span class="research-area">Goal</span>
           </div>
-          <p class="research-desc">SutraDB unifies HNSW vector indexing with RDF graph traversal. The eight theory pages explain the design: subgraph SIMD indexes, SPARQL exit conditions, traversal optimization, and where hybrid databases beat pure-vector or pure-graph stores.</p>
+          <p class="research-desc">Safety follows from the other two: a system whose reasoning is symbolic enough to inspect and geometric enough to constrain is one you can actually align. Concretely: grounded retrieval (SutraDB) so models can&rsquo;t hallucinate past their evidence, knowledge graph infrastructure (Wikidata, Pramana, Aelaki Wikibase) for the symbolic side of the loop, and tooling (claw.py / OpenClaw) for portable, auditable agent context.</p>
           <div class="research-meta">
-            <span>HNSW in RDF</span>
-            <span>Subgraph SIMD indexing</span>
-            <span>Hybrid query planning</span>
-          </div>
-        </a>
-
-        <a class="research" href="https://shinto.miraheze.org">
-          <div class="research-head">
-            <span class="research-title">Knowledge Graphs &amp; Lexicography</span>
-            <span class="research-area">Wikidata · Pramana</span>
-          </div>
-          <p class="research-desc">Wikidata pipelines for the Shinto knowledge graph (Engishiki shrines, Shikinai Ronsha disambiguation), lexeme infrastructure on the Aelaki Wikibase, and Pramana &mdash; a structured-citation system for grounding language model outputs in primary sources.</p>
-          <div class="research-meta">
-            <span>Shinto wiki bots</span>
-            <span>Aelaki lexeme API</span>
-            <span>Pramana citations</span>
+            <span>Grounded retrieval</span>
+            <span>Wikidata / Pramana pipelines</span>
+            <span>Aelaki lexeme infrastructure</span>
           </div>
         </a>
 
