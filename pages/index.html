@@ -5,31 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Building Sutra &mdash; a geometric tensor programming language &mdash; plus neurosymbolic AI tooling and interactive ML tutorials.">
+  <meta property="og:description" content="Research on geometric tensor languages, vector retrieval, and knowledge graphs &mdash; expressed as a programming language (Sutra), a database (SutraDB), and interactive ML tutorials.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
-  <meta name="twitter:description" content="Building Sutra &mdash; a geometric tensor programming language &mdash; plus neurosymbolic AI tooling and interactive ML tutorials.">
-  <meta name="description" content="Emma Leonhart builds Sutra, a geometric tensor programming language, alongside neurosymbolic AI tooling, knowledge graph infrastructure, and interactive ML tutorials.">
+  <meta name="twitter:description" content="Research on geometric tensor languages, vector retrieval, and knowledge graphs.">
+  <meta name="description" content="Emma Leonhart researches geometric tensor languages, vector retrieval, and knowledge graphs &mdash; building Sutra, SutraDB, and interactive ML tutorials.">
   <title>Emma Leonhart</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0a0a0f;
-      --bg-card: #12121a;
+      --bg: #08080d;
+      --bg-card: #11111a;
       --bg-card-hover: #16161f;
-      --border: #1e1e2a;
+      --bg-elevated: #14141e;
+      --border: #1d1d29;
       --border-hover: #3a3a55;
+      --border-strong: #262636;
       --text: #d0d0dc;
-      --text-strong: #e8e8f0;
-      --text-mute: #8888a0;
-      --text-faint: #666880;
+      --text-strong: #ececf2;
+      --text-mute: #8b8ba6;
+      --text-faint: #62647c;
       --accent: #7c8cf8;
       --accent-bright: #9aa4ff;
-      --accent-soft: rgba(124, 140, 248, 0.12);
+      --accent-soft: rgba(124, 140, 248, 0.10);
+      --accent-glow: rgba(124, 140, 248, 0.18);
       --sutra: #d4a76a;
-      --sutra-soft: rgba(212, 167, 106, 0.12);
+      --sutra-bright: #ead4ad;
+      --sutra-soft: rgba(212, 167, 106, 0.10);
+      --research: #8ad7c1;
+      --research-soft: rgba(138, 215, 193, 0.10);
     }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--bg);
@@ -37,72 +44,351 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 80px 24px 96px;
+      padding: 96px 24px 120px;
       position: relative;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
+    /* Ambient gradient glow behind hero */
     body::before {
       content: '';
       position: fixed;
-      top: -200px;
+      top: -260px;
       left: 50%;
       transform: translateX(-50%);
-      width: 800px;
-      height: 500px;
-      background: radial-gradient(ellipse at center, rgba(124, 140, 248, 0.08) 0%, transparent 70%);
+      width: 1100px;
+      height: 600px;
+      background:
+        radial-gradient(ellipse at 30% center, rgba(124, 140, 248, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% center, rgba(138, 215, 193, 0.05) 0%, transparent 55%);
       pointer-events: none;
       z-index: 0;
     }
+    /* Subtle dot grid */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+    }
     .container {
-      max-width: 680px;
+      max-width: 720px;
       width: 100%;
       position: relative;
       z-index: 1;
     }
-    .hero {
-      margin-bottom: 56px;
+
+    /* HERO */
+    .hero { margin-bottom: 64px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding: 5px 11px 5px 9px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(124, 140, 248, 0.18);
+      border-radius: 999px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+      box-shadow: 0 0 8px var(--accent-glow);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
     }
     h1 {
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: -0.5px;
-      background: linear-gradient(120deg, #e8e8f0 0%, #9aa4ff 100%);
+      margin-bottom: 14px;
+      letter-spacing: -0.6px;
+      background: linear-gradient(120deg, #f4f4f9 0%, #aab2ff 60%, #d4a76a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1.1;
     }
     .tagline {
-      font-size: 1.08rem;
+      font-size: 1.1rem;
       color: var(--text-mute);
-      line-height: 1.6;
-      max-width: 560px;
+      line-height: 1.65;
+      max-width: 580px;
     }
+    .tagline strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    /* SECTION HEADERS */
     h2 {
-      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.74rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.8px;
       color: var(--accent);
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
-    .section { margin-bottom: 52px; }
-    .bio {
-      font-size: 0.98rem;
-      line-height: 1.75;
-      color: #a0a0b8;
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-strong), transparent);
     }
-    .bio p { margin-bottom: 14px; }
-    .bio p:last-child { margin-bottom: 0; }
+    .section { margin-bottom: 60px; }
 
-    /* Generic project / tool cards */
-    .card {
+    /* BIO */
+    .bio {
+      font-size: 1rem;
+      line-height: 1.78;
+      color: #a8a8c0;
+    }
+    .bio p { margin-bottom: 16px; }
+    .bio p:last-child { margin-bottom: 0; }
+    .bio strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    /* FLAGSHIP SUTRA CARD */
+    .flagship {
       display: block;
-      padding: 18px 22px;
+      padding: 30px 30px 26px;
+      background:
+        linear-gradient(135deg, rgba(212, 167, 106, 0.08) 0%, transparent 55%),
+        var(--bg-card);
+      border: 1px solid #2c2519;
+      border-left: 3px solid var(--sutra);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.18s, background 0.18s, transform 0.18s;
+      position: relative;
+      overflow: hidden;
+    }
+    .flagship::before {
+      content: '';
+      position: absolute;
+      top: -1px; right: -1px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at top right, rgba(212, 167, 106, 0.10), transparent 65%);
+      pointer-events: none;
+    }
+    .flagship:hover {
+      border-color: #3e3320;
+      background:
+        linear-gradient(135deg, rgba(212, 167, 106, 0.12) 0%, transparent 55%),
+        var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+    .flagship-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+      position: relative;
+    }
+    .flagship-scroll {
+      font-size: 1.5rem;
+      filter: saturate(0.85);
+    }
+    .flagship-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--sutra-bright);
+      letter-spacing: -0.3px;
+    }
+    .flagship-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--sutra);
+      padding: 3px 10px;
+      background: var(--sutra-soft);
+      border: 1px solid rgba(212, 167, 106, 0.22);
+      border-radius: 999px;
+    }
+    .flagship-sub {
+      font-size: 0.86rem;
+      color: #b89968;
+      margin-bottom: 18px;
+      font-style: italic;
+      position: relative;
+    }
+    .flagship-desc {
+      font-size: 0.96rem;
+      color: #b0b0c4;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .flagship-desc:last-of-type { margin-bottom: 20px; }
+    .flagship-desc code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.86em;
+      color: var(--sutra-bright);
+      background: rgba(212, 167, 106, 0.12);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .flagship-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.86rem;
+      position: relative;
+    }
+    .flagship-links span {
+      color: var(--sutra);
+      padding: 7px 13px;
+      border: 1px solid #3e3320;
+      border-radius: 6px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .flagship:hover .flagship-links span {
+      border-color: #5a4a28;
+      background: var(--sutra-soft);
+    }
+
+    /* RESEARCH STACK */
+    .research-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .research {
+      display: block;
+      padding: 22px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--research);
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+    .research:hover {
+      border-color: var(--border-hover);
+      border-left-color: var(--research);
+      background: var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+    .research-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .research-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      letter-spacing: -0.1px;
+    }
+    .research-area {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--research);
+      padding: 2px 9px;
+      background: var(--research-soft);
+      border-radius: 4px;
+    }
+    .research-desc {
+      font-size: 0.92rem;
+      color: #8a8aa3;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .research-meta {
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .research-meta span::before {
+      content: '\2192  ';
+      color: var(--research);
+      opacity: 0.7;
+      margin-right: 2px;
+    }
+
+    /* HUB / GENERIC CARDS */
+    .hub {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 26px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
       margin-bottom: 12px;
+    }
+    .hub:last-child { margin-bottom: 0; }
+    .hub:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+    .hub-text { flex: 1; min-width: 0; }
+    .hub-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      margin-bottom: 5px;
+    }
+    .hub-desc {
+      font-size: 0.88rem;
+      color: #8a8aa3;
+      line-height: 1.55;
+    }
+    .hub-arrow {
+      font-size: 1.3rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    .hub:hover .hub-arrow { transform: translateX(3px); }
+
+    /* OTHER PROJECTS GRID */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .card {
+      display: block;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       text-decoration: none;
       color: inherit;
       transition: border-color 0.15s, background 0.15s, transform 0.15s;
@@ -113,15 +399,16 @@
       transform: translateY(-1px);
     }
     .card-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
-      color: #b8b8d0;
+      color: var(--text-strong);
       margin-bottom: 5px;
     }
     .card-desc {
-      font-size: 0.88rem;
-      color: #797992;
+      font-size: 0.86rem;
+      color: #8a8aa3;
       line-height: 1.55;
+      margin-bottom: 10px;
     }
     .card-tag {
       display: inline-block;
@@ -130,116 +417,11 @@
       background: var(--accent-soft);
       padding: 2px 8px;
       border-radius: 4px;
-      margin-top: 8px;
       margin-right: 4px;
       font-weight: 500;
     }
 
-    /* Flagship Sutra card */
-    .flagship {
-      display: block;
-      padding: 28px 28px 24px;
-      background:
-        linear-gradient(135deg, rgba(212, 167, 106, 0.06) 0%, transparent 60%),
-        var(--bg-card);
-      border: 1px solid #2a2418;
-      border-left: 3px solid var(--sutra);
-      border-radius: 10px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .flagship:hover {
-      border-color: #3a3220;
-      border-left-color: var(--sutra);
-      background:
-        linear-gradient(135deg, rgba(212, 167, 106, 0.10) 0%, transparent 60%),
-        var(--bg-card-hover);
-    }
-    .flagship-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .flagship-scroll {
-      font-size: 1.4rem;
-      filter: saturate(0.85);
-    }
-    .flagship-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #ead4ad;
-      letter-spacing: -0.2px;
-    }
-    .flagship-sub {
-      font-size: 0.82rem;
-      color: #b89968;
-      margin-bottom: 16px;
-      font-style: italic;
-    }
-    .flagship-desc {
-      font-size: 0.95rem;
-      color: #a8a8be;
-      line-height: 1.65;
-      margin-bottom: 14px;
-    }
-    .flagship-desc:last-of-type { margin-bottom: 18px; }
-    .flagship-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.85rem;
-    }
-    .flagship-links a {
-      color: var(--sutra);
-      text-decoration: none;
-      padding: 6px 12px;
-      border: 1px solid #3a3220;
-      border-radius: 6px;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .flagship-links a:hover {
-      background: var(--sutra-soft);
-      border-color: #5a4a28;
-    }
-
-    /* Tutorials hub link card (single, prominent) */
-    .hub {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 20px 24px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .hub:hover {
-      border-color: var(--border-hover);
-      background: var(--bg-card-hover);
-    }
-    .hub-text { flex: 1; min-width: 0; }
-    .hub-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #b8b8d0;
-      margin-bottom: 4px;
-    }
-    .hub-desc {
-      font-size: 0.86rem;
-      color: #797992;
-      line-height: 1.5;
-    }
-    .hub-arrow {
-      font-size: 1.2rem;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
+    /* LINKS */
     .links {
       display: flex;
       gap: 22px;
@@ -250,47 +432,56 @@
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
+      transition: color 0.15s;
     }
     .links a:hover {
       color: var(--accent-bright);
       text-decoration: underline;
     }
 
-    @media (max-width: 480px) {
-      body { padding: 56px 18px 72px; }
-      h1 { font-size: 1.85rem; }
+    /* MOBILE */
+    @media (max-width: 560px) {
+      body { padding: 56px 18px 80px; }
+      h1 { font-size: 1.95rem; }
       .tagline { font-size: 1rem; }
-      .flagship { padding: 22px 20px 20px; }
-      .flagship-title { font-size: 1.1rem; }
+      .flagship { padding: 24px 22px 22px; }
+      .flagship-title { font-size: 1.15rem; }
+      .flagship-badge { display: none; }
+      .research { padding: 18px 20px; }
+      .hub { padding: 18px 20px; }
+      .section { margin-bottom: 48px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+
     <div class="hero">
+      <span class="eyebrow">Research &amp; Tools</span>
       <h1>Emma Leonhart</h1>
-      <p class="tagline">Building Sutra &mdash; a geometric tensor programming language &mdash; alongside neurosymbolic AI tooling, knowledge graph infrastructure, and interactive tutorials that show how the math actually works.</p>
+      <p class="tagline">I work on the geometry side of AI &mdash; <strong>geometric tensor languages</strong>, <strong>vector retrieval</strong>, and the <strong>knowledge graphs</strong> that ground them. The output is a programming language, a database, and interactive tutorials that show how the math actually works.</p>
     </div>
 
     <div class="section">
       <h2>About</h2>
       <div class="bio">
-        <p>I work on the geometry side of AI. My main belief is that what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces &mdash; and that we get more debuggable, more controllable systems when we treat that fact as load-bearing instead of papering over it with simulated symbolic logic.</p>
-        <p>That conviction shows up in two places. <strong>Sutra</strong> is the language I&rsquo;m building to express programs as straight-line tensor arithmetic with no control flow at all. <strong>The interactive tutorials</strong> show what is actually happening inside neural networks &mdash; you can&rsquo;t hand-wave a visualization that you have to drag with your mouse.</p>
-        <p>I also build adjacent tooling: knowledge graph pipelines for Wikidata and Pramana, context-management libraries for AI agents (OpenClaw / claw.py), and SutraDB &mdash; a vector database tuned for the kinds of queries Sutra emits.</p>
+        <p>My main thesis is that what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces &mdash; and that we get more debuggable, more controllable systems when we treat that fact as load-bearing instead of papering over it with simulated symbolic logic.</p>
+        <p>That conviction shows up in three places. <strong>Sutra</strong> is the language I&rsquo;m building to express programs as straight-line tensor arithmetic with no control flow at all. <strong>SutraDB</strong> is the bundled retrieval layer that grounds those programs in real data. <strong>The interactive tutorials</strong> show what is actually happening inside neural networks &mdash; you can&rsquo;t hand-wave a visualization that you have to drag with your mouse.</p>
+        <p>Adjacent work: knowledge graph pipelines for Wikidata and Pramana, lexicographic infrastructure on the Aelaki Wikibase, and context-management libraries for AI agents.</p>
       </div>
     </div>
 
     <div class="section">
-      <h2>Flagship Project</h2>
+      <h2>Flagship</h2>
       <a class="flagship" href="https://sutralang.dev">
         <div class="flagship-header">
           <span class="flagship-scroll">&#128220;</span>
           <span class="flagship-title">Sutra</span>
+          <span class="flagship-badge">In development</span>
         </div>
         <div class="flagship-sub">A geometric tensor programming language.</div>
         <p class="flagship-desc">Every value is a tensor. Every operation is tensor arithmetic in a geometric space. There is no <code>print</code>, no <code>if</code>, no <code>while</code> &mdash; branches are continuous weighted blends and loops are geometric rotations. Programs compile to straight-line tensor operations, which makes them GPU-native and end-to-end differentiable by construction.</p>
-        <p class="flagship-desc">I&rsquo;m building the reference compiler (with a PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus SutraDB, the bundled vector database that lives inside the same ecosystem. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
+        <p class="flagship-desc">I&rsquo;m building the reference compiler (PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus SutraDB, the bundled vector database that lives inside the same ecosystem. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
         <div class="flagship-links">
           <span>sutralang.dev &rarr;</span>
           <span>github.com/EmmaLeonhart/Sutra</span>
@@ -299,42 +490,87 @@
     </div>
 
     <div class="section">
-      <h2>Interactive Tutorials</h2>
+      <h2>Research Areas</h2>
+      <div class="research-grid">
+
+        <a class="research" href="https://sutralang.dev">
+          <div class="research-head">
+            <span class="research-title">Geometric Tensor Languages</span>
+            <span class="research-area">Languages</span>
+          </div>
+          <p class="research-desc">Designing Sutra: a programming language with no control flow, where conditional branches are weighted geometric blends and iteration is rotation in tensor space. Goal: programs that are GPU-native and differentiable by construction.</p>
+          <div class="research-meta">
+            <span>Sutra compiler &amp; spec</span>
+            <span>IDE tooling (IntelliJ, VS Code)</span>
+          </div>
+        </a>
+
+        <a class="research" href="/theory/">
+          <div class="research-head">
+            <span class="research-title">Vector Retrieval &amp; Graph Databases</span>
+            <span class="research-area">SutraDB</span>
+          </div>
+          <p class="research-desc">SutraDB unifies HNSW vector indexing with RDF graph traversal. The eight theory pages explain the design: subgraph SIMD indexes, SPARQL exit conditions, traversal optimization, and where hybrid databases beat pure-vector or pure-graph stores.</p>
+          <div class="research-meta">
+            <span>HNSW in RDF</span>
+            <span>Subgraph SIMD indexing</span>
+            <span>Hybrid query planning</span>
+          </div>
+        </a>
+
+        <a class="research" href="https://shinto.miraheze.org">
+          <div class="research-head">
+            <span class="research-title">Knowledge Graphs &amp; Lexicography</span>
+            <span class="research-area">Wikidata · Pramana</span>
+          </div>
+          <p class="research-desc">Wikidata pipelines for the Shinto knowledge graph (Engishiki shrines, Shikinai Ronsha disambiguation), lexeme infrastructure on the Aelaki Wikibase, and Pramana &mdash; a structured-citation system for grounding language model outputs in primary sources.</p>
+          <div class="research-meta">
+            <span>Shinto wiki bots</span>
+            <span>Aelaki lexeme API</span>
+            <span>Pramana citations</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Explainers</h2>
       <a class="hub" href="/tutorials/">
         <div class="hub-text">
-          <div class="hub-title">Explaining AI &mdash; visualizer collection</div>
-          <div class="hub-desc">14 hands-on tutorials covering vector math, neural networks, training dynamics, and modern architectures. Drag, click, change the inputs, watch the math.</div>
+          <div class="hub-title">Interactive ML Tutorials</div>
+          <div class="hub-desc">14 hands-on visualizers covering vector math, neural networks, training dynamics, and modern architectures. Drag, click, change the inputs, watch the math.</div>
+        </div>
+        <span class="hub-arrow">&rarr;</span>
+      </a>
+      <a class="hub" href="/theory/">
+        <div class="hub-text">
+          <div class="hub-title">SutraDB Theory</div>
+          <div class="hub-desc">Eight interactive explainers for the database internals: HNSW in RDF, subgraph SIMD indexing, SPARQL exit conditions, and how graph and vector databases differ.</div>
         </div>
         <span class="hub-arrow">&rarr;</span>
       </a>
     </div>
 
     <div class="section">
-      <h2>SutraDB Theory</h2>
-      <a class="card" href="/theory/">
-        <div class="card-title">Database Theory Visualizations</div>
-        <div class="card-desc">Eight interactive explainers for the ideas behind SutraDB: HNSW in RDF, subgraph SIMD indexing, SPARQL exit conditions, traversal optimization, and how graph and vector databases differ.</div>
-        <span class="card-tag">8 visualizations</span>
-      </a>
-    </div>
-
-    <div class="section">
       <h2>Other Projects</h2>
-      <a class="card" href="https://github.com/EmmaLeonhart/vibecoding-tutorial">
-        <div class="card-title">Vibecoding Tutorial</div>
-        <div class="card-desc">A beginner-friendly guide to vibecoding with AI &mdash; unit testing, project structure, and working effectively with AI assistants.</div>
-        <span class="card-tag">Tutorial</span>
-      </a>
-      <a class="card" href="https://github.com/EmmaLeonhart/cleanvibe">
-        <div class="card-title">cleanvibe</div>
-        <div class="card-desc">Python library that bootstraps well-documented vibecoding projects with clean structure from the start.</div>
-        <span class="card-tag">Python</span>
-      </a>
-      <a class="card" href="https://github.com/EmmaLeonhart/claw.py">
-        <div class="card-title">claw.py</div>
-        <div class="card-desc">Library for creating exportable OpenClaw context &mdash; portable, structured context for AI agent sessions.</div>
-        <span class="card-tag">Python</span><span class="card-tag">AI Tooling</span>
-      </a>
+      <div class="projects-grid">
+        <a class="card" href="https://github.com/EmmaLeonhart/claw.py">
+          <div class="card-title">claw.py</div>
+          <div class="card-desc">Library for creating exportable OpenClaw context &mdash; portable, structured context for AI agent sessions.</div>
+          <span class="card-tag">Python</span><span class="card-tag">AI Tooling</span>
+        </a>
+        <a class="card" href="https://github.com/EmmaLeonhart/cleanvibe">
+          <div class="card-title">cleanvibe</div>
+          <div class="card-desc">Python library that bootstraps well-documented vibecoding projects with clean structure from the start.</div>
+          <span class="card-tag">Python</span>
+        </a>
+        <a class="card" href="https://github.com/EmmaLeonhart/vibecoding-tutorial">
+          <div class="card-title">Vibecoding Tutorial</div>
+          <div class="card-desc">A beginner-friendly guide to vibecoding with AI &mdash; unit testing, project structure, and working effectively with AI assistants.</div>
+          <span class="card-tag">Tutorial</span>
+        </a>
+      </div>
     </div>
 
     <div class="section">
@@ -342,8 +578,11 @@
       <div class="links">
         <a href="https://github.com/EmmaLeonhart">GitHub</a>
         <a href="https://sutralang.dev">Sutra</a>
+        <a href="/tutorials/">Tutorials</a>
+        <a href="/theory/">Theory</a>
       </div>
     </div>
+
   </div>
 </body>
 </html>
