@@ -5,100 +5,175 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages, grounded retrieval, and interactive tutorials. Builder of Sutra and SutraDB.">
+  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages and grounded retrieval. Builder of Sutra and SutraDB.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
   <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra and SutraDB.">
   <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), SutraDB (grounded retrieval), and interactive ML tutorials.">
   <title>Emma Leonhart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --bg: #08080d;
-      --bg-card: #11111a;
-      --bg-card-hover: #16161f;
-      --bg-elevated: #14141e;
-      --border: #1d1d29;
-      --border-hover: #3a3a55;
-      --border-strong: #262636;
-      --text: #d0d0dc;
-      --text-strong: #ececf2;
-      --text-mute: #8b8ba6;
-      --text-faint: #62647c;
-      --accent: #7c8cf8;
-      --accent-bright: #9aa4ff;
-      --accent-soft: rgba(124, 140, 248, 0.10);
-      --accent-glow: rgba(124, 140, 248, 0.18);
+      --bg: #07070c;
+      --bg-soft: #0c0c14;
+      --bg-card: #11111b;
+      --bg-card-hover: #16162280;
+      --bg-elevated: #14141f;
+      --border: #1d1d2c;
+      --border-hover: #34344e;
+      --border-strong: #262638;
+
+      --text: #d4d4e0;
+      --text-strong: #f0f0f6;
+      --text-mute: #8c8caa;
+      --text-faint: #5d5d78;
+
+      --accent: #8b9bff;
+      --accent-bright: #b0bcff;
+      --accent-soft: rgba(139, 155, 255, 0.10);
+      --accent-glow: rgba(139, 155, 255, 0.28);
+
+      --c-neuro: #b794f6;          /* violet — neurosymbolic */
+      --c-neuro-soft: rgba(183, 148, 246, 0.10);
+      --c-neuro-glow: rgba(183, 148, 246, 0.32);
+
+      --c-interp: #67e8f9;          /* cyan — interpretability */
+      --c-interp-soft: rgba(103, 232, 249, 0.10);
+      --c-interp-glow: rgba(103, 232, 249, 0.30);
+
+      --c-safety: #fb7185;          /* rose — safety */
+      --c-safety-soft: rgba(251, 113, 133, 0.10);
+      --c-safety-glow: rgba(251, 113, 133, 0.30);
+
       --sutra: #d4a76a;
-      --sutra-bright: #ead4ad;
+      --sutra-bright: #f5d9a8;
       --sutra-soft: rgba(212, 167, 106, 0.10);
-      --research: #8ad7c1;
-      --research-soft: rgba(138, 215, 193, 0.10);
+      --sutra-glow: rgba(212, 167, 106, 0.32);
+
+      --serif: 'Instrument Serif', 'Times New Roman', serif;
+      --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
     }
+
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 96px 24px 120px;
+      padding: 110px 24px 140px;
       position: relative;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-    }
-    /* Ambient gradient glow behind hero */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -260px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1100px;
-      height: 600px;
-      background:
-        radial-gradient(ellipse at 30% center, rgba(124, 140, 248, 0.10) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% center, rgba(138, 215, 193, 0.05) 0%, transparent 55%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Subtle dot grid */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-      z-index: 0;
-      mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-    }
-    .container {
-      max-width: 720px;
-      width: 100%;
-      position: relative;
-      z-index: 1;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: 'cv11', 'ss01', 'ss03';
+      letter-spacing: -0.005em;
     }
 
-    /* HERO */
-    .hero { margin-bottom: 64px; }
+    /* === ANIMATED MESH GRADIENT BACKGROUND === */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora::before,
+    .aurora::after,
+    .aurora .blob {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+    }
+    .aurora::before {
+      width: 720px;
+      height: 720px;
+      top: -260px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(139, 155, 255, 0.32) 0%, transparent 70%);
+      animation: drift1 22s ease-in-out infinite alternate;
+    }
+    .aurora::after {
+      width: 640px;
+      height: 640px;
+      top: -180px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(212, 167, 106, 0.22) 0%, transparent 70%);
+      animation: drift2 26s ease-in-out infinite alternate;
+    }
+    .aurora .blob {
+      width: 540px;
+      height: 540px;
+      top: 320px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(103, 232, 249, 0.16) 0%, transparent 70%);
+      animation: drift3 30s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(140px, 80px) scale(1.15); }
+    }
+    @keyframes drift2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-100px, 120px) scale(1.1); }
+    }
+    @keyframes drift3 {
+      0% { transform: translate(-50%, 0) scale(1); }
+      100% { transform: translate(-50%, 180px) scale(1.2); }
+    }
+
+    /* Subtle grain on top of everything */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.020) 1px, transparent 0);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    }
+
+    .container {
+      max-width: 760px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* === HERO === */
+    .hero { margin-bottom: 88px; position: relative; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.72rem;
-      font-weight: 600;
+      gap: 9px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 1.8px;
-      color: var(--accent);
-      margin-bottom: 18px;
-      padding: 5px 11px 5px 9px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(124, 140, 248, 0.18);
+      letter-spacing: 1.6px;
+      color: var(--accent-bright);
+      margin-bottom: 26px;
+      padding: 6px 13px 6px 11px;
+      background: rgba(139, 155, 255, 0.06);
+      border: 1px solid rgba(139, 155, 255, 0.18);
       border-radius: 999px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     .eyebrow::before {
       content: '';
@@ -106,46 +181,86 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent-bright);
-      box-shadow: 0 0 8px var(--accent-glow);
+      box-shadow: 0 0 12px var(--accent-glow);
       animation: pulse 2.4s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
     }
+
     h1 {
-      font-size: 2.6rem;
+      font-size: clamp(2.6rem, 6vw, 3.8rem);
       font-weight: 700;
-      margin-bottom: 14px;
-      letter-spacing: -0.6px;
-      background: linear-gradient(120deg, #f4f4f9 0%, #aab2ff 60%, #d4a76a 100%);
+      margin-bottom: 22px;
+      letter-spacing: -1.2px;
+      line-height: 1.02;
+      background: linear-gradient(120deg, #ffffff 0%, #b0bcff 50%, #d4a76a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      line-height: 1.1;
     }
+    h1 .serif {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+
     .tagline {
-      font-size: 1.1rem;
+      font-size: 1.18rem;
       color: var(--text-mute);
       line-height: 1.65;
-      max-width: 580px;
+      max-width: 600px;
+      font-weight: 400;
     }
+    .tagline .em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.22em;
+      letter-spacing: -0.3px;
+    }
+    .tagline .em-neuro { color: #d2b8ff; }
+    .tagline .em-interp { color: #9aedfa; }
+    .tagline .em-safety { color: #ff9aa9; }
     .tagline strong {
       color: var(--text-strong);
       font-weight: 600;
     }
 
-    /* SECTION HEADERS */
+    /* Decorative geometric mark beside hero */
+    .glyph {
+      position: absolute;
+      top: -6px;
+      right: 0;
+      width: 90px;
+      height: 90px;
+      opacity: 0.6;
+      animation: spin 60s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @media (max-width: 720px) { .glyph { display: none; } }
+
+    /* === SECTION HEADERS === */
     h2 {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 0.74rem;
-      font-weight: 600;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
+      color: var(--text-mute);
+      margin-bottom: 28px;
+    }
+    h2 .num {
       color: var(--accent);
-      margin-bottom: 22px;
+      font-weight: 500;
     }
     h2::after {
       content: '';
@@ -153,326 +268,508 @@
       height: 1px;
       background: linear-gradient(to right, var(--border-strong), transparent);
     }
-    .section { margin-bottom: 60px; }
+    .section { margin-bottom: 80px; }
 
-    /* BIO */
+    /* === BIO === */
     .bio {
-      font-size: 1rem;
-      line-height: 1.78;
-      color: #a8a8c0;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #b4b4cc;
+      max-width: 660px;
     }
-    .bio p { margin-bottom: 16px; }
+    .bio p { margin-bottom: 18px; }
     .bio p:last-child { margin-bottom: 0; }
     .bio strong {
       color: var(--text-strong);
       font-weight: 600;
     }
+    .bio em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.12em;
+      color: #c8c8e0;
+      letter-spacing: -0.2px;
+    }
 
-    /* FLAGSHIP SUTRA CARD */
+    /* === FLAGSHIP === */
     .flagship {
       display: block;
-      padding: 30px 30px 26px;
+      position: relative;
+      padding: 36px 36px 30px;
+      border-radius: 16px;
       background:
-        linear-gradient(135deg, rgba(212, 167, 106, 0.08) 0%, transparent 55%),
-        var(--bg-card);
-      border: 1px solid #2c2519;
-      border-left: 3px solid var(--sutra);
-      border-radius: 12px;
+        linear-gradient(135deg, rgba(212, 167, 106, 0.10) 0%, rgba(212, 167, 106, 0.02) 40%, transparent 70%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%),
+        rgba(20, 16, 10, 0.55);
+      border: 1px solid rgba(212, 167, 106, 0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.18s, background 0.18s, transform 0.18s;
-      position: relative;
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s, box-shadow 0.28s;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.04) inset,
+        0 30px 60px -30px rgba(0, 0, 0, 0.6);
       overflow: hidden;
     }
     .flagship::before {
       content: '';
       position: absolute;
-      top: -1px; right: -1px;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle at top right, rgba(212, 167, 106, 0.10), transparent 65%);
+      top: -1px; left: -1px; right: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--sutra), transparent);
+      opacity: 0.7;
+    }
+    .flagship::after {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(212, 167, 106, 0.18) 0%, transparent 65%);
       pointer-events: none;
+      transition: opacity 0.3s;
     }
     .flagship:hover {
-      border-color: #3e3320;
-      background:
-        linear-gradient(135deg, rgba(212, 167, 106, 0.12) 0%, transparent 55%),
-        var(--bg-card-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      border-color: rgba(212, 167, 106, 0.4);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.05) inset,
+        0 0 0 1px rgba(212, 167, 106, 0.12),
+        0 30px 80px -20px var(--sutra-glow),
+        0 30px 60px -30px rgba(0, 0, 0, 0.7);
     }
     .flagship-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 4px;
+      gap: 14px;
+      margin-bottom: 6px;
       position: relative;
     }
     .flagship-scroll {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       filter: saturate(0.85);
     }
     .flagship-title {
-      font-size: 1.35rem;
-      font-weight: 700;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 2.2rem;
+      font-weight: 400;
       color: var(--sutra-bright);
-      letter-spacing: -0.3px;
+      letter-spacing: -1px;
+      line-height: 1;
     }
     .flagship-badge {
       margin-left: auto;
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.4px;
       color: var(--sutra);
-      padding: 3px 10px;
-      background: var(--sutra-soft);
-      border: 1px solid rgba(212, 167, 106, 0.22);
+      padding: 4px 11px;
+      background: rgba(212, 167, 106, 0.12);
+      border: 1px solid rgba(212, 167, 106, 0.28);
       border-radius: 999px;
     }
     .flagship-sub {
-      font-size: 0.86rem;
-      color: #b89968;
-      margin-bottom: 18px;
-      font-style: italic;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      color: #c8a878;
+      margin-bottom: 22px;
+      font-weight: 500;
+      letter-spacing: 0.1px;
       position: relative;
     }
     .flagship-desc {
-      font-size: 0.96rem;
-      color: #b0b0c4;
-      line-height: 1.7;
-      margin-bottom: 14px;
+      font-size: 1rem;
+      color: #c0c0d2;
+      line-height: 1.72;
+      margin-bottom: 16px;
       position: relative;
     }
-    .flagship-desc:last-of-type { margin-bottom: 20px; }
+    .flagship-desc:last-of-type { margin-bottom: 24px; }
     .flagship-desc code {
-      font-family: 'Consolas', 'Monaco', monospace;
+      font-family: var(--mono);
       font-size: 0.86em;
       color: var(--sutra-bright);
       background: rgba(212, 167, 106, 0.12);
-      padding: 1px 6px;
+      padding: 2px 7px;
       border-radius: 4px;
+      border: 1px solid rgba(212, 167, 106, 0.18);
+    }
+    .flagship-desc em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1em;
+      color: var(--sutra-bright);
     }
     .flagship-links {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      font-size: 0.86rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
       position: relative;
     }
     .flagship-links span {
       color: var(--sutra);
-      padding: 7px 13px;
-      border: 1px solid #3e3320;
-      border-radius: 6px;
-      transition: background 0.15s, border-color 0.15s;
+      padding: 8px 14px;
+      border: 1px solid rgba(212, 167, 106, 0.25);
+      border-radius: 8px;
+      background: rgba(212, 167, 106, 0.04);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
     .flagship:hover .flagship-links span {
-      border-color: #5a4a28;
-      background: var(--sutra-soft);
+      border-color: rgba(212, 167, 106, 0.45);
+      background: rgba(212, 167, 106, 0.10);
     }
 
-    /* RESEARCH STACK */
+    /* === RESEARCH BENTO === */
     .research-grid {
       display: grid;
-      gap: 14px;
+      gap: 16px;
     }
     .research {
+      --r: var(--accent);
+      --r-soft: var(--accent-soft);
+      --r-glow: var(--accent-glow);
       display: block;
-      padding: 22px 24px;
+      position: relative;
+      padding: 30px 30px 26px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--research);
-      border-radius: 10px;
+      border-radius: 14px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s, box-shadow 0.28s, background 0.28s;
+      overflow: hidden;
+    }
+    .research::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, var(--r-soft) 0%, transparent 45%);
+      opacity: 0.5;
+      transition: opacity 0.28s;
+    }
+    .research::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--r) 0%, transparent 100%);
+      opacity: 0.7;
     }
     .research:hover {
+      transform: translateY(-2px);
       border-color: var(--border-hover);
-      border-left-color: var(--research);
-      background: var(--bg-card-hover);
-      transform: translateY(-1px);
+      background: var(--bg-elevated);
+      box-shadow: 0 24px 60px -28px var(--r-glow);
     }
-    .research-head {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
+    .research:hover::before { opacity: 1; }
+
+    .r-neuro  { --r: var(--c-neuro);  --r-soft: var(--c-neuro-soft);  --r-glow: var(--c-neuro-glow);  }
+    .r-interp { --r: var(--c-interp); --r-soft: var(--c-interp-soft); --r-glow: var(--c-interp-glow); }
+    .r-safety { --r: var(--c-safety); --r-soft: var(--c-safety-soft); --r-glow: var(--c-safety-glow); }
+
+    .r-num {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--r);
+      opacity: 0.35;
+      line-height: 1;
+      letter-spacing: -1px;
+      transition: opacity 0.3s, transform 0.3s;
     }
-    .research-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text-strong);
-      letter-spacing: -0.1px;
-    }
-    .research-area {
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-      color: var(--research);
-      padding: 2px 9px;
-      background: var(--research-soft);
-      border-radius: 4px;
-    }
-    .research-desc {
-      font-size: 0.92rem;
-      color: #8a8aa3;
-      line-height: 1.65;
-      margin-bottom: 10px;
-    }
-    .research-meta {
-      font-size: 0.8rem;
-      color: var(--text-faint);
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .research-meta span::before {
-      content: '\2192  ';
-      color: var(--research);
-      opacity: 0.7;
-      margin-right: 2px;
+    .research:hover .r-num {
+      opacity: 0.85;
+      transform: translateY(-2px);
     }
 
-    /* HUB / GENERIC CARDS */
+    .r-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: var(--r);
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .r-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--text-strong);
+      letter-spacing: -0.6px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      position: relative;
+      max-width: 80%;
+    }
+    .r-desc {
+      font-size: 0.96rem;
+      color: #98a2b8;
+      line-height: 1.72;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .r-desc strong { color: var(--text-strong); font-weight: 600; }
+    .r-desc em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.08em;
+      color: #c0c8d8;
+    }
+    .r-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 8px;
+      position: relative;
+    }
+    .r-meta span {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--text-faint);
+      padding: 4px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.012);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .research:hover .r-meta span {
+      color: var(--text-mute);
+      border-color: var(--border-strong);
+    }
+
+    /* === HUBS === */
     .hub {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      padding: 22px 26px;
+      padding: 24px 28px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.15s, background 0.15s, transform 0.15s;
-      margin-bottom: 12px;
+      transition: transform 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
     }
     .hub:last-child { margin-bottom: 0; }
-    .hub:hover {
-      border-color: var(--border-hover);
-      background: var(--bg-card-hover);
-      transform: translateY(-1px);
+    .hub::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, transparent 0%, var(--accent-soft) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    .hub-text { flex: 1; min-width: 0; }
+    .hub:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 50px -28px var(--accent-glow);
+    }
+    .hub:hover::before { opacity: 1; }
+    .hub-text { flex: 1; min-width: 0; position: relative; }
     .hub-title {
-      font-size: 1.02rem;
-      font-weight: 600;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.4rem;
+      font-weight: 400;
       color: var(--text-strong);
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
     }
     .hub-desc {
-      font-size: 0.88rem;
-      color: #8a8aa3;
-      line-height: 1.55;
+      font-size: 0.92rem;
+      color: #8c8caa;
+      line-height: 1.6;
     }
     .hub-arrow {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: var(--accent);
       flex-shrink: 0;
-      transition: transform 0.15s;
+      transition: transform 0.25s;
+      position: relative;
     }
-    .hub:hover .hub-arrow { transform: translateX(3px); }
+    .hub:hover .hub-arrow { transform: translateX(4px); }
 
-    /* OTHER PROJECTS GRID */
+    /* === OTHER PROJECTS GRID === */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
     .card {
       display: block;
-      padding: 18px 20px;
+      padding: 22px 22px 20px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+      transition: transform 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
     }
     .card:hover {
+      transform: translateY(-2px);
       border-color: var(--border-hover);
-      background: var(--bg-card-hover);
-      transform: translateY(-1px);
+      background: var(--bg-elevated);
+      box-shadow: 0 18px 40px -24px var(--accent-glow);
     }
     .card-title {
-      font-size: 0.98rem;
-      font-weight: 600;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.3rem;
+      font-weight: 400;
       color: var(--text-strong);
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
     }
     .card-desc {
-      font-size: 0.86rem;
-      color: #8a8aa3;
-      line-height: 1.55;
-      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: #8c8caa;
+      line-height: 1.6;
+      margin-bottom: 12px;
     }
     .card-tag {
       display: inline-block;
-      font-size: 0.7rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
       color: var(--accent);
       background: var(--accent-soft);
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 4px;
       margin-right: 4px;
       font-weight: 500;
+      letter-spacing: 0.4px;
     }
 
-    /* LINKS */
+    /* === LINKS === */
     .links {
       display: flex;
-      gap: 22px;
+      gap: 24px;
       flex-wrap: wrap;
     }
     .links a {
+      font-family: var(--mono);
       color: var(--accent);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 500;
-      transition: color 0.15s;
+      letter-spacing: 0.2px;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .links a::after {
+      content: '\2197';
+      margin-left: 4px;
+      opacity: 0.6;
+      transition: transform 0.2s, opacity 0.2s;
+      display: inline-block;
     }
     .links a:hover {
       color: var(--accent-bright);
-      text-decoration: underline;
+    }
+    .links a:hover::after {
+      opacity: 1;
+      transform: translate(2px, -2px);
     }
 
-    /* MOBILE */
-    @media (max-width: 560px) {
-      body { padding: 56px 18px 80px; }
-      h1 { font-size: 1.95rem; }
-      .tagline { font-size: 1rem; }
-      .flagship { padding: 24px 22px 22px; }
-      .flagship-title { font-size: 1.15rem; }
+    /* === SIGNATURE FOOTER MARK === */
+    .sig {
+      margin-top: 80px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-faint);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+    }
+    .sig::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--border-strong);
+    }
+
+    /* === MOBILE === */
+    @media (max-width: 600px) {
+      body { padding: 64px 18px 96px; }
+      .hero { margin-bottom: 64px; }
+      h1 { font-size: 2.2rem; letter-spacing: -0.6px; }
+      .tagline { font-size: 1.02rem; }
+      .flagship { padding: 26px 22px 22px; }
+      .flagship-title { font-size: 1.7rem; }
       .flagship-badge { display: none; }
-      .research { padding: 18px 20px; }
-      .hub { padding: 18px 20px; }
-      .section { margin-bottom: 48px; }
+      .research { padding: 22px 22px 20px; }
+      .r-num { font-size: 1.8rem; top: 18px; right: 22px; }
+      .r-title { font-size: 1.45rem; max-width: 75%; }
+      .hub { padding: 20px 22px; }
+      .hub-title { font-size: 1.18rem; }
+      .section { margin-bottom: 56px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .aurora::before, .aurora::after, .aurora .blob, .glyph, .eyebrow::before {
+        animation: none !important;
+      }
     }
   </style>
 </head>
 <body>
+
+  <div class="aurora" aria-hidden="true"><span class="blob"></span></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <div class="container">
 
-    <div class="hero">
-      <span class="eyebrow">Research</span>
-      <h1>Emma Leonhart</h1>
-      <p class="tagline">My work sits at the intersection of <strong>neurosymbolic AI</strong>, <strong>AI interpretability</strong>, and <strong>AI safety</strong> &mdash; three problems I see as a single problem. Geometric tensor languages and grounded retrieval are the tools I&rsquo;m building to attack them.</p>
-    </div>
+    <header class="hero">
+      <svg class="glyph" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" stroke="rgba(139,155,255,0.20)" stroke-width="0.6"/>
+        <circle cx="50" cy="50" r="34" stroke="rgba(212,167,106,0.18)" stroke-width="0.6"/>
+        <circle cx="50" cy="50" r="22" stroke="rgba(103,232,249,0.18)" stroke-width="0.6"/>
+        <circle cx="50" cy="4"  r="1.6" fill="#b0bcff"/>
+        <circle cx="50" cy="16" r="1.2" fill="#d4a76a"/>
+        <circle cx="50" cy="28" r="1.0" fill="#67e8f9"/>
+        <line x1="50" y1="50" x2="50" y2="6"  stroke="rgba(139,155,255,0.35)" stroke-width="0.5"/>
+        <line x1="50" y1="50" x2="86" y2="50" stroke="rgba(212,167,106,0.30)" stroke-width="0.5"/>
+        <line x1="50" y1="50" x2="22" y2="78" stroke="rgba(103,232,249,0.30)" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="2" fill="#f0f0f6"/>
+      </svg>
 
-    <div class="section">
-      <h2>About</h2>
+      <span class="eyebrow">Research Portfolio</span>
+      <h1>Emma <span class="serif">Leonhart</span></h1>
+      <p class="tagline">My work sits at the intersection of <span class="em em-neuro">neurosymbolic AI</span>, <span class="em em-interp">interpretability</span>, and <span class="em em-safety">AI safety</span> &mdash; three problems I see as a single problem. Geometric tensor languages and grounded retrieval are the tools I build to attack them.</p>
+    </header>
+
+    <section class="section">
+      <h2><span class="num">01 &mdash;</span> About</h2>
       <div class="bio">
-        <p>I think <strong>neurosymbolic AI</strong>, <strong>interpretability</strong>, and <strong>safety</strong> are the same problem viewed from three angles. A model whose reasoning we can&rsquo;t inspect can&rsquo;t be aligned; a model that can&rsquo;t be grounded in symbolic structure can&rsquo;t be inspected; and the structure has to be load-bearing inside the computation, not bolted on after the fact.</p>
-        <p>My working thesis is that what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces &mdash; and that the path forward is to make that geometry <em>explicit</em>, so it can be read, constrained, and grounded against external symbolic structure. Geometry isn&rsquo;t the goal; it&rsquo;s the substrate that lets the other three goals become tractable.</p>
-        <p>That shows up as <strong>Sutra</strong> (a language where programs are visible tensor arithmetic instead of opaque control flow), <strong>SutraDB</strong> (vector retrieval grounded in a typed knowledge graph), <strong>interactive tutorials</strong> (interpretability you can drag with your mouse), and <strong>knowledge graph infrastructure</strong> on Wikidata, Pramana, and the Aelaki Wikibase &mdash; the symbolic side of the neurosymbolic loop.</p>
+        <p>I think <strong>neurosymbolic AI</strong>, <strong>interpretability</strong>, and <strong>safety</strong> are the same problem viewed from three angles. A model whose reasoning we can&rsquo;t inspect can&rsquo;t be aligned; a model that can&rsquo;t be grounded in symbolic structure can&rsquo;t be inspected; and the structure has to be load-bearing <em>inside</em> the computation, not bolted on after the fact.</p>
+        <p>My working thesis: what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces. The path forward is to make that geometry <em>explicit</em>, so it can be read, constrained, and grounded against external symbolic structure. Geometry isn&rsquo;t the goal &mdash; it&rsquo;s the substrate that makes the other three goals tractable.</p>
+        <p>That shows up as <strong>Sutra</strong>, a language where programs are visible tensor arithmetic instead of opaque control flow; <strong>SutraDB</strong>, vector retrieval grounded in a typed knowledge graph; <strong>interactive tutorials</strong>, interpretability you can drag with your mouse; and <strong>Wikidata pipelines</strong> for the symbolic side of the loop.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>Flagship</h2>
+    <section class="section">
+      <h2><span class="num">02 &mdash;</span> Flagship</h2>
       <a class="flagship" href="https://sutralang.dev">
         <div class="flagship-header">
           <span class="flagship-scroll">&#128220;</span>
@@ -481,62 +778,59 @@
         </div>
         <div class="flagship-sub">A geometric tensor programming language.</div>
         <p class="flagship-desc">Every value is a tensor. Every operation is tensor arithmetic in a geometric space. There is no <code>print</code>, no <code>if</code>, no <code>while</code> &mdash; branches are continuous weighted blends and loops are geometric rotations. Programs compile to straight-line tensor operations, which makes them GPU-native and end-to-end differentiable by construction.</p>
-        <p class="flagship-desc">I&rsquo;m building the reference compiler (PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus SutraDB, the bundled vector database that lives inside the same ecosystem. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
+        <p class="flagship-desc">I&rsquo;m building the reference compiler (PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus SutraDB, the bundled vector database. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
         <div class="flagship-links">
           <span>sutralang.dev &rarr;</span>
           <span>github.com/EmmaLeonhart/Sutra</span>
         </div>
       </a>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>Research Directions</h2>
+    <section class="section">
+      <h2><span class="num">03 &mdash;</span> Research Directions</h2>
       <div class="research-grid">
 
-        <a class="research" href="https://sutralang.dev">
-          <div class="research-head">
-            <span class="research-title">Neurosymbolic AI</span>
-            <span class="research-area">Goal</span>
-          </div>
-          <p class="research-desc">Bringing symbolic structure inside neural computation rather than wrapping it around the outside. Sutra makes the symbolic structure of a program visible <em>as</em> tensor arithmetic; SutraDB pairs each vector with a typed entity in a knowledge graph; Pramana attaches structured citations to model outputs. The connective tissue is geometry &mdash; symbols expressed as positions and rotations in continuous space.</p>
-          <div class="research-meta">
-            <span>Sutra (geometric tensor language)</span>
-            <span>SutraDB (vectors + RDF)</span>
-            <span>Pramana (structured citations)</span>
+        <a class="research r-neuro" href="https://sutralang.dev">
+          <span class="r-num">01</span>
+          <div class="r-tag">Goal</div>
+          <div class="r-title">Neurosymbolic AI</div>
+          <p class="r-desc">Bringing symbolic structure <em>inside</em> neural computation rather than wrapping it around the outside. Sutra makes the symbolic structure of a program visible <em>as</em> tensor arithmetic; SutraDB pairs each vector with a typed entity in a knowledge graph. The connective tissue is geometry &mdash; symbols expressed as positions and rotations in continuous space.</p>
+          <div class="r-meta">
+            <span>Sutra</span>
+            <span>SutraDB</span>
+            <span>vector + RDF</span>
           </div>
         </a>
 
-        <a class="research" href="/tutorials/">
-          <div class="research-head">
-            <span class="research-title">AI Interpretability</span>
-            <span class="research-area">Goal</span>
-          </div>
-          <p class="research-desc">A model whose reasoning you can&rsquo;t inspect can&rsquo;t be aligned. I attack interpretability two ways: <strong>by construction</strong>, designing languages where the program <em>is</em> its own trace (no control flow to hide behind), and <strong>by demonstration</strong>, building 14 interactive tutorials that turn the math of vector spaces, attention, and gradient flow into something you can drag with your mouse.</p>
-          <div class="research-meta">
-            <span>Sutra: control-flow-free programs</span>
+        <a class="research r-interp" href="/tutorials/">
+          <span class="r-num">02</span>
+          <div class="r-tag">Goal</div>
+          <div class="r-title">AI Interpretability</div>
+          <p class="r-desc">A model whose reasoning you can&rsquo;t inspect can&rsquo;t be aligned. I attack interpretability two ways: <strong>by construction</strong>, designing languages where the program <em>is</em> its own trace (no control flow to hide behind), and <strong>by demonstration</strong>, building 14 interactive tutorials that turn the math of vector spaces, attention, and gradient flow into something you can drag with your mouse.</p>
+          <div class="r-meta">
+            <span>control-flow-free programs</span>
             <span>14 ML visualizers</span>
-            <span>Embedding viewer</span>
+            <span>embedding viewer</span>
           </div>
         </a>
 
-        <a class="research" href="/theory/">
-          <div class="research-head">
-            <span class="research-title">AI Safety</span>
-            <span class="research-area">Goal</span>
-          </div>
-          <p class="research-desc">Safety follows from the other two: a system whose reasoning is symbolic enough to inspect and geometric enough to constrain is one you can actually align. Concretely: grounded retrieval (SutraDB) so models can&rsquo;t hallucinate past their evidence, knowledge graph infrastructure (Wikidata, Pramana, Aelaki Wikibase) for the symbolic side of the loop, and tooling (claw.py / OpenClaw) for portable, auditable agent context.</p>
-          <div class="research-meta">
-            <span>Grounded retrieval</span>
-            <span>Wikidata / Pramana pipelines</span>
-            <span>Aelaki lexeme infrastructure</span>
+        <a class="research r-safety" href="/theory/">
+          <span class="r-num">03</span>
+          <div class="r-tag">Goal</div>
+          <div class="r-title">AI Safety</div>
+          <p class="r-desc">Safety follows from the other two: a system whose reasoning is symbolic enough to inspect and geometric enough to constrain is one you can actually align. Concretely: grounded retrieval (SutraDB) so models can&rsquo;t hallucinate past their evidence, Wikidata pipelines for the symbolic side of the loop, and tooling (claw.py / OpenClaw) for portable, auditable agent context.</p>
+          <div class="r-meta">
+            <span>grounded retrieval</span>
+            <span>Wikidata pipelines</span>
+            <span>OpenClaw / claw.py</span>
           </div>
         </a>
 
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>Explainers</h2>
+    <section class="section">
+      <h2><span class="num">04 &mdash;</span> Explainers</h2>
       <a class="hub" href="/tutorials/">
         <div class="hub-text">
           <div class="hub-title">Interactive ML Tutorials</div>
@@ -551,10 +845,10 @@
         </div>
         <span class="hub-arrow">&rarr;</span>
       </a>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>Other Projects</h2>
+    <section class="section">
+      <h2><span class="num">05 &mdash;</span> Other Projects</h2>
       <div class="projects-grid">
         <a class="card" href="https://github.com/EmmaLeonhart/claw.py">
           <div class="card-title">claw.py</div>
@@ -572,17 +866,19 @@
           <span class="card-tag">Tutorial</span>
         </a>
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>Links</h2>
+    <section class="section">
+      <h2><span class="num">06 &mdash;</span> Links</h2>
       <div class="links">
         <a href="https://github.com/EmmaLeonhart">GitHub</a>
         <a href="https://sutralang.dev">Sutra</a>
         <a href="/tutorials/">Tutorials</a>
         <a href="/theory/">Theory</a>
       </div>
-    </div>
+    </section>
+
+    <div class="sig">emmaleonhart.com</div>
 
   </div>
 </body>
