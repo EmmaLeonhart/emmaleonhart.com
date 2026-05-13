@@ -2,6 +2,10 @@
 
 Personal website and interactive tools, deployed via GitHub Pages.
 
+## GitHub profile sync
+
+`github_bio/readme.md` is the source of truth for the README on [github.com/EmmaLeonhart](https://github.com/EmmaLeonhart). A daily GitHub Action in the `EmmaLeonhart/EmmaLeonhart` profile repo (`.github/workflows/sync-from-website.yml`) copies that file over, so the profile bio can be edited from this monorepo.
+
 ## Pages
 
 - `/` — Landing page: bio, flagship project (Sutra), and research directions framed by Emma's three linked goals — neurosymbolic AI, AI interpretability, and AI safety. Geometric tensor languages, SutraDB, Wikidata / Pramana / Aelaki, and the tutorials are positioned as the *means* toward those goals.
