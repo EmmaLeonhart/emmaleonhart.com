@@ -9,7 +9,11 @@ Read my vibecoding tutorial here https://github.com/EmmaLeonhart/vibecoding-tuto
 
 Use my database here https://github.com/EmmaLeonhart/SutraDB
 
-Use my programming language here https://github.com/EmmaLeonhart/Sutra
+### Sutra — my programming language
+
+- Getting started: https://sutralang.dev
+- Source: https://github.com/EmmaLeonhart/Sutra
+- Paper (PDF): https://sutralang.dev/paper.pdf — going up on arXiv soon.
 
 
 
