@@ -4,6 +4,9 @@ Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from t
 
 ## Workflow Rules
 - **Commit and push immediately.** Every meaningful change gets a commit with a clear message explaining *why*, not just what — and `git push` right after. GitHub Pages is the easiest way to debug this site, so changes need to be live for the user to see them. Do not batch up multiple commits before pushing.
+- **Plan into `queue.md` FIRST, then execute.** When entering planning mode (or any multi-step think-before-do), the FIRST action is to write the plan into `queue.md` as concrete items. Only then begin executing. Chat context dies on session interrupt; the queue survives.
+- **Update `queue.md` in the same commit as the work.** Delete completed items in the same commit — no checkmarks or status markers.
+- **Mirror `queue.md` into the task tool.** `TaskCreate` items as you add them to queue.md; mark `in_progress` when starting; `completed` when done.
 - **Do not enter planning-only modes.** All thinking must produce files and commits.
 - **Update README.md regularly.** It should always reflect the current state of the site for human readers.
 - **Keep this file up to date.** As pages are added, removed, or restructured, record the changes here.
