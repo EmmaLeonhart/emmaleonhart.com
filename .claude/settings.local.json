@@ -35,7 +35,10 @@
       "Bash(find \"C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\emmaleonhart.com\" -type f -name \"*.css\" 2>/dev/null | head -20)",
       "Bash(npm install *)",
       "Read(//c/Users/ambie/.claude/projects/C--Users-ambie-Documents-Github-emmaleonhart-com/memory//**)",
-      "Read(//c/Users/ambie/Documents/Github/life-planning/**)"
+      "Read(//c/Users/ambie/Documents/Github/life-planning/**)",
+      "Bash(gh run *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }
