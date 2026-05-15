@@ -10,7 +10,27 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
-_(empty — add the next concrete site change here when work begins)_
+### Subdomain consolidation — external repos
+
+Projects page (`pages/projects/index.html`) + landing-page link + docs are
+done and pushed. Remaining: the five external project repos.
+
+Subdomain → repo map:
+
+- sutra.emmaleonhart.com → `EmmaLeonhart/Sutra` (was sutralang.dev)
+- loka.emmaleonhart.com → `EmmaLeonhart/Loka` (was sutradb.org)
+- querykey.emmaleonhart.com → `EmmaLeonhart/querykey` (homepage already set)
+- yantra.emmaleonhart.com → `EmmaLeonhart/Yantra` (had no domain)
+- latent-space.emmaleonhart.com → `EmmaLeonhart/latent-space-cartography`
+  (was emmaleonhart.github.io/latent-space-cartography)
+
+For each repo: `gh repo edit` to set homepage to the subdomain, and edit the
+README so the subdomain is the stated canonical domain, replacing the old one.
+Commit + push each repo separately.
+
+Open question for the user: `querykey` repo README is "Secretarybird Pivot"
+(AI secretary) but the repo *description* says social network / PRM — they
+conflict. Projects page was built from the README; user to reconcile.
 
 ---
 
