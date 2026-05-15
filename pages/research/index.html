@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Emma Leonhart">
-  <meta property="og:description" content="Papers and research across Emma Leonhart's projects — interpretability, alignment, embedding geometry, and neurosymbolic systems.">
+  <meta property="og:description" content="Emma Leonhart's research: Sutra, Latent Space Cartography, Loka, Redemption-Realignment, Yantra.">
   <meta property="og:url" content="https://emmaleonhart.com/research/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Research — Emma Leonhart">
-  <meta name="twitter:description" content="Papers and research across Emma Leonhart's projects.">
-  <meta name="description" content="An index of Emma Leonhart's research — standalone papers and the research carried inside each project: interpretability, AI safety, embedding geometry, neurosymbolic systems.">
+  <meta name="twitter:description" content="Sutra, Latent Space Cartography, Loka, Redemption-Realignment, Yantra.">
+  <meta name="description" content="Emma Leonhart's research, in order: Sutra (geometric tensor language), Latent Space Cartography (embedding geometry), Loka (RDF-star + vector engine), Redemption-Realignment (AI safety), Yantra (neurosymbolic OS).">
   <title>Research — Emma Leonhart</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,7 +105,7 @@
     .back:hover { color: var(--accent-bright); }
     .back:hover::before { transform: translateX(-3px); }
 
-    .hero { margin-bottom: 56px; }
+    .hero { margin-bottom: 52px; }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 9px;
       font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
@@ -130,17 +130,8 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     h1 .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -1px; }
-    .lede { font-size: 1.12rem; color: var(--text-mute); line-height: 1.65; max-width: 640px; }
+    .lede { font-size: 1.12rem; color: var(--text-mute); line-height: 1.65; max-width: 660px; }
     .lede em { font-family: var(--serif); font-style: italic; font-size: 1.1em; color: #c8c8e0; }
-
-    h2 {
-      display: flex; align-items: center; gap: 14px;
-      font-family: var(--mono); font-size: 0.72rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 2px;
-      color: var(--text-mute); margin: 56px 0 22px;
-    }
-    h2:first-of-type { margin-top: 0; }
-    h2::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--border-strong), transparent); }
 
     .grid { display: grid; gap: 16px; }
     .item {
@@ -157,7 +148,14 @@
       transform: translateY(-2px); border-color: var(--border-hover);
       background: var(--bg-elevated); box-shadow: 0 24px 60px -28px var(--accent-glow);
     }
-    .i-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 10px; }
+    .i-rank {
+      position: absolute; top: 20px; right: 24px;
+      font-family: var(--serif); font-style: italic; font-size: 2.1rem;
+      font-weight: 400; color: var(--accent); opacity: 0.28; line-height: 1;
+      transition: opacity .3s;
+    }
+    .item:hover .i-rank { opacity: 0.6; }
+    .i-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 10px; padding-right: 40px; }
     .i-title {
       font-family: var(--serif); font-style: italic; font-size: 1.6rem; font-weight: 400;
       color: var(--text-strong); letter-spacing: -0.5px; line-height: 1.1;
@@ -188,24 +186,26 @@
     .i-links a.primary { color: var(--accent); border-color: var(--border-hover); }
 
     .note {
-      margin-top: 40px; padding: 20px 24px; border: 1px dashed var(--border-strong);
+      margin-top: 36px; padding: 20px 24px; border: 1px dashed var(--border-strong);
       border-radius: 12px; font-size: 0.92rem; color: var(--text-mute); line-height: 1.7;
     }
-    .note strong { color: var(--text); font-weight: 600; }
+    .note a { color: var(--accent); text-decoration: none; }
+    .note a:hover { color: var(--accent-bright); }
 
     .sig {
-      margin-top: 64px; display: flex; align-items: center; gap: 14px;
+      margin-top: 60px; display: flex; align-items: center; gap: 14px;
       color: var(--text-faint); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 1px;
     }
     .sig::before { content: ''; width: 24px; height: 1px; background: var(--border-strong); }
 
     @media (max-width: 600px) {
       body { padding: 56px 18px 96px; }
-      .hero { margin-bottom: 44px; }
+      .hero { margin-bottom: 40px; }
       h1 { font-size: 2rem; letter-spacing: -0.6px; }
       .lede { font-size: 1rem; }
       .item { padding: 22px 20px 18px; }
       .i-title { font-size: 1.4rem; }
+      .i-rank { font-size: 1.6rem; top: 18px; right: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .aurora::before, .aurora::after, .aurora .blob, .eyebrow::before { animation: none !important; }
@@ -223,19 +223,32 @@
 
     <header class="hero">
       <span class="eyebrow">Research</span>
-      <h1>Research, <span class="serif">collected</span></h1>
-      <p class="lede">Most of my research lives <em>inside</em> the projects &mdash; each one tends to grow its own paper. This page pulls those threads together: interpretability, AI safety, embedding geometry, and neurosymbolic systems. It is an evolving index, not a tidy CV.</p>
+      <h1>Research, <span class="serif">in order</span></h1>
+      <p class="lede">The work, ranked roughly by how much it matters and how far along it is. Each one links to the best version available today &mdash; a project site or a preprint &mdash; and will move to arXiv as papers are accepted.</p>
     </header>
 
-    <h2>Papers &amp; standalone research</h2>
     <div class="grid">
 
       <article class="item">
+        <span class="i-rank">01</span>
+        <div class="i-head">
+          <span class="i-title">Sutra</span>
+          <span class="i-kind">Language &middot; NeurIPS 2026 track</span>
+        </div>
+        <p class="i-desc">A geometrically compiled language where logical operations over vector spaces are resolved <strong>at compile time</strong> into matrix multiplications. Branches become continuous weighted blends, loops become geometric rotations, and a whole program collapses to straight-line tensor work &mdash; GPU-native and differentiable by construction. The language paper and its NeurIPS&nbsp;2026 supplementary are published alongside the project.</p>
+        <div class="i-links">
+          <a class="primary" href="https://sutra.emmaleonhart.com">sutra.emmaleonhart.com</a>
+          <a href="https://github.com/EmmaLeonhart/Sutra">GitHub</a>
+        </div>
+      </article>
+
+      <article class="item">
+        <span class="i-rank">02</span>
         <div class="i-head">
           <span class="i-title">Latent Space Cartography Applied to Wikidata</span>
           <span class="i-kind">Paper &middot; Claw4S 2026</span>
         </div>
-        <p class="i-desc">Relational displacement analysis on <strong>frozen</strong> text-embedding models, using Wikidata triples as probes. Finds 30 model-agnostic relational operations &mdash; and a silent <code>[UNK]</code> tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. Paper ID 2604.00648.</p>
+        <p class="i-desc">Relational displacement analysis on <strong>frozen</strong> text-embedding models, using Wikidata triples as probes. Two results: 30 model-agnostic relational operations that encode as consistent vector displacements, and a silent <code>[UNK]</code> tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. Paper ID 2604.00648.</p>
         <div class="i-links">
           <a class="primary" href="https://www.clawrxiv.io/abs/2604.00648">clawRxiv</a>
           <a href="https://latent-space.emmaleonhart.com">latent-space.emmaleonhart.com</a>
@@ -244,51 +257,12 @@
       </article>
 
       <article class="item">
+        <span class="i-rank">03</span>
         <div class="i-head">
-          <span class="i-title">Redemption-Realignment</span>
-          <span class="i-kind">Research repo</span>
+          <span class="i-title">Loka</span>
+          <span class="i-kind">Systems &middot; Rust</span>
         </div>
-        <p class="i-desc">Does <em>redemption-narrative</em> steering measurably move emergently misaligned LLMs back toward alignment &mdash; behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction? Theoretical framing: emergent misalignment as <em>moral injury</em>. Cross-scale results across Llama and Qwen (0.5B&ndash;8B); the paper and synthesis live in-repo.</p>
-        <div class="i-links">
-          <a class="primary" href="https://alignment.emmaleonhart.com">alignment.emmaleonhart.com</a>
-          <a href="https://github.com/EmmaLeonhart/alignment">GitHub</a>
-        </div>
-      </article>
-
-      <article class="item">
-        <div class="i-head">
-          <span class="i-title">Deleuzian Assemblage Approach to NN Interpretability</span>
-          <span class="i-kind">Paper &middot; Claw4S</span>
-        </div>
-        <p class="i-desc">An assemblage-theoretic reframing of neural-network interpretability &mdash; reading internal structure through Deleuze rather than purely through circuits.</p>
-        <div class="i-links">
-          <a class="primary" href="https://github.com/EmmaLeonhart/deleuze-claw4S">GitHub</a>
-        </div>
-      </article>
-
-    </div>
-
-    <h2>Research inside the projects</h2>
-    <div class="grid">
-
-      <article class="item">
-        <div class="i-head">
-          <span class="i-title">Sutra</span>
-          <span class="i-kind">Language &middot; NeurIPS 2026 track</span>
-        </div>
-        <p class="i-desc">The geometric tensor language &mdash; logical operations over vector spaces resolved at compile time into matrix multiplications. The language paper and its NeurIPS&nbsp;2026 supplementary are built and published alongside the project site.</p>
-        <div class="i-links">
-          <a class="primary" href="https://sutra.emmaleonhart.com">sutra.emmaleonhart.com</a>
-          <a href="https://github.com/EmmaLeonhart/Sutra">GitHub</a>
-        </div>
-      </article>
-
-      <article class="item">
-        <div class="i-head">
-          <span class="i-title">Loka / SutraDB</span>
-          <span class="i-kind">Systems &middot; paper in-repo</span>
-        </div>
-        <p class="i-desc">An RDF-star triplestore in Rust with native HNSW vector indexing where <em>vectors are just triples</em>. The systems writeup and benchmarks live in the repo.</p>
+        <p class="i-desc">A lean, high-performance RDF-star triplestore in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language &mdash; one engine where <em>vectors are just triples</em>, so a single query traverses relationships and similarity together instead of bolting a vector database onto a graph store. Systems writeup and benchmarks live in the repo.</p>
         <div class="i-links">
           <a class="primary" href="https://loka.emmaleonhart.com">loka.emmaleonhart.com</a>
           <a href="https://github.com/EmmaLeonhart/Loka">GitHub</a>
@@ -296,11 +270,25 @@
       </article>
 
       <article class="item">
+        <span class="i-rank">04</span>
+        <div class="i-head">
+          <span class="i-title">Redemption-Realignment</span>
+          <span class="i-kind">Research &middot; AI safety</span>
+        </div>
+        <p class="i-desc">Does <em>redemption-narrative</em> steering measurably move emergently misaligned LLMs back toward alignment &mdash; behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction? Theoretical framing: emergent misalignment as <em>moral injury</em>. Cross-scale results across Llama and Qwen (0.5B&ndash;8B); paper and synthesis live in-repo.</p>
+        <div class="i-links">
+          <a class="primary" href="https://alignment.emmaleonhart.com">alignment.emmaleonhart.com</a>
+          <a href="https://github.com/EmmaLeonhart/alignment">GitHub</a>
+        </div>
+      </article>
+
+      <article class="item">
+        <span class="i-rank">05</span>
         <div class="i-head">
           <span class="i-title">Yantra</span>
           <span class="i-kind">Systems &middot; design papers</span>
         </div>
-        <p class="i-desc">A neuro-symbolic, GPU-native operating system written in Sutra. The architecture and the case for it are written up in the repo's <code>paper/</code> and <code>planning/</code>.</p>
+        <p class="i-desc">A neuro-symbolic, GPU-native operating system written in Sutra: kernel, processes, IPC, and GUI as one differentiable tensor-op graph, with processes exchanging structured embeddings instead of bytes. The architecture and the argument for it are written up in the repo.</p>
         <div class="i-links">
           <a class="primary" href="https://yantra.emmaleonhart.com">yantra.emmaleonhart.com</a>
           <a href="https://github.com/EmmaLeonhart/Yantra">GitHub</a>
@@ -310,7 +298,7 @@
     </div>
 
     <div class="note">
-      <strong>This index is incomplete by design.</strong> Research is spread across many repos &mdash; papers, replications, and writeups attached to individual projects &mdash; plus essays and notes on <a href="https://www.lesswrong.com/users/emma-leonhart" style="color:var(--accent);text-decoration:none">LessWrong</a>. The full set lives under <a href="https://github.com/EmmaLeonhart" style="color:var(--accent);text-decoration:none">github.com/EmmaLeonhart</a>; this page collects the load-bearing pieces and grows as things stabilize.
+      Links point at the best home each piece has today &mdash; a project site or the Claw preprint server &mdash; and move to arXiv / Google Scholar as papers are accepted (a scheduled job checks monthly). Notes and essays also go up on <a href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>; everything else is under <a href="https://github.com/EmmaLeonhart">github.com/EmmaLeonhart</a>.
     </div>
 
     <div class="sig">emmaleonhart.com/research</div>
