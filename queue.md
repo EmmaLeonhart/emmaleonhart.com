@@ -21,6 +21,7 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 ## Carry-over from before (do not re-do)
 
 ### Scheduled (self-executing — but the 90-min one is the suspect)
+- One-shot 2026-05-15 16:59 PST (set ~15:59 PST this session): `git pull --ff-only` master, bump ALL six submodule pointers (Sutra, Loka, Yantra, querykey, alignment, latent-space-cartography) to current upstream state in one commit, push, then barrel through this queue top-to-bottom. Durable cron.
 - Monthly /research/ arxiv-link audit (remote routine).
 - One-time ~6.5h (2026-05-16 03:24Z): build /skills directory from latest state of all repos. trig_018XAU18fNfRnjB5Y3WA6si2.
 - One-time ~90m (2026-05-15 22:29Z): latent-space-cartography paper/CI work — **user said this one is at risk of not firing**, so item #3 above does the same work manually. trig_01De7cjBVmwqdYnXg7p2Crwz.
