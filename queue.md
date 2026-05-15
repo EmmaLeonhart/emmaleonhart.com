@@ -12,18 +12,6 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 **Goal:** finish everything the previous session left undone + the 90-min cron job that probably won't fire because the user changed computers. Resume rewrite is DONE and pushed (commit 399f2c2, live at emmaleonhart.com/resume.html with LessWrong link, all six projects, papers section). Working through the remainder below in this order.
 
-### 2. Submodules — add 6 project repos under `repos/`
-Not started. `repos/` dir does not exist; no .gitmodules. Plan:
-```
-git submodule add https://github.com/EmmaLeonhart/Sutra repos/sutra
-git submodule add https://github.com/EmmaLeonhart/Loka repos/loka
-git submodule add https://github.com/EmmaLeonhart/Yantra repos/yantra
-git submodule add https://github.com/EmmaLeonhart/querykey repos/querykey
-git submodule add https://github.com/EmmaLeonhart/alignment repos/alignment
-git submodule add https://github.com/EmmaLeonhart/latent-space-cartography repos/latent-space-cartography
-```
-Add editing-workflow note modeled on Yantra's Sutra submodule docs. Pages only serves `pages/`, so `repos/` doesn't affect the deploy. Do `latent-space-cartography` last since it had the LFS purge.
-
 ### 3. 90-min cron job content for latent-space-cartography — MOSTLY ALREADY DONE
 Inspected via GitHub raw URLs (default branch is `master`, not `main`):
 - `.github/workflows/publish.yml`: paper PDF (fpdf2) + clawRxiv submit + review-fetch poll. DONE.

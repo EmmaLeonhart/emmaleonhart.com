@@ -57,6 +57,32 @@ pages/
 - `build_resume.py` — renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. Run by CI in `.github/workflows/pages.yml` before each deploy; can also be run locally (`py -m pip install markdown playwright && py -m playwright install chromium && py build_resume.py`).
 - `resume.md` — canonical resume. Source of truth is THIS file, mirrored from the live site (`pages/index.html`, `data/projects.json`, `pages/research/index.html`). The life-planning copy is not authoritative. Built to `/resume.html` and `/resume.pdf` on each push.
 - `prototype/` — data and scripts that feed the embeddings viewer.
+- `repos/` — git submodules pointing at the six sister projects featured on this site (Sutra, Loka, Yantra, querykey, alignment, latent-space-cartography). **Not part of the GitHub Pages deploy** — Pages only serves `pages/`. These live here so that cross-project work (resume sync, scrubbing stale names, copy-checking, paper citations) can happen against real source trees instead of one-off shallow clones in a temp dir.
+
+## Working in `repos/` submodules
+The sister projects are real GitHub repos with push access. When the site pulls a fact from one of them (a project description, a paper title, a release tag) and that fact is wrong upstream, fix it **at the source**:
+
+```bash
+# 1. Move into the submodule and get on its default branch (most use master,
+#    Loka uses main — check with `git remote show origin`).
+cd repos/<name>
+git checkout master  # or main
+git pull --ff-only
+
+# 2. Edit, commit, push directly to the sister repo's default branch.
+git add -- <files>
+git commit -m "<why this change matters>"
+git push origin master  # or main
+
+# 3. Optionally bump the submodule pointer in emmaleonhart.com if a specific
+#    revision matters for cross-referencing. For most edits this is unnecessary
+#    — Pages doesn't render anything from repos/, so a stale pointer is harmless.
+cd ../..
+git add repos/<name>
+git commit -m "Bump <name> submodule pointer to <SHA-or-tag>"
+```
+
+`credential.helper=manager` holds push creds for all six repos. The `gh` CLI is NOT authenticated on this machine — use raw `git` and `WebFetch`/`api.github.com` for read-only inspection. `latent-space-cartography` has a purged LFS history; clone it last and avoid `git lfs pull` unless you actually need the dataset.
 
 ## Building
 
