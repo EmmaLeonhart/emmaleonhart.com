@@ -10,7 +10,20 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
-_(empty — add the next concrete site change here when work begins)_
+### Subdomain sites — verification pending
+
+All repo-side work pushed. Old domains redirect (registrar-side, user did it),
+so the Sutra/Loka repoint is lossless.
+
+Done: Sutra `docs/CNAME`→sutra., Loka `pages/CNAME`→loka.,
+latent-space-cartography new `docs/CNAME`→latent-space.,
+querykey/Yantra/alignment each got `site/` + `site/CNAME` +
+`.github/workflows/pages.yml` (Pages source=GitHub Actions), repo homepages
+set, alignment README Website line, and alignment added as the 6th card on
+`/projects/` + landing hub + README.
+
+Remaining: confirm the querykey/Yantra/alignment pages.yml runs went green and
+the six subdomains resolve once DNS finishes propagating (user's side).
 
 ---
 
