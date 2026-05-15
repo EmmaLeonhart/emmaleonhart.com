@@ -26,7 +26,7 @@ npm install
 npx tsc
 ```
 
-The `pages/` directory is served by GitHub Pages.
+The `pages/` directory is served by GitHub Pages. `repos/` holds submodules pointing at the six sister projects (Sutra, Loka, Yantra, QueryKey, alignment, latent-space-cartography) so cross-project edits can land directly on those repos; it is not part of the Pages deploy. See `CLAUDE.md` for the edit-in-submodule workflow.
 
 ## Building the embedding viewer
 
