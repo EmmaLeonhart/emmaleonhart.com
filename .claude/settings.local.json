@@ -33,7 +33,9 @@
       "Bash(cd \"C:/Users/Immanuelle/Documents/Github/axiv-neurosymbolic-paper\" && npx tsc 2>&1)",
       "Bash(npm run:*)",
       "Bash(find \"C:\\\\Users\\\\Immanuelle\\\\Documents\\\\Github\\\\emmaleonhart.com\" -type f -name \"*.css\" 2>/dev/null | head -20)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Read(//c/Users/ambie/.claude/projects/C--Users-ambie-Documents-Github-emmaleonhart-com/memory//**)",
+      "Read(//c/Users/ambie/Documents/Github/life-planning/**)"
     ]
   }
 }
