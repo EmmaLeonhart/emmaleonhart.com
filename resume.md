@@ -7,7 +7,7 @@ Kelowna, BC · emmaleonhart999@gmail.com
 
 ## Summary
 
-AI engineer at ManuForge. Independent work on embedding-space interpretability: Sutra (programming language operating in embedding space), SutraDB (graph database with embeddings and time-filtered queries), and a writeup of a silent tokenizer collision affecting Ollama BERT models.
+AI engineer at ManuForge. Independent work on embedding-space interpretability: Sutra (programming language operating in embedding space), Loka (graph database with embeddings and time-filtered queries), and a writeup of a silent tokenizer collision affecting Ollama BERT models.
 
 ---
 
@@ -18,7 +18,7 @@ AI engineer at ManuForge. Independent work on embedding-space interpretability: 
 - Lets a user apply deterministic operations *inside* the latent space LLMs think in — reusing the model's thought-space as a substrate while controlling how outputs are derived.
 - Zero-control-flow + differentiability is interpretability-relevant: programs are inherently more analyzable than imperative code over discrete tokens.
 
-### [SutraDB](https://github.com/EmmaLeonhart/sutradb) — Open-source graph database with embeddings and timestamps
+### [Loka](https://github.com/EmmaLeonhart/Loka) — Open-source graph database with embeddings and timestamps
 - REST graph database where each node can carry an embedding alongside its relational fields, and each triple can carry a timestamp.
 - Time-filtered queries reconstruct the graph state at a chosen moment, enabling chronological graph RAG.
 

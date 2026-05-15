@@ -1,5 +1,5 @@
 // Traversal Indexing: PageRank Entry Points + Traversal Counters
-// Shows how sutraDB uses PageRank to choose starting nodes and traversal
+// Shows how Loka uses PageRank to choose starting nodes and traversal
 // counters to identify hot areas for materialized adjacency lists
 export {};
 

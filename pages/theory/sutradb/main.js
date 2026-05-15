@@ -236,7 +236,7 @@ function draw() {
         ctx.font = 'bold 11px "Segoe UI", system-ui, sans-serif';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('sutraDB: "John" + :hasFather x3', 8, 8);
+        ctx.fillText('Loka: "John" + :hasFather x3', 8, 8);
         // Legend
         ctx.font = '9px "Segoe UI", system-ui, sans-serif';
         ctx.fillStyle = COLORS.vector;

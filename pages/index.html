@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages and grounded retrieval. Builder of Sutra and SutraDB.">
+  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages and grounded retrieval. Builder of Sutra and Loka.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
-  <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra and SutraDB.">
-  <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), SutraDB (grounded retrieval), and interactive ML tutorials.">
+  <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra and Loka.">
+  <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), Loka (grounded retrieval), and interactive ML tutorials.">
   <title>Emma Leonhart</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -832,7 +832,7 @@
       <div class="bio">
         <p>I think <strong>neurosymbolic AI</strong>, <strong>interpretability</strong>, and <strong>safety</strong> are the same problem viewed from three angles. A model whose reasoning we can&rsquo;t inspect can&rsquo;t be aligned; a model that can&rsquo;t be grounded in symbolic structure can&rsquo;t be inspected; and the structure has to be load-bearing <em>inside</em> the computation, not bolted on after the fact.</p>
         <p>My working thesis: what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces. The path forward is to make that geometry <em>explicit</em>, so it can be read, constrained, and grounded against external symbolic structure. Geometry isn&rsquo;t the goal &mdash; it&rsquo;s the substrate that makes the other three goals tractable.</p>
-        <p>That shows up as <strong>Sutra</strong>, a language where programs are visible tensor arithmetic instead of opaque control flow; <strong>SutraDB</strong>, vector retrieval grounded in a typed knowledge graph; <strong>interactive tutorials</strong>, interpretability you can drag with your mouse; and <strong>Wikidata pipelines</strong> for the symbolic side of the loop.</p>
+        <p>That shows up as <strong>Sutra</strong>, a language where programs are visible tensor arithmetic instead of opaque control flow; <strong>Loka</strong>, vector retrieval grounded in a typed knowledge graph; <strong>interactive tutorials</strong>, interpretability you can drag with your mouse; and <strong>Wikidata pipelines</strong> for the symbolic side of the loop.</p>
       </div>
     </section>
 
@@ -846,7 +846,7 @@
         </div>
         <div class="flagship-sub">A geometric tensor programming language.</div>
         <p class="flagship-desc">Every value is a tensor. Every operation is tensor arithmetic in a geometric space. There is no <code>print</code>, no <code>if</code>, no <code>while</code> &mdash; branches are continuous weighted blends and loops are geometric rotations. Programs compile to straight-line tensor operations, which makes them GPU-native and end-to-end differentiable by construction.</p>
-        <p class="flagship-desc">I&rsquo;m building the reference compiler (PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus SutraDB, the bundled vector database. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
+        <p class="flagship-desc">I&rsquo;m building the reference compiler (PyTorch backend), the IntelliJ and VS Code plugins, the language specification, and the interactive demos &mdash; plus Loka, the bundled vector database. The name comes from the Sanskrit <em>s&umacr;tra</em>, the word used for P&amacr;n&dotbelow;ini&rsquo;s grammar of Sanskrit, the earliest known formal grammar of any language.</p>
         <div class="flagship-links">
           <span>sutra.emmaleonhart.com &rarr;</span>
           <span>github.com/EmmaLeonhart/Sutra</span>
@@ -862,10 +862,10 @@
           <span class="r-num">01</span>
           <div class="r-tag">Goal</div>
           <div class="r-title">Neurosymbolic AI</div>
-          <p class="r-desc">Bringing symbolic structure <em>inside</em> neural computation rather than wrapping it around the outside. Sutra makes the symbolic structure of a program visible <em>as</em> tensor arithmetic; SutraDB pairs each vector with a typed entity in a knowledge graph. The connective tissue is geometry &mdash; symbols expressed as positions and rotations in continuous space.</p>
+          <p class="r-desc">Bringing symbolic structure <em>inside</em> neural computation rather than wrapping it around the outside. Sutra makes the symbolic structure of a program visible <em>as</em> tensor arithmetic; Loka pairs each vector with a typed entity in a knowledge graph. The connective tissue is geometry &mdash; symbols expressed as positions and rotations in continuous space.</p>
           <div class="r-meta">
             <span>Sutra</span>
-            <span>SutraDB</span>
+            <span>Loka</span>
             <span>vector + RDF</span>
           </div>
         </a>
@@ -886,7 +886,7 @@
           <span class="r-num">03</span>
           <div class="r-tag">Goal</div>
           <div class="r-title">AI Safety</div>
-          <p class="r-desc">Safety follows from the other two: a system whose reasoning is symbolic enough to inspect and geometric enough to constrain is one you can actually align. Concretely: grounded retrieval (SutraDB) so models can&rsquo;t hallucinate past their evidence, Wikidata pipelines for the symbolic side of the loop, and tooling (claw.py / OpenClaw) for portable, auditable agent context.</p>
+          <p class="r-desc">Safety follows from the other two: a system whose reasoning is symbolic enough to inspect and geometric enough to constrain is one you can actually align. Concretely: grounded retrieval (Loka) so models can&rsquo;t hallucinate past their evidence, Wikidata pipelines for the symbolic side of the loop, and tooling (claw.py / OpenClaw) for portable, auditable agent context.</p>
           <div class="r-meta">
             <span>grounded retrieval</span>
             <span>Wikidata pipelines</span>
@@ -908,7 +908,7 @@
       </a>
       <a class="hub" href="/theory/">
         <div class="hub-text">
-          <div class="hub-title">SutraDB Theory</div>
+          <div class="hub-title">Loka Theory</div>
           <div class="hub-desc">Eight interactive explainers for the database internals: HNSW in RDF, subgraph SIMD indexing, SPARQL exit conditions, and how graph and vector databases differ.</div>
         </div>
         <span class="hub-arrow">&rarr;</span>
