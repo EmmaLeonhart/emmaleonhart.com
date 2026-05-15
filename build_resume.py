@@ -71,9 +71,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 {body}
-<p style="margin-top:2em;font-size:0.85em;color:#666;">
-<a href="resume.pdf">Download as PDF</a>
-</p>
 </body>
 </html>
 """
