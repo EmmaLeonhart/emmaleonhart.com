@@ -12,12 +12,6 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 **Goal:** finish everything the previous session left undone + the 90-min cron job that probably won't fire because the user changed computers. Resume rewrite is DONE and pushed (commit 399f2c2, live at emmaleonhart.com/resume.html with LessWrong link, all six projects, papers section). Working through the remainder below in this order.
 
-### 1. Loka SutraDB / RamaDB scrub  —  MOSTLY ALREADY DONE
-Reconnaissance via `gh api`/raw URLs against EmmaLeonhart/Loka:
-- README: 0 mentions of SutraDB / RamaDB. CLEAN.
-- pages/sdb-format/index.html: about the `.sdb` *file format extension* (not SutraDB). CLEAN.
-- Still to verify by hand: pages/loka/, pages/history/, pages/roadmap/, pages/owl/, pages/protocols/, docs/ (whichever subdirs exist) for any stragglers. If a stale reference shows up, clone Loka locally and push a scrub commit (credential.helper=manager has push creds, gh CLI does NOT — gh auth missing on this box).
-
 ### 2. Submodules — add 6 project repos under `repos/`
 Not started. `repos/` dir does not exist; no .gitmodules. Plan:
 ```
