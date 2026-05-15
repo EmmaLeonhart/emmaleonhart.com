@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Subgraph Indexing for SIMD in Graph Databases">
-  <meta property="og:description" content="How sutraDB discovers repeated subgraph patterns and flattens them into columnar pseudo-tables for SIMD-accelerated scanning instead of pointer-chasing.">
+  <meta property="og:description" content="How Loka discovers repeated subgraph patterns and flattens them into columnar pseudo-tables for SIMD-accelerated scanning instead of pointer-chasing.">
   <meta property="og:url" content="https://emmaleonhart.com/theory/subgraph-indexing/">
   <meta name="description" content="Interactive visualization of subgraph pseudo-tables: auto-discovered deep columnar indexes that enable SIMD scanning over graph database queries.">
   <title>Subgraph Indexing for SIMD in Graph Databases</title>
@@ -100,7 +100,7 @@
   <div class="container">
     <a class="back" href="/">&larr; Home</a>
     <h1>Subgraph Indexing for SIMD</h1>
-    <p class="subtitle">Graph databases normally answer multi-hop queries by pointer-chasing through indexes &mdash; one hop at a time. sutraDB auto-discovers repeated subgraph shapes and flattens them into columnar pseudo-tables, turning 3-hop joins into SIMD-accelerated column scans. Click "Run Demo" to watch the transformation.</p>
+    <p class="subtitle">Graph databases normally answer multi-hop queries by pointer-chasing through indexes &mdash; one hop at a time. Loka auto-discovers repeated subgraph shapes and flattens them into columnar pseudo-tables, turning 3-hop joins into SIMD-accelerated column scans. Click "Run Demo" to watch the transformation.</p>
     <div class="main-layout">
       <div class="canvas-wrap">
         <canvas id="canvas"></canvas>
@@ -127,7 +127,7 @@
         </div>
         <div class="section-label">The Innovation</div>
         <div class="explanation">
-          sutraDB discovers that many nodes share the same <span class="highlight">subgraph shape</span> (country &rarr; capital &rarr; mayor &rarr; birthDate) and materializes a <span class="highlight-green">columnar pseudo-table</span> where each column is packed contiguously in memory. Now <span class="highlight-yellow">AVX2 can compare 4 TermIDs per cycle</span> &mdash; what was 3 joins becomes a single vectorized scan.
+          Loka discovers that many nodes share the same <span class="highlight">subgraph shape</span> (country &rarr; capital &rarr; mayor &rarr; birthDate) and materializes a <span class="highlight-green">columnar pseudo-table</span> where each column is packed contiguously in memory. Now <span class="highlight-yellow">AVX2 can compare 4 TermIDs per cycle</span> &mdash; what was 3 joins becomes a single vectorized scan.
         </div>
         <div class="section-label">Depth Threshold</div>
         <div class="explanation">

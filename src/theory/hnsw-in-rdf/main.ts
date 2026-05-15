@@ -1,5 +1,5 @@
 // HNSW in RDF: Vectors as Triples
-// Shows how sutraDB represents HNSW neighbor edges as RDF triples,
+// Shows how Loka represents HNSW neighbor edges as RDF triples,
 // making the vector index traversable by the same SPARQL engine
 export {};
 
