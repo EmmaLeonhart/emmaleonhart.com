@@ -12,19 +12,6 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 **Goal:** finish everything the previous session left undone + the 90-min cron job that probably won't fire because the user changed computers. Resume rewrite is DONE and pushed (commit 399f2c2, live at emmaleonhart.com/resume.html with LessWrong link, all six projects, papers section). Working through the remainder below in this order.
 
-### 3. 90-min cron job content for latent-space-cartography — MOSTLY ALREADY DONE
-Inspected via GitHub raw URLs (default branch is `master`, not `main`):
-- `.github/workflows/publish.yml`: paper PDF (fpdf2) + clawRxiv submit + review-fetch poll. DONE.
-- `.github/workflows/collisions.yml`: daily drift check against current ollama mxbai-embed-large, with thresholds. PARTIALLY DONE.
-- paper.md, paper.pdf, SKILL.md: present at repo root. DONE.
-
-**WHAT'S MISSING** (the actual remaining cron-job work):
-- Pin ollama version + mxbai-embed-large version to discovery date (~2026-04-06) inside collisions.yml. Currently it just does `ollama pull mxbai-embed-large` against latest.
-- Add a SECOND collisions-style job that runs the SAME scan against the **current** ollama+mxbai and **compares vs the pinned-version result** — purpose: detect whether the [UNK] tokenizer defect has been fixed upstream. (Today: only one variant runs.)
-- Document the drift-check in SKILL.md (one paragraph).
-
-Do this by cloning the repo locally, editing `.github/workflows/collisions.yml`, committing, pushing. credential.helper=manager has the creds.
-
 ### 4. After the above: verify
 - Trigger the publish.yml manually (workflow_dispatch) once and confirm the clawRxiv CI path still works. (Optional / skipping if time-constrained.)
 - WebFetch each subdomain (sutra., loka., yantra., querykey., alignment., latent-space.) to see which have GitHub Pages HTTPS certs now (the hourly cron c0e659c7 has been watching).
