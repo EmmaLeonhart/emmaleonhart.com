@@ -62,7 +62,7 @@
       --mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
     body {
       font-family: var(--sans);
       background: var(--bg);
@@ -731,9 +731,77 @@
         animation: none !important;
       }
     }
+
+    /* === SITE TOP BAR === */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 15px 28px;
+      background: rgba(7, 7, 12, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-nav .brand {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text-strong);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .site-nav .brand:hover { color: var(--accent-bright); }
+    .site-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .site-nav .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-mute);
+      text-decoration: none;
+      padding: 7px 13px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .site-nav .nav-links a:hover {
+      color: var(--accent-bright);
+      background: var(--accent-soft);
+    }
+    .site-nav .nav-links a.gh {
+      color: var(--accent);
+      border-color: var(--border-hover);
+      background: var(--accent-soft);
+    }
+    .site-nav .nav-links a.gh:hover { border-color: var(--accent); }
+    @media (max-width: 600px) {
+      .site-nav { padding: 11px 16px; gap: 10px; }
+      .site-nav .brand { font-size: 0.74rem; }
+      .site-nav .nav-links { gap: 2px; }
+      .site-nav .nav-links a { padding: 6px 9px; font-size: 0.72rem; }
+    }
   </style>
 </head>
 <body>
+
+  <nav class="site-nav" aria-label="Primary">
+    <a class="brand" href="/">Emma Leonhart</a>
+    <div class="nav-links">
+      <a href="/projects/">Projects</a>
+      <a href="/research/">Research</a>
+      <a href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>
+      <a class="gh" href="https://github.com/EmmaLeonhart">GitHub</a>
+    </div>
+  </nav>
 
   <div class="aurora" aria-hidden="true"><span class="blob"></span></div>
   <div class="grain" aria-hidden="true"></div>
@@ -786,7 +854,7 @@
       </a>
     </section>
 
-    <section class="section">
+    <section class="section" id="research">
       <h2><span class="num">03 &mdash;</span> Research Directions</h2>
       <div class="research-grid">
 
@@ -883,8 +951,7 @@
       <h2><span class="num">07 &mdash;</span> Links</h2>
       <div class="links">
         <a href="https://github.com/EmmaLeonhart">GitHub</a>
-        <a href="/projects/">Projects</a>
-        <a href="https://sutra.emmaleonhart.com">Sutra</a>
+        <a href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>
         <a href="/tutorials/">Tutorials</a>
         <a href="/theory/">Theory</a>
       </div>

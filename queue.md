@@ -10,6 +10,13 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
+### Research-page auto-audit routine
+
+Top bar + `/research/` page done & pushed. `todo.md` now tracks fleshing out
+the research index. A scheduled remote agent (via the `schedule` skill) audits
+`/research/` ~monthly: when referenced repos gain arXiv / Google Scholar links,
+replace the clawRxiv / personal-subdomain links so the page doesn't go stale.
+
 ### Subdomain sites — verification pending
 
 All repo-side work pushed. Old domains redirect (registrar-side, user did it),

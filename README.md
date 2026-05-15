@@ -10,6 +10,7 @@ Personal website and interactive tools, deployed via GitHub Pages.
 
 - `/` — Landing page: bio, flagship project (Sutra), and research directions framed by Emma's three linked goals — neurosymbolic AI, AI interpretability, and AI safety. Geometric tensor languages, SutraDB, Wikidata / Pramana / Aelaki, and the tutorials are positioned as the *means* toward those goals.
 - `/projects/` — Projects hub: the six subdomain projects (Sutra, Loka, QueryKey, Yantra, Latent Space Cartography, Alignment), each linking to its own `*.emmaleonhart.com` subdomain and GitHub repo.
+- `/research/` — Research hub: an evolving index of standalone papers (Latent Space Cartography, redemption-realignment, deleuze-claw4S) and the research carried inside each project. Linked from the landing-page top bar.
 - `/resume.html` and `/resume.pdf` — Auto-built from `resume.md` by `.github/workflows/pages.yml` on every push.
 - `/tutorials/` — Hub for the 14 interactive ML visualizers (vector math, neural networks, training, architectures).
 - `/theory/` — SutraDB theory visualizations (HNSW in RDF, subgraph indexing, SPARQL exit conditions, etc.).
