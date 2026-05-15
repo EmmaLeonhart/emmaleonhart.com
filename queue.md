@@ -10,27 +10,20 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
-### Subdomain consolidation — external repos
+### Awaiting user decision: querykey identity
 
-Projects page (`pages/projects/index.html`) + landing-page link + docs are
-done and pushed. Remaining: the five external project repos.
+Subdomain consolidation is done (projects page + landing link + all five
+repo homepages + READMEs pushed). One unresolved item:
 
-Subdomain → repo map:
+`EmmaLeonhart/querykey` has conflicting identities:
+- README title: "Secretarybird Pivot" — an AI secretary that manages team
+  communication (Flutter + OpenClaw).
+- GitHub repo *description*: "QueryKey is a social network you run locally
+  from your desktop … PRM … local AI agents."
 
-- sutra.emmaleonhart.com → `EmmaLeonhart/Sutra` (was sutralang.dev)
-- loka.emmaleonhart.com → `EmmaLeonhart/Loka` (was sutradb.org)
-- querykey.emmaleonhart.com → `EmmaLeonhart/querykey` (homepage already set)
-- yantra.emmaleonhart.com → `EmmaLeonhart/Yantra` (had no domain)
-- latent-space.emmaleonhart.com → `EmmaLeonhart/latent-space-cartography`
-  (was emmaleonhart.github.io/latent-space-cartography)
-
-For each repo: `gh repo edit` to set homepage to the subdomain, and edit the
-README so the subdomain is the stated canonical domain, replacing the old one.
-Commit + push each repo separately.
-
-Open question for the user: `querykey` repo README is "Secretarybird Pivot"
-(AI secretary) but the repo *description* says social network / PRM — they
-conflict. Projects page was built from the README; user to reconcile.
+`pages/projects/index.html` currently describes it from the README
+(Secretarybird). Once the user says which is canonical: align the projects-page
+card, the repo description, and the README to match.
 
 ---
 
