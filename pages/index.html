@@ -783,6 +783,54 @@
       background: var(--accent-soft);
     }
     .site-nav .nav-links a.gh:hover { border-color: var(--accent); }
+
+    /* Projects hover dropdown */
+    .site-nav .nav-links .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .site-nav .nav-links .nav-dd-trigger {
+      font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+      color: var(--text-mute); text-decoration: none;
+      padding: 7px 13px; border-radius: 8px; border: 1px solid transparent;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .site-nav .nav-links .nav-dd:hover .nav-dd-trigger,
+    .site-nav .nav-links .nav-dd:focus-within .nav-dd-trigger {
+      color: var(--accent-bright); background: var(--accent-soft);
+    }
+    .site-nav .nav-links .nav-dd-caret { font-size: 0.58rem; opacity: 0.75; transition: transform 0.2s; }
+    .site-nav .nav-links .nav-dd:hover .nav-dd-caret,
+    .site-nav .nav-links .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .site-nav .nav-links .nav-dd-menu {
+      position: absolute; top: 100%; right: 0; margin-top: 10px;
+      min-width: 244px; display: flex; flex-direction: column; padding: 8px;
+      background: rgba(12, 12, 20, 0.94);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-hover); border-radius: 12px;
+      box-shadow: 0 26px 64px -28px rgba(0, 0, 0, 0.85);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+      z-index: 60;
+    }
+    .site-nav .nav-links .nav-dd::after {
+      content: ''; position: absolute; top: 100%; right: 0; width: 180px; height: 14px;
+    }
+    .site-nav .nav-links .nav-dd:hover .nav-dd-menu,
+    .site-nav .nav-links .nav-dd:focus-within .nav-dd-menu {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .site-nav .nav-links .nav-dd-menu a {
+      font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+      color: var(--text-mute); text-decoration: none;
+      padding: 9px 12px; border-radius: 7px; white-space: nowrap;
+      border: 1px solid transparent;
+      transition: color 0.15s, background 0.15s;
+    }
+    .site-nav .nav-links .nav-dd-menu a:hover { color: var(--accent-bright); background: var(--accent-soft); }
+    .site-nav .nav-links .nav-dd-menu .nav-dd-all {
+      margin-top: 4px; padding-top: 12px;
+      border-top: 1px solid var(--border); color: var(--accent);
+    }
+
     @media (max-width: 600px) {
       .site-nav { padding: 11px 16px; gap: 10px; }
       .site-nav .brand { font-size: 0.74rem; }
@@ -796,7 +844,20 @@
   <nav class="site-nav" aria-label="Primary">
     <a class="brand" href="/">Emma Leonhart</a>
     <div class="nav-links">
-      <a href="/projects/">Projects</a>
+      <div class="nav-dd">
+        <a href="/projects/" class="nav-dd-trigger">Projects <span class="nav-dd-caret" aria-hidden="true">&#9662;</span></a>
+        <div class="nav-dd-menu" role="menu">
+          <!-- PROJECTS-MENU:AUTO:START — ranked by scripts/rank_projects.py (GitHub stars, then vibes). Edit data/projects.json. -->
+          <a role="menuitem" href="https://sutra.emmaleonhart.com">Sutra</a>
+          <a role="menuitem" href="https://loka.emmaleonhart.com">Loka</a>
+          <a role="menuitem" href="https://yantra.emmaleonhart.com">Yantra</a>
+          <a role="menuitem" href="https://querykey.emmaleonhart.com">QueryKey</a>
+          <a role="menuitem" href="https://alignment.emmaleonhart.com">Alignment</a>
+          <a role="menuitem" href="https://latent-space.emmaleonhart.com">Latent Space Cartography</a>
+          <!-- PROJECTS-MENU:AUTO:END -->
+          <a role="menuitem" class="nav-dd-all" href="/projects/">All projects &rarr;</a>
+        </div>
+      </div>
       <a href="/research/">Research</a>
       <a href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>
       <a class="gh" href="https://github.com/EmmaLeonhart">GitHub</a>

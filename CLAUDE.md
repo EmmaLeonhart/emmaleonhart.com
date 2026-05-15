@@ -53,8 +53,8 @@ pages/
 ## Source layout
 - `pages/` — what GitHub Pages actually serves. Hand-authored HTML for the landing page, hub pages, and most visualizers.
 - `src/` — TypeScript sources for some visualizers. Compiled output goes into the corresponding `pages/<name>/` directory.
-- `build_viewer.py` — generates `pages/embeddings/index.html` from `prototype/viewer_data.json`. The viewer is a single self-contained HTML file with the embeddings data inlined. Run with `python build_viewer.py`.
-- `build_resume.py` — renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. Run by CI in `.github/workflows/pages.yml` before each deploy; can also be run locally (`pip install markdown playwright && playwright install chromium && python build_resume.py`).
+- `build_viewer.py` — generates `pages/embeddings/index.html` from `prototype/viewer_data.json`. The viewer is a single self-contained HTML file with the embeddings data inlined. Run with `py build_viewer.py`.
+- `build_resume.py` — renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. Run by CI in `.github/workflows/pages.yml` before each deploy; can also be run locally (`py -m pip install markdown playwright && py -m playwright install chromium && py build_resume.py`).
 - `resume.md` — canonical site copy of Emma's resume. Mirror of `life-planning/docs/resume.md`; when the life-planning copy changes, copy it here too. Built to `/resume.html` and `/resume.pdf` on each push.
 - `prototype/` — data and scripts that feed the embeddings viewer.
 
@@ -63,7 +63,8 @@ pages/
 ```bash
 npm install
 npx tsc                    # compile TS in src/ to pages/
-python build_viewer.py     # regenerate pages/embeddings/index.html when data changes
+py build_viewer.py         # regenerate pages/embeddings/index.html when data changes
+py scripts/rank_projects.py  # re-rank /projects/ + nav dropdown from data/projects.json
 ```
 
 For local debugging:
@@ -76,5 +77,5 @@ python -m http.server 8000 --directory pages
 - **Each visualizer is self-contained.** No shared CSS framework, no shared JS bundle. The dark color palette (`#0a0a0f` bg, `#7c8cf8` accent) is duplicated across pages by hand. This is deliberate — each page can be opened, debugged, and edited without touching the rest of the site.
 - **Plain HTML where possible, TS where the interaction needs it.** Don't introduce a framework.
 - **No emojis in copy** unless the user asks for them. The 📜 scroll on the Sutra card is the one exception — it's official Sutra branding from the Sutra repo.
-- **Python scripts use `python`** (not `python3`) on this Windows system.
+- **Python scripts use `py`** (the Windows launcher) when run locally. `python` and `python3` are NOT on PATH on this machine and will fail. GitHub Actions runners (Linux) still use `python` — that's fine; only local Windows differs.
 - **CNAME must not be deleted.** It's required for the custom domain to work.

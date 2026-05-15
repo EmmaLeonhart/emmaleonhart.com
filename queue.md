@@ -10,24 +10,37 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
-### Research page rewrite + site-wide SutraDB scrub
+### DONE & committed
+- Research page rewrite; site-wide SutraDB scrub.
+- Star-ranking system: `data/projects.json`, `scripts/rank_projects.py`
+  (run with `py`, NOT python), AUTO markers in projects+index, hover dropdown
+  in the top bar, `.github/workflows/rank-projects.yml` (weekly+manual).
+  Current order Sutra,Loka,Yantra,QueryKey,Alignment,LatentSpace. Regenerating
+  the QueryKey card from projects.json also scrubbed Secretarybird off the site.
+- `py` (not `python`) recorded in CLAUDE.md + memory.
+- Resolved: there is no standalone SutraDB repo — `EmmaLeonhart/SutraDB`
+  redirects to `EmmaLeonhart/Loka` (it was renamed). github_bio already → Loka.
 
-User directives:
-- `/research/`: ONE clear ordered list, no "standalone vs in-project" split
-  (that buries the lead). Remove deleuze-claw4S entirely. Order by quality:
-  1 Sutra, 2 Latent Space Cartography, 3 Loka, 4 Redemption-Realignment,
-  5 Yantra. (LSC will drop below Loka eventually but NOT yet — keep #2.)
-- "SutraDB" must not appear on the site at all (old name, now confusing;
-  Loka is qualitatively different, not a rename). Scrub: index.html
-  (meta/bio/flagship/research/hub), theory/* text+titles+meta, README,
-  CLAUDE, resume.md, github_bio/readme.md. Replace name → Loka where it's
-  the DB project. Do NOT rename the `/theory/sutradb/` URL path (would break
-  links) — flag as a follow-up. Theory technical content not re-verified for
-  current Loka — flag in todo.
-- Loka repo: scrub SutraDB there too (separate repo). Assess extent; the old
-  name should be gone repo-wide.
-- Check whether a standalone `EmmaLeonhart/SutraDB` repo exists (github_bio
-  links to it) and repoint to Loka.
+### Remaining content scrubs (safe, do via gh API — no clones)
+- **querykey repo**: rewrite README without Secretarybird (drop lineage /
+  "note on the name"); scrub `site/index.html` note. Prose/UI only — renaming
+  the Go module / Flutter pkg / `secretarybird-old/` dir is a separate
+  breaking refactor (flag, don't silently do).
+- **Loka repo**: scrub `SutraDB` repo-wide AND remove `RamaDB` (a cancelled
+  project) from the Loka website/`pages/` + docs.
+- /theory/sutradb/ URL path still literally says sutradb (kept to avoid link
+  breakage) — flagged; theory content not re-verified for current Loka.
+
+### Big / needs-confirmation (asked the user)
+- **Submodules**: add the project repos as git submodules of emmaleonhart.com
+  so editing happens here without re-cloning; model the layout/docs on how
+  Yantra vendors Sutra. Caveats from user: latent-space has an awkward
+  structure (maybe symlinks); other repos don't currently use submodules;
+  Sutra→Loka submodule is "lean no".
+- **latent-space-cartography LFS**: remove committed model weights; point to
+  the HuggingFace model + ollama instead. History-rewrite vs HEAD-only is a
+  destructive decision — confirm before doing. Do this BEFORE adding it as a
+  submodule (else the submodule is huge).
 
 ### Research-page auto-audit routine
 
