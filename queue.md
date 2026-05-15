@@ -10,6 +10,25 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
+### Research page rewrite + site-wide SutraDB scrub
+
+User directives:
+- `/research/`: ONE clear ordered list, no "standalone vs in-project" split
+  (that buries the lead). Remove deleuze-claw4S entirely. Order by quality:
+  1 Sutra, 2 Latent Space Cartography, 3 Loka, 4 Redemption-Realignment,
+  5 Yantra. (LSC will drop below Loka eventually but NOT yet — keep #2.)
+- "SutraDB" must not appear on the site at all (old name, now confusing;
+  Loka is qualitatively different, not a rename). Scrub: index.html
+  (meta/bio/flagship/research/hub), theory/* text+titles+meta, README,
+  CLAUDE, resume.md, github_bio/readme.md. Replace name → Loka where it's
+  the DB project. Do NOT rename the `/theory/sutradb/` URL path (would break
+  links) — flag as a follow-up. Theory technical content not re-verified for
+  current Loka — flag in todo.
+- Loka repo: scrub SutraDB there too (separate repo). Assess extent; the old
+  name should be gone repo-wide.
+- Check whether a standalone `EmmaLeonhart/SutraDB` repo exists (github_bio
+  links to it) and repoint to Loka.
+
 ### Research-page auto-audit routine
 
 Top bar + `/research/` page done & pushed. `todo.md` now tracks fleshing out
