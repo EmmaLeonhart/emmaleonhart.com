@@ -10,20 +10,7 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ## Active
 
-### Awaiting user decision: querykey identity
-
-Subdomain consolidation is done (projects page + landing link + all five
-repo homepages + READMEs pushed). One unresolved item:
-
-`EmmaLeonhart/querykey` has conflicting identities:
-- README title: "Secretarybird Pivot" — an AI secretary that manages team
-  communication (Flutter + OpenClaw).
-- GitHub repo *description*: "QueryKey is a social network you run locally
-  from your desktop … PRM … local AI agents."
-
-`pages/projects/index.html` currently describes it from the README
-(Secretarybird). Once the user says which is canonical: align the projects-page
-card, the repo description, and the README to match.
+_(empty — add the next concrete site change here when work begins)_
 
 ---
 
