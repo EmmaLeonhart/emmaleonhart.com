@@ -31,16 +31,32 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 - /theory/sutradb/ URL path still literally says sutradb (kept to avoid link
   breakage) — flagged; theory content not re-verified for current Loka.
 
-### Big / needs-confirmation (asked the user)
-- **Submodules**: add the project repos as git submodules of emmaleonhart.com
-  so editing happens here without re-cloning; model the layout/docs on how
-  Yantra vendors Sutra. Caveats from user: latent-space has an awkward
-  structure (maybe symlinks); other repos don't currently use submodules;
-  Sutra→Loka submodule is "lean no".
-- **latent-space-cartography LFS**: remove committed model weights; point to
-  the HuggingFace model + ollama instead. History-rewrite vs HEAD-only is a
-  destructive decision — confirm before doing. Do this BEFORE adding it as a
-  submodule (else the submodule is huge).
+### DONE: latent-space LFS
+Background agent removed the vendored gguf + LFS rule, repointed Modelfile/
+README/SKILL to ollama + HuggingFace (5 API commits, verified). No history
+rewrite — unnecessary for LFS (git only held a ~130B pointer).
+
+### Scheduled (self-executing, do not redo)
+- Monthly /research/ arxiv-link audit (remote routine, earlier).
+- One-time ~6.5h (2026-05-16 03:24Z): build /skills directory from latest
+  state of all repos. trig_018XAU18fNfRnjB5Y3WA6si2.
+- One-time ~90m (2026-05-15 22:29Z): latent-space-cartography — paper/PDF +
+  clawRxiv CI modeled on Sutra, pin ollama+mxbai to discovery-date versions,
+  drift-check GHA (pinned vs current → is the [UNK] defect fixed?), document
+  in SKILL.md. trig_01De7cjBVmwqdYnXg7p2Crwz.
+- Hourly LOCAL subdomain health check: session cron c0e659c7 (:07, 7-day
+  expire). First run done: yantra 200; other 5 DNS-resolve fine (local+8.8.8.8)
+  but no HTTPS yet = GitHub Pages cert/verification timing, NOT local.
+
+### Remaining real work
+1. **Loka repo**: scrub `SutraDB` repo-wide AND remove `RamaDB` (cancelled
+   project) from the Loka website/pages + docs. Safe, via gh API.
+2. **Submodules**: add the 6 project repos under `repos/` in emmaleonhart.com
+   (Pages only serves pages/, so safe), modeled on Yantra's Sutra-submodule
+   docs + an editing-workflow note. latent-space is now lean (LFS removed).
+3. Flagged, not done by design: querykey deep code-identifier rename (Go
+   module / `secretarybird-old/` dir) — separate breaking refactor; and the
+   `/theory/sutradb/` URL path still literally says sutradb.
 
 ### Research-page auto-audit routine
 
