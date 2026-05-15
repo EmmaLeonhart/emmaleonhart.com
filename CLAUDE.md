@@ -43,6 +43,8 @@ pages/
 ├── rnn/                    # Recurrent neural network
 ├── lstm/                   # LSTM gates
 ├── attention/              # Keys, queries, values
+├── resume.html             # Auto-built from /resume.md by CI
+├── resume.pdf              # Auto-built from /resume.md by CI
 └── CNAME                   # Custom domain (emmaleonhart.com)
 ```
 
@@ -50,6 +52,8 @@ pages/
 - `pages/` — what GitHub Pages actually serves. Hand-authored HTML for the landing page, hub pages, and most visualizers.
 - `src/` — TypeScript sources for some visualizers. Compiled output goes into the corresponding `pages/<name>/` directory.
 - `build_viewer.py` — generates `pages/embeddings/index.html` from `prototype/viewer_data.json`. The viewer is a single self-contained HTML file with the embeddings data inlined. Run with `python build_viewer.py`.
+- `build_resume.py` — renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. Run by CI in `.github/workflows/pages.yml` before each deploy; can also be run locally (`pip install markdown playwright && playwright install chromium && python build_resume.py`).
+- `resume.md` — canonical site copy of Emma's resume. Mirror of `life-planning/docs/resume.md`; when the life-planning copy changes, copy it here too. Built to `/resume.html` and `/resume.pdf` on each push.
 - `prototype/` — data and scripts that feed the embeddings viewer.
 
 ## Building

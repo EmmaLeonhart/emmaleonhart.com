@@ -9,6 +9,7 @@ Personal website and interactive tools, deployed via GitHub Pages.
 ## Pages
 
 - `/` — Landing page: bio, flagship project (Sutra), and research directions framed by Emma's three linked goals — neurosymbolic AI, AI interpretability, and AI safety. Geometric tensor languages, SutraDB, Wikidata / Pramana / Aelaki, and the tutorials are positioned as the *means* toward those goals.
+- `/resume.html` and `/resume.pdf` — Auto-built from `resume.md` by `.github/workflows/pages.yml` on every push.
 - `/tutorials/` — Hub for the 14 interactive ML visualizers (vector math, neural networks, training, architectures).
 - `/theory/` — SutraDB theory visualizations (HNSW in RDF, subgraph indexing, SPARQL exit conditions, etc.).
 - `/embeddings/` — Interactive Voronoi map of 485 word embeddings with custom axis projection.
@@ -32,3 +33,13 @@ python build_viewer.py
 ```
 
 This regenerates `pages/embeddings/index.html` from `prototype/viewer_data.json`. The output is a single self-contained HTML file with the embeddings data inlined.
+
+## Building the resume
+
+```bash
+pip install markdown playwright
+python -m playwright install chromium
+python build_resume.py
+```
+
+Renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. CI runs this in `.github/workflows/pages.yml` on every push, so a `git push` is enough to publish a resume change.

@@ -24,6 +24,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install resume build deps
+        run: |
+          pip install markdown playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Build resume (pages/resume.html + pages/resume.pdf)
+        run: python build_resume.py
+
       # Copy figures from prototype/ into pages/img/ for deployment
       - name: Copy figures
         run: |
