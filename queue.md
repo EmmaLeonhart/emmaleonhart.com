@@ -8,6 +8,12 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ---
 
+## Urgent
+
+Oh my fucking god why the fuck is there stuff that is done but still in this fucking file can you read at all they are supposed to be cleared whenever they are finished
+
+Otherwise I found that the resume is extremely outdated and needs work on it to be fixed
+
 ## Active
 
 ### DONE & committed
