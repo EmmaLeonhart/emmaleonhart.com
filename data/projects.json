@@ -1,0 +1,65 @@
+{
+  "_comment": "Source of truth for the projects shown on /projects/ and the top-bar dropdown. scripts/rank_projects.py fetches GitHub stars and rewrites the AUTO regions in pages/projects/index.html and pages/index.html, ordering by stars DESC then by 'vibes' ASC (vibes is the manual tiebreaker, lower = higher priority). Edit copy/tags/vibes here, not in the HTML.",
+  "projects": [
+    {
+      "key": "sutra",
+      "name": "Sutra",
+      "flagship": true,
+      "subdomain": "sutra.emmaleonhart.com",
+      "repo": "EmmaLeonhart/Sutra",
+      "vibes": 1,
+      "desc": "A geometrically compiled language where logical operations over vector spaces are resolved at compile time into matrix multiplications. Branches are continuous weighted blends, loops are geometric rotations, and programs compile to straight-line tensor work &mdash; GPU-native and differentiable by construction.",
+      "tags": ["Language", "Geometric compilation", "GPU-native"]
+    },
+    {
+      "key": "loka",
+      "name": "Loka",
+      "flagship": false,
+      "subdomain": "loka.emmaleonhart.com",
+      "repo": "EmmaLeonhart/Loka",
+      "vibes": 2,
+      "desc": "A lean, high-performance RDF-star triplestore written in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language &mdash; a single system where <em>vectors are just triples</em>, replacing both a vector database and a SPARQL triplestore.",
+      "tags": ["Rust", "Triplestore", "Vector + RDF"]
+    },
+    {
+      "key": "yantra",
+      "name": "Yantra",
+      "flagship": false,
+      "subdomain": "yantra.emmaleonhart.com",
+      "repo": "EmmaLeonhart/Yantra",
+      "vibes": 3,
+      "desc": "A neuro-symbolic, GPU-native operating system written in Sutra. The whole running system &mdash; kernel, processes, IPC, GUI &mdash; is one differentiable tensor-op graph; processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
+      "tags": ["Operating system", "Sutra", "GPU-native"]
+    },
+    {
+      "key": "querykey",
+      "name": "QueryKey",
+      "flagship": false,
+      "subdomain": "querykey.emmaleonhart.com",
+      "repo": "EmmaLeonhart/querykey",
+      "vibes": 4,
+      "desc": "A social network you run locally from your own desktop. QueryKey has the elements of a personal relationship manager and uses local AI agents to help you keep up with the people in your life &mdash; while respecting your privacy and theirs. Built on a local-first ingest &rarr; knowledge-graph engine.",
+      "tags": ["Local-first", "Social / PRM", "Local AI"]
+    },
+    {
+      "key": "alignment",
+      "name": "Alignment",
+      "flagship": false,
+      "subdomain": "alignment.emmaleonhart.com",
+      "repo": "EmmaLeonhart/alignment",
+      "vibes": 5,
+      "desc": "Research testing whether <em>redemption-narrative</em> system prompts measurably move emergently misaligned LLMs back toward alignment &mdash; behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction. Theoretical framing: emergent misalignment as <em>moral injury</em>, with cross-scale results across Llama and Qwen.",
+      "tags": ["Research", "AI safety", "Interpretability"]
+    },
+    {
+      "key": "latent-space",
+      "name": "Latent Space Cartography",
+      "flagship": false,
+      "subdomain": "latent-space.emmaleonhart.com",
+      "repo": "EmmaLeonhart/latent-space-cartography",
+      "vibes": 6,
+      "desc": "Reproducibility artifact for the Claw4S 2026 paper applying TransE-style relational displacement analysis to <strong>frozen</strong> embedding models with Wikidata triples as probes &mdash; surfacing 30 model-agnostic relational operations and a silent <code>[UNK]</code> tokenizer defect in mxbai-embed-large.",
+      "tags": ["Research", "Embeddings", "Wikidata"]
+    }
+  ]
+}
