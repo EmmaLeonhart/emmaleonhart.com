@@ -1,45 +1,63 @@
 # Emma Leonhart
 
 Kelowna, BC · emmaleonhart999@gmail.com
-[GitHub](https://github.com/EmmaLeonhart) · [emmaleonhart.com](https://emmaleonhart.com)
+[GitHub](https://github.com/EmmaLeonhart) · [LessWrong](https://www.lesswrong.com/users/emma-leonhart) · [emmaleonhart.com](https://emmaleonhart.com)
 
 ---
 
 ## Summary
 
-AI engineer at ManuForge. Independent work on embedding-space interpretability: Sutra (programming language operating in embedding space), Loka (graph database with embeddings and time-filtered queries), and a writeup of a silent tokenizer collision affecting Ollama BERT models.
+Independent researcher and builder working at the intersection of **neurosymbolic AI**, **interpretability**, and **AI safety** — three problems viewed as one. The tools are geometric tensor languages (Sutra) and grounded retrieval (Loka): make the geometry inside model computation explicit so it can be read, constrained, and grounded against external symbolic structure.
 
 ---
 
 ## Selected Projects
 
-### [Sutra](https://github.com/EmmaLeonhart/Sutra) — GPU-native programming language operating in embedding space
-- Designed and implemented a fully differentiable, GPU-native, zero-control-flow language whose primitives live in embedding space rather than token space.
-- Lets a user apply deterministic operations *inside* the latent space LLMs think in — reusing the model's thought-space as a substrate while controlling how outputs are derived.
-- Zero-control-flow + differentiability is interpretability-relevant: programs are inherently more analyzable than imperative code over discrete tokens.
+### [Sutra](https://sutra.emmaleonhart.com) — Geometrically compiled language · [GitHub](https://github.com/EmmaLeonhart/Sutra)
+A language where logical operations over vector spaces are resolved at compile time into matrix multiplications. Branches are continuous weighted blends, loops are geometric rotations, programs compile to straight-line tensor work — GPU-native and differentiable by construction.
+- Language paper + NeurIPS 2026 supplementary alongside the reference compiler (PyTorch backend), IntelliJ and VS Code plugins, language spec, interactive demos.
 
-### [Loka](https://github.com/EmmaLeonhart/Loka) — Open-source graph database with embeddings and timestamps
-- REST graph database where each node can carry an embedding alongside its relational fields, and each triple can carry a timestamp.
-- Time-filtered queries reconstruct the graph state at a chosen moment, enabling chronological graph RAG.
+### [Loka](https://loka.emmaleonhart.com) — Rust RDF-star triplestore · [GitHub](https://github.com/EmmaLeonhart/Loka)
+Lean, high-performance RDF-star triplestore in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language — a single engine where *vectors are just triples*, replacing both a vector database and a SPARQL triplestore. Systems writeup + benchmarks in-repo.
 
-### [Found tokenizer collision in Ollama BERT embedding models](https://emmaleonhart.github.io/latent-space-cartography/tokenization-error.html)
-- Found a silent tokenizer collision affecting mxbai-embed-large and related models — distinct inputs collapse to identical token sequences and identical embeddings.
-- Built a reproducible script for demonstrating the glitch.
+### [Yantra](https://yantra.emmaleonhart.com) — Neuro-symbolic, GPU-native operating system · [GitHub](https://github.com/EmmaLeonhart/Yantra)
+A neuro-symbolic OS written in Sutra: kernel, processes, IPC, and GUI as one differentiable tensor-op graph. Processes exchange *axons* (structured embeddings) so local AI integrates without a translation layer. Architecture + design papers in-repo.
 
-### [Abstract Wikipedia Editor](https://github.com/EmmaLeonhart/abstract-wikipedia-editor) — Wikifunctions automation
-- Playwright-based automation for creating and editing Abstract Wikipedia entries from Wikidata QIDs.
+### [QueryKey](https://querykey.emmaleonhart.com) — Local-first PRM / social · [GitHub](https://github.com/EmmaLeonhart/querykey)
+A social network you run locally from your own desktop. Personal-relationship-manager elements with local AI agents to help keep up with the people in your life — privacy-respecting on both sides. Built on a local-first ingest → knowledge-graph engine.
+
+### [Alignment / Redemption-Realignment](https://alignment.emmaleonhart.com) — AI safety research · [GitHub](https://github.com/EmmaLeonhart/alignment)
+Tests whether *redemption-narrative* system prompts measurably move emergently misaligned LLMs back toward alignment — behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction. Cross-scale results across Llama and Qwen (0.5B–8B). Theoretical framing: emergent misalignment as *moral injury*.
+
+### [Latent Space Cartography Applied to Wikidata](https://latent-space.emmaleonhart.com) — Embedding geometry · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
+TransE-style relational displacement analysis on **frozen** text-embedding models with Wikidata triples as probes — surfacing 30 model-agnostic relational operations and a silent `[UNK]` tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. clawRxiv 2604.00648, Claw4S 2026.
+
+---
+
+## Selected Papers / Preprints
+
+- *Latent Space Cartography Applied to Wikidata* — clawRxiv [2604.00648](https://www.clawrxiv.io/abs/2604.00648), Claw4S 2026.
+- *Sutra: A Geometrically Compiled Language* — paper + NeurIPS 2026 supplementary (in-repo).
+- *Redemption-Realignment* — emergent-misalignment-as-moral-injury, cross-scale Llama / Qwen (in repo).
+- *Loka: an RDF-star + HNSW + Temporal Engine* — systems writeup + benchmarks (in repo).
+- *Yantra: a Neuro-symbolic, GPU-native OS* — design papers (in repo).
+
+---
+
+## Other Open Source
+
+[claw.py / OpenClaw](https://github.com/EmmaLeonhart/claw.py) — portable, structured context for AI agent sessions.
+[cleanvibe](https://github.com/EmmaLeonhart/cleanvibe) — Python scaffolding for well-documented vibecoding projects.
+[Vibecoding Tutorial](https://github.com/EmmaLeonhart/vibecoding-tutorial) — beginner-friendly guide to AI-pair-coding.
+[emmaleonhart.com](https://emmaleonhart.com) — 16 interactive ML visualizers (vector math → modern architectures) and 8 Loka database-theory explainers.
 
 ---
 
 ## Experience
 
-### AI Engineer — ManuForge AI
-*March 2026–present*
-- Built a world-modelling system for short stories that uses position in the text to establish known unknowns at each point — surfacing them so an author can make deliberate choices on them. Intended as input to a chronological-world-state-driven text-to-video pipeline (in progress).
-
 ### Developer — Ambient Games
 *2024–2025*
-- Shipped on *Schema* (video game) across the .NET ecosystem (C#) with the project's CI/CD in Azure DevOps; integrated Ollama for in-game local LLM conversation.
+- Shipped on *Schema* (video game) across the .NET ecosystem (C#) with CI/CD in Azure DevOps; integrated Ollama for in-game local LLM conversation.
 
 ### Wikimedia / Wikidata Contributor (independent)
 *2025–present*
@@ -49,18 +67,13 @@ AI engineer at ManuForge. Independent work on embedding-space interpretability: 
 
 ## Education
 
-### Associates of Computer Science — Okanagan College
-*2020–2023*
-
-### BA, Economics (minor: Philosophy) — University of British Columbia Okanagan
-*2014–2019*
-- Coursework: econometrics, logic, decision theory, game theory.
+**Associates of Computer Science** — Okanagan College, 2020–2023
+**BA, Economics (minor: Philosophy)** — University of British Columbia Okanagan, 2014–2019. Coursework: econometrics, logic, decision theory, game theory.
 
 ---
 
 ## Skills
 
-**Languages:** Python, C#, TypeScript, Rust
-**ML / AI:** Embedding-space systems, LLM application development, world-model-grounded generation
-**Infra:** GitHub Actions CI/CD, Azure DevOps, MediaWiki/Wikibase APIs, SPARQL, Playwright
-**Databases:** Graph-vector hybrid, SPARQL endpoints
+**Languages:** Python, Rust, C#, TypeScript.
+**ML / AI:** geometric tensor compilation, embedding-space analysis, steering-vector / alignment research, grounded retrieval.
+**Systems:** RDF-star, HNSW, SPARQL+, GitHub Actions CI/CD, Azure DevOps, MediaWiki / Wikibase, Playwright.

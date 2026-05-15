@@ -3,9 +3,9 @@
 Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory on `master`.
 
 ## Workflow Rules
+- **DELETE completed items from `queue.md` IN THE SAME COMMIT as the work.** This is non-negotiable. Not at the end of a session, not "soon" — same commit. No checkmarks, no `DONE` headers, no status markers. If the work is done, the line is gone. The queue is a queue, not a journal.
 - **Commit and push immediately.** Every meaningful change gets a commit with a clear message explaining *why*, not just what — and `git push` right after. GitHub Pages is the easiest way to debug this site, so changes need to be live for the user to see them. Do not batch up multiple commits before pushing.
 - **Plan into `queue.md` FIRST, then execute.** When entering planning mode (or any multi-step think-before-do), the FIRST action is to write the plan into `queue.md` as concrete items. Only then begin executing. Chat context dies on session interrupt; the queue survives.
-- **Update `queue.md` in the same commit as the work.** Delete completed items in the same commit — no checkmarks or status markers.
 - **Mirror `queue.md` into the task tool.** `TaskCreate` items as you add them to queue.md; mark `in_progress` when starting; `completed` when done.
 - **Do not enter planning-only modes.** All thinking must produce files and commits.
 - **Update README.md regularly.** It should always reflect the current state of the site for human readers.
@@ -55,7 +55,7 @@ pages/
 - `src/` — TypeScript sources for some visualizers. Compiled output goes into the corresponding `pages/<name>/` directory.
 - `build_viewer.py` — generates `pages/embeddings/index.html` from `prototype/viewer_data.json`. The viewer is a single self-contained HTML file with the embeddings data inlined. Run with `py build_viewer.py`.
 - `build_resume.py` — renders `resume.md` to `pages/resume.html` and `pages/resume.pdf`. Run by CI in `.github/workflows/pages.yml` before each deploy; can also be run locally (`py -m pip install markdown playwright && py -m playwright install chromium && py build_resume.py`).
-- `resume.md` — canonical site copy of Emma's resume. Mirror of `life-planning/docs/resume.md`; when the life-planning copy changes, copy it here too. Built to `/resume.html` and `/resume.pdf` on each push.
+- `resume.md` — canonical resume. Source of truth is THIS file, mirrored from the live site (`pages/index.html`, `data/projects.json`, `pages/research/index.html`). The life-planning copy is not authoritative. Built to `/resume.html` and `/resume.pdf` on each push.
 - `prototype/` — data and scripts that feed the embeddings viewer.
 
 ## Building
