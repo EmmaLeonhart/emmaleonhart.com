@@ -1,5 +1,19 @@
 # TODO — emmaleonhart.com
 
+## Research page (`/research/`)
+- [ ] The research index is still vague. It links the project subdomains and a
+      few standalone papers, but most per-project papers are only referenced
+      indirectly ("paper in-repo"). Flesh it out: pull the real paper
+      titles/PDFs from each repo's `paper/` dir, and add the standalone
+      research repos that aren't listed yet (the set is chaotic — sweep
+      github.com/EmmaLeonhart for `paper/`-bearing repos).
+- [ ] Swap the clawRxiv / personal-subdomain links for arXiv / Google Scholar
+      links once papers are accepted there — currently the only homes are the
+      Claw site and the project subdomains, which reads less professional. A
+      scheduled remote agent audits this roughly monthly so the page doesn't
+      go stale the moment something lands on arXiv (see the routine set via
+      the `schedule` skill); this item tracks the manual side until then.
+
 ## Verify Existing Pages
 - [ ] Test dot product visualizer — vectors draggable, math updates, projection renders correctly
 - [ ] Test cross product visualizer — parallelogram area, sign colors, rotation direction
