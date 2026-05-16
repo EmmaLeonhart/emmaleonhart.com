@@ -9,64 +9,15 @@
   <meta property="og:url" content="https://emmaleonhart.com/theory/sutradb/">
   <meta name="description" content="See how Loka unifies HNSW vector search with graph traversal into a single interleaved operation. One graph, one walk, no JSON handoffs.">
   <title>Loka: Integrated Vector-Graph Database</title>
-  <style>
-    /* ===== CANONICAL VISUAL IDENTITY (see /_identity/) ==============
-       Lacquer tokens; dark is default, [data-theme="light"] flips them.
-       Slate chrome hexes in this stylesheet were rewritten to var(). */
-    :root {
-      --bg: #07070c;
-      --bg-soft: #0c0c14;
-      --bg-card: #11111b;
-      --bg-elevated: #14141f;
-      --border: #1d1d2c;
-      --border-hover: #34344e;
-      --border-strong: #262638;
-      --text: #d4d4e0;
-      --text-strong: #f0f0f6;
-      --text-mute: #8c8caa;
-      --text-faint: #5d5d78;
-      --accent: #8b9bff;
-      --accent-bright: #b0bcff;
-      --accent-soft: rgba(139, 155, 255, 0.10);
-      --accent-glow: rgba(139, 155, 255, 0.28);
-    }
-    html[data-theme="light"] {
-      --bg: #f4f4f8;
-      --bg-soft: #ebebf2;
-      --bg-card: #ffffff;
-      --bg-elevated: #fbfbfe;
-      --border: #dadae6;
-      --border-hover: #b6b6cf;
-      --border-strong: #c7c7d8;
-      --text: #2b2b38;
-      --text-strong: #14141f;
-      --text-mute: #5c5c74;
-      --text-faint: #8c8caa;
-      --accent: #5160dd;
-      --accent-bright: #3a48c4;
-      --accent-soft: rgba(81, 96, 221, 0.10);
-      --accent-glow: rgba(81, 96, 221, 0.22);
-    }
-    body { transition: background 0.35s ease, color 0.35s ease; }
-    .theme-toggle {
-      position: fixed; top: 18px; right: 18px; z-index: 200;
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 999px; color: var(--text-mute); cursor: pointer;
-      transition: color .2s, border-color .2s, background .2s, transform .2s;
-    }
-    .theme-toggle:hover {
-      color: var(--accent-bright); border-color: var(--accent);
-      background: var(--accent-soft); transform: translateY(-1px);
-    }
-    .theme-toggle svg { width: 18px; height: 18px; display: none; }
-    html[data-theme="dark"]  .theme-toggle .icon-sun  { display: block; }
-    html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
-
+    <!-- Shared visual identity: the ONE source of truth. /_identity/ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/identity.css">
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -105,7 +56,7 @@
     .step-card {
       background: var(--bg-soft); border-radius: 6px;
       padding: 10px 12px; margin-bottom: 8px;
-      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-family: var(--mono);
       font-size: 0.82rem; line-height: 1.5;
       border-left: 3px solid var(--border);
       transition: border-color 0.3s, opacity 0.3s;
@@ -147,7 +98,7 @@
       letter-spacing: 0.05em; margin-bottom: 4px; font-weight: 600;
     }
     .compare-card .compare-value {
-      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-family: var(--mono);
       font-size: 1rem; font-weight: 700;
     }
     .result-card {
@@ -158,7 +109,7 @@
     .result-card .name { font-weight: 600; color: var(--text-strong); margin-bottom: 2px; }
     .result-card .chain {
       font-size: 0.75rem; color: var(--text-mute);
-      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-family: var(--mono);
     }
     @media (max-width: 900px) {
       .main-layout { flex-direction: column; }
