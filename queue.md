@@ -23,10 +23,10 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 - publish.yml workflow_dispatch verify (clawRxiv CI path) — not actionable: `gh` not authed on this machine. Do when auth available, or trigger from GitHub UI.
 
 ### Subdomain sites — diagnosed 2026-05-15, see experiment_log.md "Subdomain HTTPS Rendering Diagnostic"
-Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Open actions:
-- **USER decision (blocks sutra coherence, not its cert):** sutra `mkdocs.yml site_url: https://sutralang.dev` + Sutra CLAUDE.md vs `docs/CNAME: sutra.emmaleonhart.com` (+ portfolio). Pick the canonical domain, then align site_url & CLAUDE.md.
-- Re-kick DONE 2026-05-15 (user-authorized): empty pages.yml commits pushed — querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master). sutra NOT re-kicked (pending the domain decision above; its pages.yml has a paths filter so an empty commit wouldn't trigger anyway). Watch the 4 pages.yml runs go green, then watch for GitHub cert issuance (hourly cron c0e659c7).
-- **USER, real lever (needs GitHub auth):** github.com/settings/pages → verify `emmaleonhart.com`; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". This is the most likely reason yantra's cert provisioned and the rest lag.
+Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Status:
+- Sutra canonical domain RESOLVED → `sutra.emmaleonhart.com` (Emma's call). Fixed across 11 files incl. mkdocs.yml site_url + CLAUDE.md/AGENTS.md, pushed sutra@c25c298c (also re-kicked sutra's pages.yml). Loka was already consistent (loka.emmaleonhart.com everywhere) — no change needed.
+- All 5 re-kicked 2026-05-15 (user-authorized): querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master), sutra c25c298c (master). Watch the pages.yml runs go green, then watch for GitHub cert issuance (hourly cron c0e659c7).
+- **Only remaining item — OPTIONAL, user-only (Emma unsure, no rush):** github.com/settings/pages → verify `emmaleonhart.com` at account level; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". This likely speeds issuance (probable reason yantra provisioned first) but GitHub should issue the certs on its own now that every repo is correctly configured + freshly deployed.
 
 ---
 
