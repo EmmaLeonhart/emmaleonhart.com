@@ -11,6 +11,14 @@ Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from t
 - **Update README.md regularly.** It should always reflect the current state of the site for human readers.
 - **Keep this file up to date.** As pages are added, removed, or restructured, record the changes here.
 
+## Queue and longer-horizon work
+
+(Clarity model adopted from the `cleanvibe` scaffold — the bar for "clear project docs.")
+
+- **`queue.md`** — what is being worked on *right now*: concrete, executable steps. Items are deleted in the same commit that completes them — no checkmarks, no "done"/"DONE" markers, no status narration, no "integrated"/"shipped" snapshots. If a line is still in `queue.md`, it is not done. If a task is not in `queue.md`, it is not in scope for the current session.
+- **`todo.md`** — the long-term horizon: abstract, multi-session goals and ambitions. An item here is a *destination, not a step*. `todo.md` is the *basis for* `queue.md`. Parked / deferred / spec / reference material lives here, never in `queue.md`.
+- **Forward flow only:** `todo.md` (abstract) → `queue.md` (concrete steps) → task tool (in-flight) → `git log` (history). Items only move forward. Done work is deleted, not annotated; it survives in `git log`. A stale `queue.md` is worse than no `queue.md` — it lies about what is in flight.
+
 ## What this repo is
 A static personal site with:
 - A landing page introducing Emma and the flagship project (Sutra).
