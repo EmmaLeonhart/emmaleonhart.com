@@ -165,6 +165,25 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 @keyframes id-drift1 { to { transform: translate(130px, 80px) scale(1.15); } }
 @keyframes id-drift2 { to { transform: translate(-90px, 110px) scale(1.1); } }
 
+/* ---- GitHub repo pill (shared widget, live stars + release) ------- */
+.gh {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--accent); text-decoration: none;
+  font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border-hover); background: var(--accent-soft);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.gh:hover { color: var(--accent-bright); border-color: var(--accent); }
+.gh svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
+.gh .gh-stat {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding-left: 9px; border-left: 1px solid var(--border-hover);
+  color: var(--text-mute); font-variant-numeric: tabular-nums;
+}
+.gh .gh-stat svg { width: 13px; height: 13px; }
+.gh:hover .gh-stat { border-color: var(--accent); color: var(--accent-bright); }
+
 @media (prefers-reduced-motion: reduce) {
   .aurora::before, .aurora::after, .eyebrow::before { animation: none; }
   html { scroll-behavior: auto; }
