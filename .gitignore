@@ -40,3 +40,6 @@ pages/img/
 
 # cleanvibe reference scaffold (gitignored — analysis only, never deployed)
 _refscaffold/
+
+# second cleanvibe reference scaffold (1.0.0 source, gitignored)
+_refscaffold2/
