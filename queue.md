@@ -6,6 +6,17 @@
 
 See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the task tool stay in sync.
 
+## important stuff
+
+we gotta clear the queue better it appears to have suffered a bloating from stuff not getting removed
+
+visual branding on https://emmaleonhart.com/branding is great
+
+but add the cosmic thingie from https://emmaleonhart.com to it
+
+unified pipeline should unify this stuff
+
+remove references to the embedding viewer thing, I havent done anything with it in a long time but it is still in the readme
 
 ## ACTIVE — vibecoding/cleanvibe onboarding + button-identity unification (2026-05-16)
 
@@ -145,6 +156,9 @@ Full writeup: experiment_log.md "Subdomain Render Diagnostic v2". Emma's git/leg
 
 ### Subdomain sites — see the RESOLVED diagnostic section above
 The earlier "account-level domain verification is the blocker" conclusion is **SUPERSEDED** by the v2 diagnostic (repo Pages custom-domain setting stuck on the legacy domain). Canonical domains were already resolved (sutra@c25c298c → sutra.emmaleonhart.com; loka already loka.emmaleonhart.com). The remaining action is the user-only per-repo Settings→Pages custom-domain re-set described above.
+
+
+
 
 ---
 
