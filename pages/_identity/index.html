@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visual Identity &mdash; emmaleonhart.com</title>
-  <meta name="description" content="The canonical visual identity for emmaleonhart.com and its sister projects: Lacquer surface, Pewter buttons, top-right dark/light toggle. This page is the reference other pages copy.">
+  <meta name="description" content="The canonical visual identity for emmaleonhart.com and its sister projects: Lacquer surface, Pewter buttons, top-right dark/light toggle. This page links /identity.css and renders it live.">
   <!-- Theme must be set before first paint to avoid a flash. Dark is the
        default on first visit regardless of OS preference (deliberate). -->
   <script>
@@ -21,140 +21,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- The one shared stylesheet. This page renders it live; it does not
+       re-declare anything /identity.css already owns. -->
+  <link rel="stylesheet" href="/identity.css">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ===========================================================
+       /identity.css owns the IDENTITY: palette + the two theme
+       token blocks, the Pewter buttons, the top-right toggle, the
+       aurora, the eyebrow, the card, and the type. This page is
+       the LIVE DEMO of that file — everything below is ONLY this
+       demo page's own layout. Nothing /identity.css already
+       defines is duplicated here. */
 
-    /* ===== CANONICAL IDENTITY TOKENS =================================
-       Base = Lacquer. Buttons = Pewter (filled). Dark is default;
-       [data-theme="light"] supplies the light-mode Lacquer palette.
-       Copy this :root / [data-theme] block verbatim into any page. */
-    :root {
-      --bg: #07070c;
-      --bg-soft: #0c0c14;
-      --bg-card: #11111b;
-      --bg-elevated: #14141f;
-      --border: #1d1d2c;
-      --border-hover: #34344e;
-      --border-strong: #262638;
-
-      --text: #d4d4e0;
-      --text-strong: #f0f0f6;
-      --text-mute: #8c8caa;
-      --text-faint: #5d5d78;
-
-      --accent: #8b9bff;
-      --accent-bright: #b0bcff;
-      --accent-soft: rgba(139, 155, 255, 0.10);
-      --accent-glow: rgba(139, 155, 255, 0.28);
-      /* Label color that sits on a solid --accent fill (Pewter button). */
-      --on-accent: #07070c;
-
-      --sutra: #d4a76a;
-      --sutra-bright: #f5d9a8;
-
-      --aurora-1: rgba(139, 155, 255, 0.32);
-      --aurora-2: rgba(212, 167, 106, 0.22);
-      --aurora-3: rgba(103, 232, 249, 0.16);
-      --aurora-opacity: 0.55;
-
-      --serif: 'Instrument Serif', 'Times New Roman', serif;
-      --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-    }
-
-    html[data-theme="light"] {
-      --bg: #f4f4f8;
-      --bg-soft: #ebebf2;
-      --bg-card: #ffffff;
-      --bg-elevated: #fbfbfe;
-      --border: #dadae6;
-      --border-hover: #b6b6cf;
-      --border-strong: #c7c7d8;
-
-      --text: #2b2b38;
-      --text-strong: #14141f;
-      --text-mute: #5c5c74;
-      --text-faint: #8c8caa;
-
-      --accent: #5160dd;
-      --accent-bright: #3a48c4;
-      --accent-soft: rgba(81, 96, 221, 0.10);
-      --accent-glow: rgba(81, 96, 221, 0.22);
-      --on-accent: #ffffff;
-
-      --sutra: #9c6a22;
-      --sutra-bright: #7c5217;
-
-      --aurora-1: rgba(81, 96, 221, 0.16);
-      --aurora-2: rgba(176, 125, 51, 0.12);
-      --aurora-3: rgba(40, 150, 170, 0.10);
-      --aurora-opacity: 0.7;
-    }
-
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 80px 24px 120px;
-      position: relative;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.005em;
-      transition: background 0.35s ease, color 0.35s ease;
-    }
-
-    /* ===== TOP-RIGHT DARK/LIGHT TOGGLE WIDGET ======================== */
-    .theme-toggle {
-      position: fixed; top: 18px; right: 18px; z-index: 100;
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--text-mute);
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
-    }
-    .theme-toggle:hover {
-      color: var(--accent-bright);
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      transform: translateY(-1px);
-    }
-    .theme-toggle svg { width: 18px; height: 18px; display: none; }
-    html[data-theme="dark"]  .theme-toggle .icon-sun  { display: block; }
-    html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
-
-    .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .aurora::before, .aurora::after, .aurora .blob {
-      content: ''; position: absolute; border-radius: 50%;
-      filter: blur(90px); opacity: var(--aurora-opacity); mix-blend-mode: screen;
-    }
-    .aurora::before {
-      width: 720px; height: 720px; top: -260px; left: -120px;
-      background: radial-gradient(circle, var(--aurora-1) 0%, transparent 70%);
-      animation: drift1 22s ease-in-out infinite alternate;
-    }
-    .aurora::after {
-      width: 640px; height: 640px; top: -180px; right: -80px;
-      background: radial-gradient(circle, var(--aurora-2) 0%, transparent 70%);
-      animation: drift2 26s ease-in-out infinite alternate;
-    }
-    .aurora .blob {
-      width: 540px; height: 540px; top: 320px; left: 50%;
-      transform: translateX(-50%);
-      background: radial-gradient(circle, var(--aurora-3) 0%, transparent 70%);
-      animation: drift3 30s ease-in-out infinite alternate;
-    }
-    @keyframes drift1 { to { transform: translate(140px, 80px) scale(1.15); } }
-    @keyframes drift2 { to { transform: translate(-100px, 120px) scale(1.1); } }
-    @keyframes drift3 { to { transform: translate(-50%, 180px) scale(1.2); } }
-    @media (prefers-reduced-motion: reduce) {
-      .aurora::before, .aurora::after, .aurora .blob { animation: none; }
-      .eyebrow::before { animation: none; }
-    }
+    /* Page-specific layout layered on identity.css's body */
+    body { padding: 80px 24px 120px; position: relative; overflow-x: hidden; }
 
     main { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; }
 
@@ -164,27 +44,8 @@
     }
     .crumb:hover { color: var(--accent-bright); }
 
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 1.6px;
-      color: var(--accent-bright);
-      margin-bottom: 22px;
-      padding: 6px 13px 6px 11px;
-      background: var(--accent-soft);
-      border: 1px solid var(--accent-soft);
-      border-radius: 999px;
-    }
-    .eyebrow::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent-bright);
-      box-shadow: 0 0 12px var(--accent-glow);
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
+    /* identity.css owns .eyebrow + its pulsing dot; this only adds spacing */
+    .eyebrow { margin-bottom: 22px; }
 
     h1.codename {
       font-size: clamp(2.6rem, 6vw, 3.8rem);
@@ -211,33 +72,9 @@
       max-width: 620px; margin-bottom: 40px;
     }
 
-    /* ===== BUTTONS — PEWTER (prominent, filled) ===================== */
+    /* identity.css owns .btn / .btn-primary / .btn-secondary;
+       only the row layout is page-specific */
     .button-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 64px; }
-    .btn {
-      display: inline-block;
-      font-family: var(--sans); font-size: 0.95rem; font-weight: 600;
-      text-decoration: none;
-      padding: 12px 26px;
-      border-radius: 8px;
-      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
-      border: 1px solid transparent;
-    }
-    .btn-primary {
-      background: var(--accent); color: var(--on-accent);
-      border-color: var(--accent);
-    }
-    .btn-primary:hover {
-      background: var(--accent-bright); border-color: var(--accent-bright);
-      color: var(--on-accent); transform: translateY(-1px);
-    }
-    .btn-secondary {
-      background: var(--bg-card); color: var(--text-strong);
-      border-color: var(--border);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent); color: var(--accent-bright);
-      transform: translateY(-1px);
-    }
 
     .section-label {
       font-family: var(--mono); font-size: 0.72rem; font-weight: 500;
@@ -245,13 +82,8 @@
       color: var(--text-faint); margin-bottom: 16px;
     }
 
-    .card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 28px 30px;
-      margin-bottom: 16px;
-      transition: border-color 0.2s, background 0.35s ease;
-    }
-    .card:hover { border-color: var(--border-hover); }
+    /* identity.css owns .card base + hover; this adds spacing + sub-parts */
+    .card { margin-bottom: 16px; }
     .card-title {
       font-size: 1.15rem; font-weight: 600; color: var(--text-strong);
       margin-bottom: 6px;
@@ -317,7 +149,7 @@
   </style>
 </head>
 <body>
-  <div class="aurora" aria-hidden="true"><div class="blob"></div></div>
+  <div class="aurora" aria-hidden="true"></div>
 
   <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
     <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.86 14.37,18.59L12,22Z"></path></svg>
@@ -330,10 +162,10 @@
     <div class="eyebrow">Canonical visual identity</div>
     <h1 class="codename">One identity.</h1>
     <p class="lede">The system every page on this site and every sister project converges on: the <em>Lacquer</em> surface, the <em>Pewter</em> button, and a dark/light toggle that lives in the top-right corner of every screen.</p>
-    <p class="note">This page is the reference, not decoration. It renders the identity and carries the exact tokens and the copy-paste block below. The site is intentionally framework-free &mdash; there is no shared bundle; each page copies this block so it stays self-contained and debuggable on its own.</p>
+    <p class="note">This page is the reference, not decoration. It <strong>links <code>/identity.css</code></strong> &mdash; the one shared stylesheet every page on the site and every sister project pulls in &mdash; and renders that file live. The tokens and the drop-in snippet below are exactly what <code>/identity.css</code> defines: change the file, every page changes with it. (This supersedes the old per-page copied block &mdash; one file, linked, is why the pages are genuinely the same and not merely similar.)</p>
 
     <div class="button-row">
-      <a class="btn btn-primary" href="#dropin">Copy the drop-in block</a>
+      <a class="btn btn-primary" href="#dropin">See how to use it</a>
       <a class="btn btn-secondary" href="#tokens">See the tokens</a>
     </div>
 
@@ -354,7 +186,7 @@
       <div class="card-body">Near-black blue-tinted background, periwinkle accent, the Inter / Instrument Serif / JetBrains Mono trio, the drifting aurora, the eyebrow pill with its pulsing dot, gradient-text headlines. Light mode keeps the same character with a darkened periwinkle that holds contrast on a near-white surface.</div>
     </div>
 
-    <pre class="code"><span class="c">// The two button rules that define "prominent" (Pewter):</span>
+    <pre class="code"><span class="c">// The two button rules that define "prominent" (Pewter), straight from /identity.css:</span>
 .btn-primary {
   background: <span class="k">var</span>(--accent);
   color:      <span class="k">var</span>(--on-accent);  <span class="c">// flips per theme</span>
@@ -366,7 +198,7 @@
 
     <div id="tokens" class="breakdown">
       <h2>Tokens</h2>
-      <p class="sub">The same variable names in both themes &mdash; only the values change. <code>--on-accent</code> is the label color on a filled button and flips with the theme.</p>
+      <p class="sub">The same variable names in both themes &mdash; only the values change. <code>--on-accent</code> is the label color on a filled button and flips with the theme. These are the values declared in <code>/identity.css</code>.</p>
 
       <div class="row">
         <div class="row-key">Dark (default)</div>
@@ -419,33 +251,34 @@
       <div class="row">
         <div class="row-key">Toggle widget</div>
         <div class="row-val">
-          40&times;40&thinsp;px circle, fixed <code>top:18px right:18px</code>, <code>z-index:100</code>. Pre-paint inline script sets <code>data-theme</code> from <code>localStorage</code> (dark default) so there is no flash. One click handler swaps + persists.
+          40&times;40&thinsp;px circle, fixed <code>top:18px right:18px</code>, <code>z-index:1000</code>. Pre-paint inline script sets <code>data-theme</code> from <code>localStorage</code> (dark default) so there is no flash. One click handler swaps + persists.
         </div>
       </div>
 
       <div class="row">
         <div class="row-key">Carried from Lacquer</div>
         <div class="row-val">
-          Aurora (three blurred radial blobs, 22/26/30&thinsp;s drifts, screen-blended; opacity rises in light mode), eyebrow pill + pulsing dot, gradient headline, 760&ndash;780&thinsp;px column. All respect <code>prefers-reduced-motion</code>.
+          Aurora (two blurred radial blobs drifting on 24 / 28&thinsp;s loops, screen-blended), eyebrow pill + pulsing dot, gradient headline, ~780&thinsp;px column. All respect <code>prefers-reduced-motion</code>.
         </div>
       </div>
     </div>
 
     <div id="dropin" class="breakdown" style="margin-top:24px;">
-      <h2>The drop-in block</h2>
-      <p class="sub">Paste this into <code>&lt;head&gt;</code> (pre-paint script + token block), the button in the body, and the handler before <code>&lt;/body&gt;</code>. Self-contained &mdash; no external file.</p>
-      <pre class="code" style="margin-bottom:0;"><span class="c">&lt;!-- 1. in &lt;head&gt;, BEFORE any stylesheet --&gt;</span>
+      <h2>How a page uses it</h2>
+      <p class="sub">Three small pieces. The palette, buttons, toggle and primitives all live in <code>/identity.css</code> &mdash; you <strong>link</strong> it, you do not copy it. The page keeps only its own layout CSS.</p>
+      <pre class="code" style="margin-bottom:0;"><span class="c">&lt;!-- 1. in &lt;head&gt;, BEFORE any stylesheet: pre-paint theme (dark default, no flash) --&gt;</span>
 &lt;script&gt;(<span class="k">function</span>(){<span class="k">try</span>{<span class="k">var</span> t=localStorage.getItem(<span class="s">'theme'</span>);
 <span class="k">if</span>(t!==<span class="s">'light'</span>&amp;&amp;t!==<span class="s">'dark'</span>)t=<span class="s">'dark'</span>;
 document.documentElement.setAttribute(<span class="s">'data-theme'</span>,t);}
 <span class="k">catch</span>(e){document.documentElement.setAttribute(<span class="s">'data-theme'</span>,<span class="s">'dark'</span>);}})();&lt;/script&gt;
 
-<span class="c">// 2. the :root + html[data-theme="light"] token blocks above
-//    (the canonical values; same names, values flip per theme)</span>
+<span class="c">&lt;!-- 2. in &lt;head&gt;: the one shared stylesheet, before the page's own CSS --&gt;</span>
+&lt;link <span class="k">rel</span>=<span class="s">"stylesheet"</span> <span class="k">href</span>=<span class="s">"/identity.css"</span>&gt;
 
-<span class="c">&lt;!-- 3. the .theme-toggle button markup + .theme-toggle CSS --&gt;</span>
+<span class="c">&lt;!-- 3. in &lt;body&gt;: the .theme-toggle button markup
+//    (the sun + moon icons; identity.css styles it) --&gt;</span>
 
-<span class="c">&lt;!-- 4. before &lt;/body&gt; --&gt;</span>
+<span class="c">&lt;!-- 4. before &lt;/body&gt;: the toggle handler --&gt;</span>
 &lt;script&gt;(<span class="k">function</span>(){<span class="k">var</span> b=document.getElementById(<span class="s">'theme-toggle'</span>);
 <span class="k">if</span>(!b)<span class="k">return</span>;b.addEventListener(<span class="s">'click'</span>,<span class="k">function</span>(){
 <span class="k">var</span> c=document.documentElement.getAttribute(<span class="s">'data-theme'</span>)===<span class="s">'light'</span>?<span class="s">'light'</span>:<span class="s">'dark'</span>;

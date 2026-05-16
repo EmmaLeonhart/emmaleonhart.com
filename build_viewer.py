@@ -9,7 +9,7 @@ with open('prototype/viewer_data.json') as f:
     viewer_json = f.read()
 
 html = u'''<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -23,24 +23,35 @@ html = u'''<!DOCTYPE html>
   <meta name="twitter:description" content="Interactive map of word embeddings. Explore how words organize in high-dimensional space.">
   <meta name="description" content="Interactive Voronoi map of 485 word embeddings projected onto custom semantic axes. Part of the Beyond Proximity neurosymbolic research project.">
   <title>Beyond Proximity \u2014 Embedding Space Viewer</title>
+  <!-- Canonical identity: set theme before first paint (dark default). -->
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <link rel="stylesheet" href="/identity.css">
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* The identity (palette, the .theme-toggle widget, type tokens) comes
+       from /identity.css — linked, not copied. The chrome below uses those
+       tokens so the toggle genuinely flips the frame. The D3 data canvas
+       (the Voronoi map + point colors, drawn in JS) is the data surface
+       and stays theme-stable in both modes, the same rule the rest of the
+       Slate visualizers follow (data-viz colors stable, canvas untouched). */
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #0a0a0f;
-      color: #e0e0e0;
+      background: var(--bg);
+      color: var(--text);
       overflow: hidden;
       height: 100vh;
       height: 100dvh;
     }
+    /* This tool's header bar is dense; position the shared toggle in-flow
+       inside it instead of fixed top-right (which would cover search). */
+    #header .theme-toggle { position: static; width: 32px; height: 32px; }
     #header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 8px 16px;
-      background: #111118;
-      border-bottom: 1px solid #2a2a35;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
       height: 48px;
       z-index: 10;
       gap: 8px;
@@ -48,14 +59,14 @@ html = u'''<!DOCTYPE html>
     #header h1 {
       font-size: 16px;
       font-weight: 600;
-      color: #c0c0d0;
+      color: var(--text-strong);
       letter-spacing: 0.5px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 0;
     }
-    #header h1 span { color: #7c8cf8; }
+    #header h1 span { color: var(--accent); }
     #header-right {
       display: flex;
       align-items: center;
@@ -63,29 +74,29 @@ html = u'''<!DOCTYPE html>
       flex-shrink: 0;
     }
     #search {
-      background: #1a1a25;
-      border: 1px solid #3a3a45;
-      color: #e0e0e0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-hover);
+      color: var(--text);
       padding: 6px 12px;
       border-radius: 4px;
       font-size: 13px;
       width: 220px;
       outline: none;
     }
-    #search:focus { border-color: #7c8cf8; }
-    #search::placeholder { color: #666; }
+    #search:focus { border-color: var(--accent); }
+    #search::placeholder { color: var(--text-faint); }
     #sidebar-toggle {
       display: none;
-      background: #1a1a25;
-      border: 1px solid #3a3a45;
-      color: #e0e0e0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-hover);
+      color: var(--text);
       padding: 6px 10px;
       border-radius: 4px;
       font-size: 16px;
       cursor: pointer;
       line-height: 1;
     }
-    #sidebar-toggle:hover { background: #252535; }
+    #sidebar-toggle:hover { background: var(--bg-soft); }
     #main {
       display: flex;
       height: calc(100vh - 48px - 32px);
@@ -94,8 +105,8 @@ html = u'''<!DOCTYPE html>
     #sidebar {
       width: 260px;
       min-width: 260px;
-      background: #111118;
-      border-right: 1px solid #2a2a35;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
       padding: 12px;
       overflow-y: auto;
       font-size: 12px;
@@ -106,13 +117,13 @@ html = u'''<!DOCTYPE html>
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #888;
+      color: var(--text-mute);
       margin: 14px 0 6px 0;
     }
     #sidebar h3:first-child { margin-top: 0; }
     .info-text {
       font-size: 11px;
-      color: #999;
+      color: var(--text-mute);
       line-height: 1.5;
       margin-bottom: 8px;
     }
@@ -128,17 +139,17 @@ html = u'''<!DOCTYPE html>
       border-radius: 2px;
       flex-shrink: 0;
     }
-    .legend-label { color: #ccc; font-size: 11px; }
+    .legend-label { color: var(--text); font-size: 11px; }
 
     /* Custom Axis Inputs */
     .axis-group { margin-bottom: 10px; }
-    .axis-group-label { font-size: 11px; color: #aaa; margin-bottom: 4px; font-weight: 600; }
+    .axis-group-label { font-size: 11px; color: var(--text-mute); margin-bottom: 4px; font-weight: 600; }
     .axis-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .axis-arrow { color: #666; font-size: 12px; flex-shrink: 0; }
+    .axis-arrow { color: var(--text-faint); font-size: 12px; flex-shrink: 0; }
     .axis-input {
-      background: #1a1a25;
-      border: 1px solid #3a3a45;
-      color: #e0e0e0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-hover);
+      color: var(--text);
       padding: 4px 8px;
       border-radius: 3px;
       font-size: 12px;
@@ -146,8 +157,8 @@ html = u'''<!DOCTYPE html>
       outline: none;
       font-family: inherit;
     }
-    .axis-input:focus { border-color: #7c8cf8; }
-    .axis-input::placeholder { color: #555; }
+    .axis-input:focus { border-color: var(--accent); }
+    .axis-input::placeholder { color: var(--text-faint); }
     .axis-input.invalid { border-color: #e74c3c; }
     .axis-input.valid { border-color: #2ecc71; }
     #apply-axes {
@@ -155,22 +166,22 @@ html = u'''<!DOCTYPE html>
       width: 100%;
       padding: 6px 12px;
       margin-top: 8px;
-      background: #7c8cf8;
+      background: var(--accent);
       border: none;
       border-radius: 4px;
-      color: #fff;
+      color: var(--on-accent);
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
     }
-    #apply-axes:hover { background: #6b7be8; }
-    #apply-axes:disabled { background: #3a3a55; color: #666; cursor: not-allowed; }
-    #axis-status { font-size: 10px; color: #888; margin-top: 4px; min-height: 14px; }
+    #apply-axes:hover { background: var(--accent-bright); }
+    #apply-axes:disabled { background: var(--border-strong); color: var(--text-faint); cursor: not-allowed; }
+    #axis-status { font-size: 10px; color: var(--text-mute); margin-top: 4px; min-height: 14px; }
     #reset-axes {
       background: none;
-      border: 1px solid #3a3a45;
-      color: #999;
+      border: 1px solid var(--border-hover);
+      color: var(--text-mute);
       padding: 4px 8px;
       border-radius: 3px;
       font-size: 11px;
@@ -179,7 +190,7 @@ html = u'''<!DOCTYPE html>
       display: block;
       width: 100%;
     }
-    #reset-axes:hover { border-color: #7c8cf8; color: #ccc; }
+    #reset-axes:hover { border-color: var(--accent); color: var(--text); }
 
     .pole-item {
       display: flex;
@@ -197,39 +208,39 @@ html = u'''<!DOCTYPE html>
       border: 2px solid;
       flex-shrink: 0;
     }
-    .pole-label { color: #e0e0e0; font-weight: 600; font-size: 12px; }
+    .pole-label { color: var(--text); font-weight: 600; font-size: 12px; }
     #detail-panel {
       margin-top: 16px;
       padding-top: 12px;
-      border-top: 1px solid #2a2a35;
+      border-top: 1px solid var(--border);
       display: none;
     }
-    #detail-panel h3 { color: #7c8cf8; }
-    #detail-label { font-size: 14px; font-weight: 600; color: #e0e0e0; margin: 4px 0; }
-    #detail-coords { font-size: 11px; color: #888; margin-bottom: 8px; }
+    #detail-panel h3 { color: var(--accent); }
+    #detail-label { font-size: 14px; font-weight: 600; color: var(--text); margin: 4px 0; }
+    #detail-coords { font-size: 11px; color: var(--text-mute); margin-bottom: 8px; }
     #neighbors-list { list-style: none; padding: 0; }
     #neighbors-list li {
       padding: 2px 0;
-      color: #aaa;
+      color: var(--text-mute);
       font-size: 11px;
       display: flex;
       justify-content: space-between;
     }
-    #neighbors-list li .dist { color: #666; }
+    #neighbors-list li .dist { color: var(--text-faint); }
     #paper-link {
       display: block;
       margin-top: 16px;
       padding: 8px 12px;
-      background: #1a1a25;
-      border: 1px solid #3a3a45;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-hover);
       border-radius: 4px;
-      color: #7c8cf8;
+      color: var(--accent);
       text-decoration: none;
       font-size: 12px;
       text-align: center;
       transition: background 0.2s;
     }
-    #paper-link:hover { background: #252535; }
+    #paper-link:hover { background: var(--bg-soft); }
     #canvas-wrap { flex: 1; position: relative; overflow: hidden; }
     canvas { display: block; cursor: crosshair; touch-action: none; }
     #tooltip {
@@ -255,16 +266,16 @@ html = u'''<!DOCTYPE html>
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      background: #111118;
-      border-top: 1px solid #2a2a35;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
       font-size: 11px;
-      color: #666;
+      color: var(--text-faint);
       gap: 8px;
     }
-    #footer a { color: #7c8cf8; text-decoration: none; }
+    #footer a { color: var(--accent); text-decoration: none; }
     #footer a:hover { text-decoration: underline; }
     #footer-info { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-    #zoom-info { color: #555; white-space: nowrap; flex-shrink: 0; }
+    #zoom-info { color: var(--text-faint); white-space: nowrap; flex-shrink: 0; }
     .regime-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; }
     .regime-over { background: rgba(231,76,60,0.4); color: #ff6b5a; }
     .regime-neuro { background: rgba(46,204,113,0.4); color: #5ddb9e; }
@@ -306,6 +317,10 @@ html = u'''<!DOCTYPE html>
     <h1><span>Beyond Proximity</span><span class="subtitle"> &mdash; Embedding Space Viewer</span></h1>
     <div id="header-right">
       <input type="text" id="search" placeholder="Search words..." autocomplete="off">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.86 14.37,18.59L12,22Z"></path></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z"></path></svg>
+      </button>
       <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
     </div>
   </div>
@@ -1071,6 +1086,7 @@ html = u'''<!DOCTYPE html>
   // Initial draw
   draw();
   </script>
+  <script>(function(){var b=document.getElementById('theme-toggle');if(!b)return;b.addEventListener('click',function(){var c=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';var n=c==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}});})();</script>
 </body>
 </html>'''
 

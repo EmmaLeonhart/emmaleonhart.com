@@ -7,9 +7,29 @@
 See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the task tool stay in sync.
 
 
-## High priority of the visual identity unification
+## High priority — GitHub stars widget on sister sites
 
-Please for the love of god actually listen and add the github link thing with the stars and such on all of the repos (except emmaleonhart.com) make releases of v0.0.0 if need be for it
+Live GitHub repo pill (mark + name + ★ star count + latest release/tag,
+fetched client-side from the public API) is built and committed LOCALLY
+on all four sister sites — Yantra/QueryKey/Alignment (Lacquer topbar)
+and Loka (Pewter nav). Sutra already shows stars/forks via Material's
+built-in repo widget (no change, P6). `v0.0.0` annotated tags created
+LOCALLY on Yantra/QueryKey/Alignment/latent-space-cartography (Loka/Sutra
+already have v0.4.0).
+
+REMAINING: the auto-mode classifier blocks the agent from pushing to the
+shared sister repos. Emma (or a permitted run) must publish — run from
+the emmaleonhart.com repo root:
+
+```
+git -C repos/yantra push origin master ; git -C repos/yantra push origin v0.0.0
+git -C repos/querykey push origin main ; git -C repos/querykey push origin v0.0.0
+git -C repos/alignment push origin master ; git -C repos/alignment push origin v0.0.0
+git -C repos/loka push origin main
+git -C repos/latent-space-cartography push origin v0.0.0
+```
+
+When pushed, delete this section.
 
 ---
 
@@ -30,10 +50,6 @@ Please for the love of god actually listen and add the github link thing with th
 This is a large, multi-pass redo. Commit+push per logical group; do NOT claim "done" until pages actually render the same. Emma reviews live on GitHub Pages — she is the ground truth, not the diff.
 
 **Granular execution checklist (in order; each line = one commit+push):**
-- [P1] Rewrite `scripts/apply_identity.py`: stop INJECTING duplicated CSS. Instead ensure `<link rel="stylesheet" href="/identity.css">` is present (before the first `<style>`) and STRIP the previously-injected `IDENTITY_CSS` constant from the page `<style>`. Run it on the 25 Group-A Slate/theory/tutorials pages (chrome hexes already var()-ified). Verify mlp + one theory page render in dark+light.
-- [P2] Group-B hand-authored pages (`index.html`, `projects/index.html`, `research/index.html`): replace the inline `:root` dark tokens + `html[data-theme="light"]` block + `.theme-toggle` CSS with the linked `/identity.css`; keep page-specific layout + any extra tokens (e.g. index's `--bg-card-hover`). Convert primary CTAs to `.btn`/`.btn-primary`/`.btn-secondary`.
-- [P3] `pages/_identity/index.html`: link `/identity.css`, strip the inlined identity CSS, keep only the demo-page layout. It becomes the LIVE demo of the shared sheet.
-- [P4] `build_viewer.py`: add `/identity.css` link + pre-paint + toggle + handler to the embeddings template; rebuild `pages/embeddings/index.html`.
 - [P5] Sister sites in `repos/`: copy `identity.css` into each repo root/site dir; convert Loka (proper, not cascade-override), Yantra, QueryKey, Alignment pages to link it + shared toggle/buttons. Push each sister repo on its default branch; bump submodule pointers here.
 - [P6] Sutra: no code change — keep the Material `extra_css` steer (already genuinely consistent within Material). Record decision.
 - [P7] Final pass: visual diff all main-site pages dark+light; update README + experiment_log; delete this whole section from queue.
