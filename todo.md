@@ -92,6 +92,23 @@
   judged the main-site buttons the best (calmer + aurora gradient/glow)
   — they are now the shared `.btn-primary`. Loka and the rest inherit
   it. Keep the main site as the button reference.
+- [ ] **ROOT CAUSE of Loka/Sutra divergence = different build
+  pipelines (Emma's diagnosis 2026-05-16, correct).** The main site +
+  yantra/querykey/alignment + vibecoding are hand-authored static HTML
+  all built from the SAME structural shell (`.site-nav` + linked
+  `/identity.css`), so they stay consistent. **Loka** is per-page
+  static HTML with NO shared template — every page is its own file, so
+  `identity.css` can only re-skin (palette/buttons/widget/aurora), not
+  restructure; matching the main-site *structure* needs a shared
+  header/footer partial or per-page retrofit. **Sutra** is MkDocs
+  Material (generated from Markdown) — a sound modern pipeline, just a
+  *different* one, so its chrome is Material's DOM steered by
+  `identity.css` (now done: dark header/tabs/widget/search) and its
+  nav/search are Material's (Emma wants those kept). Strategic
+  takeaway: `identity.css` unifies the SKIN; structural unity needs
+  Loka to get a shared shell. Don't try to make Sutra non-MkDocs —
+  steer it instead. This is why skin unified fast but structure is the
+  remaining long-haul.
 
 ## Site Infrastructure
 - [ ] Add favicon
