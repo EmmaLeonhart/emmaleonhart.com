@@ -36,20 +36,6 @@ Check cleanvibe for commits landed since cron 1. If any: bump the
 to better fit the visual identity. Commit + push. If unchanged, no-op +
 delete this item.
 
-### D. NOW (in parallel) — button-identity unification across all sites
-The Loka button feel is the target everyone should share. Currently
-each site re-declares a local `.btn`/`.btn-primary`/`.btn-secondary`
-inside its own `<style>`, overriding the shared `/identity.css` — that
-is the inconsistency (Sutra ↔ Loka most visibly).
-- [ ] Align canonical `pages/identity.css` `.btn*` to the Loka feel
-      (chunky `12px 28px`, `font-size: 1rem`, filled Pewter secondary).
-- [ ] Delete the local `.btn*` override blocks from every page/site that
-      has one (Loka `pages/index.html`, any main-site page, Sutra
-      `docs/stylesheets/identity.css` + overrides) so all defer to the
-      one shared definition.
-- [ ] Propagate the updated `identity.css` to every sister repo's copy.
-- [ ] Commit + push emmaleonhart.com + each touched sister repo.
-
 ---
 
 ## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
