@@ -32,9 +32,18 @@ release / commits since the last run; if any, bump the
 `data/projects.json` desc/tags to reflect the release. Commit + push.
 No-op if nothing new. Delete this item when done.
 
-These three are one-shot remote routines (persist regardless of this
-session): B=trig_01LUKG7crXQX1eVdbASo7fuB, C=trig_01Vd1Uh3o87pRJQceSQgv7du,
-D=trig_01LkDXSEhBP8qjEJ2rgTAN1Z. Manage at claude.ai/code/routines.
+These three run as LOCAL one-shot session crons (cleanvibe work needs
+the local credential.helper=manager + local working tree — it does NOT
+work from the cloud). B=cron e276c1ae (15:08), C=cron 679b53ea (19:37),
+D=cron c1d721d8 (23:55), all 2026-05-16 local. The earlier remote
+routines (trig_01LUKG7…, trig_01Vd1Uh3…, trig_01LkDXSE…) are DISABLED
+(superseded by these locals; delete fully at claude.ai/code/routines).
+
+CAVEAT: the harness does not honor durable cron persistence here, so
+these are session-only — they fire only while this Claude Code session
+stays open and the machine is awake. If the session is closed before a
+fire time, that cron is lost and the cleanvibe work for it must be run
+by hand (steps are in sections B/C/D above).
 
 ---
 
