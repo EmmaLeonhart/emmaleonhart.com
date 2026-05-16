@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>404 — page not found</title>
+
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- The ONE shared identity. This 404 is a unified template: the
+       SAME file ships on every emmaleonhart.com site (GitHub Pages
+       serves /404.html for any unknown path). It self-adapts via that
+       site's /sitemap.xml, falling back to the embedded ROUTES. -->
+  <link rel="stylesheet" href="/identity.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 96px 24px; position: relative; overflow-x: hidden; text-align: center; }
+    .container { max-width: 620px; width: 100%; position: relative; z-index: 2; }
+    .glyph {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 220px; height: 220px; opacity: 0.5;
+      filter: drop-shadow(0 0 22px var(--accent-glow));
+      animation: spin 60s linear infinite; pointer-events: none;
+    }
+    @keyframes spin { from { transform: translateX(-50%) rotate(0); } to { transform: translateX(-50%) rotate(360deg); } }
+    .code {
+      font-size: clamp(4.5rem, 18vw, 8rem); font-weight: 800; line-height: 1;
+      letter-spacing: -3px; margin-bottom: 8px;
+      background: linear-gradient(120deg, var(--text-strong) 0%, var(--accent-bright) 55%, var(--sutra) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .lead { font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: var(--text-strong); margin-bottom: 10px; }
+    .path { font-family: var(--mono); font-size: 0.85rem; color: var(--text-faint); word-break: break-all; margin-bottom: 26px; }
+    .path b { color: var(--accent-bright); }
+    .suggest-label {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 1.6px; color: var(--text-mute); margin-bottom: 12px;
+    }
+    .suggestions { display: flex; flex-direction: column; gap: 8px; margin-bottom: 30px; }
+    .suggestions a {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 12px 18px; border-radius: 10px; text-decoration: none;
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text-strong);
+      font-size: 0.95rem; transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .suggestions a:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--bg-elevated); }
+    .suggestions a .s-path { font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute); }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
+    .timer {
+      font-family: var(--mono); font-size: 0.82rem; color: var(--text-mute);
+      display: inline-flex; align-items: center; gap: 9px;
+    }
+    .timer .ring { position: relative; width: 30px; height: 30px; flex: none; }
+    .timer .ring svg { transform: rotate(-90deg); width: 30px; height: 30px; }
+    .timer .ring circle { fill: none; stroke-width: 3; }
+    .timer .ring .bg { stroke: var(--border); }
+    .timer .ring .fg { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+    .timer .ring b {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; color: var(--text-strong); font-variant-numeric: tabular-nums;
+    }
+    .timer.paused .fg { stroke: var(--text-faint); }
+    @media (prefers-reduced-motion: reduce) { .glyph { animation: none; } }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.86 14.37,18.59L12,22Z"></path></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z"></path></svg>
+  </button>
+
+  <div class="aurora" aria-hidden="true"></div>
+
+  <div class="container">
+    <svg class="glyph" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="rgba(139,155,255,0.20)" stroke-width="0.6"/>
+      <circle cx="50" cy="50" r="34" stroke="rgba(212,167,106,0.18)" stroke-width="0.6"/>
+      <circle cx="50" cy="50" r="22" stroke="rgba(103,232,249,0.18)" stroke-width="0.6"/>
+      <circle cx="50" cy="4"  r="1.6" fill="#b0bcff"/>
+      <circle cx="50" cy="16" r="1.2" fill="#d4a76a"/>
+      <circle cx="50" cy="28" r="1.0" fill="#67e8f9"/>
+      <line x1="50" y1="50" x2="50" y2="6"  stroke="rgba(139,155,255,0.35)" stroke-width="0.5"/>
+      <line x1="50" y1="50" x2="86" y2="50" stroke="rgba(212,167,106,0.30)" stroke-width="0.5"/>
+      <line x1="50" y1="50" x2="22" y2="78" stroke="rgba(103,232,249,0.30)" stroke-width="0.5"/>
+      <circle cx="50" cy="50" r="2" fill="#f0f0f6"/>
+    </svg>
+
+    <span class="eyebrow">Page not found</span>
+    <div class="code">404</div>
+    <div class="lead">This page drifted out of orbit.</div>
+    <div class="path">No page at <b id="bad-path">/</b></div>
+
+    <div class="suggest-label" id="suggest-label" hidden>Were you looking for</div>
+    <div class="suggestions" id="suggestions"></div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Go to the homepage</a>
+      <span class="timer" id="timer" title="Click anywhere to stay">
+        <span class="ring">
+          <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="bg" cx="18" cy="18" r="15.5"></circle><circle class="fg" id="ring-fg" cx="18" cy="18" r="15.5"></circle></svg>
+          <b id="count">15</b>
+        </span>
+        <span id="timer-text">redirecting to home&hellip;</span>
+      </span>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var b=document.getElementById('theme-toggle');
+      if(b)b.addEventListener('click',function(){var c=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';var n=c==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}});
+
+      var path = location.pathname || '/';
+      document.getElementById('bad-path').textContent = path + (location.hash||'');
+
+      // ---- Embedded fallback routes for emmaleonhart.com. On a sister
+      // site /sitemap.xml (if present) overrides this, so the SAME file
+      // is correct everywhere; this list is the per-site swap point. ----
+      var ROUTES = [
+        ['/', 'Home'],
+        ['/projects/', 'Projects'],
+        ['/research/', 'Research'],
+        ['/tutorials/', 'ML tutorials'],
+        ['/theory/', 'Loka theory'],
+        ['/examples/', 'Visual identity gallery'],
+        ['/branding', 'Branding / style guide'],
+        ['/resume.html', 'Résumé'],
+        ['/dotproduct/', 'Dot product'],
+        ['/crossproduct/', 'Cross product'],
+        ['/cosine-similarity/', 'Cosine similarity'],
+        ['/mlp/', 'Multilayer perceptron'],
+        ['/backpropagation/', 'Backpropagation'],
+        ['/regression/', 'Regression'],
+        ['/feature-transforms/', 'Feature transforms'],
+        ['/loss-functions/', 'Loss functions'],
+        ['/regularization/', 'Regularization'],
+        ['/optimizers/', 'Optimizers'],
+        ['/cnn/', 'Convolutional networks'],
+        ['/cnn-architectures/', 'CNN architectures'],
+        ['/rnn/', 'Recurrent networks'],
+        ['/lstm/', 'LSTM'],
+        ['/attention/', 'Attention']
+      ];
+
+      function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
+      function lev(a,b){
+        a=a||''; b=b||''; var m=a.length,n=b.length,i,j;
+        if(!m)return n; if(!n)return m;
+        var d=[]; for(i=0;i<=m;i++)d[i]=[i];
+        for(j=0;j<=n;j++)d[0][j]=j;
+        for(i=1;i<=m;i++)for(j=1;j<=n;j++)
+          d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+        return d[m][n];
+      }
+      function score(target, routePath, routeLabel){
+        var t=norm(target), rp=norm(routePath), rl=norm(routeLabel);
+        var best=1e9;
+        [rp,rl].forEach(function(c){
+          var L=Math.max(t.length,c.length)||1;
+          var s=lev(t,c)/L;                 // 0 = identical, 1 = nothing alike
+          if(c&&t&&(c.indexOf(t)>=0||t.indexOf(c)>=0)) s-=0.35;  // substring boost
+          if(s<best)best=s;
+        });
+        return best;
+      }
+      function render(routes){
+        var here=path.replace(/\/+$/,'')||'/';
+        var ranked=routes
+          .filter(function(r){ return (r[0].replace(/\/+$/,'')||'/')!==here; })
+          .map(function(r){ return {p:r[0],l:r[1],s:score(path,r[0],r[1])}; })
+          .sort(function(a,b){ return a.s-b.s; });
+        var top=ranked.filter(function(r){ return r.s<0.78; }).slice(0,4);
+        if(top.length<2) top=ranked.slice(0,3);   // always offer a few
+        var box=document.getElementById('suggestions');
+        box.innerHTML='';
+        top.forEach(function(r){
+          var a=document.createElement('a'); a.href=r.p;
+          a.innerHTML='<span>'+r.l+'</span><span class="s-path">'+r.p+'</span>';
+          box.appendChild(a);
+        });
+        if(top.length) document.getElementById('suggest-label').hidden=false;
+      }
+
+      // Prefer this site's sitemap.xml (keeps the file truly unified);
+      // fall back to the embedded ROUTES if absent or unparseable.
+      fetch('/sitemap.xml').then(function(r){return r.ok?r.text():null;}).then(function(xml){
+        if(!xml) throw 0;
+        var locs=xml.match(/<loc>([^<]+)<\/loc>/g)||[];
+        if(!locs.length) throw 0;
+        var routes=locs.map(function(m){
+          var u=m.replace(/<\/?loc>/g,'');
+          var p; try{ p=new URL(u).pathname; }catch(e){ p=u; }
+          var label=p.replace(/\/+$/,'').split('/').pop()||'Home';
+          label=label.replace(/[-_]+/g,' ').replace(/\.html?$/,'') || 'Home';
+          label=label.charAt(0).toUpperCase()+label.slice(1);
+          return [p,label];
+        });
+        render(routes);
+      }).catch(function(){ render(ROUTES); });
+
+      // ---- Visible 15s countdown → auto-redirect to subdomain root.
+      // Any interaction cancels it (don't yank a reading user away). ----
+      var secs=15, ring=document.getElementById('ring-fg'),
+          C=2*Math.PI*15.5, cancelled=false, timer=document.getElementById('timer');
+      ring.style.strokeDasharray=C; ring.style.strokeDashoffset=0;
+      function cancel(){
+        if(cancelled)return; cancelled=true; clearInterval(iv);
+        timer.classList.add('paused');
+        document.getElementById('timer-text').textContent='auto-redirect cancelled';
+        document.getElementById('count').textContent='·';
+      }
+      ['click','keydown','wheel','touchstart'].forEach(function(ev){
+        window.addEventListener(ev,cancel,{once:true,passive:true});
+      });
+      var iv=setInterval(function(){
+        secs--;
+        document.getElementById('count').textContent=secs;
+        ring.style.strokeDashoffset = C*((15-secs)/15);
+        if(secs<=0){ clearInterval(iv); if(!cancelled) location.replace('/'); }
+      },1000);
+    })();
+  </script>
+</body>
+</html>

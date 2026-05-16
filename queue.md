@@ -57,6 +57,16 @@ mechanism, iterated in ONE place. No more per-site ad-hoc tweaks.
 7. Cosmic orbital glyph (rotating hero SVG) — now on /branding too;
    more cosmic background elements wanted (todo.md).
 8. Gradient + italic-serif display type (flagged to revisit, todo.md).
+9. Unified 404 page (from PR #12 / EmmaLeonhart-patch-1, restored here
+   after a queue rewrite ate it): shared identity, visible 15s
+   countdown, suggested pages ranked by URL similarity (sitemap.xml
+   if present, else an embedded route list), auto-redirect to the
+   subdomain root at 0. Same file on every site.
+
+### Restored from PR #12 (supersedes that PR — implement on master)
+Build the canonical `pages/404.html` on emmaleonhart.com now; the
+unified-pipeline rollout (cron 4 / P3) ships the same template to
+every sister site (GitHub Pages serves `/404.html` automatically).
 
 ### Pipeline phases
 - P1 SKIN — DONE + pushed across all repos (palette, calmer/aurora
@@ -86,11 +96,13 @@ then: re-sync every sister `identity.css` byte-for-byte from canonical
 (loka/querykey/alignment/yantra/vibecoding/cleanvibe); map the same
 tokens into Sutra's Material `docs/stylesheets/identity.css`; apply
 the aurora-box + emoji card convention + the cosmic orbital glyph to
-each site's existing card grids / hero where they exist; commit + push
-every touched repo to its OWN remote; bump submodule pointers; verify
+each site's existing card grids / hero where they exist; copy the
+canonical `pages/404.html` into every sister site's publish dir so
+GitHub Pages serves the unified 404 there too; commit + push every
+touched repo to its OWN remote; bump submodule pointers; verify
 local==origin. Do NOT restructure Loka's per-page HTML (separate P3
-long-haul) — skin + cards + glyph only. Delete this item + mark the
-task done when finished.
+long-haul) — skin + cards + glyph + 404 only. Delete this item + mark
+the task done when finished.
 
 ---
 
