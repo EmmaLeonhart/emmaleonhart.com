@@ -117,7 +117,33 @@
     .section { margin-bottom: 64px; }
 
     .kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .kit .card { display: flex; flex-direction: column; gap: 14px; }
+    /* Aurora box: the gradient-glow + accent-bar card from the main
+       site, ported here. Every kit card is an aurora box AND carries
+       an emoji (Emma: "everything either has an Aurora or an emoji").
+       Colour cycles k-a..k-d for the cosmic multi-hue feel. */
+    .kit .card {
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; gap: 14px;
+      --k: var(--accent); --k-soft: rgba(139,155,255,0.12); --k-glow: rgba(139,155,255,0.32);
+      transition: transform 0.28s cubic-bezier(0.2,0.8,0.2,1), border-color 0.28s, box-shadow 0.28s, background 0.28s;
+    }
+    .kit .card::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, var(--k-soft) 0%, transparent 52%);
+      opacity: 0.55; transition: opacity 0.28s;
+    }
+    .kit .card::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--k) 0%, transparent 100%); opacity: 0.7;
+    }
+    .kit .card:hover { transform: translateY(-3px); border-color: var(--k); box-shadow: 0 22px 50px -28px var(--k-glow); }
+    .kit .card:hover::before { opacity: 1; }
+    .kit .card > * { position: relative; z-index: 1; }
+    .kit .card .k-tag { color: var(--k); }
+    .kit .k-a { --k: var(--accent); --k-soft: rgba(139,155,255,0.12); --k-glow: rgba(139,155,255,0.32); }
+    .kit .k-b { --k: #67e8f9; --k-soft: rgba(103,232,249,0.12); --k-glow: rgba(103,232,249,0.30); }
+    .kit .k-c { --k: #fb7185; --k-soft: rgba(251,113,133,0.12); --k-glow: rgba(251,113,133,0.30); }
+    .kit .k-d { --k: var(--sutra); --k-soft: rgba(212,167,106,0.12); --k-glow: rgba(212,167,106,0.30); }
     .kit .k-tag {
       font-family: var(--mono); font-size: 0.64rem; font-weight: 500;
       text-transform: uppercase; letter-spacing: 1.4px; color: var(--accent);
@@ -189,14 +215,14 @@
       <h2><span class="num">01 &mdash;</span> The shared kit</h2>
       <div class="kit" id="kit">
 
-        <div class="card" data-kit="structure top bar layout main site">
+        <div class="card k-a" data-kit="structure top bar layout main site">
           <span class="k-tag">Structure</span>
           <div class="k-title"><span class="k-emoji">&#129517;</span>Main-site layout</div>
           <p class="k-desc">The structure you like from emmaleonhart.com: fixed translucent top bar, brand left, generous sectioned body, numbered section headers. This whole page is that structure.</p>
           <div class="k-demo"><a class="btn btn-secondary" href="/">See the main site</a></div>
         </div>
 
-        <div class="card" data-kit="palette colour box lacquer tokens">
+        <div class="card k-b" data-kit="palette colour box lacquer tokens">
           <span class="k-tag">Palette</span>
           <div class="k-title"><span class="k-emoji">&#127912;</span>Lacquer tokens</div>
           <p class="k-desc">One palette, flips with the theme. The "box / colour" surfaces from Sutra and the rest all resolve to these tokens in <code>/identity.css</code>.</p>
@@ -210,7 +236,7 @@
           </div>
         </div>
 
-        <div class="card" data-kit="buttons loka primary secondary calmer">
+        <div class="card k-c" data-kit="buttons loka primary secondary calmer">
           <span class="k-tag">Buttons</span>
           <div class="k-title"><span class="k-emoji">&#128280;</span>The Loka feel</div>
           <p class="k-desc">The buttons you like from Loka, now the single shared <code>.btn</code>. Primary recoloured to a <strong>calmer</strong> mid-tone fill &mdash; not the garish bright block. Live below.</p>
@@ -220,7 +246,7 @@
           </div>
         </div>
 
-        <div class="card" data-kit="github widget repo stars version sutra material">
+        <div class="card k-d" data-kit="github widget repo stars version sutra material">
           <span class="k-tag">GitHub widget</span>
           <div class="k-title"><span class="k-emoji">&#128025;</span>The prominent one</div>
           <p class="k-desc">Sutra's Material repo widget, verbatim: octocat, <code>Owner/Repo</code>, then version &middot; stars &middot; forks. The visible one you prefer over the small pill. Live, in the bar above.</p>
@@ -239,7 +265,7 @@
           </div>
         </div>
 
-        <div class="card" data-kit="search box material find compact">
+        <div class="card k-a" data-kit="search box material find compact">
           <span class="k-tag">Search</span>
           <div class="k-title"><span class="k-emoji">&#128269;</span>The search box</div>
           <p class="k-desc">The Material search, as a shared component &mdash; now compact, expanding on focus. The one in the bar filters these cards live; try typing "buttons".</p>
@@ -251,21 +277,21 @@
           </div>
         </div>
 
-        <div class="card" data-kit="light dark mode toggle theme">
+        <div class="card k-b" data-kit="light dark mode toggle theme">
           <span class="k-tag">Theme</span>
           <div class="k-title"><span class="k-emoji">&#127765;</span>Light / dark toggle</div>
           <p class="k-desc">The exact MkDocs-Material sun/moon toggle, dark by default, persisted. It sits right next to the GitHub widget in the bar &mdash; click it up there.</p>
           <div class="k-demo"><span class="k-desc">Top-right of the bar, beside the repo widget.</span></div>
         </div>
 
-        <div class="card" data-kit="aurora glow background gradient loka">
+        <div class="card k-c" data-kit="aurora glow background gradient loka">
           <span class="k-tag">Aurora</span>
           <div class="k-title"><span class="k-emoji">&#127756;</span>The side glow</div>
           <p class="k-desc">The soft blurred glow at the edges (you liked it on Loka) &mdash; the shared <code>.aurora</code> in <code>/identity.css</code>. It is behind this page right now.</p>
           <div class="k-demo"><span class="k-desc">Look at the corners of the page.</span></div>
         </div>
 
-        <div class="card" data-kit="display type gradient italic serif headline">
+        <div class="card k-d" data-kit="display type gradient italic serif headline">
           <span class="k-tag">Display type</span>
           <div class="k-title"><span class="k-emoji">&#9999;&#65039;</span>Gradient &amp; <span class="serif">italic</span></div>
           <p class="k-desc">The gradient headline + italic-serif accent you like (the "Vibe Coding, <em>done properly</em>" look). Kept as an identity element &mdash; flagged in <code>todo.md</code> to revisit whether to dial it back.</p>
