@@ -60,6 +60,16 @@
       "vibes": 6,
       "desc": "Reproducibility artifact for the Claw4S 2026 paper applying TransE-style relational displacement analysis to <strong>frozen</strong> embedding models with Wikidata triples as probes &mdash; surfacing 30 model-agnostic relational operations and a silent <code>[UNK]</code> tokenizer defect in mxbai-embed-large.",
       "tags": ["Research", "Embeddings", "Wikidata"]
+    },
+    {
+      "key": "vibecoding",
+      "name": "Vibecoding Tutorial",
+      "flagship": false,
+      "subdomain": "vibecoding.emmaleonhart.com",
+      "repo": "EmmaLeonhart/vibecoding-tutorial",
+      "vibes": 7,
+      "desc": "A beginner-friendly guide to vibe coding as a discipline &mdash; building real software through AI collaboration while staying in control, with documentation, version control, and tests. Nine chapters from a zero-experience setup to a working AI-assisted workflow, scaffolded with cleanvibe.",
+      "tags": ["Tutorial", "Vibe coding", "AI workflow"]
     }
   ]
 }
