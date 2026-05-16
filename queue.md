@@ -18,6 +18,16 @@ unified pipeline should unify this stuff
 
 remove references to the embedding viewer thing, I havent done anything with it in a long time but it is still in the readme
 
+all of the sites need 404 pages, and a unified 404 structure between them
+
+imo one that uses the search function or sitemap to do something like
+
+timer starts  and is visible and counts down for 15 seconds
+
+gives a list of pages they may have been looking for based on url similarity (or embeddings lol)
+
+after 15 seconds auto redirects to the root of the subdomain
+
 ## ACTIVE — vibecoding/cleanvibe onboarding + button-identity unification (2026-05-16)
 
 Plan set at 2026-05-16 13:35 -0700. Two new sister projects join the
