@@ -24,6 +24,15 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 This is a large, multi-pass redo. Commit+push per logical group; do NOT claim "done" until pages actually render the same. Emma reviews live on GitHub Pages — she is the ground truth, not the diff.
 
+**Granular execution checklist (in order; each line = one commit+push):**
+- [P1] Rewrite `scripts/apply_identity.py`: stop INJECTING duplicated CSS. Instead ensure `<link rel="stylesheet" href="/identity.css">` is present (before the first `<style>`) and STRIP the previously-injected `IDENTITY_CSS` constant from the page `<style>`. Run it on the 25 Group-A Slate/theory/tutorials pages (chrome hexes already var()-ified). Verify mlp + one theory page render in dark+light.
+- [P2] Group-B hand-authored pages (`index.html`, `projects/index.html`, `research/index.html`): replace the inline `:root` dark tokens + `html[data-theme="light"]` block + `.theme-toggle` CSS with the linked `/identity.css`; keep page-specific layout + any extra tokens (e.g. index's `--bg-card-hover`). Convert primary CTAs to `.btn`/`.btn-primary`/`.btn-secondary`.
+- [P3] `pages/_identity/index.html`: link `/identity.css`, strip the inlined identity CSS, keep only the demo-page layout. It becomes the LIVE demo of the shared sheet.
+- [P4] `build_viewer.py`: add `/identity.css` link + pre-paint + toggle + handler to the embeddings template; rebuild `pages/embeddings/index.html`.
+- [P5] Sister sites in `repos/`: copy `identity.css` into each repo root/site dir; convert Loka (proper, not cascade-override), Yantra, QueryKey, Alignment pages to link it + shared toggle/buttons. Push each sister repo on its default branch; bump submodule pointers here.
+- [P6] Sutra: no code change — keep the Material `extra_css` steer (already genuinely consistent within Material). Record decision.
+- [P7] Final pass: visual diff all main-site pages dark+light; update README + experiment_log; delete this whole section from queue.
+
 ---
 
 ## Subdomain RENDER diagnostic — RESOLVED (Emma was right: repo Pages-setting, not DNS/cert)
