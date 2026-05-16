@@ -671,3 +671,22 @@ Latent-space-cartography contributes no hosted style — it's a research repo wh
 - Yantra/QueryKey/Alignment landing pages are essentially Lacquer with the per-project `eyebrow` text and lede copy swapped. Their CSS is functionally a copy of the same template.
 - Loka's Pewter style is the most divergent of the sister sites — it predates the Lacquer template the others adopted and has not been migrated.
 - Sutra's Heather is structurally separate (it's a documentation site, not a one-pager) — bringing it into a unified identity would mean either restyling MkDocs Material or replacing it with a hand-authored landing.
+
+---
+
+## Subdomain Render Diagnostic v2 — it's a Pages custom-domain SETTING issue, not DNS/cert-account
+
+**Date:** 2026-05-15, prompted by Emma: "most have Enforce-HTTPS, I've seen this with sutradb.org/sutralang.dev before — it's a git/repo issue, not DNS." She was right; this **supersedes** the earlier "account-level domain verification" conclusion.
+
+**Method:** scanned every CNAME file (all dirs), remote branches, and Pages workflows in all six repos; read the legacy-domain git history.
+
+**Findings:**
+- Every repo's *deployed* root CNAME is correct: yantra/querykey/alignment `site/CNAME`, loka `pages/CNAME`, lsc `docs/CNAME`, sutra `_site/CNAME` (mkdocs copies `docs/CNAME` = sutra.emmaleonhart.com). No `gh-pages` branches anywhere.
+- The two "extra" Pages workflows are **INERT**: `sutra/sutraDB/.github/workflows/pages.yml` and `lsc/old/redoing-paper/old-paper/.github/workflows/pages.yml`. GitHub Actions only runs workflows in the **repo-root** `.github/workflows/`; nested ones never execute. They were confusing cruft, not an active cause. Removed (sutra@a86ec70f, lsc@5377bba).
+- Legacy-domain history is the tell: Loka's log has `97e77a5 docs: migrate domain sutradb.org → loka.emmaleonhart.com` AND **`e136870 Repoint Pages custom domain to loka.emmaleonhart.com`** — a human had to manually re-set the Pages *custom-domain setting* once before, because editing the CNAME file alone did not move it. Sutra's `sutraDB/pages/CNAME=sutradb.org` arrived via `47bb6140 Merge SutraDB ... via git subtree`; Sutra's old domain was sutralang.dev.
+
+**Root cause:** the GitHub Pages **per-repo "Custom domain" setting** (server-side persistent state, separate from the CNAME file in the tree) is stuck on / desynced from the legacy domain (sutralang.dev for Sutra, the sutradb.org lineage for Loka, etc.). When that setting doesn't match the live hostname, GitHub serves its default `*.github.io` certificate, whose SAN does not cover `<sub>.emmaleonhart.com` → **`ERR_TLS_CERT_ALTNAME_INVALID`** (our exact symptom). `actions/deploy-pages` does NOT reliably repoint an already-set custom domain, which is why the earlier re-kicks didn't fix it. NOT DNS, NOT the org-wide cert-verification step.
+
+**Fix — per repo, GitHub UI / `gh` (not automatable here, no gh auth):** Settings → Pages → Custom domain: clear it, Save; re-enter the correct `<sub>.emmaleonhart.com`, Save. GitHub re-runs the DNS check and provisions a fresh Let's Encrypt cert. This is exactly what Loka's `e136870` did manually. Applies to sutra, loka, querykey, alignment, latent-space-cartography (yantra already correct).
+
+**Repo cleanups done at source (Emma's "legacy domains in those repos likely cause issues"):** removed `sutra/sutraDB/pages/CNAME` (sutradb.org) + the inert nested workflow (a86ec70f); removed lsc's inert old-paper workflow (5377bba). These don't issue the certs (that's the Settings re-set) but eliminate the recurring legacy-domain landmine and the fragile `--exclude=CNAME` dependence.
