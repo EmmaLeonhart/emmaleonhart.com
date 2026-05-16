@@ -110,7 +110,7 @@ python -m http.server 8000 --directory pages
 ```
 
 ## Conventions
-- **Each visualizer is self-contained.** No shared CSS framework, no shared JS bundle. The dark color palette (`#0a0a0f` bg, `#7c8cf8` accent) is duplicated across pages by hand. This is deliberate — each page can be opened, debugged, and edited without touching the rest of the site.
+- **Shared visual identity via `pages/identity.css`.** (Changed 2026-05-15 — supersedes the old "every page self-contained, palette duplicated by hand" rule, which is exactly what made the site visually inconsistent.) Every page links `/identity.css` for the canonical Lacquer dark/light tokens, the prominent filled buttons (`.btn`), the exact MkDocs-Material dark/light toggle widget (`.theme-toggle`, dark default), and shared surface/card/typography primitives. Pages still own their page-specific layout/visualization CSS, but the *identity* (palette, buttons, toggle, type) is the one shared file — not copied per page. Sutra (MkDocs) uses `docs/stylesheets/identity.css` as its equivalent; sister static sites link their own copy of the same file. The goal is pages that are genuinely the *same*, not merely similar.
 - **Plain HTML where possible, TS where the interaction needs it.** Don't introduce a framework.
 - **No emojis in copy** unless the user asks for them. The 📜 scroll on the Sutra card is the one exception — it's official Sutra branding from the Sutra repo.
 - **Python scripts use `py`** (the Windows launcher) when run locally. `python` and `python3` are NOT on PATH on this machine and will fail. GitHub Actions runners (Linux) still use `python` — that's fine; only local Windows differs.
