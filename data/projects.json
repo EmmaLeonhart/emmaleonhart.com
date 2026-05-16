@@ -70,6 +70,16 @@
       "vibes": 7,
       "desc": "A beginner-friendly guide to vibe coding as a discipline &mdash; building real software through AI collaboration while staying in control, with documentation, version control, and tests. Nine chapters from a zero-experience setup to a working AI-assisted workflow, scaffolded with cleanvibe.",
       "tags": ["Tutorial", "Vibe coding", "AI workflow"]
+    },
+    {
+      "key": "cleanvibe",
+      "name": "cleanvibe",
+      "flagship": false,
+      "subdomain": "cleanvibe.emmaleonhart.com",
+      "repo": "EmmaLeonhart/cleanvibe",
+      "vibes": 8,
+      "desc": "A zero-dependency Python CLI that scaffolds AI-assisted coding projects and launches Claude Code &mdash; injecting an opinionated <code>CLAUDE.md</code> behavior contract (documentation discipline, meaningful commits, file-based thinking) so a project starts structured instead of as a blank-repo scramble. Stable v1.0.0: <code>new</code>, <code>clone</code>, <code>convert</code>, <code>replicate</code>.",
+      "tags": ["Python", "Scaffolding", "AI workflow"]
     }
   ]
 }

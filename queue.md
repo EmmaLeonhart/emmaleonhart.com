@@ -25,10 +25,14 @@ six: `vibecoding-tutorial` → vibecoding.emmaleonhart.com,
 `cleanvibe` → cleanvibe.emmaleonhart.com. cleanvibe is in flux until
 ~15:05 today (new features landing), so its work is deferred to a cron.
 
-### B. CRON 1 (~15:08 today, after cleanvibe flux) — cleanvibe full integration
-Same as A but for `cleanvibe` (vibes=8, cleanvibe.emmaleonhart.com).
-Commit + push all three repos (cleanvibe + emmaleonhart.com + re-touch
-vibecoding if identity changed). Detailed steps live in the cron prompt.
+cleanvibe is now INTEGRATED (cron 1 / e276c1ae fired ~15:08): submodule
+added; `repos/cleanvibe/pages/` subdomain site built on the shared
+identity (verbatim canonical identity.css, calmer aurora button,
+verbatim Material GitHub widget, compact search, aurora-box + emoji
+cards), `pages/CNAME` = cleanvibe.emmaleonhart.com, Pages workflow
+repointed site/ → pages/; added to data/projects.json (vibes 8) +
+ranked into nav/projects; old "Other Projects" card removed. Pushed:
+cleanvibe @ 0b31c39 + emmaleonhart.com. C/D crons still pending.
 
 ### C. CRON 2 (~19:37 today, +6h) — cleanvibe follow-up
 Check cleanvibe for commits landed since cron 1. If any: bump the

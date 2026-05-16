@@ -19,3 +19,6 @@
 [submodule "repos/vibecoding-tutorial"]
 	path = repos/vibecoding-tutorial
 	url = https://github.com/EmmaLeonhart/vibecoding-tutorial
+[submodule "repos/cleanvibe"]
+	path = repos/cleanvibe
+	url = https://github.com/EmmaLeonhart/cleanvibe
