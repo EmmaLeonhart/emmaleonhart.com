@@ -75,7 +75,7 @@ def render_card(p: dict) -> str:
         + f'        <p class="p-desc">{p["desc"]}</p>\n'
         + '        <div class="p-foot">\n'
         + tags
-        + f'          <a class="p-gh" href="https://github.com/{p["repo"]}">GitHub</a>\n'
+        + f'          <a class="btn btn-secondary" href="https://github.com/{p["repo"]}">GitHub</a>\n'
         + "        </div>\n"
         + "      </article>"
     )

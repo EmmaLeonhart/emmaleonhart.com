@@ -663,35 +663,11 @@
       letter-spacing: 0.4px;
     }
 
-    /* === LINKS === */
+    /* === LINKS === Prominent Pewter buttons from /identity.css (.btn) */
     .links {
       display: flex;
-      gap: 24px;
+      gap: 12px;
       flex-wrap: wrap;
-    }
-    .links a {
-      font-family: var(--mono);
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.2px;
-      transition: color 0.2s;
-      position: relative;
-    }
-    .links a::after {
-      content: '\2197';
-      margin-left: 4px;
-      opacity: 0.6;
-      transition: transform 0.2s, opacity 0.2s;
-      display: inline-block;
-    }
-    .links a:hover {
-      color: var(--accent-bright);
-    }
-    .links a:hover::after {
-      opacity: 1;
-      transform: translate(2px, -2px);
     }
 
     /* === SIGNATURE FOOTER MARK === */
@@ -1021,11 +997,11 @@
     <section class="section">
       <h2><span class="num">07 &mdash;</span> Links</h2>
       <div class="links">
-        <a href="https://github.com/EmmaLeonhart">GitHub</a>
-        <a href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>
-        <a href="/tutorials/">Tutorials</a>
-        <a href="/theory/">Theory</a>
-        <a href="/examples/">Examples</a>
+        <a class="btn btn-primary" href="https://github.com/EmmaLeonhart">GitHub</a>
+        <a class="btn btn-secondary" href="https://www.lesswrong.com/users/emma-leonhart">LessWrong</a>
+        <a class="btn btn-secondary" href="/tutorials/">Tutorials</a>
+        <a class="btn btn-secondary" href="/theory/">Theory</a>
+        <a class="btn btn-secondary" href="/examples/">Examples</a>
       </div>
     </section>
 
