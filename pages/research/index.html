@@ -20,53 +20,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <!-- The ONE shared identity: palette, buttons, toggle, type. /_identity/ -->
+  <link rel="stylesheet" href="/identity.css">
+
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #07070c;
-      --bg-soft: #0c0c14;
-      --bg-card: #11111b;
-      --bg-elevated: #14141f;
-      --border: #1d1d2c;
-      --border-hover: #34344e;
-      --border-strong: #262638;
-
-      --text: #d4d4e0;
-      --text-strong: #f0f0f6;
-      --text-mute: #8c8caa;
-      --text-faint: #5d5d78;
-
-      --accent: #8b9bff;
-      --accent-bright: #b0bcff;
-      --accent-soft: rgba(139, 155, 255, 0.10);
-      --accent-glow: rgba(139, 155, 255, 0.28);
-
-      --serif: 'Instrument Serif', 'Times New Roman', serif;
-      --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-    }
-
-    /* Light-mode Lacquer palette (see /_identity/). Same names, values flip. */
-    html[data-theme="light"] {
-      --bg: #f4f4f8;
-      --bg-soft: #ebebf2;
-      --bg-card: #ffffff;
-      --bg-elevated: #fbfbfe;
-      --border: #dadae6;
-      --border-hover: #b6b6cf;
-      --border-strong: #c7c7d8;
-
-      --text: #2b2b38;
-      --text-strong: #14141f;
-      --text-mute: #5c5c74;
-      --text-faint: #8c8caa;
-
-      --accent: #5160dd;
-      --accent-bright: #3a48c4;
-      --accent-soft: rgba(81, 96, 221, 0.10);
-      --accent-glow: rgba(81, 96, 221, 0.22);
-    }
+    /* Palette, buttons, toggle, type and primitives all come from
+       /identity.css — the single source of truth. This hub has no
+       page-specific design tokens; it keeps only its own layout. */
 
     html { scroll-behavior: smooth; }
     body {
@@ -234,24 +194,7 @@
     @media (prefers-reduced-motion: reduce) {
       .aurora::before, .aurora::after, .aurora .blob, .eyebrow::before { animation: none !important; }
     }
-    body { transition: background 0.35s ease, color 0.35s ease; }
-
-    /* === TOP-RIGHT DARK/LIGHT TOGGLE (canonical, see /_identity/) === */
-    .theme-toggle {
-      position: fixed; top: 18px; right: 18px; z-index: 200;
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 999px; color: var(--text-mute); cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
-    }
-    .theme-toggle:hover {
-      color: var(--accent-bright); border-color: var(--accent);
-      background: var(--accent-soft); transform: translateY(-1px);
-    }
-    .theme-toggle svg { width: 18px; height: 18px; display: none; }
-    html[data-theme="dark"]  .theme-toggle .icon-sun  { display: block; }
-    html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+    /* body transition + .theme-toggle now come from /identity.css */
   </style>
 </head>
 <body>
