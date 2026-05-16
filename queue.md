@@ -14,17 +14,6 @@ six: `vibecoding-tutorial` → vibecoding.emmaleonhart.com,
 `cleanvibe` → cleanvibe.emmaleonhart.com. cleanvibe is in flux until
 ~15:05 today (new features landing), so its work is deferred to a cron.
 
-### A. NOW — vibecoding-tutorial full integration
-- [ ] Add `repos/vibecoding-tutorial` submodule (github.com/EmmaLeonhart/vibecoding-tutorial, master).
-- [ ] Build its subdomain site in the sister repo: `pages/index.html`
-      linking its own copy of `identity.css`, `pages/CNAME`
-      (`vibecoding.emmaleonhart.com`), `.github/workflows/pages.yml`,
-      mirroring the Loka pattern. Content from the repo's actual tutorial.
-- [ ] Promote it in `data/projects.json` (subdomain/repo/vibes=7), drop
-      its old "Other Projects" GitHub card from `pages/index.html`,
-      add it to the nav dropdown + /projects/ via `scripts/rank_projects.py`.
-- [ ] Commit + push BOTH repos (vibecoding-tutorial sister repo + emmaleonhart.com).
-
 ### B. CRON 1 (~15:08 today, after cleanvibe flux) — cleanvibe full integration
 Same as A but for `cleanvibe` (vibes=8, cleanvibe.emmaleonhart.com).
 Commit + push all three repos (cleanvibe + emmaleonhart.com + re-touch

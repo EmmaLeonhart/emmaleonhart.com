@@ -16,3 +16,6 @@
 [submodule "repos/latent-space-cartography"]
 	path = repos/latent-space-cartography
 	url = https://github.com/EmmaLeonhart/latent-space-cartography
+[submodule "repos/vibecoding-tutorial"]
+	path = repos/vibecoding-tutorial
+	url = https://github.com/EmmaLeonhart/vibecoding-tutorial
