@@ -65,6 +65,34 @@
 - [ ] Wait for DNS check to pass (green checkmark in Settings > Pages)
 - [ ] Enable "Enforce HTTPS" checkbox (greyed out until DNS resolves and SSL cert is provisioned)
 
+## Visual identity / style guide
+- [ ] **`/branding` is the living style guide.** It is the single
+  reference for the shared kit (Material GitHub repo widget, compact
+  search, light/dark toggle, calmer primary button, aurora glow,
+  emoji card icons, gradient+italic display type, Lacquer palette).
+  Iterate it first; roll changes out to the sister sites after Emma
+  confirms on `/branding`.
+- [ ] **Revisit: gradient text + italic-serif display treatment.**
+  Emma likes the gradient headline + italic-serif accent (the
+  `Vibe Coding, done properly` hero look) and wants it a consistent
+  identity element — but is unsure others will appreciate it. Keep it
+  in the style guide for now; revisit whether to dial it back / make
+  it opt-in once more of the sites are unified and it can be judged in
+  aggregate. Decision deferred on purpose, not forgotten.
+- [ ] Consider promoting `/branding` to a formal written style guide
+  (tokens + do/don't) if the kit stabilises.
+- [ ] **Cosmic background motifs — expand.** Emma loves the rotating
+  orbital glyph on the main-site hero ("cosmic vibe") and the
+  aurora-neon coloured italics. Enlarged the glyph 2026-05-16; she
+  wants MORE of this: additional subtle cosmic background elements
+  (constellation lines, faint orbital rings, drifting points) layered
+  with the aurora, as a defining identity trait. Build out a small
+  reusable set and put it in `/identity.css` so every site gets it.
+- [ ] **Primary buttons are based on the main-site buttons.** Emma
+  judged the main-site buttons the best (calmer + aurora gradient/glow)
+  — they are now the shared `.btn-primary`. Loka and the rest inherit
+  it. Keep the main site as the button reference.
+
 ## Site Infrastructure
 - [ ] Add favicon
 - [ ] Add Open Graph images for social sharing

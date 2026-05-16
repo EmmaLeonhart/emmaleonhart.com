@@ -72,13 +72,29 @@ buttons + Sutra's prominent Material GitHub repo widget + a Material
 search component + the light/dark toggle (toggle sits next to the
 GitHub widget; search on the other side).
 
-- [ ] Build `pages/branding/index.html` (→ emmaleonhart.com/branding):
-      a demonstration of the unified kit on the one site Emma can see.
-      Each shared element shown live and labelled; GitHub widget points
-      at github.com/EmmaLeonhart/emmaleonhart.com. v1 now; iterate when
-      Emma's reference attachments arrive.
-- [ ] (ongoing, long-term) Reconstruct each sister site from these
-      shared elements. Tracked per-site; awaiting Emma's attachments.
+CONFIRMED kit (locked from Emma's reference screenshots 2026-05-16):
+1. GitHub repo widget = Sutra's Material `.md-source` VERBATIM
+   (octocat + `Owner/Repo` one line + version·stars·forks pill).
+2. Search = compact, expands on focus (NOT a wide box).
+3. Light/dark toggle sits next to the GitHub widget; search opposite.
+4. Primary button = calmer mid-tone fill + near-white label + a
+   subtle AURORA GRADIENT/GLOW (NOT the old garish bright block).
+   Based on the main-site buttons; every site inherits this.
+5. Aurora side-glow = identity element (Emma liked it on Loka).
+6. Emoji card icons = identity element (iconic, eye-catching).
+7. Cosmic motif: the rotating orbital hero glyph — enlarged; MORE
+   cosmic background elements wanted (todo.md).
+8. Gradient + italic-serif display type = identity element, but
+   flagged in todo.md to revisit (Emma unsure others will like it).
+`/branding` is the LIVING STYLE GUIDE — iterate there, then roll out.
+
+- [x] Build `/branding` (shipped + iterated: verbatim widget, compact
+      search, emoji cards, aurora-gradient button, glyph).
+- [ ] (ongoing) Reconstruct each sister site from the confirmed kit.
+      Done so far: shared `identity.css` (palette + calmer/aurora
+      button) on loka/querykey/alignment/yantra/vibecoding; Sutra
+      chrome restyled (dark header/tabs/widget/search) + button.
+      Remaining: per-site layout alignment to the main-site structure.
 
 ---
 

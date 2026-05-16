@@ -48,44 +48,51 @@
     /* the canonical toggle, moved out of its fixed corner into the bar */
     .site-nav .theme-toggle { position: static; top: auto; right: auto; }
 
-    /* ---- Shared component: search box ---- */
+    /* ---- Shared component: search box — compact, expands on focus
+       (Material-style, as Emma asked). ---- */
     .search {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 14px; border-radius: 8px;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 12px; border-radius: 8px;
       background: var(--bg-card); border: 1px solid var(--border);
-      transition: border-color 0.2s, background 0.2s;
-      min-width: 220px;
+      transition: border-color 0.2s, background 0.2s, width 0.25s ease;
+      width: 152px;
     }
-    .search:focus-within { border-color: var(--accent); background: var(--bg-elevated); }
-    .search svg { width: 15px; height: 15px; fill: var(--text-mute); flex: none; }
+    .search:focus-within { border-color: var(--accent); background: var(--bg-elevated); width: 232px; }
+    .search svg { width: 14px; height: 14px; fill: var(--text-mute); flex: none; }
     .search input {
       border: none; outline: none; background: transparent; width: 100%;
-      font-family: var(--sans); font-size: 0.85rem; color: var(--text);
+      font-family: var(--sans); font-size: 0.82rem; color: var(--text);
     }
     .search input::placeholder { color: var(--text-faint); }
-    @media (max-width: 680px) { .search { min-width: 0; width: 130px; } .site-nav .brand { font-size: 0.74rem; } }
+    @media (max-width: 680px) { .search { width: 120px; } .search:focus-within { width: 150px; } .site-nav .brand { font-size: 0.74rem; } }
 
-    /* ---- Shared component: prominent GitHub repo widget ---- */
+    /* ---- Shared component: the GitHub repo widget, reproduced
+       verbatim from Sutra's Material .md-source (Emma's pick): octocat
+       + Owner/Repo on one line + a version·stars·forks facts row, in
+       the accent pill. This is the canonical widget to spread. ---- */
     .repo-widget {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 9px 16px; border-radius: 10px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 11px;
+      padding: 8px 15px; border-radius: 8px; text-decoration: none;
       background: var(--accent-soft); border: 1px solid var(--border-hover);
-      color: var(--text-strong); font-family: var(--mono);
+      color: var(--text-strong);
       transition: border-color 0.2s, background 0.2s, transform 0.2s;
     }
     .repo-widget:hover { border-color: var(--accent); transform: translateY(-1px); color: var(--text-strong); }
-    .repo-widget .mark { width: 20px; height: 20px; fill: var(--accent); flex: none; }
-    .repo-widget .repo-name { display: flex; flex-direction: column; line-height: 1.25; }
-    .repo-widget .repo-name b { font-size: 0.82rem; font-weight: 600; }
-    .repo-widget .repo-name span { font-size: 0.68rem; color: var(--text-mute); }
-    .repo-widget .repo-stats {
-      display: flex; align-items: center; gap: 12px;
-      padding-left: 12px; border-left: 1px solid var(--border-hover);
-      font-size: 0.78rem; color: var(--text-mute); font-variant-numeric: tabular-nums;
+    .repo-widget .rw-icon { display: flex; flex: none; }
+    .repo-widget .rw-icon svg { width: 23px; height: 23px; fill: var(--accent); }
+    .repo-widget .rw-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .repo-widget .rw-repo {
+      font-family: var(--sans); font-size: 0.8rem; font-weight: 700;
+      line-height: 1.2; color: var(--text-strong);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .repo-widget .repo-stats i { font-style: normal; display: inline-flex; align-items: center; gap: 4px; }
-    .repo-widget .repo-stats svg { width: 13px; height: 13px; fill: currentColor; }
-    @media (max-width: 680px) { .repo-widget .repo-stats { display: none; } }
+    .repo-widget .rw-facts {
+      display: flex; align-items: center; gap: 11px;
+      font-family: var(--sans); font-size: 0.66rem; color: var(--text-mute);
+    }
+    .repo-widget .rw-fact { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+    .repo-widget .rw-fact svg { width: 12px; height: 12px; fill: currentColor; flex: none; }
+    .repo-widget .rw-fact.is-empty { display: none; }
 
     /* ---- Page layout ---- */
     .hero { margin-bottom: 60px; }
@@ -116,6 +123,7 @@
       text-transform: uppercase; letter-spacing: 1.4px; color: var(--accent);
     }
     .kit .k-title { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--text-strong); }
+    .kit .k-emoji { font-style: normal; font-size: 1.05em; margin-right: 0.5rem; }
     .kit .k-desc { font-size: 0.9rem; color: var(--text-mute); line-height: 1.6; }
     .kit .k-demo { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 
@@ -147,19 +155,22 @@
     <div class="nav-spacer"></div>
     <label class="search" title="Search the kit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
-      <input id="kit-search" type="search" placeholder="Search the kit" aria-label="Search the kit" autocomplete="off">
+      <input id="kit-search" type="search" placeholder="Search" aria-label="Search the kit" autocomplete="off">
     </label>
     <div class="nav-right">
       <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.86 14.37,18.59L12,22Z"></path></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z"></path></svg>
       </button>
-      <a class="repo-widget" id="repo-widget" href="https://github.com/EmmaLeonhart/emmaleonhart.com">
-        <svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-        <span class="repo-name"><b>emmaleonhart.com</b><span>EmmaLeonhart</span></span>
-        <span class="repo-stats">
-          <i title="Stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg><span id="repo-stars">&middot;</span></i>
-          <i title="Forks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6,2A3,3 0 0,1 9,5C9,6.28 8.19,7.38 7,7.82V11H11V7.82C9.81,7.38 9,6.28 9,5A3,3 0 0,1 12,2A3,3 0 0,1 15,5C15,6.28 14.19,7.38 13,7.82V11H17A2,2 0 0,1 19,13V16.18C20.19,16.62 21,17.72 21,19A3,3 0 0,1 18,22A3,3 0 0,1 15,19C15,17.72 15.81,16.62 17,16.18V13H7V16.18C8.19,16.62 9,17.72 9,19A3,3 0 0,1 6,22A3,3 0 0,1 3,19C3,17.72 3.81,16.62 5,16.18V13A2,2 0 0,1 7,11"/></svg><span id="repo-forks">&middot;</span></i>
+      <a class="repo-widget js-repo" href="https://github.com/EmmaLeonhart/emmaleonhart.com">
+        <span class="rw-icon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></span>
+        <span class="rw-body">
+          <span class="rw-repo">EmmaLeonhart/emmaleonhart.com</span>
+          <span class="rw-facts">
+            <span class="rw-fact rw-version-wrap is-empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.78 12.45,22 13,22C13.55,22 14.05,21.78 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"/></svg><span class="rw-version"></span></span>
+            <span class="rw-fact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg><span class="rw-stars">&middot;</span></span>
+            <span class="rw-fact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6,2A3,3 0 0,1 9,5C9,6.28 8.19,7.38 7,7.82V11H11V7.82C9.81,7.38 9,6.28 9,5A3,3 0 0,1 12,2A3,3 0 0,1 15,5C15,6.28 14.19,7.38 13,7.82V11H17A2,2 0 0,1 19,13V16.18C20.19,16.62 21,17.72 21,19A3,3 0 0,1 18,22A3,3 0 0,1 15,19C15,17.72 15.81,16.62 17,16.18V13H7V16.18C8.19,16.62 9,17.72 9,19A3,3 0 0,1 6,22A3,3 0 0,1 3,19C3,17.72 3.81,16.62 5,16.18V13A2,2 0 0,1 7,11"/></svg><span class="rw-forks">&middot;</span></span>
+          </span>
         </span>
       </a>
     </div>
@@ -180,63 +191,85 @@
 
         <div class="card" data-kit="structure top bar layout main site">
           <span class="k-tag">Structure</span>
-          <div class="k-title">Main-site layout</div>
+          <div class="k-title"><span class="k-emoji">&#129517;</span>Main-site layout</div>
           <p class="k-desc">The structure you like from emmaleonhart.com: fixed translucent top bar, brand left, generous sectioned body, numbered section headers. This whole page is that structure.</p>
           <div class="k-demo"><a class="btn btn-secondary" href="/">See the main site</a></div>
         </div>
 
         <div class="card" data-kit="palette colour box lacquer tokens">
           <span class="k-tag">Palette</span>
-          <div class="k-title">Lacquer tokens</div>
+          <div class="k-title"><span class="k-emoji">&#127912;</span>Lacquer tokens</div>
           <p class="k-desc">One palette, flips with the theme. The "box / colour" surfaces from Sutra and the rest all resolve to these tokens in <code>/identity.css</code>.</p>
           <div class="k-demo swatches">
             <div class="sw-wrap"><span class="swatch" style="background:var(--bg)"></span><span class="sw-label">bg</span></div>
             <div class="sw-wrap"><span class="swatch" style="background:var(--bg-card)"></span><span class="sw-label">card</span></div>
             <div class="sw-wrap"><span class="swatch" style="background:var(--border-hover)"></span><span class="sw-label">border</span></div>
             <div class="sw-wrap"><span class="swatch" style="background:var(--accent)"></span><span class="sw-label">accent</span></div>
+            <div class="sw-wrap"><span class="swatch" style="background:var(--accent-deep)"></span><span class="sw-label">btn</span></div>
             <div class="sw-wrap"><span class="swatch" style="background:var(--sutra)"></span><span class="sw-label">sutra</span></div>
           </div>
         </div>
 
-        <div class="card" data-kit="buttons loka primary secondary">
+        <div class="card" data-kit="buttons loka primary secondary calmer">
           <span class="k-tag">Buttons</span>
-          <div class="k-title">The Loka feel</div>
-          <p class="k-desc">The buttons you like from Loka, now the single shared <code>.btn</code> in <code>/identity.css</code> &mdash; chunky, filled primary, Pewter secondary. Live below.</p>
+          <div class="k-title"><span class="k-emoji">&#128280;</span>The Loka feel</div>
+          <p class="k-desc">The buttons you like from Loka, now the single shared <code>.btn</code>. Primary recoloured to a <strong>calmer</strong> mid-tone fill &mdash; not the garish bright block. Live below.</p>
           <div class="k-demo">
             <a class="btn btn-primary" href="#">Primary</a>
             <a class="btn btn-secondary" href="#">Secondary</a>
           </div>
         </div>
 
-        <div class="card" data-kit="github widget repo stars sutra material">
+        <div class="card" data-kit="github widget repo stars version sutra material">
           <span class="k-tag">GitHub widget</span>
-          <div class="k-title">The prominent one</div>
-          <p class="k-desc">Sutra's Material repo widget &mdash; the visible one you prefer over the small pill. Live stars/forks, in the bar above. Here it points at this site's repo.</p>
+          <div class="k-title"><span class="k-emoji">&#128025;</span>The prominent one</div>
+          <p class="k-desc">Sutra's Material repo widget, verbatim: octocat, <code>Owner/Repo</code>, then version &middot; stars &middot; forks. The visible one you prefer over the small pill. Live, in the bar above.</p>
           <div class="k-demo">
-            <a class="repo-widget" href="https://github.com/EmmaLeonhart/emmaleonhart.com">
-              <svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-              <span class="repo-name"><b>emmaleonhart.com</b><span>EmmaLeonhart</span></span>
+            <a class="repo-widget js-repo" href="https://github.com/EmmaLeonhart/emmaleonhart.com">
+              <span class="rw-icon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></span>
+              <span class="rw-body">
+                <span class="rw-repo">EmmaLeonhart/emmaleonhart.com</span>
+                <span class="rw-facts">
+                  <span class="rw-fact rw-version-wrap is-empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.78 12.45,22 13,22C13.55,22 14.05,21.78 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"/></svg><span class="rw-version"></span></span>
+                  <span class="rw-fact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg><span class="rw-stars">&middot;</span></span>
+                  <span class="rw-fact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6,2A3,3 0 0,1 9,5C9,6.28 8.19,7.38 7,7.82V11H11V7.82C9.81,7.38 9,6.28 9,5A3,3 0 0,1 12,2A3,3 0 0,1 15,5C15,6.28 14.19,7.38 13,7.82V11H17A2,2 0 0,1 19,13V16.18C20.19,16.62 21,17.72 21,19A3,3 0 0,1 18,22A3,3 0 0,1 15,19C15,17.72 15.81,16.62 17,16.18V13H7V16.18C8.19,16.62 9,17.72 9,19A3,3 0 0,1 6,22A3,3 0 0,1 3,19C3,17.72 3.81,16.62 5,16.18V13A2,2 0 0,1 7,11"/></svg><span class="rw-forks">&middot;</span></span>
+                </span>
+              </span>
             </a>
           </div>
         </div>
 
-        <div class="card" data-kit="search box material find">
+        <div class="card" data-kit="search box material find compact">
           <span class="k-tag">Search</span>
-          <div class="k-title">The search box</div>
-          <p class="k-desc">The Material search you like, as a shared component. The one in the bar filters these cards live &mdash; try typing "buttons".</p>
+          <div class="k-title"><span class="k-emoji">&#128269;</span>The search box</div>
+          <p class="k-desc">The Material search, as a shared component &mdash; now compact, expanding on focus. The one in the bar filters these cards live; try typing "buttons".</p>
           <div class="k-demo">
-            <span class="search" style="min-width:0;width:100%">
+            <span class="search" style="width:100%">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
-              <input type="search" placeholder="Shared search component" aria-label="demo" disabled>
+              <input type="search" placeholder="Compact search" aria-label="demo" disabled>
             </span>
           </div>
         </div>
 
         <div class="card" data-kit="light dark mode toggle theme">
           <span class="k-tag">Theme</span>
-          <div class="k-title">Light / dark toggle</div>
+          <div class="k-title"><span class="k-emoji">&#127765;</span>Light / dark toggle</div>
           <p class="k-desc">The exact MkDocs-Material sun/moon toggle, dark by default, persisted. It sits right next to the GitHub widget in the bar &mdash; click it up there.</p>
           <div class="k-demo"><span class="k-desc">Top-right of the bar, beside the repo widget.</span></div>
+        </div>
+
+        <div class="card" data-kit="aurora glow background gradient loka">
+          <span class="k-tag">Aurora</span>
+          <div class="k-title"><span class="k-emoji">&#127756;</span>The side glow</div>
+          <p class="k-desc">The soft blurred glow at the edges (you liked it on Loka) &mdash; the shared <code>.aurora</code> in <code>/identity.css</code>. It is behind this page right now.</p>
+          <div class="k-demo"><span class="k-desc">Look at the corners of the page.</span></div>
+        </div>
+
+        <div class="card" data-kit="display type gradient italic serif headline">
+          <span class="k-tag">Display type</span>
+          <div class="k-title"><span class="k-emoji">&#9999;&#65039;</span>Gradient &amp; <span class="serif">italic</span></div>
+          <p class="k-desc">The gradient headline + italic-serif accent you like (the "Vibe Coding, <em>done properly</em>" look). Kept as an identity element &mdash; flagged in <code>todo.md</code> to revisit whether to dial it back.</p>
+          <div class="k-demo"><span class="k-desc">See the page title above.</span></div>
         </div>
 
       </div>
@@ -276,14 +309,23 @@
         });
       });
 
-      // Live repo stats for the GitHub widget (graceful on rate-limit).
+      // Live data for every GitHub widget instance (graceful on rate-limit).
+      function setAll(sel,val){document.querySelectorAll(sel).forEach(function(e){e.textContent=val;});}
       fetch('https://api.github.com/repos/EmmaLeonhart/emmaleonhart.com')
         .then(function(r){return r.ok?r.json():null;})
         .then(function(d){
           if(!d)return;
-          var s=document.getElementById('repo-stars'), f=document.getElementById('repo-forks');
-          if(s&&typeof d.stargazers_count==='number')s.textContent=d.stargazers_count;
-          if(f&&typeof d.forks_count==='number')f.textContent=d.forks_count;
+          if(typeof d.stargazers_count==='number')setAll('.rw-stars',d.stargazers_count);
+          if(typeof d.forks_count==='number')setAll('.rw-forks',d.forks_count);
+        }).catch(function(){});
+      // Version fact: latest release tag; stays hidden if the repo has none.
+      fetch('https://api.github.com/repos/EmmaLeonhart/emmaleonhart.com/releases/latest')
+        .then(function(r){return r.ok?r.json():null;})
+        .then(function(d){
+          if(d&&d.tag_name){
+            setAll('.rw-version',d.tag_name);
+            document.querySelectorAll('.rw-version-wrap').forEach(function(e){e.classList.remove('is-empty');});
+          }
         }).catch(function(){});
     })();
   </script>
