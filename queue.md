@@ -37,14 +37,12 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ---
 
-## Subdomain RENDER diagnostic — Emma says it's a git/repo issue, NOT DNS/cert (2026-05-15) — PRIORITY
+## Subdomain RENDER diagnostic — RESOLVED (Emma was right: repo Pages-setting, not DNS/cert)
 
-Emma's correction: most subdomains DO have Enforce-HTTPS, so the account-level cert theory is wrong. She has seen this exact failure with the legacy domains before — `sutradb.org` (Loka's old domain) and `sutralang.dev` (Sutra's old domain). Hypothesis: a **repo-config / git issue** — a competing or legacy `CNAME` file, a stale `gh-pages` branch with an old CNAME, multiple `pages.yml` workflows fighting, or the repo's GitHub Pages custom-domain setting bound to a legacy domain. Investigate per repo:
-- Every `CNAME` file in each repo (all branches, all dirs) — is there a stray one with `sutradb.org` / `sutralang.dev` / wrong subdomain that the deployed artifact picks up instead of the right one?
-- `gh-pages` branch existence + its CNAME, vs the Actions-based deploy.
-- More than one workflow deploying Pages (e.g. Sutra had `sutraDB/.github/workflows/pages.yml` + a `sutraDB/pages/CNAME` = sutradb.org; latent-space had `old/.../pages.yml`).
-- Double-check the legacy→canonical intent: `sutradb.org` → `loka.emmaleonhart.com`, `sutralang.dev` → `sutra.emmaleonhart.com`. Legacy domains lingering in repo config likely cause the bind to fail.
-Write findings into experiment_log.md; fix what's fixable at source.
+Full writeup: experiment_log.md "Subdomain Render Diagnostic v2". Emma's git/legacy-domain hypothesis confirmed; supersedes the old "account-level verification" theory.
+- Deployed root CNAMEs all correct; no gh-pages branches. The two extra Pages workflows (`sutra/sutraDB/.github/workflows/pages.yml`, `lsc/old/.../pages.yml`) were INERT — GitHub only runs repo-root `.github/workflows/`. Removed as cruft (sutra@a86ec70f, lsc@5377bba) + bumped pointers.
+- Root cause: each repo's GitHub Pages **"Custom domain" setting** (server-side, separate from the CNAME file) is stuck/desynced from the legacy domain (sutralang.dev / sutradb.org lineage), so GitHub serves the `*.github.io` cert → `ERR_TLS_CERT_ALTNAME_INVALID`. Loka's own `e136870 Repoint Pages custom domain` proves a human had to manually un-stick this before. `deploy-pages` won't repoint an already-set domain — that's why the re-kicks didn't help.
+- **USER-ONLY FIX (needs GitHub UI / gh; not automatable here):** per repo (sutra, loka, querykey, alignment, latent-space-cartography) → Settings → Pages → Custom domain: clear it + Save, then re-enter the correct `<sub>.emmaleonhart.com` + Save. Forces DNS re-check + fresh cert. Same as Loka's e136870.
 
 ---
 
@@ -60,12 +58,8 @@ Write findings into experiment_log.md; fix what's fixable at source.
 - /theory/sutradb/ URL path still literally says sutradb (kept to avoid link breakage).
 - publish.yml workflow_dispatch verify (clawRxiv CI path) — not actionable: `gh` not authed on this machine. Do when auth available, or trigger from GitHub UI.
 
-### Subdomain sites — diagnosed 2026-05-15, see experiment_log.md "Subdomain HTTPS Rendering Diagnostic"
-Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Status:
-- Sutra canonical domain RESOLVED → `sutra.emmaleonhart.com` (Emma's call). Fixed across 11 files incl. mkdocs.yml site_url + CLAUDE.md/AGENTS.md, pushed sutra@c25c298c (also re-kicked sutra's pages.yml). Loka was already consistent (loka.emmaleonhart.com everywhere) — no change needed.
-- All 5 re-kicked 2026-05-15 (user-authorized): querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master), sutra c25c298c (master).
-- **Re-check 2026-05-15 ~21:57 PST (~5h after re-kick): all 5 STILL `ERR_TLS_CERT_ALTNAME_INVALID`.** Re-kick alone confirmed insufficient — GitHub is not auto-issuing despite correct config + fresh successful deploys. yantra (provisioned) is the only difference.
-- **→ ACTUAL BLOCKER, user-only (was filed "optional" — it is not):** github.com/settings/pages → add & **verify `emmaleonhart.com`** at account level; then per repo Settings→Pages confirm "DNS check successful" and that "Enforce HTTPS" becomes available. This is now the load-bearing step; the certs are unlikely to issue without it. `gh` not authed on this machine, so this cannot be automated here.
+### Subdomain sites — see the RESOLVED diagnostic section above
+The earlier "account-level domain verification is the blocker" conclusion is **SUPERSEDED** by the v2 diagnostic (repo Pages custom-domain setting stuck on the legacy domain). Canonical domains were already resolved (sutra@c25c298c → sutra.emmaleonhart.com; loka already loka.emmaleonhart.com). The remaining action is the user-only per-repo Settings→Pages custom-domain re-set described above.
 
 ---
 
