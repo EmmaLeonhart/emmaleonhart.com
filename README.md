@@ -18,6 +18,18 @@ Personal website and interactive tools, deployed via GitHub Pages.
 - `/embeddings/` — Interactive Voronoi map of 485 word embeddings with custom axis projection.
 - Individual visualizer pages: `/dotproduct/`, `/crossproduct/`, `/cosine-similarity/`, `/mlp/`, `/cnn/`, `/cnn-architectures/`, `/rnn/`, `/lstm/`, `/attention/`, `/regression/`, `/loss-functions/`, `/regularization/`, `/optimizers/`, `/feature-transforms/`, `/backpropagation/`.
 
+## Visual identity
+
+Every page links one shared stylesheet, `/identity.css` (Lacquer palette,
+the Pewter `.btn`, the MkDocs-Material dark/light `.theme-toggle` with dark
+default, the `.gh` GitHub-repo pill, and shared type/primitives). Pages own
+only their page-specific layout. `/_identity/` is the live demo of that
+file. The six sister projects each carry their own copy of the same
+`identity.css` and link it (Loka maps its component var names onto the
+shared tokens; Sutra steers MkDocs Material to the same palette). Every
+sister site shows a GitHub repo pill with the live star count and latest
+release/tag (Sutra uses Material's built-in repo widget).
+
 ## Development
 
 TypeScript sources live in `src/`, compiled output goes to `pages/`.

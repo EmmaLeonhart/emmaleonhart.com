@@ -7,19 +7,24 @@
 See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the task tool stay in sync.
 
 
-## High priority — GitHub stars widget on sister sites
+## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
 
-Live GitHub repo pill (mark + name + ★ star count + latest release/tag,
-fetched client-side from the public API) is built and committed LOCALLY
-on all four sister sites — Yantra/QueryKey/Alignment (Lacquer topbar)
-and Loka (Pewter nav). Sutra already shows stars/forks via Material's
-built-in repo widget (no change, P6). `v0.0.0` annotated tags created
-LOCALLY on Yantra/QueryKey/Alignment/latent-space-cartography (Loka/Sutra
-already have v0.4.0).
+Main site is done and LIVE: one shared `pages/identity.css` (palette,
+`.btn`, Material `.theme-toggle`, aurora, eyebrow, card, type, and the
+shared `.gh` GitHub-repo pill); `index.html`/`projects/`/`research/`,
+`pages/_identity/` (now the live demo), and the `build_viewer.py`
+embeddings template all link it. Sister sites (Yantra/QueryKey/
+Alignment/Loka) are committed LOCALLY: each carries its own copy of
+`identity.css` and links it; Loka redone properly via `@import`+alias
+(no more cascade-override); the live GitHub star/release pill is on all
+four. Sutra unchanged by design (Material steer + its built-in repo
+widget already shows stars). Full writeup: experiment_log
+"TRUE Visual Identity Unification + GitHub repo pill (2026-05-16)".
 
-REMAINING: the auto-mode classifier blocks the agent from pushing to the
-shared sister repos. Emma (or a permitted run) must publish — run from
-the emmaleonhart.com repo root:
+**REMAINING — blocked on the auto-mode classifier (agent cannot push to
+the shared sister repos).** Emma (or a permitted run) publishes the
+widget + P5 + `v0.0.0` tags with ONE batch, from the emmaleonhart.com
+repo root:
 
 ```
 git -C repos/yantra push origin master ; git -C repos/yantra push origin v0.0.0
@@ -29,30 +34,9 @@ git -C repos/loka push origin main
 git -C repos/latent-space-cartography push origin v0.0.0
 ```
 
-When pushed, delete this section.
-
----
-
-## TRUE visual identity unification (Emma 2026-05-15) — ACTIVE PRIORITY
-
-**Honest status:** the first pass imposed *similar* (per-page token injection + a toggle, each page keeping its own bespoke layout/buttons). Emma's verdict: not consistent, Loka not properly implemented, prominent buttons missing on most pages, "the same" not achieved. The token-swap is real but insufficient. The Material toggle ICON is now exactly the Sutra one everywhere (8580637 + sister pushes) — keep that.
-
-**Root cause:** the old CLAUDE.md convention ("no shared CSS, every page self-contained, duplicated by hand") makes true sameness impossible. Superseded — see CLAUDE.md change in this commit. The identity is now a single linked stylesheet, not a per-page copy.
-
-**The real plan:**
-1. Build `pages/identity.css` — the ONE shared stylesheet: dark/light Lacquer tokens, the prominent Pewter button (`.btn`/`.btn-primary`/`.btn-secondary`), the exact Material `.theme-toggle` widget CSS, and shared surface/typography/card/eyebrow primitives. This is the single source of truth; pages LINK it (`<link rel="stylesheet" href="/identity.css">`), not copy it.
-2. Convert every main-site page to: link `/identity.css`, drop its duplicated token/toggle CSS, and use the shared component classes. The prominent buttons go on EVERY page's primary actions (landing cards/CTAs, hub links, "view source", visualizer controls) — no more "N/A, no .btn here".
-3. Redo Loka PROPERLY: its pages link a Loka copy of identity.css (or the same component classes) and use the shared button/toggle — not the cascade-override patch currently shipped. Same for Yantra/QueryKey/Alignment (link a shared stylesheet in `site/`).
-4. Sutra: keep the Material `extra_css` steer (it already uses the real Material toggle + is genuinely consistent within Material).
-5. `pages/embeddings/` via `build_viewer.py` template.
-6. Update `/_identity/` to be the live demo of the shared stylesheet (link it, don't inline).
-
-This is a large, multi-pass redo. Commit+push per logical group; do NOT claim "done" until pages actually render the same. Emma reviews live on GitHub Pages — she is the ground truth, not the diff.
-
-**Granular execution checklist (in order; each line = one commit+push):**
-- [P5] Sister sites in `repos/`: copy `identity.css` into each repo root/site dir; convert Loka (proper, not cascade-override), Yantra, QueryKey, Alignment pages to link it + shared toggle/buttons. Push each sister repo on its default branch; bump submodule pointers here.
-- [P6] Sutra: no code change — keep the Material `extra_css` steer (already genuinely consistent within Material). Record decision.
-- [P7] Final pass: visual diff all main-site pages dark+light; update README + experiment_log; delete this whole section from queue.
+After the push, do the only remaining identity item: the live dark+light
+visual diff of all main-site + sister pages (Emma is ground truth on
+GitHub Pages). Then delete this whole section.
 
 ---
 
