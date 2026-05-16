@@ -8,20 +8,9 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ---
 
-## In-flight (session 2026-05-15 22:30Z — possible interrupt for low battery)
-
-**Goal:** finish everything the previous session left undone + the 90-min cron job that probably won't fire because the user changed computers. Resume rewrite is DONE and pushed (commit 399f2c2, live at emmaleonhart.com/resume.html with LessWrong link, all six projects, papers section). Working through the remainder below in this order.
-
-### 4. After the above: verify
-- Trigger the publish.yml manually (workflow_dispatch) once and confirm the clawRxiv CI path still works. (Optional / skipping if time-constrained.)
-- WebFetch each subdomain (sutra., loka., yantra., querykey., alignment., latent-space.) to see which have GitHub Pages HTTPS certs now (the hourly cron c0e659c7 has been watching).
-
----
-
 ## Carry-over from before (do not re-do)
 
 ### Scheduled (self-executing — but the 90-min one is the suspect)
-- One-shot 2026-05-15 16:59 PST (set ~15:59 PST this session): `git pull --ff-only` master, bump ALL six submodule pointers (Sutra, Loka, Yantra, querykey, alignment, latent-space-cartography) to current upstream state in one commit, push, then a per-subdomain root-cause diagnostic on why the six *.emmaleonhart.com sites aren't rendering (DNS vs HTTPS-cert vs CNAME-file vs Pages-config — NOT a hand-wave "propagation" answer; yantra=200 is the known-good baseline), fixing what's fixable at the source, then barrel through this queue top-to-bottom. Durable cron.
 - One-shot 2026-05-16 00:51 PST (set ~16:51 PST 2026-05-15 this session): upgrade all six submodules to latest upstream, then build the Examples style-gallery — see "## Examples style-gallery build" section below for the full plan. Session-only local cron.
 - Monthly /research/ arxiv-link audit (remote routine).
 - One-time ~6.5h (2026-05-16 03:24Z): build /skills directory from latest state of all repos. trig_018XAU18fNfRnjB5Y3WA6si2.
@@ -31,9 +20,13 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 ### Flagged, not done by design
 - querykey deep code-identifier rename (Go module / `secretarybird-old/` dir) — separate breaking refactor, needs user go-ahead.
 - /theory/sutradb/ URL path still literally says sutradb (kept to avoid link breakage).
+- publish.yml workflow_dispatch verify (clawRxiv CI path) — not actionable: `gh` not authed on this machine. Do when auth available, or trigger from GitHub UI.
 
-### Subdomain sites — verification pending
-Confirm querykey/Yantra/alignment pages.yml runs went green and the six subdomains resolve once GitHub's HTTPS cert/domain-verification finishes provisioning. Watching via hourly cron.
+### Subdomain sites — diagnosed 2026-05-15, see experiment_log.md "Subdomain HTTPS Rendering Diagnostic"
+Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Open actions:
+- **USER decision (blocks sutra coherence, not its cert):** sutra `mkdocs.yml site_url: https://sutralang.dev` + Sutra CLAUDE.md vs `docs/CNAME: sutra.emmaleonhart.com` (+ portfolio). Pick the canonical domain, then align site_url & CLAUDE.md.
+- **USER go-ahead needed:** empty-commit re-kick of pages.yml on querykey/loka/alignment/latent-space-cartography (default branches main/main/master/master) — prepared but the safety classifier blocked the sister-repo push after the mid-run interrupt. Re-run once user confirms.
+- **USER, real lever (needs GitHub auth):** github.com/settings/pages → verify `emmaleonhart.com`; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". Hourly cron c0e659c7 keeps watching for cert provisioning.
 
 ---
 
