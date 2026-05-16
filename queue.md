@@ -25,6 +25,17 @@ Check cleanvibe for commits landed since cron 1. If any: bump the
 to better fit the visual identity. Commit + push. If unchanged, no-op +
 delete this item.
 
+### D. CRON 3 (~23:55 today / 06:55Z, +10h) — cleanvibe new-release check
+Emma expects a NEW cleanvibe release by then. Check for new tags /
+release / commits since the last run; if any, bump the
+`repos/cleanvibe` pointer + update the cleanvibe site and its
+`data/projects.json` desc/tags to reflect the release. Commit + push.
+No-op if nothing new. Delete this item when done.
+
+These three are one-shot remote routines (persist regardless of this
+session): B=trig_01LUKG7crXQX1eVdbASo7fuB, C=trig_01Vd1Uh3o87pRJQceSQgv7du,
+D=trig_01LkDXSEhBP8qjEJ2rgTAN1Z. Manage at claude.ai/code/routines.
+
 ---
 
 ## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
