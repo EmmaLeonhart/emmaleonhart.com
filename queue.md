@@ -25,8 +25,8 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 ### Subdomain sites — diagnosed 2026-05-15, see experiment_log.md "Subdomain HTTPS Rendering Diagnostic"
 Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Open actions:
 - **USER decision (blocks sutra coherence, not its cert):** sutra `mkdocs.yml site_url: https://sutralang.dev` + Sutra CLAUDE.md vs `docs/CNAME: sutra.emmaleonhart.com` (+ portfolio). Pick the canonical domain, then align site_url & CLAUDE.md.
-- **USER go-ahead needed:** empty-commit re-kick of pages.yml on querykey/loka/alignment/latent-space-cartography (default branches main/main/master/master) — prepared but the safety classifier blocked the sister-repo push after the mid-run interrupt. Re-run once user confirms.
-- **USER, real lever (needs GitHub auth):** github.com/settings/pages → verify `emmaleonhart.com`; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". Hourly cron c0e659c7 keeps watching for cert provisioning.
+- Re-kick DONE 2026-05-15 (user-authorized): empty pages.yml commits pushed — querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master). sutra NOT re-kicked (pending the domain decision above; its pages.yml has a paths filter so an empty commit wouldn't trigger anyway). Watch the 4 pages.yml runs go green, then watch for GitHub cert issuance (hourly cron c0e659c7).
+- **USER, real lever (needs GitHub auth):** github.com/settings/pages → verify `emmaleonhart.com`; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". This is the most likely reason yantra's cert provisioned and the rest lag.
 
 ---
 
