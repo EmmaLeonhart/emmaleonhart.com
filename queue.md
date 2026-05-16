@@ -6,6 +6,11 @@
 
 See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the task tool stay in sync.
 
+
+## High priority of the visual identity unification
+
+Please for the love of god actually listen and add the github link thing with the stars and such on all of the repos (except emmaleonhart.com) make releases of v0.0.0 if need be for it
+
 ---
 
 ## TRUE visual identity unification (Emma 2026-05-15) — ACTIVE PRIORITY
