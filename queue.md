@@ -23,8 +23,9 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 ### Subdomain sites — diagnosed 2026-05-15, see experiment_log.md "Subdomain HTTPS Rendering Diagnostic"
 Root cause is **NOT** DNS propagation (ruled out: DNS/CNAME/build all verified correct & identical to working yantra). It is GitHub per-domain TLS certs not yet provisioned for the 5 non-yantra subdomains. Status:
 - Sutra canonical domain RESOLVED → `sutra.emmaleonhart.com` (Emma's call). Fixed across 11 files incl. mkdocs.yml site_url + CLAUDE.md/AGENTS.md, pushed sutra@c25c298c (also re-kicked sutra's pages.yml). Loka was already consistent (loka.emmaleonhart.com everywhere) — no change needed.
-- All 5 re-kicked 2026-05-15 (user-authorized): querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master), sutra c25c298c (master). Watch the pages.yml runs go green, then watch for GitHub cert issuance (hourly cron c0e659c7).
-- **Only remaining item — OPTIONAL, user-only (Emma unsure, no rush):** github.com/settings/pages → verify `emmaleonhart.com` at account level; per repo Settings→Pages confirm "DNS check successful" + "Enforce HTTPS". This likely speeds issuance (probable reason yantra provisioned first) but GitHub should issue the certs on its own now that every repo is correctly configured + freshly deployed.
+- All 5 re-kicked 2026-05-15 (user-authorized): querykey 8c87b20 (main), loka a2e3d70 (main), alignment 964fa5b (master), latent-space-cartography e7bd29f (master), sutra c25c298c (master).
+- **Re-check 2026-05-15 ~21:57 PST (~5h after re-kick): all 5 STILL `ERR_TLS_CERT_ALTNAME_INVALID`.** Re-kick alone confirmed insufficient — GitHub is not auto-issuing despite correct config + fresh successful deploys. yantra (provisioned) is the only difference.
+- **→ ACTUAL BLOCKER, user-only (was filed "optional" — it is not):** github.com/settings/pages → add & **verify `emmaleonhart.com`** at account level; then per repo Settings→Pages confirm "DNS check successful" and that "Enforce HTTPS" becomes available. This is now the load-bearing step; the certs are unlikely to issue without it. `gh` not authed on this machine, so this cannot be automated here.
 
 ---
 
