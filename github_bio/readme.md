@@ -1,19 +1,25 @@
 ## Hi there 👋
 
-My name is Emma and my passion is neuro-symbolic ai.
+I'm Emma. I work on neuro-symbolic AI — geometric tensor methods in service of interpretability and AI safety.
 
+### My website is the canonical home for everything: **https://emmaleonhart.com**
 
-Read my website here http://emmaleonhart.com
+Bio, projects, research, and interactive tools all live there. The project subdomains below are the current homes — older standalone domains (e.g. `sutralang.dev`) are deprecated.
 
-Read my vibecoding tutorial here https://github.com/EmmaLeonhart/vibecoding-tutorial and use my vibecoding documentation bootstrapper here https://github.com/EmmaLeonhart/cleanvibe
+- **Projects** — https://emmaleonhart.com/projects/
+- **Research** — https://emmaleonhart.com/research/
+- **Interactive ML tutorials** — https://emmaleonhart.com/tutorials/
 
-Use my database here https://github.com/EmmaLeonhart/Loka
+### Projects
 
-### Sutra — my programming language
+- **Sutra** — a geometrically compiled, GPU-native, differentiable language. https://sutra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Sutra)
+- **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
+- **Yantra** — a neuro-symbolic, GPU-native operating system written in Sutra. https://yantra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Yantra)
+- **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
+- **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
+- **Latent Space Cartography** — relational geometry of frozen embedding spaces. https://latent-space.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/latent-space-cartography)
 
-- Getting started: https://sutralang.dev
-- Source: https://github.com/EmmaLeonhart/Sutra
-- Paper (PDF): https://sutralang.dev/paper.pdf — going up on arXiv soon.
+Also: a [vibecoding tutorial](https://github.com/EmmaLeonhart/vibecoding-tutorial) and [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe), a vibecoding documentation bootstrapper.
 
 
 
