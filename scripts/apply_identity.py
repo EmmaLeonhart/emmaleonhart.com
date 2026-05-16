@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
-"""Apply the canonical visual identity (see pages/_identity/) to the Slate
-visualizer + hub pages.
+"""Make the Slate visualizer + hub + theory pages link the ONE shared
+identity stylesheet (pages/identity.css) instead of carrying a
+hand-duplicated copy of the tokens/toggle CSS.
 
-These pages hardcode the Slate palette (no CSS variables) and also use
-data-visualization colors that must stay theme-stable. This script:
+History: an earlier pass *injected* a duplicated token + toggle block into
+each page (the IDENTITY_CSS constant below) and rewrote the Slate chrome
+hexes to var(). That produced pages that were *similar*, not *the same*.
+This pass finishes the job:
 
-  1. injects the canonical :root (dark Lacquer) + html[data-theme="light"]
-     (light Lacquer) + .theme-toggle CSS right after the first <style>;
-  2. rewrites ONLY the shared Slate *chrome* hexes -> var(--token), and
-     ONLY inside that first <style> block, so canvas/JS drawing colors and
-     the data-viz palette (#34d399, #f59e0b, #f43f5e, #38bdf8, ...) are
-     left exactly as they are;
-  3. adds data-theme="dark" to <html>, the pre-paint anti-flash script,
-     the top-right toggle button, and the click handler.
+  1. removes the injected IDENTITY_CSS block (exact-string strip);
+  2. rewrites the remaining Slate *typography* stacks ('Segoe UI'... /
+     'Cascadia Code'...) -> var(--sans)/var(--mono), and re-applies the
+     chrome hex -> var() rewrite, ONLY inside the first <style> block, so
+     canvas/JS drawing colors + the data-viz palette stay theme-stable;
+  3. loads the shared webfonts and links /identity.css (the single source
+     of truth for palette, buttons, toggle, type, primitives) right
+     before that first <style>, so the page is genuinely the same.
 
-Idempotent: a page that already has id="theme-toggle" is skipped. Safe to
-re-run. Run from the repo root:  py scripts/apply_identity.py
+The pre-paint script / data-theme attr / toggle button / click handler
+were already added by the earlier pass; they are re-asserted here only if
+missing (fresh pages). Idempotent: a page that already links
+/identity.css is skipped. Run from the repo root:
+
+    py scripts/apply_identity.py
 """
 import re
 import sys
@@ -33,7 +40,8 @@ PAGES = [
 ]
 
 # Slate chrome hex -> canonical Lacquer token. Data-viz colors are
-# deliberately absent so they remain theme-stable.
+# deliberately absent so they remain theme-stable. (Already applied by the
+# earlier pass; kept for fresh pages / idempotent safety.)
 CHROME = {
     "#0a0a0f": "--bg",
     "#12121a": "--bg-card",
@@ -57,6 +65,18 @@ CHROME = {
     "#9aa4ff": "--accent-bright",
 }
 
+# Slate typography stacks -> shared token. Longest first so a shorter
+# stack never partially matches inside a longer one.
+FONTS = [
+    ("'Cascadia Code', 'Fira Code', 'Consolas', monospace", "var(--mono)"),
+    ("'Cascadia Code', 'Fira Code', monospace", "var(--mono)"),
+    ("'Cascadia Code', monospace", "var(--mono)"),
+    ("'Segoe UI', system-ui, -apple-system, sans-serif", "var(--sans)"),
+    ("'Segoe UI', system-ui, sans-serif", "var(--sans)"),
+]
+
+# The exact block the earlier pass injected after the first <style>.
+# Stripped verbatim here — its job is now done by /identity.css.
 IDENTITY_CSS = """
     /* ===== CANONICAL VISUAL IDENTITY (see /_identity/) ==============
        Lacquer tokens; dark is default, [data-theme="light"] flips them.
@@ -113,8 +133,20 @@ IDENTITY_CSS = """
     html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 """
 
+# Loaded right before the first <style> so the shared identity is the
+# base and the page's own layout CSS (which follows) wins on conflicts.
+SHARED_LINKS = (
+    '  <!-- Shared visual identity: the ONE source of truth. /_identity/ -->\n'
+    '  <link rel="preconnect" href="https://fonts.googleapis.com">\n'
+    '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+    '  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;'
+    '500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:'
+    'wght@400;500&display=swap" rel="stylesheet">\n'
+    '  <link rel="stylesheet" href="/identity.css">\n'
+)
+
 PRE_PAINT = (
-    "  <!-- Canonical identity: theme before first paint (dark default)."
+    "  <!-- Shared identity: theme before first paint (dark default)."
     " See /_identity/. -->\n"
     "  <script>(function(){try{var t=localStorage.getItem('theme');"
     "if(t!=='light'&&t!=='dark')t='dark';"
@@ -126,16 +158,28 @@ PRE_PAINT = (
 TOGGLE_HTML = (
     '\n  <button id="theme-toggle" class="theme-toggle" type="button"'
     ' aria-label="Toggle light and dark theme" title="Toggle light / dark">\n'
-    '    <svg class="icon-sun" viewBox="0 0 24 24" fill="none"'
-    ' stroke="currentColor" stroke-width="2" stroke-linecap="round"'
-    ' stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12"'
-    ' r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66'
-    ' 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07'
-    ' 4.93l-1.41 1.41"></path></svg>\n'
-    '    <svg class="icon-moon" viewBox="0 0 24 24" fill="none"'
-    ' stroke="currentColor" stroke-width="2" stroke-linecap="round"'
-    ' stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1'
-    ' 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>\n'
+    '    <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor"'
+    ' aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5'
+    ' 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0'
+    ' 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16'
+    ',5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,'
+    '8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,'
+    '14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,'
+    '10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65'
+    ',7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 '
+    '18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,'
+    '19C12.82,19 13.63,18.86 14.37,18.59L12,22Z"></path></svg>\n'
+    '    <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"'
+    ' aria-hidden="true"><path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,'
+    '7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,'
+    '4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,'
+    '12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8'
+    ',15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,'
+    '23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,'
+    '4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,'
+    '13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,'
+    '16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,'
+    '17.41C9.37,20.43 14,20.54 17.33,17.97Z"></path></svg>\n'
     '  </button>\n'
 )
 
@@ -150,8 +194,8 @@ HANDLER_JS = (
 
 
 def migrate(html: str) -> str:
-    if 'id="theme-toggle"' in html:
-        return html  # already migrated
+    if 'href="/identity.css"' in html:
+        return html  # already converted to the shared sheet
 
     # 1. <html ...> -> ensure data-theme="dark"
     def add_dt(m):
@@ -159,27 +203,34 @@ def migrate(html: str) -> str:
         return tag if "data-theme" in tag else tag[:-1] + ' data-theme="dark">'
     html = re.sub(r"<html[^>]*>", add_dt, html, count=1)
 
-    # 2. pre-paint script before </head>
-    html = html.replace("</head>", PRE_PAINT + "</head>", 1)
+    # 2. pre-paint script before </head> (only if absent)
+    if "localStorage.getItem('theme')" not in html:
+        html = html.replace("</head>", PRE_PAINT + "</head>", 1)
 
-    # 3. identity CSS right after the first <style ...>, and chrome
-    #    hex -> var() ONLY within that first <style>...</style> block
+    # 3. first <style> block: strip the injected identity block, then
+    #    rewrite the remaining Slate chrome hexes + font stacks to var().
     m = re.search(r"<style[^>]*>", html)
+    s_open = m.start()
     s_open_end = m.end()
     s_close = html.index("</style>", s_open_end)
-    head, css, tail = (html[:s_open_end], html[s_open_end:s_close],
-                       html[s_close:])
+    head, css, tail = html[:s_open], html[s_open_end:s_close], html[s_close:]
+    style_open = html[s_open:s_open_end]
+
+    css = css.replace(IDENTITY_CSS, "", 1)
     for hexv, tok in CHROME.items():
         css = re.sub(re.escape(hexv) + r"(?![0-9a-fA-F])",
                      "var(%s)" % tok, css, flags=re.IGNORECASE)
-    html = head + IDENTITY_CSS + css + tail
+    for stack, tok in FONTS:
+        css = css.replace(stack, tok)
 
-    # 4. toggle button after first <body ...>
-    html = re.sub(r"(<body[^>]*>)", r"\1" + TOGGLE_HTML, html, count=1)
+    # 4. shared webfonts + /identity.css link, immediately before <style>
+    html = head + SHARED_LINKS + style_open + css + tail
 
-    # 5. handler before the final </body>
-    i = html.rfind("</body>")
-    html = html[:i] + HANDLER_JS + html[i:]
+    # 5. toggle button after first <body ...> (only if absent)
+    if 'id="theme-toggle"' not in html:
+        html = re.sub(r"(<body[^>]*>)", r"\1" + TOGGLE_HTML, html, count=1)
+        i = html.rfind("</body>")
+        html = html[:i] + HANDLER_JS + html[i:]
     return html
 
 
