@@ -56,13 +56,29 @@ Pushed: sutra @ e1534435, pointer bumped here. Fuller remake is a
 recorded LONG-TERM goal (Sutra `todo.md` → "Docs / website" + queue
 Parked), incl. porting Sutra's nicer GitHub widget to the other sites.
 
-VISIBILITY NOTE (why sister-site changes may not be visible to Emma):
-the changes ARE pushed to each repo's master. But the sister subdomains
-(sutra/loka/… .emmaleonhart.com) can still serve the wrong TLS cert
-until the per-repo **GitHub → Settings → Pages → Custom domain** is
-cleared + re-entered by hand — see "Subdomain RENDER diagnostic" below.
-That is a USER-ONLY fix; pushing more commits cannot resolve it.
-emmaleonhart.com itself deploys normally, so its button change IS live.
+VISIBILITY NOTE (updated 2026-05-16): Emma fixed the per-repo Pages
+custom domain — the subdomains resolve now. HTTPS cert may still be
+propagating for a bit. KEY RULE going forward: each sister site
+deploys from ITS OWN repo's Pages workflow on push to that repo's
+default branch — so every submodule edit must be committed AND pushed
+to the sister repo's own remote (not just the superproject pointer).
+Always verify sister local HEAD == sister origin after editing.
+
+## Synoptic visual integration + /branding demonstration page (2026-05-16)
+
+Emma's brief: every site should be reconstructed from the SAME shared
+elements — main-site structure/identity + Lacquer palette + Loka-feel
+buttons + Sutra's prominent Material GitHub repo widget + a Material
+search component + the light/dark toggle (toggle sits next to the
+GitHub widget; search on the other side).
+
+- [ ] Build `pages/branding/index.html` (→ emmaleonhart.com/branding):
+      a demonstration of the unified kit on the one site Emma can see.
+      Each shared element shown live and labelled; GitHub widget points
+      at github.com/EmmaLeonhart/emmaleonhart.com. v1 now; iterate when
+      Emma's reference attachments arrive.
+- [ ] (ongoing, long-term) Reconstruct each sister site from these
+      shared elements. Tracked per-site; awaiting Emma's attachments.
 
 ---
 
