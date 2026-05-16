@@ -7,6 +7,51 @@
 See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the task tool stay in sync.
 
 
+## ACTIVE — vibecoding/cleanvibe onboarding + button-identity unification (2026-05-16)
+
+Plan set at 2026-05-16 13:35 -0700. Two new sister projects join the
+six: `vibecoding-tutorial` → vibecoding.emmaleonhart.com,
+`cleanvibe` → cleanvibe.emmaleonhart.com. cleanvibe is in flux until
+~15:05 today (new features landing), so its work is deferred to a cron.
+
+### A. NOW — vibecoding-tutorial full integration
+- [ ] Add `repos/vibecoding-tutorial` submodule (github.com/EmmaLeonhart/vibecoding-tutorial, master).
+- [ ] Build its subdomain site in the sister repo: `pages/index.html`
+      linking its own copy of `identity.css`, `pages/CNAME`
+      (`vibecoding.emmaleonhart.com`), `.github/workflows/pages.yml`,
+      mirroring the Loka pattern. Content from the repo's actual tutorial.
+- [ ] Promote it in `data/projects.json` (subdomain/repo/vibes=7), drop
+      its old "Other Projects" GitHub card from `pages/index.html`,
+      add it to the nav dropdown + /projects/ via `scripts/rank_projects.py`.
+- [ ] Commit + push BOTH repos (vibecoding-tutorial sister repo + emmaleonhart.com).
+
+### B. CRON 1 (~15:08 today, after cleanvibe flux) — cleanvibe full integration
+Same as A but for `cleanvibe` (vibes=8, cleanvibe.emmaleonhart.com).
+Commit + push all three repos (cleanvibe + emmaleonhart.com + re-touch
+vibecoding if identity changed). Detailed steps live in the cron prompt.
+
+### C. CRON 2 (~19:37 today, +6h) — cleanvibe follow-up
+Check cleanvibe for commits landed since cron 1. If any: bump the
+`repos/cleanvibe` submodule pointer and refine cleanvibe.emmaleonhart.com
+to better fit the visual identity. Commit + push. If unchanged, no-op +
+delete this item.
+
+### D. NOW (in parallel) — button-identity unification across all sites
+The Loka button feel is the target everyone should share. Currently
+each site re-declares a local `.btn`/`.btn-primary`/`.btn-secondary`
+inside its own `<style>`, overriding the shared `/identity.css` — that
+is the inconsistency (Sutra ↔ Loka most visibly).
+- [ ] Align canonical `pages/identity.css` `.btn*` to the Loka feel
+      (chunky `12px 28px`, `font-size: 1rem`, filled Pewter secondary).
+- [ ] Delete the local `.btn*` override blocks from every page/site that
+      has one (Loka `pages/index.html`, any main-site page, Sutra
+      `docs/stylesheets/identity.css` + overrides) so all defer to the
+      one shared definition.
+- [ ] Propagate the updated `identity.css` to every sister repo's copy.
+- [ ] Commit + push emmaleonhart.com + each touched sister repo.
+
+---
+
 ## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
 
 Main site is done and LIVE: one shared `pages/identity.css` (palette,
