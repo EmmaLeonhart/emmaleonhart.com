@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lacquer &mdash; Examples</title>
+  <meta name="description" content="The Lacquer visual style: drifting aurora gradients, periwinkle accent, Inter + Instrument Serif. The 'front door' style used on the emmaleonhart.com landing and the Yantra/QueryKey/Alignment subdomains.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #07070c;
+      --bg-soft: #0c0c14;
+      --bg-card: #11111b;
+      --bg-elevated: #14141f;
+      --border: #1d1d2c;
+      --border-hover: #34344e;
+      --border-strong: #262638;
+
+      --text: #d4d4e0;
+      --text-strong: #f0f0f6;
+      --text-mute: #8c8caa;
+      --text-faint: #5d5d78;
+
+      --accent: #8b9bff;
+      --accent-bright: #b0bcff;
+      --accent-soft: rgba(139, 155, 255, 0.10);
+      --accent-glow: rgba(139, 155, 255, 0.28);
+
+      --sutra: #d4a76a;
+      --sutra-bright: #f5d9a8;
+
+      --serif: 'Instrument Serif', 'Times New Roman', serif;
+      --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 80px 24px 120px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.005em;
+    }
+
+    .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .aurora::before, .aurora::after, .aurora .blob {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(90px); opacity: 0.55; mix-blend-mode: screen;
+    }
+    .aurora::before {
+      width: 720px; height: 720px; top: -260px; left: -120px;
+      background: radial-gradient(circle, rgba(139, 155, 255, 0.32) 0%, transparent 70%);
+      animation: drift1 22s ease-in-out infinite alternate;
+    }
+    .aurora::after {
+      width: 640px; height: 640px; top: -180px; right: -80px;
+      background: radial-gradient(circle, rgba(212, 167, 106, 0.22) 0%, transparent 70%);
+      animation: drift2 26s ease-in-out infinite alternate;
+    }
+    .aurora .blob {
+      width: 540px; height: 540px; top: 320px; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(103, 232, 249, 0.16) 0%, transparent 70%);
+      animation: drift3 30s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(140px, 80px) scale(1.15); } }
+    @keyframes drift2 { to { transform: translate(-100px, 120px) scale(1.1); } }
+    @keyframes drift3 { to { transform: translate(-50%, 180px) scale(1.2); } }
+    @media (prefers-reduced-motion: reduce) {
+      .aurora::before, .aurora::after, .aurora .blob { animation: none; }
+      .eyebrow::before { animation: none; }
+    }
+
+    main { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
+
+    .crumb {
+      font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute);
+      text-decoration: none; margin-bottom: 32px; display: inline-block;
+    }
+    .crumb:hover { color: var(--accent-bright); }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.6px;
+      color: var(--accent-bright);
+      margin-bottom: 22px;
+      padding: 6px 13px 6px 11px;
+      background: rgba(139, 155, 255, 0.06);
+      border: 1px solid rgba(139, 155, 255, 0.18);
+      border-radius: 999px;
+    }
+    .eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-bright);
+      box-shadow: 0 0 12px var(--accent-glow);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1.codename {
+      font-size: clamp(2.6rem, 6vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      line-height: 1.02;
+      margin-bottom: 22px;
+      background: linear-gradient(120deg, #ffffff 0%, #b0bcff 50%, #d4a76a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lede {
+      font-size: 1.18rem; line-height: 1.65; color: var(--text);
+      max-width: 600px; margin-bottom: 18px;
+    }
+    .lede em {
+      font-family: var(--serif); font-style: italic;
+      font-size: 1.08em; color: #c8c8e0;
+    }
+    .note {
+      font-size: 0.96rem; line-height: 1.7; color: var(--text-mute);
+      max-width: 600px; margin-bottom: 40px;
+    }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 64px; }
+    .btn {
+      font-family: var(--mono); font-size: 0.84rem; font-weight: 500;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      color: var(--accent); border: 1px solid var(--border-hover);
+      background: rgba(255, 255, 255, 0.012);
+    }
+    .btn-primary:hover {
+      color: var(--accent-bright); border-color: var(--accent);
+      background: var(--accent-soft); transform: translateY(-1px);
+    }
+    .btn-secondary {
+      color: var(--text-mute); border: 1px solid var(--border);
+      background: transparent;
+    }
+    .btn-secondary:hover { color: var(--text-strong); border-color: var(--border-hover); }
+
+    .section-label {
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.6px;
+      color: var(--text-faint); margin-bottom: 16px;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 30px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: var(--border-hover); }
+    .card-title {
+      font-size: 1.15rem; font-weight: 600; color: var(--text-strong);
+      margin-bottom: 6px;
+    }
+    .card-body { font-size: 0.94rem; line-height: 1.6; color: var(--text-mute); }
+
+    pre.code {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px;
+      font-family: var(--mono); font-size: 0.84rem;
+      color: var(--text); overflow-x: auto;
+      margin-bottom: 56px;
+    }
+    pre.code .k { color: var(--accent-bright); }
+    pre.code .s { color: var(--sutra-bright); }
+    pre.code .c { color: var(--text-faint); font-style: italic; }
+
+    /* Breakdown panel */
+    .breakdown {
+      margin-top: 64px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+    }
+    .breakdown h2 {
+      font-family: var(--serif); font-style: italic;
+      font-size: 1.6rem; font-weight: 400; color: var(--text-strong);
+      margin-bottom: 6px;
+    }
+    .breakdown .sub {
+      font-size: 0.9rem; color: var(--text-mute); margin-bottom: 28px;
+    }
+    .row {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 12px 24px; padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    .row:first-of-type { border-top: 0; padding-top: 0; }
+    .row-key {
+      font-family: var(--mono); font-size: 0.74rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--text-faint); padding-top: 2px;
+    }
+    .row-val {
+      font-size: 0.92rem; color: var(--text); line-height: 1.65;
+    }
+    .row-val code {
+      font-family: var(--mono); font-size: 0.86em;
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1px 7px; border-radius: 4px;
+      color: var(--accent-bright);
+    }
+    .swatch-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sw {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 0.78rem; color: var(--text);
+    }
+    .sw .chip {
+      width: 22px; height: 22px; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .where {
+      margin-top: 44px; padding-top: 22px;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem; color: var(--text-mute); line-height: 1.7;
+    }
+    .where strong { color: var(--text-strong); font-weight: 600; }
+
+    @media (max-width: 600px) {
+      body { padding: 56px 18px 80px; }
+      .row { grid-template-columns: 1fr; gap: 4px; }
+      .breakdown { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <div class="blob"></div>
+  </div>
+
+  <main>
+    <a class="crumb" href="/examples/">&larr; Examples</a>
+
+    <div class="eyebrow">Lacquer &middot; the front-door style</div>
+    <h1 class="codename">Lacquer.</h1>
+    <p class="lede">A glossy, atmospheric surface where <em>drifting aurora gradients</em> sit behind a periwinkle accent and serif italics carry the warmth in the lede.</p>
+    <p class="note">Used as the &ldquo;front door&rdquo; across this site &mdash; the landing page and the projects, research, and resume hubs &mdash; and on the Yantra, QueryKey, and Alignment subdomains, which all derive their CSS from the same template.</p>
+
+    <div class="button-row">
+      <a class="btn btn-primary" href="#breakdown">View breakdown</a>
+      <a class="btn btn-secondary" href="https://emmaleonhart.com/">See it live</a>
+    </div>
+
+    <div class="section-label">Representative components</div>
+
+    <div class="card">
+      <div class="card-title">A card</div>
+      <div class="card-body">Cards in Lacquer use a soft elevated panel (<code style="font-family:var(--mono);font-size:0.86em;color:var(--accent-bright);">--bg-card</code>) with a thin <code style="font-family:var(--mono);font-size:0.86em;color:var(--accent-bright);">--border</code> hairline that brightens on hover. No drop-shadow &mdash; the elevation reads from the contrast of card surface against the near-black body and the haze of the aurora behind.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Another card</div>
+      <div class="card-body">The vertical rhythm is generous: 16&ndash;28&thinsp;px internal padding on cards, 110&thinsp;px page padding-top on the live site. Headings use Instrument Serif for italic display moments; everything else is Inter with <code style="font-family:var(--mono);font-size:0.86em;color:var(--accent-bright);">letter-spacing: -0.005em</code> and font-feature settings <code style="font-family:var(--mono);font-size:0.86em;color:var(--accent-bright);">cv11 ss01 ss03</code>.</div>
+    </div>
+
+    <pre class="code"><span class="c">// Mono uses JetBrains Mono with the periwinkle accent for keywords</span>
+<span class="k">const</span> palette = {
+  bg:     <span class="s">'#07070c'</span>,  <span class="c">// near-black, blue-tinted</span>
+  accent: <span class="s">'#8b9bff'</span>,  <span class="c">// periwinkle</span>
+  sutra:  <span class="s">'#d4a76a'</span>,  <span class="c">// warm gold (Sutra accent)</span>
+};</pre>
+
+    <div id="breakdown" class="breakdown">
+      <h2>Style breakdown</h2>
+      <p class="sub">Concrete tokens and signature motifs that make Lacquer look like Lacquer.</p>
+
+      <div class="row">
+        <div class="row-key">Palette</div>
+        <div class="row-val">
+          <div class="swatch-row" style="margin-bottom:10px;">
+            <div class="sw"><span class="chip" style="background:#07070c"></span>#07070c bg</div>
+            <div class="sw"><span class="chip" style="background:#0c0c14"></span>#0c0c14 soft</div>
+            <div class="sw"><span class="chip" style="background:#11111b"></span>#11111b card</div>
+            <div class="sw"><span class="chip" style="background:#1d1d2c"></span>#1d1d2c border</div>
+          </div>
+          <div class="swatch-row">
+            <div class="sw"><span class="chip" style="background:#d4d4e0"></span>#d4d4e0 text</div>
+            <div class="sw"><span class="chip" style="background:#f0f0f6"></span>#f0f0f6 strong</div>
+            <div class="sw"><span class="chip" style="background:#8b9bff"></span>#8b9bff accent</div>
+            <div class="sw"><span class="chip" style="background:#d4a76a"></span>#d4a76a sutra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Typography</div>
+        <div class="row-val">
+          Body / UI: <code>Inter</code> 400&ndash;800, Google Fonts.<br>
+          Display italics: <code>Instrument Serif</code>.<br>
+          Mono: <code>JetBrains Mono</code> 400/500.<br>
+          Body has <code>letter-spacing: -0.005em</code>, antialiased, with font-feature <code>cv11 ss01 ss03</code>.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Headlines</div>
+        <div class="row-val">
+          Fluid <code>clamp(2.6rem, 6vw, 3.8rem)</code>, weight 700, letter-spacing <code>-1.2px</code>, line-height 1.02. Filled with a <code>linear-gradient(120deg, #fff 0%, #b0bcff 50%, #d4a76a 100%)</code> via <code>-webkit-background-clip: text</code>.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Components</div>
+        <div class="row-val">
+          <strong>Eyebrow pill</strong> &mdash; mono caps, <code>letter-spacing: 1.6px</code>, periwinkle text on 6% periwinkle fill, 999px radius, a 6&times;6&thinsp;px pulsing dot prefix.<br>
+          <strong>Card</strong> &mdash; <code>border-radius: 14px</code>, <code>--bg-card</code> fill, <code>--border</code> hairline, no shadow.<br>
+          <strong>Button</strong> &mdash; mono label, 8&thinsp;px radius, hairline border, <code>translateY(-1px)</code> on hover.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Spacing</div>
+        <div class="row-val">
+          Page padding-top 110&thinsp;px (live), 80&thinsp;px (this page). Container max-width 760&thinsp;px. Section gaps 56&ndash;88&thinsp;px. Card padding 28&times;30&thinsp;px. Button padding 10&times;18&thinsp;px.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Signature motif</div>
+        <div class="row-val">
+          The <strong>aurora</strong>: three blurred radial-gradient blobs (periwinkle, gold, cyan) drifting on 22&thinsp;s / 26&thinsp;s / 30&thinsp;s loops, blurred 90&thinsp;px, screen-blended at 55% opacity. Plus a <strong>grain</strong> overlay (1&thinsp;px white dots on 32&thinsp;px grid, masked to fade out toward the bottom). Both respect <code>prefers-reduced-motion</code>.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Links</div>
+        <div class="row-val">
+          Mono labels even for primary nav. Hover lifts 1&thinsp;px and brightens accent. No underlines except on plain in-prose links.
+        </div>
+      </div>
+
+      <div class="where">
+        <strong>In use:</strong> emmaleonhart.com landing &middot; <code>/projects/</code> &middot; <code>/research/</code> &middot; <a href="https://yantra.emmaleonhart.com/" style="color:var(--accent);">yantra</a> &middot; <a href="https://querykey.emmaleonhart.com/" style="color:var(--accent);">querykey</a> &middot; <a href="https://alignment.emmaleonhart.com/" style="color:var(--accent);">alignment</a>.
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Examples — Visual Identity Gallery">
+  <meta property="og:description" content="Side-by-side gallery of every distinct visual style currently in use across emmaleonhart.com and the six sister-project sites.">
+  <meta property="og:url" content="https://emmaleonhart.com/examples/">
+  <meta name="description" content="A side-by-side inventory of every distinct visual identity across emmaleonhart.com and its six sister projects, so the differences are visible in one place before any of them is changed.">
+  <title>Examples — Visual Identity Gallery</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 64px 24px;
+    }
+    .container { max-width: 920px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, #e8e8f0 0%, #9aa4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 1.05rem;
+      color: #9090a8;
+      margin-bottom: 16px;
+      line-height: 1.6;
+      max-width: 640px;
+    }
+    .why {
+      font-size: 0.92rem;
+      color: #777793;
+      margin-bottom: 56px;
+      line-height: 1.65;
+      max-width: 640px;
+    }
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7c8cf8;
+      margin-bottom: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 18px;
+    }
+    .style-card {
+      display: block;
+      padding: 0;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .style-card:hover {
+      border-color: #3a3a55;
+      transform: translateY(-2px);
+    }
+    .preview {
+      height: 124px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid #1e1e2a;
+    }
+    .meta {
+      padding: 18px 22px 22px;
+    }
+    .codename {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 4px;
+      letter-spacing: -0.4px;
+    }
+    .vibe {
+      font-size: 0.88rem;
+      color: #8888a0;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .swatches {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .where {
+      font-size: 0.74rem;
+      color: #5d5d78;
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      line-height: 1.55;
+    }
+
+    /* Per-style preview windows. Each one is a tiny in-card render that
+       hints at the style; the dedicated /examples/<codename>/ page is the
+       full breakdown. */
+
+    /* Lacquer preview */
+    .preview.lacquer {
+      background: #07070c;
+    }
+    .preview.lacquer::before {
+      content: '';
+      position: absolute;
+      width: 240px; height: 240px;
+      top: -90px; left: -50px;
+      background: radial-gradient(circle, rgba(139,155,255,0.42) 0%, transparent 70%);
+      filter: blur(40px);
+      mix-blend-mode: screen;
+    }
+    .preview.lacquer::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      top: -60px; right: -40px;
+      background: radial-gradient(circle, rgba(212,167,106,0.30) 0%, transparent 70%);
+      filter: blur(40px);
+      mix-blend-mode: screen;
+    }
+    .preview.lacquer .label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Times New Roman', serif;
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -0.6px;
+      background: linear-gradient(120deg, #ffffff 0%, #b0bcff 60%, #d4a76a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Slate preview */
+    .preview.slate {
+      background: #0a0a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 20px;
+    }
+    .preview.slate .pill {
+      padding: 8px 12px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #c0c0dc;
+    }
+    .preview.slate .pill.accent { color: #7c8cf8; border-color: #2a3a55; }
+
+    /* Pewter preview */
+    .preview.pewter {
+      background: #0d1117;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .preview.pewter .name {
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+      color: #e6edf3;
+    }
+    .preview.pewter .name span { color: #58a6ff; }
+    .preview.pewter .badges { display: flex; gap: 6px; }
+    .preview.pewter .badge {
+      padding: 3px 10px; border-radius: 14px;
+      font-size: 0.7rem; font-weight: 600;
+    }
+    .preview.pewter .badge.rust { background: #3e2723; color: #ff8a65; }
+    .preview.pewter .badge.lic { background: #1a237e; color: #82b1ff; }
+    .preview.pewter .badge.prv { background: #4a1942; color: #e879f9; }
+
+    /* Heather preview */
+    .preview.heather {
+      background: linear-gradient(135deg, #2c1338 0%, #1b1226 100%);
+      display: flex;
+      align-items: stretch;
+      padding: 0;
+    }
+    .preview.heather .sidebar {
+      width: 96px;
+      background: #1d0f29;
+      border-right: 1px solid #3a1f4f;
+      padding: 12px 10px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .preview.heather .nav-item {
+      font-size: 0.66rem; color: #c4b3d6; line-height: 1.4;
+    }
+    .preview.heather .nav-item.active { color: #b39ddb; font-weight: 600; }
+    .preview.heather .body {
+      flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .preview.heather .h {
+      font-size: 0.95rem; font-weight: 600; color: #ede7f6;
+      border-bottom: 1px solid #3a1f4f; padding-bottom: 4px;
+    }
+    .preview.heather .p {
+      font-size: 0.7rem; color: #c4b3d6; line-height: 1.5;
+    }
+    .preview.heather .p code {
+      background: #1d0f29; padding: 1px 5px; border-radius: 3px;
+      color: #ce93d8; font-family: 'Consolas', monospace; font-size: 0.66rem;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 40px 16px; }
+      h1 { font-size: 1.7rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">&larr; emmaleonhart.com</a>
+    <h1>Examples</h1>
+    <p class="tagline">Every distinct visual identity currently in use across this site and its six sister projects, side by side, under abstract codenames.</p>
+    <p class="why">This gallery exists so the differences are visible in one place before any of them is changed. Each card links to a dedicated page that renders the style with representative components and lists the exact tokens (palette, typography, radii, spacing, signature motifs) that make it look that way. Codenames are deliberately abstract &mdash; they're not derived from the projects that use them &mdash; so the conversation can stay about the style rather than the product.</p>
+
+    <h2>Four styles in use</h2>
+    <div class="grid">
+
+      <a class="style-card" href="/examples/lacquer/">
+        <div class="preview lacquer"><div class="label">Lacquer</div></div>
+        <div class="meta">
+          <div class="codename">Lacquer</div>
+          <div class="vibe">Atmospheric, premium, animated. Drifting aurora gradients behind a periwinkle accent and serif italics in the lede.</div>
+          <div class="swatches">
+            <div class="swatch" style="background:#07070c"></div>
+            <div class="swatch" style="background:#11111b"></div>
+            <div class="swatch" style="background:#8b9bff"></div>
+            <div class="swatch" style="background:#d4a76a"></div>
+            <div class="swatch" style="background:#f0f0f6"></div>
+          </div>
+          <div class="where">in use: emmaleonhart.com landing &middot; /projects/ &middot; /research/ &middot; yantra &middot; querykey &middot; alignment</div>
+        </div>
+      </a>
+
+      <a class="style-card" href="/examples/slate/">
+        <div class="preview slate">
+          <span class="pill">card</span>
+          <span class="pill accent">link</span>
+          <span class="pill">card</span>
+        </div>
+        <div class="meta">
+          <div class="codename">Slate</div>
+          <div class="vibe">Flat, utilitarian, system-font. The "tool shed" surface &mdash; no animation, small cards in a tight grid, modest padding.</div>
+          <div class="swatches">
+            <div class="swatch" style="background:#0a0a0f"></div>
+            <div class="swatch" style="background:#12121a"></div>
+            <div class="swatch" style="background:#1e1e2a"></div>
+            <div class="swatch" style="background:#7c8cf8"></div>
+            <div class="swatch" style="background:#e8e8f0"></div>
+          </div>
+          <div class="where">in use: /tutorials/ &middot; /theory/ &middot; every per-visualizer page</div>
+        </div>
+      </a>
+
+      <a class="style-card" href="/examples/pewter/">
+        <div class="preview pewter">
+          <div class="name">Project<span>Name</span></div>
+          <div class="badges">
+            <span class="badge rust">rust</span>
+            <span class="badge lic">apache 2.0</span>
+            <span class="badge prv">preview</span>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="codename">Pewter</div>
+          <div class="vibe">GitHub-dark cribbed wholesale. Centered hero, semantic colored badges, structured sections divided by hairline borders.</div>
+          <div class="swatches">
+            <div class="swatch" style="background:#0d1117"></div>
+            <div class="swatch" style="background:#161b22"></div>
+            <div class="swatch" style="background:#30363d"></div>
+            <div class="swatch" style="background:#58a6ff"></div>
+            <div class="swatch" style="background:#e6edf3"></div>
+          </div>
+          <div class="where">in use: loka</div>
+        </div>
+      </a>
+
+      <a class="style-card" href="/examples/heather/">
+        <div class="preview heather">
+          <div class="sidebar">
+            <div class="nav-item active">Home</div>
+            <div class="nav-item">What is&hellip;</div>
+            <div class="nav-item">Theory</div>
+            <div class="nav-item">Tutorials</div>
+          </div>
+          <div class="body">
+            <div class="h">Section</div>
+            <div class="p">Body copy with <code>inline</code> code.</div>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="codename">Heather</div>
+          <div class="vibe">Documentation-shape: MkDocs Material in deep purple + indigo, with tabs, sidebar, integrated table of contents, and a dark/light toggle.</div>
+          <div class="swatches">
+            <div class="swatch" style="background:#1b1226"></div>
+            <div class="swatch" style="background:#2c1338"></div>
+            <div class="swatch" style="background:#3a1f4f"></div>
+            <div class="swatch" style="background:#b39ddb"></div>
+            <div class="swatch" style="background:#ede7f6"></div>
+          </div>
+          <div class="where">in use: sutra (sutra.emmaleonhart.com)</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</body>
+</html>

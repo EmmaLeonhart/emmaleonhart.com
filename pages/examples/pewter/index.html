@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pewter &mdash; Examples</title>
+  <meta name="description" content="The Pewter visual style: GitHub-dark cribbed wholesale. Centered hero, semantic colored badges, structured sections with hairline dividers. Currently in use only on the Loka site.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --purple: #bc8cff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    .crumb-bar {
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88em;
+    }
+    .crumb-bar a { color: var(--text-muted); }
+    .crumb-bar a:hover { color: var(--accent); text-decoration: none; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero .tagline {
+      font-size: 1.3em;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+    .hero .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+    .badge-rust { background: #3e2723; color: #ff8a65; }
+    .badge-license { background: #1a237e; color: #82b1ff; }
+    .badge-superset { background: #1b5e20; color: #81c784; }
+    .badge-preview { background: #4a1942; color: #e879f9; }
+
+    .cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { background: var(--accent-hover); color: var(--bg); }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    .section {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 56px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section h2 {
+      font-size: 1.6em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .section .lede {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .feature h3 {
+      font-size: 1em; font-weight: 600;
+      margin-bottom: 6px; color: var(--text);
+    }
+    .feature p { font-size: 0.92em; color: var(--text-muted); }
+
+    pre.code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace;
+      font-size: 0.88em;
+      color: var(--text);
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    pre.code .k { color: var(--purple); }
+    pre.code .s { color: #a5d6ff; }
+    pre.code .c { color: #6e7681; font-style: italic; }
+
+    /* Breakdown panel */
+    .breakdown {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 56px 20px 100px;
+    }
+    .breakdown h2 {
+      font-size: 1.6em; font-weight: 700;
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .breakdown .sub { color: var(--text-muted); margin-bottom: 28px; }
+    .row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px 24px;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+    }
+    .row:first-of-type { border-top: 0; padding-top: 0; }
+    .row-key {
+      font-size: 0.78em; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-muted);
+      padding-top: 2px;
+    }
+    .row-val { font-size: 0.95em; color: var(--text); line-height: 1.65; }
+    .row-val code {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 1px 6px; border-radius: 3px;
+      font-family: 'SFMono-Regular', 'Consolas', monospace; font-size: 0.86em;
+      color: var(--accent);
+    }
+    .swatch-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sw {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'SFMono-Regular', 'Consolas', monospace; font-size: 0.82em;
+      color: var(--text);
+    }
+    .sw .chip {
+      width: 22px; height: 22px; border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .where {
+      margin-top: 36px; padding-top: 22px;
+      border-top: 1px solid var(--border);
+      font-size: 0.92em; color: var(--text-muted); line-height: 1.7;
+    }
+    .where strong { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2em; }
+      .row { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="crumb-bar">
+    <a href="/examples/">&larr; Examples</a>
+  </div>
+
+  <div class="hero">
+    <h1>Pewter<span>.</span></h1>
+    <p class="tagline">GitHub-dark cribbed wholesale &mdash; centered hero, semantic colored badges, structured sections with hairline dividers.</p>
+    <div class="badges">
+      <span class="badge badge-rust">rust</span>
+      <span class="badge badge-license">apache 2.0</span>
+      <span class="badge badge-superset">superset of rdf</span>
+      <span class="badge badge-preview">preview</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-primary" href="#breakdown">View breakdown</a>
+      <a class="btn btn-secondary" href="https://loka.emmaleonhart.com/">See it live</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Three feature columns</h2>
+    <p class="lede">Pewter pages stack content in centered, full-width sections divided by hairlines, with feature grids inside each.</p>
+    <div class="grid-3">
+      <div class="feature">
+        <h3>One thing</h3>
+        <p>A short paragraph in muted gray. Cards have an 8&thinsp;px radius and a single-pixel border.</p>
+      </div>
+      <div class="feature">
+        <h3>Another thing</h3>
+        <p>Surfaces use <code style="background:var(--bg);padding:1px 4px;border-radius:3px;color:var(--accent);">--surface</code> on top of <code style="background:var(--bg);padding:1px 4px;border-radius:3px;color:var(--accent);">--bg</code>.</p>
+      </div>
+      <div class="feature">
+        <h3>A third thing</h3>
+        <p>Buttons lift 1&thinsp;px on hover, like Lacquer, but never animate continuously.</p>
+      </div>
+    </div>
+
+    <pre class="code"><span class="c">// Pewter mono uses SFMono-Regular, GitHub-style highlights</span>
+<span class="k">struct</span> Palette {
+  bg:     <span class="s">"#0d1117"</span>,  <span class="c">// GitHub dark</span>
+  accent: <span class="s">"#58a6ff"</span>,  <span class="c">// GitHub blue</span>
+  green:  <span class="s">"#3fb950"</span>,
+};</pre>
+  </div>
+
+  <div id="breakdown" class="breakdown">
+    <h2>Style breakdown</h2>
+    <p class="sub">Tokens copied from GitHub's own dark theme, plus four semantic badge colors.</p>
+
+    <div class="row">
+      <div class="row-key">Palette</div>
+      <div class="row-val">
+        <div class="swatch-row" style="margin-bottom:10px;">
+          <div class="sw"><span class="chip" style="background:#0d1117"></span>#0d1117 bg</div>
+          <div class="sw"><span class="chip" style="background:#161b22"></span>#161b22 surface</div>
+          <div class="sw"><span class="chip" style="background:#30363d"></span>#30363d border</div>
+          <div class="sw"><span class="chip" style="background:#e6edf3"></span>#e6edf3 text</div>
+          <div class="sw"><span class="chip" style="background:#8b949e"></span>#8b949e mute</div>
+        </div>
+        <div class="swatch-row">
+          <div class="sw"><span class="chip" style="background:#58a6ff"></span>#58a6ff accent</div>
+          <div class="sw"><span class="chip" style="background:#3fb950"></span>#3fb950 green</div>
+          <div class="sw"><span class="chip" style="background:#d29922"></span>#d29922 orange</div>
+          <div class="sw"><span class="chip" style="background:#bc8cff"></span>#bc8cff purple</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-key">Typography</div>
+      <div class="row-val">
+        <code>-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial</code> &mdash; the GitHub system stack to the letter.<br>
+        Code: <code>'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace</code>.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-key">Headlines</div>
+      <div class="row-val">
+        Hero h1 at <code>3em</code> 700, <code>letter-spacing: -0.02em</code>. <em>Centered</em>, not left-aligned &mdash; this is the only style here that does that. Section h2s also bold, <code>1.6em</code>, <code>letter-spacing: -0.01em</code>.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-key">Components</div>
+      <div class="row-val">
+        <strong>Badge</strong> &mdash; pill (<code>border-radius: 16px</code>), <code>padding: 4px 12px</code>, weight 600. Each kind has a hand-picked dark fill + bright text pair: rust (<code>#3e2723 / #ff8a65</code>), license blue (<code>#1a237e / #82b1ff</code>), license green (<code>#1b5e20 / #81c784</code>), preview magenta (<code>#4a1942 / #e879f9</code>).<br>
+        <strong>Button</strong> &mdash; primary fills with accent (text becomes the bg color); secondary uses <code>--surface</code> with <code>--border</code>.<br>
+        <strong>Section</strong> &mdash; full-width, hairline-divided, centered max-width 880&thinsp;px.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-key">Spacing</div>
+      <div class="row-val">
+        Hero padding <code>80px 20px 60px</code>. Section padding <code>56px 20px</code>. Feature card padding <code>18&times;20px</code>. Buttons <code>12&times;28px</code>.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-key">Signature motif</div>
+      <div class="row-val">
+        The <strong>centered hero with badge row</strong>. Pewter is the only style here that puts everything down the middle of the page; everything else is left-aligned in a 600&ndash;760&thinsp;px column. Combined with the GitHub palette it reads as &ldquo;classic open-source project README rendered as a real site.&rdquo;
+      </div>
+    </div>
+
+    <div class="where">
+      <strong>In use:</strong> <a href="https://loka.emmaleonhart.com/" style="color:var(--accent);">loka</a>. The most divergent of the sister sites &mdash; predates the Lacquer template the others adopted and has not been migrated.
+    </div>
+  </div>
+</body>
+</html>

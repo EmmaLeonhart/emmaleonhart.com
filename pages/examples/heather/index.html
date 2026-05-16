@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heather &mdash; Examples</title>
+  <meta name="description" content="The Heather visual style: MkDocs Material in deep purple + indigo, with tabs, sidebar, integrated table of contents, and a dark/light toggle. Currently in use only on the Sutra documentation site (sutra.emmaleonhart.com).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Heather is a re-creation of MkDocs Material's `slate` scheme with
+       primary: deep purple, accent: indigo. Real MkDocs sites have a build
+       step; this page hand-renders enough of the chrome to stand in for the
+       comparison gallery. */
+    :root {
+      --md-bg: #1b1226;
+      --md-bg-soft: #221733;
+      --md-surface: #2c1d40;
+      --md-border: #3a1f4f;
+      --md-text: #ede7f6;
+      --md-text-mute: #c4b3d6;
+      --md-text-faint: #8e7ba6;
+      --md-primary: #6a3d8c;       /* deep purple */
+      --md-primary-bright: #b39ddb;
+      --md-accent: #5c6bc0;        /* indigo */
+      --md-accent-bright: #9fa8da;
+      --md-code-bg: #15091e;
+      --md-code-fg: #ce93d8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--md-bg);
+      color: var(--md-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Top bar with tabs */
+    header.md-top {
+      background: var(--md-primary);
+      color: var(--md-text);
+      padding: 0 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .md-top .row1 {
+      display: flex; align-items: center; gap: 16px; height: 48px;
+    }
+    .md-top .crumb { font-size: 0.85rem; color: var(--md-text-mute); text-decoration: none; }
+    .md-top .crumb:hover { color: white; }
+    .md-top .title { font-size: 1.05rem; font-weight: 600; flex: 1; text-align: center; }
+    .md-top .actions { display: flex; gap: 8px; }
+    .md-top .icon-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: white; cursor: default;
+      background: rgba(255,255,255,0.05);
+    }
+    .md-top .tabs {
+      display: flex; gap: 0; height: 38px; align-items: stretch;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .md-top .tab {
+      padding: 0 16px; display: flex; align-items: center;
+      font-size: 0.78rem; font-weight: 600; color: var(--md-text-mute);
+      text-decoration: none; letter-spacing: 0.3px;
+      border-bottom: 2px solid transparent;
+    }
+    .md-top .tab.active {
+      color: white; border-bottom-color: var(--md-accent-bright);
+    }
+
+    /* Body shell: sidebar + content + toc */
+    .shell {
+      display: grid;
+      grid-template-columns: 240px 1fr 220px;
+      max-width: 1280px; margin: 0 auto;
+      gap: 0;
+    }
+    .md-side, .md-toc {
+      padding: 28px 18px;
+      font-size: 0.86rem;
+      color: var(--md-text-mute);
+    }
+    .md-side {
+      border-right: 1px solid var(--md-border);
+    }
+    .md-toc {
+      border-left: 1px solid var(--md-border);
+    }
+    .nav-section {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--md-text-faint);
+      margin: 18px 0 8px; padding: 0 8px;
+    }
+    .nav-section:first-of-type { margin-top: 0; }
+    .nav-item {
+      display: block; padding: 5px 8px; border-radius: 4px;
+      color: var(--md-text-mute); text-decoration: none;
+      font-size: 0.84rem; line-height: 1.5;
+    }
+    .nav-item:hover { background: var(--md-bg-soft); color: var(--md-text); }
+    .nav-item.active {
+      color: var(--md-accent-bright); font-weight: 600;
+      background: rgba(159, 168, 218, 0.08);
+    }
+
+    .md-toc .toc-title {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--md-text-faint);
+      margin-bottom: 10px;
+    }
+    .md-toc .toc-item {
+      display: block; padding: 4px 0;
+      color: var(--md-text-mute); text-decoration: none;
+      font-size: 0.82rem; border-left: 2px solid transparent;
+      padding-left: 10px; margin-left: -2px;
+    }
+    .md-toc .toc-item.active {
+      color: var(--md-accent-bright);
+      border-left-color: var(--md-accent-bright);
+    }
+    .md-toc .toc-item.deep { padding-left: 22px; font-size: 0.78rem; }
+
+    main.md-main { padding: 36px 40px 100px; min-width: 0; }
+    main.md-main h1 {
+      font-size: 2rem; font-weight: 700;
+      color: var(--md-text); margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    main.md-main .subtitle {
+      color: var(--md-text-mute); margin-bottom: 28px;
+    }
+    main.md-main h2 {
+      font-size: 1.4rem; font-weight: 600;
+      color: var(--md-text); margin: 36px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--md-border);
+    }
+    main.md-main p {
+      color: var(--md-text); margin-bottom: 14px;
+    }
+    main.md-main p code {
+      background: var(--md-code-bg); padding: 2px 6px;
+      border-radius: 3px; color: var(--md-code-fg);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.86em;
+    }
+    main.md-main a { color: var(--md-accent-bright); }
+    main.md-main a:hover { text-decoration: underline; }
+
+    /* Material admonition block */
+    .admon {
+      background: rgba(92, 107, 192, 0.08);
+      border-left: 4px solid var(--md-accent);
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin: 18px 0;
+    }
+    .admon .admon-title {
+      font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--md-accent-bright); margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .admon .admon-title::before {
+      content: 'ℹ'; display: inline-block; font-size: 1rem;
+    }
+    .admon p { margin-bottom: 0; color: var(--md-text-mute); font-size: 0.92rem; }
+
+    /* Material code block with copy button */
+    .code-wrap { position: relative; margin: 18px 0; }
+    pre.md-code {
+      background: var(--md-code-bg);
+      border-radius: 4px;
+      padding: 16px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      color: var(--md-text);
+      overflow-x: auto;
+      border: 1px solid var(--md-border);
+    }
+    pre.md-code .k { color: var(--md-accent-bright); }
+    pre.md-code .s { color: #ce93d8; }
+    pre.md-code .c { color: var(--md-text-faint); font-style: italic; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: var(--md-bg-soft); border: 1px solid var(--md-border);
+      color: var(--md-text-mute);
+      font-size: 0.7rem; padding: 4px 8px; border-radius: 3px;
+      cursor: default;
+    }
+
+    /* Breakdown panel */
+    .breakdown {
+      margin-top: 56px;
+      background: var(--md-bg-soft);
+      border: 1px solid var(--md-border);
+      border-radius: 6px;
+      padding: 28px 30px;
+    }
+    .breakdown h2 {
+      border: 0; padding: 0;
+      font-size: 1.5rem;
+      margin-bottom: 6px; margin-top: 0;
+    }
+    .breakdown .sub { color: var(--md-text-mute); margin-bottom: 24px; }
+    .row {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 12px 24px; padding: 14px 0;
+      border-top: 1px solid var(--md-border);
+    }
+    .row:first-of-type { border-top: 0; padding-top: 0; }
+    .row-key {
+      font-size: 0.78em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--md-text-faint);
+      padding-top: 2px;
+    }
+    .row-val { font-size: 0.94em; color: var(--md-text); line-height: 1.65; }
+    .row-val code {
+      background: var(--md-code-bg); padding: 1px 6px;
+      border-radius: 3px; color: var(--md-code-fg);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.86em;
+    }
+    .swatch-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sw {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
+      color: var(--md-text);
+    }
+    .sw .chip {
+      width: 22px; height: 22px; border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .where {
+      margin-top: 32px; padding-top: 22px;
+      border-top: 1px solid var(--md-border);
+      font-size: 0.92em; color: var(--md-text-mute); line-height: 1.7;
+    }
+    .where strong { color: var(--md-text); }
+
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 220px 1fr; }
+      .md-toc { display: none; }
+    }
+    @media (max-width: 740px) {
+      .shell { grid-template-columns: 1fr; }
+      .md-side { display: none; }
+      main.md-main { padding: 24px 18px 64px; }
+      .row { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="md-top">
+    <div class="row1">
+      <a class="crumb" href="/examples/">&larr; Examples</a>
+      <div class="title">Heather &mdash; documentation theme</div>
+      <div class="actions">
+        <span class="icon-btn" title="Search">⌕</span>
+        <span class="icon-btn" title="Toggle dark/light">☾</span>
+        <span class="icon-btn" title="GitHub">⎇</span>
+      </div>
+    </div>
+    <div class="tabs">
+      <a class="tab active" href="#">Home</a>
+      <a class="tab" href="#">What is Heather?</a>
+      <a class="tab" href="#">Theory</a>
+      <a class="tab" href="#">Tutorials</a>
+      <a class="tab" href="#">Reference</a>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="md-side">
+      <div class="nav-section">Section</div>
+      <a class="nav-item active" href="#">Home</a>
+      <a class="nav-item" href="#">What is Heather?</a>
+      <div class="nav-section">Theory</div>
+      <a class="nav-item" href="#">Paradigms</a>
+      <a class="nav-item" href="#">Ontology</a>
+      <a class="nav-item" href="#">Operators</a>
+      <a class="nav-item" href="#">Numeric math</a>
+      <div class="nav-section">Tutorials</div>
+      <a class="nav-item" href="#">01 &mdash; Hello</a>
+      <a class="nav-item" href="#">02 &mdash; Bind</a>
+    </aside>
+
+    <main class="md-main">
+      <h1>Heather</h1>
+      <p class="subtitle">A documentation-shape style: MkDocs Material in deep purple + indigo, with tabs, sidebar, integrated table of contents, and a dark/light toggle.</p>
+
+      <h2>What you get</h2>
+      <p>Heather is the only style here built from a real CMS theme rather than hand-authored HTML. Pages are written in Markdown and rendered by <code>mkdocs-material</code> at deploy time. Navigation is generated; the sidebar, the top tabs, and the right-hand table of contents all come from the page tree and the headings in the source.</p>
+
+      <div class="admon">
+        <div class="admon-title">Note</div>
+        <p>Material admonitions look like this &mdash; left-rule of the accent color, lightly tinted background, all-caps label.</p>
+      </div>
+
+      <h2>Code</h2>
+      <p>Code blocks ship with a copy button in the upper-right corner and per-language syntax highlighting:</p>
+      <div class="code-wrap">
+        <pre class="md-code"><span class="c"># Heather mono uses JetBrains Mono with the accent indigo for keywords</span>
+<span class="k">def</span> palette():
+    <span class="k">return</span> {
+        <span class="s">'primary'</span>: <span class="s">'deep purple'</span>,
+        <span class="s">'accent'</span>:  <span class="s">'indigo'</span>,
+        <span class="s">'scheme'</span>:  <span class="s">'slate'</span>,
+    }</pre>
+        <span class="copy-btn">copy</span>
+      </div>
+
+      <p>Inline code like <code>--md-primary-bright</code> picks up the magenta-leaning purple to keep it readable against the dark slate.</p>
+
+      <div class="breakdown">
+        <h2>Style breakdown</h2>
+        <p class="sub">MkDocs Material configuration tokens, plus the chrome the theme renders for free.</p>
+
+        <div class="row">
+          <div class="row-key">Palette</div>
+          <div class="row-val">
+            <div class="swatch-row" style="margin-bottom:10px;">
+              <div class="sw"><span class="chip" style="background:#1b1226"></span>#1b1226 bg</div>
+              <div class="sw"><span class="chip" style="background:#221733"></span>#221733 soft</div>
+              <div class="sw"><span class="chip" style="background:#2c1d40"></span>#2c1d40 surface</div>
+              <div class="sw"><span class="chip" style="background:#3a1f4f"></span>#3a1f4f border</div>
+            </div>
+            <div class="swatch-row">
+              <div class="sw"><span class="chip" style="background:#6a3d8c"></span>#6a3d8c primary</div>
+              <div class="sw"><span class="chip" style="background:#b39ddb"></span>#b39ddb primary br</div>
+              <div class="sw"><span class="chip" style="background:#5c6bc0"></span>#5c6bc0 accent</div>
+              <div class="sw"><span class="chip" style="background:#9fa8da"></span>#9fa8da accent br</div>
+            </div>
+            <p style="margin-top:10px;font-size:0.86em;color:var(--md-text-mute);">In <code>mkdocs.yml</code>: <code>palette.primary: deep purple</code>, <code>palette.accent: indigo</code>, <code>palette.scheme: slate</code> (dark) with a default-light pair for the toggle.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Typography</div>
+          <div class="row-val">
+            <code>theme.font.text: Inter</code> &middot; <code>theme.font.code: JetBrains Mono</code>. Material handles the loading; no <code>&lt;link&gt;</code> tag needed in source.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Chrome</div>
+          <div class="row-val">
+            <code>navigation.tabs</code> + <code>navigation.tabs.sticky</code> &mdash; the purple top bar with the section tabs.<br>
+            <code>navigation.sections</code> + <code>navigation.expand</code> &mdash; the always-expanded left sidebar.<br>
+            <code>toc.integrate</code> &mdash; the right-hand table of contents.<br>
+            <code>content.code.copy</code> &mdash; the copy button on every code block.<br>
+            <code>content.action.edit</code> &mdash; an &ldquo;edit on GitHub&rdquo; pencil per page.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Headlines</div>
+          <div class="row-val">
+            h1 at <code>2rem</code> 700, no gradient. h2s carry a hairline underline (<code>border-bottom: 1px solid --md-border</code>) &mdash; visible on this page.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Components</div>
+          <div class="row-val">
+            <strong>Admonition</strong> &mdash; left-rule + tinted bg + caps label. Variants: note, warning, tip, danger.<br>
+            <strong>Code block</strong> &mdash; <code>--md-code-bg</code> fill, hairline border, copy button overlay top-right, syntax highlighting via Pygments.<br>
+            <strong>Tabs</strong> &mdash; sticky purple bar; active tab gets an accent-color underline.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Spacing</div>
+          <div class="row-val">
+            Three-column shell at <code>240 / 1fr / 220</code>, max-width 1280&thinsp;px. Main padding <code>36px 40px 100px</code>. Sidebar / TOC padding <code>28px 18px</code>. Collapses to two columns under 1100&thinsp;px and one column under 740&thinsp;px.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-key">Signature motif</div>
+          <div class="row-val">
+            The <strong>three-column documentation shell</strong> with the purple top bar. Heather is the only style here that has persistent navigation chrome &mdash; everything else is single-column with a back-link. Combined with the dark slate scheme + deep purple primary it reads as &ldquo;serious technical reference,&rdquo; not &ldquo;portfolio.&rdquo;
+          </div>
+        </div>
+
+        <div class="where">
+          <strong>In use:</strong> <a href="https://sutra.emmaleonhart.com/">sutra</a> (sutra.emmaleonhart.com). The only documentation-shape surface in the family &mdash; bringing it into a unified identity would mean either restyling MkDocs Material or replacing it with a hand-authored landing.
+        </div>
+      </div>
+    </main>
+
+    <aside class="md-toc">
+      <div class="toc-title">On this page</div>
+      <a class="toc-item active" href="#">Heather</a>
+      <a class="toc-item deep" href="#">What you get</a>
+      <a class="toc-item deep" href="#">Code</a>
+      <a class="toc-item" href="#">Style breakdown</a>
+    </aside>
+  </div>
+</body>
+</html>

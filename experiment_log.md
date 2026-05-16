@@ -649,3 +649,25 @@ Chronological record of every experiment run in this project. Each entry records
   3. Decide the sutra `sutralang.dev` vs `sutra.emmaleonhart.com` question, then align `site_url` (and Sutra `CLAUDE.md` references) to whichever wins.
 
 **Resolution (2026-05-15, same session):** Emma chose `sutra.emmaleonhart.com` (and confirmed `loka.emmaleonhart.com`). All five non-yantra repos re-kicked with user authorization — querykey@8c87b20, loka@a2e3d70, alignment@964fa5b, latent-space-cartography@e7bd29f. Sutra's `sutralang.dev` references replaced with `sutra.emmaleonhart.com` across 11 files (mkdocs.yml `site_url` + header, CLAUDE.md/AGENTS.md Audiences, pages.yml/paper-pdf.yml comments, 3×sdk pyproject Homepage + 3×sdk README); pushed sutra@c25c298c, which also re-kicked its pages.yml. `DEVLOG.md` (history) and sutra `queue.md`/`todo.md` (transient) intentionally untouched. Loka needed no change (already `loka.emmaleonhart.com` everywhere). Only open item: optional account-level domain verification at github.com/settings/pages (user deferred, no rush — GitHub should issue certs unaided now that all repos are correctly configured + freshly deployed).
+
+---
+
+## Visual Identity Inventory — Style Codename Mapping (private)
+
+**Date:** 2026-05-15 (~17:25 PST), preparing the `pages/examples/` style gallery.
+**Method:** Read landing/hub/visualizer pages of emmaleonhart.com + the hosted site of each sister project in `repos/`. Clustered near-identical surfaces by shared palette + typography + component vocabulary. The public gallery uses only the codenames; this section is the source mapping so future sessions don't have to re-do the inventory.
+
+| Codename | Source surfaces | Distinguishing fingerprint |
+|---|---|---|
+| **Lacquer** | emmaleonhart.com landing (`pages/index.html`) + `/projects/` + `/research/` hubs; sister sites: Yantra, QueryKey, Alignment | `#07070c` near-black bg, periwinkle `#8b9bff` accent, Inter + Instrument Serif + JetBrains Mono trio, animated drifting "aurora" radial-gradient blobs behind, eyebrow pill with pulsing dot, gradient-text headlines, generous 110px vertical padding |
+| **Slate** | emmaleonhart.com `/tutorials/`, `/theory/`, every per-visualizer page (`/dotproduct/`, `/cnn/`, `/attention/`, …) | `#0a0a0f` flat bg, `#7c8cf8` accent, Segoe UI system stack (no Google fonts), `#12121a` cards / `#1e1e2a` borders, no animation, simple grid-of-cards hub layout, modest 64px padding |
+| **Pewter** | Loka site (`repos/loka/pages/index.html`) | GitHub-dark palette literally cribbed (`#0d1117` bg, `#161b22` surface, `#30363d` border, `#58a6ff` accent), system-font stack (-apple-system / BlinkMacSystemFont / Segoe UI), centered hero + tagline + CTA-button row, semantic colored badges (rust `#3e2723/#ff8a65`, license `#1a237e/#82b1ff`, preview `#4a1942/#e879f9`), structured sections with bordered separators |
+| **Heather** | Sutra site (`repos/sutra/`, MkDocs Material) at sutra.emmaleonhart.com (canonical post-2026-05-15 resolution) | MkDocs Material theme with `primary: deep purple`, `accent: indigo`, `scheme: slate` (dark) + `scheme: default` (light) toggle, Inter text + JetBrains Mono code, top tabs + sidebar + integrated ToC, content.code.copy buttons, admonition blocks, edit-on-GitHub link in header |
+
+Latent-space-cartography contributes no hosted style — it's a research repo whose only "site" is its GitHub-rendered README. Not included as a distinct gallery entry; if later given a custom site it would likely inherit Lacquer (matching the other sister sites).
+
+**Notes for future-you:**
+- The Lacquer/Slate split inside the main site is by *page role*, not by deliberate visual system. Lacquer is the "front door" style (landing + hubs that link out to subdomains); Slate is the "tool shed" style (interactive visualizers and their hubs). They do not share CSS variables — each page is hand-authored per CLAUDE.md "Each visualizer is self-contained".
+- Yantra/QueryKey/Alignment landing pages are essentially Lacquer with the per-project `eyebrow` text and lede copy swapped. Their CSS is functionally a copy of the same template.
+- Loka's Pewter style is the most divergent of the sister sites — it predates the Lacquer template the others adopted and has not been migrated.
+- Sutra's Heather is structurally separate (it's a documentation site, not a one-pager) — bringing it into a unified identity would mean either restyling MkDocs Material or replacing it with a hand-authored landing.

@@ -14,6 +14,7 @@ Personal website and interactive tools, deployed via GitHub Pages.
 - `/resume.html` and `/resume.pdf` — Auto-built from `resume.md` by `.github/workflows/pages.yml` on every push.
 - `/tutorials/` — Hub for the 14 interactive ML visualizers (vector math, neural networks, training, architectures).
 - `/theory/` — Loka theory visualizations (HNSW in RDF, subgraph indexing, SPARQL exit conditions, etc.).
+- `/examples/` — Visual identity gallery. Side-by-side rendering of every distinct style currently in use across this site and the six sister projects, under abstract codenames (Lacquer, Slate, Pewter, Heather). Per-style pages list the exact tokens. Inventory, not redesign.
 - `/embeddings/` — Interactive Voronoi map of 485 word embeddings with custom axis projection.
 - Individual visualizer pages: `/dotproduct/`, `/crossproduct/`, `/cosine-similarity/`, `/mlp/`, `/cnn/`, `/cnn-architectures/`, `/rnn/`, `/lstm/`, `/attention/`, `/regression/`, `/loss-functions/`, `/regularization/`, `/optimizers/`, `/feature-transforms/`, `/backpropagation/`.
 
