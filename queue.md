@@ -8,6 +8,28 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 ---
 
+## Common Visual Identity rollout (Emma 2026-05-15) — ACTIVE PRIORITY
+
+**Decision (Emma's, from the gallery):** one identity across the main site + all six sister sites =
+- **Base = Lacquer** (`#07070c` bg, periwinkle `#8b9bff` accent, Inter / Instrument Serif / JetBrains Mono, drifting aurora, eyebrow pill, gradient headlines) — the majority of the visual identity.
+- **Buttons = Pewter's** — prominent FILLED buttons: primary = solid `--accent` fill with `--bg`-colored label, weight 600, ~12×28px, 8px radius, `translateY(-1px)` hover. Replaces Lacquer's hairline-outline buttons everywhere. Emma explicitly wants prominent, visible buttons.
+- **Dark/light toggle widget, fixed top-right, DARK DEFAULT** — the thing Emma likes on the Sutra (MkDocs Material) site. Essential on EVERY page of EVERY site. Self-contained vanilla JS + CSS-variable theming, persists to localStorage, defaults dark (prefers-color-scheme only as first-visit fallback). Needs a documented LIGHT-mode token set for the Lacquer palette.
+- Drop Heather/Slate/Pewter as separate identities — all converge here. Keep the `/examples/` gallery but it now documents history + the adopted system, not live divergence.
+
+**Why:** the site + 6 sister projects currently have 4 scattered identities; Emma wants one coherent system. She does not do front-end — GitHub Pages live is how she reviews, so push incrementally and land the main-site reference first so she can redirect before the full propagation finishes.
+
+**Canonical artifact:** `pages/_identity/` — a spec page + the exact copy-paste `<style>`/`<script>` block (self-contained per CLAUDE.md "each page self-contained, no shared bundle"; the "shared identity" is a documented template every page copies, not a runtime import).
+
+**Steps (commit+push each; delete the line when done; mirror to task tool):**
+1. Properly bump ALL six submodule pointers to current remote HEAD (Emma wants pointers actually current, not the stale-is-harmless default): per submodule `git pull --ff-only` its default branch (loka/querykey main, rest master; NO `git lfs pull` lsc), `git add repos/<name>`, one commit, push.
+2. Build `pages/_identity/index.html` — canonical spec + live demo (Lacquer surface + Pewter filled buttons + top-right dark/light toggle) + documented light-mode tokens + the drop-in block.
+3. Main-site reference: apply to `pages/index.html` landing (Pewter buttons + toggle widget + light tokens), then `/projects/`, `/research/`. Push after each.
+4. Roll the toggle widget + Pewter buttons across the Slate pages — `/tutorials/`, `/theory/`, every per-visualizer page. Largest sub-job; one commit per logical group.
+5. Sister repos (push to each default branch per the repos/ workflow, then bump pointers): Yantra/QueryKey/Alignment (already Lacquer) → add Pewter buttons + toggle. Loka (Pewter) → re-base on Lacquer, keep prominent buttons, add toggle. Sutra (MkDocs Material — already has a toggle) → steer its Material palette/accent toward the Lacquer tokens so it visually matches. latent-space-cartography → Lacquer if/when it gets a site.
+6. Update README.md + CLAUDE.md "Page structure" + experiment_log.md mapping to record the convergence.
+
+---
+
 ## Carry-over from before (do not re-do)
 
 ### Scheduled (self-executing)
