@@ -45,6 +45,25 @@ stays open and the machine is awake. If the session is closed before a
 fire time, that cron is lost and the cleanvibe work for it must be run
 by hand (steps are in sections B/C/D above).
 
+## Sutra site visual unification — chrome restyle SHIPPED; full remake LONG-TERM
+
+2026-05-16: Sutra's Material chrome restyled to the shared Lacquer
+identity (dark header/tabs, the Loka-feel `.md-button`, lifted grid
+cards, tinted admonitions, header re-ordered: search one side / theme
+toggle next to the GitHub widget). Appearance only — structure, the
+Material GitHub widget, and search kept; zero claims/math touched.
+Pushed: sutra @ e1534435, pointer bumped here. Fuller remake is a
+recorded LONG-TERM goal (Sutra `todo.md` → "Docs / website" + queue
+Parked), incl. porting Sutra's nicer GitHub widget to the other sites.
+
+VISIBILITY NOTE (why sister-site changes may not be visible to Emma):
+the changes ARE pushed to each repo's master. But the sister subdomains
+(sutra/loka/… .emmaleonhart.com) can still serve the wrong TLS cert
+until the per-repo **GitHub → Settings → Pages → Custom domain** is
+cleared + re-entered by hand — see "Subdomain RENDER diagnostic" below.
+That is a USER-ONLY fix; pushing more commits cannot resolve it.
+emmaleonhart.com itself deploys normally, so its button change IS live.
+
 ---
 
 ## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
