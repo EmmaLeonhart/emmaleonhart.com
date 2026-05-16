@@ -33,3 +33,7 @@ node_modules/
 pages/img/
 *.pptm
 .claude/worktrees/sleepy-edison/
+
+# Harness-managed local artifact — the runtime rewrites it constantly,
+# so tracking it just makes git status perpetually dirty. Local-only.
+.claude/scheduled_tasks.lock
