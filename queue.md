@@ -45,89 +45,80 @@ stays open and the machine is awake. If the session is closed before a
 fire time, that cron is lost and the cleanvibe work for it must be run
 by hand (steps are in sections B/C/D above).
 
-## Sutra site visual unification — chrome restyle SHIPPED; full remake LONG-TERM
+## Visual identity — THE UNIFIED PIPELINE (single source of truth, 2026-05-16)
 
-2026-05-16: Sutra's Material chrome restyled to the shared Lacquer
-identity (dark header/tabs, the Loka-feel `.md-button`, lifted grid
-cards, tinted admonitions, header re-ordered: search one side / theme
-toggle next to the GitHub widget). Appearance only — structure, the
-Material GitHub widget, and search kept; zero claims/math touched.
-Pushed: sutra @ e1534435, pointer bumped here. Fuller remake is a
-recorded LONG-TERM goal (Sutra `todo.md` → "Docs / website" + queue
-Parked), incl. porting Sutra's nicer GitHub widget to the other sites.
+Goal: every site is the SAME visual identity, produced by ONE
+mechanism, iterated in ONE place. No more per-site ad-hoc tweaks.
 
-VISIBILITY NOTE (updated 2026-05-16): Emma fixed the per-repo Pages
-custom domain — the subdomains resolve now. HTTPS cert may still be
-propagating for a bit. KEY RULE going forward: each sister site
-deploys from ITS OWN repo's Pages workflow on push to that repo's
-default branch — so every submodule edit must be committed AND pushed
-to the sister repo's own remote (not just the superproject pointer).
-Always verify sister local HEAD == sister origin after editing.
+### Source of truth
+- `/branding` (emmaleonhart.com/branding) = the LIVING STYLE GUIDE.
+  Every element is demonstrated there first; nothing rolls out until
+  it looks right on /branding.
+- `pages/identity.css` = the ONE skin file. Sister static sites carry
+  a BYTE-IDENTICAL copy (re-synced from canonical, never per-page
+  overridden). Sutra (MkDocs) maps the same tokens into Material via
+  `docs/stylesheets/identity.css`.
 
-## Synoptic visual integration + /branding demonstration page (2026-05-16)
-
-Emma's brief: every site should be reconstructed from the SAME shared
-elements — main-site structure/identity + Lacquer palette + Loka-feel
-buttons + Sutra's prominent Material GitHub repo widget + a Material
-search component + the light/dark toggle (toggle sits next to the
-GitHub widget; search on the other side).
-
-CONFIRMED kit (locked from Emma's reference screenshots 2026-05-16):
+### Confirmed kit (locked from Emma's reference screenshots)
 1. GitHub repo widget = Sutra's Material `.md-source` VERBATIM
-   (octocat + `Owner/Repo` one line + version·stars·forks pill).
-2. Search = compact, expands on focus (NOT a wide box).
-3. Light/dark toggle sits next to the GitHub widget; search opposite.
-4. Primary button = calmer mid-tone fill + near-white label + a
-   subtle AURORA GRADIENT/GLOW (NOT the old garish bright block).
-   Based on the main-site buttons; every site inherits this.
-5. Aurora side-glow = identity element (Emma liked it on Loka).
-6. Emoji card icons = identity element (iconic, eye-catching).
-7. Cosmic motif: the rotating orbital hero glyph — enlarged; MORE
-   cosmic background elements wanted (todo.md).
-8. Gradient + italic-serif display type = identity element, but
-   flagged in todo.md to revisit (Emma unsure others will like it).
-`/branding` is the LIVING STYLE GUIDE — iterate there, then roll out.
+   (octocat + `Owner/Repo` + version·stars·forks pill).
+2. Search = compact, expands on focus.
+3. Light/dark toggle next to the GitHub widget; search opposite.
+4. Primary button = calmer mid-tone fill + near-white label + subtle
+   AURORA GRADIENT/GLOW (based on the main-site buttons).
+5. Aurora side-glow = identity element.
+6. Aurora-box cards = the main-site gradient-glow + accent-bar card,
+   multi-hue; every card ALSO carries an emoji ("everything has an
+   Aurora or an emoji").
+7. Cosmic motif: enlarged rotating orbital hero glyph; more cosmic
+   background elements wanted (todo.md).
+8. Gradient + italic-serif display type (flagged to revisit, todo.md).
 
-- [x] Build `/branding` (shipped + iterated: verbatim widget, compact
-      search, emoji cards, aurora-gradient button, glyph).
-- [ ] (ongoing) Reconstruct each sister site from the confirmed kit.
-      Done so far: shared `identity.css` (palette + calmer/aurora
-      button) on loka/querykey/alignment/yantra/vibecoding; Sutra
-      chrome restyled (dark header/tabs/widget/search) + button.
-      Remaining: per-site layout alignment to the main-site structure.
+### Pipeline phases
+- P1 SKIN — DONE + pushed across all repos (palette, calmer/aurora
+  button, widget, search, aurora, emoji, glyph in canonical
+  identity.css; sister copies re-synced; Sutra Material steered).
+- P2 STYLE GUIDE — /branding is live and iterated FIRST (now:
+  aurora-box + emoji cards).
+- P3 STRUCTURAL ROLLOUT — the long-haul. Static sites adopt the
+  shared `.site-nav` shell + aurora + glyph; **Loka needs a shared
+  shell (root cause: per-page static HTML, no template — todo.md)**;
+  Sutra stays MkDocs, steered (chrome done; keep its nav/search).
+  cleanvibe enters P3 via the cleanvibe crons above.
+- P4 DEFERRED — revisit gradient/italic; expand cosmic motifs;
+  promote /branding to a formal written style guide.
+
+### KEY RULE
+Each sister site deploys from ITS OWN repo's Pages workflow on push
+to that repo's default branch. Every submodule edit must be committed
+AND pushed to the sister repo's own remote (not just the superproject
+pointer), then verified local HEAD == origin. Emma fixed the per-repo
+Pages custom domain; subdomains resolve (HTTPS cert may still settle).
+
+### E. CRON 4 (~16:09 today, +1h) — run the P3 skin+cards rollout
+LOCAL one-shot session cron `32aecc22` (needs local creds + tree;
+session-only like the cleanvibe crons — fires only while this session
+is alive + machine awake).
+Reads this pipeline + the FINAL state of `/branding` + canonical
+`pages/identity.css`, then: re-sync every sister `identity.css`
+byte-for-byte from canonical (loka/querykey/alignment/yantra/
+vibecoding, + cleanvibe if integrated); map the same tokens into
+Sutra's Material `docs/stylesheets/identity.css`; apply the aurora-box
++ emoji card convention to each site's existing card grids; commit +
+push every touched repo to its OWN remote; bump submodule pointers;
+verify local==origin for each. Do NOT restructure Loka's per-page
+HTML in this pass (P3 shell work is separate long-haul) — skin +
+cards only. Delete this item + mark the task done when finished.
 
 ---
 
-## Visual identity + GitHub stars widget — DONE locally; needs Emma's push
+## (superseded) Visual identity + GitHub stars widget
 
-Main site is done and LIVE: one shared `pages/identity.css` (palette,
-`.btn`, Material `.theme-toggle`, aurora, eyebrow, card, type, and the
-shared `.gh` GitHub-repo pill); `index.html`/`projects/`/`research/`,
-`pages/_identity/` (now the live demo), and the `build_viewer.py`
-embeddings template all link it. Sister sites (Yantra/QueryKey/
-Alignment/Loka) are committed LOCALLY: each carries its own copy of
-`identity.css` and links it; Loka redone properly via `@import`+alias
-(no more cascade-override); the live GitHub star/release pill is on all
-four. Sutra unchanged by design (Material steer + its built-in repo
-widget already shows stars). Full writeup: experiment_log
-"TRUE Visual Identity Unification + GitHub repo pill (2026-05-16)".
-
-**REMAINING — blocked on the auto-mode classifier (agent cannot push to
-the shared sister repos).** Emma (or a permitted run) publishes the
-widget + P5 + `v0.0.0` tags with ONE batch, from the emmaleonhart.com
-repo root:
-
-```
-git -C repos/yantra push origin master ; git -C repos/yantra push origin v0.0.0
-git -C repos/querykey push origin main ; git -C repos/querykey push origin v0.0.0
-git -C repos/alignment push origin master ; git -C repos/alignment push origin v0.0.0
-git -C repos/loka push origin main
-git -C repos/latent-space-cartography push origin v0.0.0
-```
-
-After the push, do the only remaining identity item: the live dark+light
-visual diff of all main-site + sister pages (Emma is ground truth on
-GitHub Pages). Then delete this whole section.
+Folded into THE UNIFIED PIPELINE above. The skin + widget work is
+committed AND pushed across all repos (verified local==origin), and
+Emma fixed the Pages custom domains, so the old "DONE locally; needs
+Emma's push / blocked on auto-mode classifier" framing no longer
+applies. Remaining identity work lives in the pipeline phases (P3/P4).
 
 ---
 
