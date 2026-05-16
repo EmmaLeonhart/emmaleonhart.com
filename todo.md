@@ -116,4 +116,21 @@
 - [ ] Consider adding a project index/gallery page with thumbnails
 - [ ] Add analytics (privacy-respecting, like Plausible or self-hosted)
 - [ ] Set up GitHub Actions to auto-compile TypeScript on push
-- [ ] Add 404 page
+
+## Visual-identity pipeline — long-haul (reference; queue holds only the active cron)
+- [ ] **P3 structural rollout.** Skin/cards/glyph/404 are shared via
+  `identity.css` + the rollout cron. Structural parity is the long
+  pole: **Loka needs a shared shell** (per-page static HTML, no
+  template — see ROOT CAUSE above). Static sisters adopt the shared
+  `.site-nav` + aurora + glyph; Sutra stays MkDocs, steered.
+- [ ] **P4 deferred** — revisit gradient/italic display type; expand
+  cosmic background motifs; promote `/branding` to a formal written
+  style guide. (`/branding` is the living source of truth meanwhile.)
+
+## Parked / flagged (not active)
+- [ ] querykey deep code-identifier rename (Go module /
+  `secretarybird-old/`) — separate breaking refactor, needs go-ahead.
+- [ ] `/theory/sutradb/` URL path still literally says sutradb (kept
+  to avoid link breakage).
+- [ ] publish.yml workflow_dispatch verify (clawRxiv CI path) — `gh`
+  not authed on this machine; do when auth available or via GitHub UI.
