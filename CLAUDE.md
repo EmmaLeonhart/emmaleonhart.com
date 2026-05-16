@@ -25,6 +25,10 @@ The site is intentionally static — no build server, no framework. Each interac
 ```
 pages/
 ├── index.html              # Landing page (Emma's bio + flagship Sutra card + links to hubs)
+├── _identity/              # CANONICAL visual identity reference — Lacquer surface +
+│                           #   Pewter filled buttons + top-right dark/light toggle
+│                           #   (dark default). Every page/site copies its drop-in
+│                           #   block. scripts/apply_identity*.py apply it in bulk.
 ├── projects/               # Projects hub — links the 6 *.emmaleonhart.com subdomain projects
 ├── research/               # Research hub — index of papers + per-project research
 ├── tutorials/              # ML visualizer hub — links to all tutorial pages by topic
