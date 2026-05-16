@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slate &mdash; Examples</title>
+  <meta name="description" content="The Slate visual style: flat dark, system fonts, simple cards. The 'tool shed' surface used by every interactive visualizer and the /tutorials/ and /theory/ hubs.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #d0d0dc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 64px 24px;
+    }
+    .container { max-width: 760px; width: 100%; }
+    .back {
+      display: inline-block;
+      color: #7c8cf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+    .back:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #e8e8f0;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, #e8e8f0 0%, #9aa4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 1.05rem;
+      color: #9090a8;
+      margin-bottom: 16px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    .note {
+      font-size: 0.92rem;
+      color: #777793;
+      margin-bottom: 56px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7c8cf8;
+      margin-bottom: 18px;
+    }
+    .section { margin-bottom: 44px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .tool {
+      display: block;
+      padding: 16px 18px;
+      background: #12121a;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+    .tool:hover {
+      border-color: #3a3a55;
+      background: #16161f;
+      transform: translateY(-1px);
+    }
+    .tool-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #c0c0dc;
+      margin-bottom: 4px;
+    }
+    .tool-desc {
+      font-size: 0.82rem;
+      color: #777793;
+      line-height: 1.5;
+    }
+    .button-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn {
+      font-size: 0.88rem;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #1e1e2a;
+      background: #12121a;
+      color: #c0c0dc;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn:hover { border-color: #3a3a55; background: #16161f; }
+    .btn-primary { color: #7c8cf8; border-color: #2a3a55; }
+    .btn-primary:hover { color: #9aa8ff; }
+    pre.code {
+      background: #08080d;
+      border: 1px solid #1e1e2a;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.84rem;
+      color: #c0c0dc;
+      overflow-x: auto;
+      margin-bottom: 44px;
+    }
+    pre.code .k { color: #7c8cf8; }
+    pre.code .s { color: #d4a76a; }
+    pre.code .c { color: #555570; }
+
+    /* Breakdown */
+    .breakdown {
+      margin-top: 56px;
+      background: #0d0d14;
+      border: 1px solid #1e1e2a;
+      border-radius: 8px;
+      padding: 24px 26px;
+    }
+    .breakdown h2 {
+      font-size: 1.4rem; font-weight: 700; color: #e8e8f0;
+      text-transform: none; letter-spacing: -0.3px;
+      margin-bottom: 4px;
+    }
+    .breakdown .sub { color: #777793; font-size: 0.92rem; margin-bottom: 24px; }
+    .row {
+      display: grid; grid-template-columns: 130px 1fr;
+      gap: 12px 20px; padding: 12px 0;
+      border-top: 1px solid #16161f;
+    }
+    .row:first-of-type { border-top: 0; padding-top: 0; }
+    .row-key {
+      font-size: 0.78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #555570; padding-top: 2px;
+    }
+    .row-val { font-size: 0.92rem; color: #c0c0dc; line-height: 1.6; }
+    .row-val code {
+      font-family: 'Consolas', monospace; font-size: 0.86em;
+      background: #12121a; border: 1px solid #1e1e2a;
+      padding: 1px 6px; border-radius: 3px; color: #9aa4ff;
+    }
+    .swatch-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sw {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'Consolas', monospace; font-size: 0.78rem; color: #c0c0dc;
+    }
+    .sw .chip {
+      width: 20px; height: 20px; border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .where {
+      margin-top: 32px; padding-top: 18px;
+      border-top: 1px solid #16161f;
+      font-size: 0.86rem; color: #8888a0; line-height: 1.6;
+    }
+    .where strong { color: #e8e8f0; }
+
+    @media (max-width: 480px) {
+      body { padding: 40px 16px; }
+      h1 { font-size: 1.7rem; }
+      .row { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/examples/" class="back">&larr; Examples</a>
+    <h1>Slate</h1>
+    <p class="tagline">A flat, system-font tool surface &mdash; no animation, no Google Fonts, no atmosphere. Just dark cards in a tight grid.</p>
+    <p class="note">Used on every interactive visualizer and on the <code style="font-family:Consolas,monospace;color:#9aa4ff;">/tutorials/</code> and <code style="font-family:Consolas,monospace;color:#9aa4ff;">/theory/</code> hubs that index them. The job is to stay out of the way of the math demo it's wrapping.</p>
+
+    <h2>Card grid</h2>
+    <div class="section">
+      <div class="grid">
+        <a class="tool" href="#breakdown">
+          <div class="tool-title">Tool A</div>
+          <div class="tool-desc">A short one-liner about what this tool does, kept tight.</div>
+        </a>
+        <a class="tool" href="#breakdown">
+          <div class="tool-title">Tool B</div>
+          <div class="tool-desc">Cards live in a <code style="background:#08080d;padding:1px 4px;border-radius:3px;">repeat(auto-fit, minmax(220px, 1fr))</code> grid.</div>
+        </a>
+        <a class="tool" href="#breakdown">
+          <div class="tool-title">Tool C</div>
+          <div class="tool-desc">Lift on hover: <code style="background:#08080d;padding:1px 4px;border-radius:3px;">translateY(-1px)</code>.</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>Buttons</h2>
+    <div class="button-row">
+      <a class="btn btn-primary" href="#breakdown">Primary</a>
+      <a class="btn" href="#">Secondary</a>
+      <a class="btn" href="#">Tertiary</a>
+    </div>
+
+    <h2>Code</h2>
+    <pre class="code"><span class="c">// Slate uses Consolas for code, periwinkle for keywords</span>
+<span class="k">const</span> palette = {
+  bg:     <span class="s">'#0a0a0f'</span>,  <span class="c">// flat dark</span>
+  card:   <span class="s">'#12121a'</span>,
+  accent: <span class="s">'#7c8cf8'</span>,  <span class="c">// periwinkle</span>
+};</pre>
+
+    <div id="breakdown" class="breakdown">
+      <h2>Style breakdown</h2>
+      <p class="sub">The minimal token set Slate keeps reusing.</p>
+
+      <div class="row">
+        <div class="row-key">Palette</div>
+        <div class="row-val">
+          <div class="swatch-row" style="margin-bottom:10px;">
+            <div class="sw"><span class="chip" style="background:#0a0a0f"></span>#0a0a0f bg</div>
+            <div class="sw"><span class="chip" style="background:#12121a"></span>#12121a card</div>
+            <div class="sw"><span class="chip" style="background:#16161f"></span>#16161f hover</div>
+            <div class="sw"><span class="chip" style="background:#1e1e2a"></span>#1e1e2a border</div>
+          </div>
+          <div class="swatch-row">
+            <div class="sw"><span class="chip" style="background:#d0d0dc"></span>#d0d0dc body</div>
+            <div class="sw"><span class="chip" style="background:#e8e8f0"></span>#e8e8f0 strong</div>
+            <div class="sw"><span class="chip" style="background:#7c8cf8"></span>#7c8cf8 accent</div>
+            <div class="sw"><span class="chip" style="background:#777793"></span>#777793 mute</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Typography</div>
+        <div class="row-val">
+          <code>'Segoe UI', system-ui, -apple-system, sans-serif</code> &mdash; whatever the OS already has. No web-font fetch.<br>
+          Code: <code>'Consolas', 'Monaco', monospace</code>.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Headlines</div>
+        <div class="row-val">
+          h1 at <code>2.2rem</code> 700, <code>letter-spacing: -0.5px</code>, with the same gradient-text trick (white &rarr; periwinkle) for one understated flourish. h2s are mono caps in periwinkle, <code>letter-spacing: 1.5px</code>.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Components</div>
+        <div class="row-val">
+          <strong>Card</strong> &mdash; <code>border-radius: 8px</code>, padding <code>16&times;18px</code>, hairline border lifts to <code>#3a3a55</code> on hover, surface lifts to <code>#16161f</code>.<br>
+          <strong>Button</strong> &mdash; same shape as a card with smaller text. Primary just swaps text color to accent.<br>
+          <strong>Code block</strong> &mdash; slightly darker than body bg, same hairline.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Spacing</div>
+        <div class="row-val">
+          Page padding 64&thinsp;px (visualizer pages drop to 40&thinsp;px). Container 760&thinsp;px. Card grid gap 12&thinsp;px. Section gaps 44&thinsp;px.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-key">Signature motif</div>
+        <div class="row-val">
+          <em>Absence.</em> No background animation, no shadows, no gradients except a single one in the h1. Hover state is a 1&thinsp;px transform plus a one-shade border lift. The whole point is to not compete with the visualization the page is wrapping.
+        </div>
+      </div>
+
+      <div class="where">
+        <strong>In use:</strong> <code>/tutorials/</code> &middot; <code>/theory/</code> &middot; every per-visualizer page (<code>/dotproduct/</code>, <code>/cnn/</code>, <code>/attention/</code>, <code>/mlp/</code>, <code>/lstm/</code>, <code>/regression/</code>&hellip;).
+      </div>
+    </div>
+  </div>
+</body>
+</html>
