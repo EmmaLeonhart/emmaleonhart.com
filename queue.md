@@ -22,11 +22,12 @@ See `CLAUDE.md` § "Workflow Rules" for how this file, planning mode, and the ta
 
 **Canonical artifact is built:** `pages/_identity/index.html` — the reference page + the copy-paste drop-in block (pre-paint theme script, `:root`/`[data-theme="light"]` token blocks, `.theme-toggle` widget, click handler). Every page below copies from it.
 
+**Main-site Lacquer front door is migrated** (landing fa6cdd5, projects + research next commit) — they use a card/link system, not `.btn`, so they got the toggle + light tokens; no Pewter-button change applies there (forcing it would be a redesign).
+
 **Steps (commit+push each; delete the line when done; mirror to task tool):**
-1. Main-site reference: apply to `pages/index.html` landing (Pewter buttons + toggle widget + light tokens), then `/projects/`, `/research/`. Push after each.
-2. Roll the toggle widget + Pewter buttons across the Slate pages — `/tutorials/`, `/theory/`, every per-visualizer page. Largest sub-job; one commit per logical group.
-3. Sister repos (push to each default branch per the repos/ workflow, then bump pointers): Yantra/QueryKey/Alignment (already Lacquer) → add Pewter buttons + toggle. Loka (Pewter) → re-base on Lacquer, keep prominent buttons, add toggle. Sutra (MkDocs Material — already has a toggle) → steer its Material palette/accent toward the Lacquer tokens so it visually matches. latent-space-cartography → Lacquer if/when it gets a site.
-4. Update README.md + CLAUDE.md "Page structure" + experiment_log.md mapping to record the convergence.
+1. Roll the toggle widget + Pewter buttons across the Slate pages — `/tutorials/`, `/theory/` hubs + every per-visualizer page (`/dotproduct/`, `/cnn/`, `/attention/`, …). These DO use buttons → apply Pewter filled style + toggle + Slate→Lacquer token convergence. Largest sub-job; one commit per logical group. Pattern = the 6-edit recipe used on the front-door pages (data-theme attr, pre-paint script, light token block, toggle CSS, toggle markup, handler) + Pewter `.btn` rules.
+2. Sister repos (push to each default branch per the repos/ workflow, then bump pointers): Yantra/QueryKey/Alignment (already Lacquer) → add Pewter buttons + toggle. Loka (Pewter) → re-base on Lacquer, keep prominent buttons, add toggle. Sutra (MkDocs Material — already has a toggle) → steer its Material palette/accent toward the Lacquer tokens so it visually matches. latent-space-cartography → Lacquer if/when it gets a site.
+3. Update README.md + CLAUDE.md "Page structure" + experiment_log.md mapping to record the convergence.
 
 ---
 
