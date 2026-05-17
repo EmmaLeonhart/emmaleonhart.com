@@ -1,6 +1,6 @@
 # emmaleonhart.com
 
-Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory on `master`.
+Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory. **Branch migration in progress (2026-05-16): `master` → `main`.** The Pages workflow triggers on BOTH `master` and `main`, so deploys keep working through the switch. `main` exists on origin; the final GitHub default-branch flip (Settings → Branches) is a UI action only the repo owner can do. Once default is `main` and confirmed, drop `master` from `pages.yml` and delete `origin/master`.
 
 ## Workflow Rules
 - **DELETE completed items from `queue.md` IN THE SAME COMMIT as the work.** This is non-negotiable. Not at the end of a session, not "soon" — same commit. No checkmarks, no `DONE` headers, no status markers. If the work is done, the line is gone. The queue is a queue, not a journal.
