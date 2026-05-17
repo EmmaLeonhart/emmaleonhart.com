@@ -42,6 +42,20 @@ a repo's GitHub default.**
 
 ---
 
+## Sutra site wiped → verify the live deploy
+
+The MkDocs Material Sutra site was scrapped; the site is now one
+static page (`docs/neurips-2026.md` via `repos/sutra`
+`scripts/build_site.py`) on the shared identity, with paper PDF,
+anonymized PDF, and reproduction zip downloadable from it. Shipped
+and pushed: repos/sutra@31b591e8, 62f2c3bd, 8634ce0d.
+
+Pending: confirm the `pages.yml` run for 62f2c3bd is green and
+<https://sutra.emmaleonhart.com> serves the new page with all three
+downloads resolving (Emma can't see local builds — must verify live).
+The risky parts are the kept TeX/pandoc paper-PDF + supplementary-zip
+steps. If the run failed, fix forward and push; don't revert.
+
 ## Pointers
 
 - Visual-identity spec, confirmed kit, P3/P4 long-haul, parked items: `todo.md` + the living `/branding` page.

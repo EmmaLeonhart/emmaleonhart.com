@@ -1,5 +1,24 @@
 # TODO — emmaleonhart.com
 
+## Loka onto the common render pipeline (the one worth the effort)
+
+Sutra's site was scrapped (it wasn't good enough to preserve — see
+`git log`, the single-page rebuild). **Loka is the opposite case:**
+Emma rates the Loka website as much better and explicitly wants the
+effort spent there. It is NOT on the shared static pipeline yet —
+Loka shares the palette/buttons via `identity.css` but its page
+structure, render path, and chrome are still its own.
+
+Destination (not steps — this is a multi-session goal): rebuild Loka
+onto the same static pipeline + canonical identity as the rest of
+emmaleonhart.com (real `identity.css`, `.aurora`, cosmic glyph,
+gradient display type, the Material-style toggle, the shared GitHub
+widget) while *preserving* what makes the Loka site good — its
+content and the interactions Emma likes. Unlike Sutra, the goal here
+is preservation + unification, not replacement. The `/branding` page
+is the reference for what "the same parts" means. Scope a concrete
+plan into `queue.md` before touching it.
+
 ## Research page (`/research/`)
 - [ ] The research index is still vague. It links the project subdomains and a
       few standalone papers, but most per-project papers are only referenced
