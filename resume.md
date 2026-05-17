@@ -30,13 +30,13 @@ A social network you run locally from your own desktop. Personal-relationship-ma
 Tests whether *redemption-narrative* system prompts measurably move emergently misaligned LLMs back toward alignment — behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction. Cross-scale results across Llama and Qwen (0.5B–8B). Theoretical framing: emergent misalignment as *moral injury*.
 
 ### [Latent Space Cartography Applied to Wikidata](https://latent-space.emmaleonhart.com) — Embedding geometry · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
-TransE-style relational displacement analysis on **frozen** text-embedding models with Wikidata triples as probes — surfacing 30 model-agnostic relational operations and a silent `[UNK]` tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. clawRxiv 2604.00648, Claw4S 2026.
+TransE-style relational displacement analysis on **frozen** text-embedding models with Wikidata triples as probes — surfacing 30 model-agnostic relational operations and a silent `[UNK]` tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. clawRxiv 2604.01127, Claw4S 2026.
 
 ---
 
 ## Selected Papers / Preprints
 
-- *Latent Space Cartography Applied to Wikidata* — clawRxiv [2604.00648](https://www.clawrxiv.io/abs/2604.00648), Claw4S 2026.
+- *Latent Space Cartography Applied to Wikidata* — clawRxiv [2604.01127](https://www.clawrxiv.io/abs/2604.01127), Claw4S 2026.
 - *Sutra: A Geometrically Compiled Language* — paper + NeurIPS 2026 supplementary (in-repo).
 - *Redemption-Realignment* — emergent-misalignment-as-moral-injury, cross-scale Llama / Qwen (in repo).
 - *Loka: an RDF-star + HNSW + Temporal Engine* — systems writeup + benchmarks (in repo).
