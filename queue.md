@@ -6,30 +6,6 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ---
 
-## Sister queue.md barrel-through (was dcaabdf1 step 2 — still pending)
-
-The bloated sister `queue.md`s still need barreling. Audit 2026-05-16:
-querykey 882 lines/93 done-hits, loka 369/57, alignment 274/9,
-sutra 233/21 (OK: yantra 53, cleanvibe 23). Not rushed under tight
-usage because destructively rewriting 4 mature repos' live queues is
-exactly where context gets lost. Do it deliberately, one repo at a
-time:
-
-- Per violator: move clearly-DONE / superseded / status-narration /
-  worth-keeping history into that repo's `DEVLOG.md` (loka & sutra
-  already have one; cleanvibe ships `devlog.md` as of v1.1.0 — its
-  convention: done = delete from queue.md + dated devlog entry, same
-  commit). Barrel `queue.md` down to only live concrete steps.
-- Ensure each CLAUDE.md has the forward-flow "Queue and longer-horizon
-  work" section (present: emmaleonhart.com, loka, lsc,
-  vibecoding-tutorial; check the rest).
-- **SUTRA SPECIAL RULE:** never touch vision / substrate-dispute /
-  personal / CLAUDE.md substance / code / math; only relocate
-  clearly-DONE *operational* items. When unsure, leave it.
-- Commit + push each repo to its OWN remote; bump pointers; verify
-  local==origin. querykey already pruned 882→clean once (Round 14 per
-  its CLAUDE.md) and regrew — it is the priority.
-
 ## Bio-sync — Emma action required (one-time)
 
 Diagnosis (2026-05-16): EmmaLeonhart/EmmaLeonhart IS the profile-README
@@ -50,28 +26,34 @@ Pragmatic fix shipped instead: a push-from-here fallback,
    https://github.com/EmmaLeonhart/EmmaLeonhart/settings/actions
 Then trigger once via the workflow's `workflow_dispatch` to verify.
 
-## master → main rename (was dbd1ff12) — MANUAL, blocked on a GitHub PAT
+## master → main migration — status + the ONE thing only Emma can do
 
-Flipping a repo's default branch needs the GitHub API/UI; `gh` is NOT
-authenticated here and there is no REST PAT. Pushing `main` while
-unable to flip the default + Pages source would BREAK the live site
-and CI, so this was NOT auto-run (the spec's own safety clause:
-no PAT → leave a manual TODO, don't delete `master`).
+Done by automation (2026-05-16): emmaleonhart.com has a `main` branch
+on origin (mirror of master, `5aa80954a`), local is on `main`,
+`pages.yml` + `sync-profile-readme.yml` trigger on `[master, main]`,
+Pages is Actions-based (no branch "source" to flip), CLAUDE.md
+documents the migration. So nothing deploys *only* from master and
+`main` is fully wired.
 
-Repos to flip (loka, querykey already `main` — skip):
-emmaleonhart.com, alignment, cleanvibe, latent-space-cartography,
-sutra (README/CLAUDE text only — conservative), vibecoding-tutorial
-(lowercase `claude.md`), yantra.
+**Live remote check 2026-05-16 ~21:00: emmaleonhart.com GitHub default
+is STILL `master`** (`git ls-remote --symref origin HEAD`). Submodule
+defaults already flipped by Emma: sutra/loka/querykey/alignment/
+vibecoding=main; yantra/lsc/cleanvibe still master (but `main` exists
+on all 8).
 
-Per repo, Emma (or a PAT-equipped run): Settings → Branches →
-rename `master` → `main`
-(`https://github.com/EmmaLeonhart/<repo>/settings/branches`); for
-emmaleonhart.com also flip Pages source branch to `main`
-(https://github.com/EmmaLeonhart/emmaleonhart.com/settings/pages).
-THEN a session can: update `.github/workflows/*.yml` + CLAUDE.md /
-claude.md branch refs master→main, `git remote set-head origin main`,
-bump pointers, verify. Do NOT `git push origin --delete master` until
-the GitHub default + Pages are confirmed `main`.
+**ONLY remaining blocker (Emma, UI — agent has no PAT):** emmaleonhart.com
+→ Settings → Branches → set default to `main`
+(https://github.com/EmmaLeonhart/emmaleonhart.com/settings/branches).
+For the still-master submodules likewise flip their default.
+AFTER a repo's GitHub default is confirmed `main`, a session may:
+trim `pages.yml`/`sync-profile-readme.yml` to `[main]`,
+`git push origin --delete master`, `git remote set-head origin main`,
+update remaining CLAUDE/claude.md `master` text. Do NOT delete any
+`origin/master` before its GitHub default is confirmed `main`
+(destructive — emmaleonhart.com default is still master right now).
+
+Submodule gitlink re-point to each repo's `main` HEAD is handled by
+LOCAL one-shot cron `ec7863e6` (~21:29 local 2026-05-16; session-only).
 
 ---
 
