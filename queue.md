@@ -42,19 +42,23 @@ a repo's GitHub default.**
 
 ---
 
-## Sutra site wiped → verify the live deploy
+## Active cross-repo task: Loka site → common render pipeline
 
-The MkDocs Material Sutra site was scrapped; the site is now one
-static page (`docs/neurips-2026.md` via `repos/sutra`
-`scripts/build_site.py`) on the shared identity, with paper PDF,
-anonymized PDF, and reproduction zip downloadable from it. Shipped
-and pushed: repos/sutra@31b591e8, 62f2c3bd, 8634ce0d.
+Sutra is done (MkDocs scrapped → 2 static pages on the shared
+identity + Yantra-style header/footer; repos/sutra@…20fe9d6d; wipe
+deploy verified green, later commits serialized in the Pages queue).
 
-Pending: confirm the `pages.yml` run for 62f2c3bd is green and
-<https://sutra.emmaleonhart.com> serves the new page with all three
-downloads resolving (Emma can't see local builds — must verify live).
-The risky parts are the kept TeX/pandoc paper-PDF + supplementary-zip
-steps. If the run failed, fix forward and push; don't revert.
+Now unifying the Loka website (Emma's explicit next task: Loka's
+content is good and must be PRESERVED — only the render pipeline /
+shell gets unified to match emmaleonhart.com + Yantra + Sutra).
+Concrete staged plan + progress live in `repos/loka/queue.md`
+(Loka has its own CLAUDE.md/queue rules — follow them; push to
+Loka `main`). Loka is a 41-page static site; this is multi-session.
+
+Note: sister-subdomain pushes can stay invisible until Emma's manual
+GitHub Pages custom-domain re-set — verify the push landed, don't
+just re-push. Optionally re-confirm the two later Sutra Pages runs
+(4161e8dc, 20fe9d6d) went green once the queue drains.
 
 ## Pointers
 
