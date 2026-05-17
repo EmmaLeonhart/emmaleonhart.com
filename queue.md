@@ -26,34 +26,19 @@ Pragmatic fix shipped instead: a push-from-here fallback,
    https://github.com/EmmaLeonhart/EmmaLeonhart/settings/actions
 Then trigger once via the workflow's `workflow_dispatch` to verify.
 
-## master → main migration — status + the ONE thing only Emma can do
+## master → main migration — essentially DONE (optional cleanup only)
 
-Done by automation (2026-05-16): emmaleonhart.com has a `main` branch
-on origin (mirror of master, `5aa80954a`), local is on `main`,
-`pages.yml` + `sync-profile-readme.yml` trigger on `[master, main]`,
-Pages is Actions-based (no branch "source" to flip), CLAUDE.md
-documents the migration. So nothing deploys *only* from master and
-`main` is fully wired.
+emmaleonhart.com GitHub default = `main` (Emma flipped it; verified
+live `git ls-remote --symref origin HEAD` → `refs/heads/main`,
+2026-05-16). All 8 submodules re-pointed to their `main` HEAD
+(cron `ec7863e6`); `git submodule status` clean. `main` is the
+canonical/current branch everywhere; nothing deploys only from master.
 
-**Live remote check 2026-05-16 ~21:00: emmaleonhart.com GitHub default
-is STILL `master`** (`git ls-remote --symref origin HEAD`). Submodule
-defaults already flipped by Emma: sutra/loka/querykey/alignment/
-vibecoding=main; yantra/lsc/cleanvibe still master (but `main` exists
-on all 8).
-
-**ONLY remaining blocker (Emma, UI — agent has no PAT):** emmaleonhart.com
-→ Settings → Branches → set default to `main`
-(https://github.com/EmmaLeonhart/emmaleonhart.com/settings/branches).
-For the still-master submodules likewise flip their default.
-AFTER a repo's GitHub default is confirmed `main`, a session may:
-trim `pages.yml`/`sync-profile-readme.yml` to `[main]`,
-`git push origin --delete master`, `git remote set-head origin main`,
-update remaining CLAUDE/claude.md `master` text. Do NOT delete any
-`origin/master` before its GitHub default is confirmed `main`
-(destructive — emmaleonhart.com default is still master right now).
-
-Submodule gitlink re-point to each repo's `main` HEAD is handled by
-LOCAL one-shot cron `ec7863e6` (~21:29 local 2026-05-16; session-only).
+Optional, low-priority, do when convenient (not blocking anything):
+trim `pages.yml` + `sync-profile-readme.yml` triggers `[master, main]`
+→ `[main]`; once a repo's GitHub default is confirmed `main`, delete
+its now-unused `origin/master`. **Never delete a branch that is still
+a repo's GitHub default.**
 
 ---
 
