@@ -182,14 +182,6 @@ not survive a restart.
   sister publish dir. Commit + push each repo to its OWN remote; bump
   submodule pointers; verify local==origin. NOT Loka HTML restructure.
 
-- **cleanvibe follow-up (was `679b53ea`).** If cleanvibe origin/master
-  moved since integration: pull, refine its `pages/` site + re-sync
-  identity.css, push + bump pointer. Else no-op.
-
-- **cleanvibe new-release check (was `c1d721d8`).** If a new
-  release/tag/commits: bump pointer + update its site +
-  `data/projects.json` desc/tags, push. Else no-op.
-
 Earlier remote routines (trig_01LUKG7…/01Vd1Uh3…/01LkDXSE…) are
 DISABLED — delete fully at claude.ai/code/routines.
 
