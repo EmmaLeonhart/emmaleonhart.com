@@ -42,16 +42,6 @@ a repo's GitHub default.**
 
 ---
 
-## Language tiers — bio card + resume (in flight)
-
-- github_bio/readme.md: Programming Languages → two tiers. Know well:
-  Rust, C#, Python. Working knowledge: PHP, Lisp. Add PHP + Lisp shield
-  defs (verified 200 + logo: php / commonlisp).
-- resume.md: Skills > Languages line → same two tiers.
-- One commit, push (bio-sync + pages workflows deploy).
-
----
-
 ## Active cross-repo task: Loka site → common render pipeline
 
 Sutra is done (MkDocs scrapped → 2 static pages on the shared

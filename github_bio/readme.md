@@ -24,11 +24,18 @@ Also: a [vibecoding tutorial](https://github.com/EmmaLeonhart/vibecoding-tutoria
 
 
 
-### Programming Languages:
+### Programming Languages
 
+**Know well:**
+
+[![Rust][Rust]][Rust-url]
 [![C#][CSharp]][CSharp-url]
 [![Python][Python]][Python-url]
-[![Rust][Rust]][Rust-url]
+
+**Working knowledge:**
+
+[![PHP][PHP]][PHP-url]
+[![Lisp][Lisp]][Lisp-url]
 
 ---
 
@@ -50,6 +57,10 @@ Also: a [vibecoding tutorial](https://github.com/EmmaLeonhart/vibecoding-tutoria
 [Python-url]: https://www.python.org/
 [Rust]: https://img.shields.io/badge/Rust-CE422B?style=for-the-badge&logo=rust&logoColor=white
 [Rust-url]: https://www.rust-lang.org/
+[PHP]: https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white
+[PHP-url]: https://www.php.net/
+[Lisp]: https://img.shields.io/badge/Lisp-000000?style=for-the-badge&logo=commonlisp&logoColor=white
+[Lisp-url]: https://lisp-lang.org/
 [Go]: https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white
 [Go-url]: https://go.dev/
 [AzureDevOps]: https://img.shields.io/badge/Azure_DevOps-0078D7?style=for-the-badge&logo=azure-devops&logoColor=white

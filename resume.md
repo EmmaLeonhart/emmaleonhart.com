@@ -74,6 +74,7 @@ TransE-style relational displacement analysis on **frozen** text-embedding model
 
 ## Skills
 
-**Languages:** Python, Rust, C#, TypeScript.
+**Languages — know well:** Rust, C#, Python.
+**Languages — working knowledge:** PHP, Lisp.
 **ML / AI:** geometric tensor compilation, embedding-space analysis, steering-vector / alignment research, grounded retrieval.
 **Systems:** RDF-star, HNSW, SPARQL+, GitHub Actions CI/CD, Azure DevOps, MediaWiki / Wikibase, Playwright.
