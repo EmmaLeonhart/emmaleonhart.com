@@ -124,3 +124,6 @@ python -m http.server 8000 --directory pages
 - **No emojis in copy** unless the user asks for them. The 📜 scroll on the Sutra card is the one exception — it's official Sutra branding from the Sutra repo.
 - **Python scripts use `py`** (the Windows launcher) when run locally. `python` and `python3` are NOT on PATH on this machine and will fail. GitHub Actions runners (Linux) still use `python` — that's fine; only local Windows differs.
 - **CNAME must not be deleted.** It's required for the custom domain to work.
+
+## Writing
+- Do not use the word "honest", "honesty", or "honestly". It is aggressively overused. Choose a more precise word that says what you actually mean (e.g. "accurate", "frank", "plainly", "truly").
