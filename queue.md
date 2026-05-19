@@ -6,18 +6,6 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ---
 
-## Bio-sync — one push pending Emma's authorization
-
-The token-free pull workflow that actually keeps the GitHub profile
-bio current lives in `EmmaLeonhart/EmmaLeonhart/.github/workflows/
-sync-from-website.yml`. It reads stale `master`; the one-line fix
-(`SOURCE_BRANCH: master` → `main`) is committed locally in
-`%TEMP%/EmmaLeonhart-sync-fix`. Pushing it to the separate profile
-repo's default branch was blocked by the safety classifier and needs
-Emma's explicit OK (or Emma runs `git -C <tmp> push origin HEAD:main`
-herself). Until then the profile bio updates daily but from a stale
-source. Nothing else here depends on it.
-
 ## master → main migration — essentially DONE (optional cleanup only)
 
 emmaleonhart.com GitHub default = `main` (Emma flipped it; verified
