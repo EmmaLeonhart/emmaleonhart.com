@@ -1,0 +1,80 @@
+name: Bump submodule pointers
+
+# Keeps every submodule in repos/ pointed at the latest commit on its
+# own remote default branch (main today; resolved dynamically so a repo
+# switching back to master still works). Nested gitlinks (e.g.
+# yantra/external/Sutra) are synced to whatever the bumped tip records —
+# they are each owning repo's responsibility, not advanced from here.
+#
+# Runs daily and on demand. Commits + pushes only when something moved.
+#
+# Note: uses the default GITHUB_TOKEN, which can read the public sister
+# repos and push back to this one. If any sister repo is made private,
+# replace `token:` with a PAT secret that can read it.
+
+on:
+  schedule:
+    - cron: '40 6 * * *'   # 06:40 UTC daily (after the 06:00 bio sync)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: submodule-bump
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    if: github.repository == 'EmmaLeonhart/emmaleonhart.com'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Re-point every submodule to its remote default-branch HEAD
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          paths=$(git config --file .gitmodules --get-regexp '^submodule\..*\.path$' \
+                  | awk '{print $2}')
+
+          for p in $paths; do
+            echo "::group::$p"
+            if [ ! -e "$p/.git" ]; then
+              echo "not initialized — skipping"
+              echo "::endgroup::"
+              continue
+            fi
+            branch=$(git -C "$p" ls-remote --symref origin HEAD \
+                     | awk '/^ref:/{sub("refs/heads/","",$2);print $2;exit}')
+            if [ -z "${branch:-}" ]; then
+              echo "could not resolve default branch — skipping"
+              echo "::endgroup::"
+              continue
+            fi
+            echo "default branch: $branch"
+            git -C "$p" fetch --quiet origin "$branch"
+            git -C "$p" checkout -q -B "$branch" "origin/$branch"
+            # Sync nested gitlinks to the new tip (do not independently advance them).
+            git -C "$p" submodule update --init --recursive --quiet || true
+            echo "::endgroup::"
+          done
+
+          if [ -z "$(git status --porcelain -- $paths)" ]; then
+            echo "All submodule pointers already current. Nothing to commit."
+            exit 0
+          fi
+
+          echo "Pointer changes:"
+          git -c core.pager=cat submodule summary -- $paths || true
+
+          git add -- $paths
+          git commit -m "submodules: auto-bump pointers to each repo's default-branch HEAD
+
+Automated by .github/workflows/submodule-bump.yml."
+          git push
