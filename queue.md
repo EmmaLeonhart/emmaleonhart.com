@@ -40,17 +40,6 @@ GitHub Pages custom-domain re-set — verify the push landed, don't
 just re-push. Optionally re-confirm the two later Sutra Pages runs
 (4161e8dc, 20fe9d6d) went green once the queue drains.
 
-## Submodule auto-bump automation (active)
-
-- Clean stray uncommitted state: discard the local
-  `repos/yantra` → `external/Sutra` `19ff409` modification. The parent
-  gitlink is the channel; yantra's nested Sutra is yantra CI's job,
-  not an uncommitted edit sitting in this working tree.
-- Apply now (cannot trigger Actions — `gh` unauthenticated here): run
-  the same bump logic locally for all 8, commit + push so the repo is
-  current immediately and the workflow logic is validated.
-- Record the new workflow in `CLAUDE.md` § "Working in repos/ submodules".
-
 ## Redirect investigation (after the submodule work)
 
 - Why `https://sutralang.dev/paper.pdf` does NOT redirect to
