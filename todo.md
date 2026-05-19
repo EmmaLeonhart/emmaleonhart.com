@@ -153,3 +153,21 @@ plan into `queue.md` before touching it.
   to avoid link breakage).
 - [ ] publish.yml workflow_dispatch verify (clawRxiv CI path) — `gh`
   not authed on this machine; do when auth available or via GitHub UI.
+- [ ] **`sutralang.dev` / `sutradb.org` redirects are broken — Emma-only
+  registrar fix.** Diagnosed 2026-05-19: both apexes use Namecheap URL
+  forwarding (DNS → `192.64.119.x`, `Server: namecheap-nginx`), NOT
+  GitHub Pages. Two faults: (1) the 302 exists ONLY on HTTP:80 — port
+  443 has no TLS cert, so `https://sutralang.dev/...` /
+  `https://sutradb.org` fail the TLS handshake before any redirect
+  (every browser/`https://` link hits this); (2) even over HTTP the
+  redirect drops the path — `http://sutralang.dev/paper.pdf` → bare
+  `https://sutra.emmaleonhart.com`, not `…/paper.pdf`. No codebase
+  lever (live repos point at the `*.emmaleonhart.com` subdomains; old
+  apex CNAMEs survive only in a stale nested Sutra copy under
+  `repos/alignment/external/Sutra`). FIX: put both apexes on
+  Cloudflare free — move nameservers to CF, Universal SSL fixes the
+  TLS failure, add a 301 Redirect Rule
+  `https://sutralang.dev/*` → `https://sutra.emmaleonhart.com/${path}`
+  (preserve path+query) and `https://sutradb.org/*` →
+  `https://loka.emmaleonhart.com/${path}`, dummy proxied A record so
+  CF terminates TLS. Namecheap-only tweaks cannot fix fault (1).

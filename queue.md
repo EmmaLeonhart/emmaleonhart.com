@@ -40,13 +40,6 @@ GitHub Pages custom-domain re-set — verify the push landed, don't
 just re-push. Optionally re-confirm the two later Sutra Pages runs
 (4161e8dc, 20fe9d6d) went green once the queue drains.
 
-## Redirect investigation (after the submodule work)
-
-- Why `https://sutralang.dev/paper.pdf` does NOT redirect to
-  `https://sutra.emmaleonhart.com/paper.pdf` (desired).
-- Why `https://sutradb.org` does NOT redirect to
-  `https://loka.emmaleonhart.com` (desired).
-
 ## Pointers
 
 - Visual-identity spec, confirmed kit, P3/P4 long-haul, parked items: `todo.md` + the living `/branding` page.
