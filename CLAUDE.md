@@ -10,6 +10,7 @@ Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from t
 - **Do not enter planning-only modes.** All thinking must produce files and commits.
 - **Update README.md regularly.** It should always reflect the current state of the site for human readers.
 - **Keep this file up to date.** As pages are added, removed, or restructured, record the changes here.
+- **Always apply changes to all submodules** I want the parts of the site to stay in sync. Do not apply changes to only some of them. If they have different rendering pipelines this means that you should change them to make them more unified. Exception is for pages with heavy JavaScript on them.
 
 ## Queue and longer-horizon work
 
