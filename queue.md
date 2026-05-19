@@ -6,25 +6,17 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ---
 
-## Bio-sync — Emma action required (one-time)
+## Bio-sync — one push pending Emma's authorization
 
-Diagnosis (2026-05-16): EmmaLeonhart/EmmaLeonhart IS the profile-README
-repo (default branch `main`, ~39 commits, content roughly current); it
-has a `.github/workflows/` dir but deeper CI status (is
-`sync-from-website.yml` failing or disabled?) is not determinable here
-— `gh` is unauthenticated and Actions run pages are JS-rendered.
-Pragmatic fix shipped instead: a push-from-here fallback,
-`.github/workflows/sync-profile-readme.yml`, that syncs
-`github_bio/readme.md` into the profile README between
-`<!-- BIO:START -->`/`<!-- BIO:END -->` markers.
-
-**Emma must, one-time, for the fallback to run:**
-1. Set repo secret `PROFILE_README_TOKEN` (fine-grained PAT,
-   contents:write on EmmaLeonhart/EmmaLeonhart) at
-   https://github.com/EmmaLeonhart/emmaleonhart.com/settings/secrets/actions
-2. Ensure Actions are enabled on the profile repo:
-   https://github.com/EmmaLeonhart/EmmaLeonhart/settings/actions
-Then trigger once via the workflow's `workflow_dispatch` to verify.
+The token-free pull workflow that actually keeps the GitHub profile
+bio current lives in `EmmaLeonhart/EmmaLeonhart/.github/workflows/
+sync-from-website.yml`. It reads stale `master`; the one-line fix
+(`SOURCE_BRANCH: master` → `main`) is committed locally in
+`%TEMP%/EmmaLeonhart-sync-fix`. Pushing it to the separate profile
+repo's default branch was blocked by the safety classifier and needs
+Emma's explicit OK (or Emma runs `git -C <tmp> push origin HEAD:main`
+herself). Until then the profile bio updates daily but from a stale
+source. Nothing else here depends on it.
 
 ## master → main migration — essentially DONE (optional cleanup only)
 
@@ -35,10 +27,10 @@ live `git ls-remote --symref origin HEAD` → `refs/heads/main`,
 canonical/current branch everywhere; nothing deploys only from master.
 
 Optional, low-priority, do when convenient (not blocking anything):
-trim `pages.yml` + `sync-profile-readme.yml` triggers `[master, main]`
-→ `[main]`; once a repo's GitHub default is confirmed `main`, delete
-its now-unused `origin/master`. **Never delete a branch that is still
-a repo's GitHub default.**
+trim the `pages.yml` trigger `[master, main]` → `[main]`; once a
+repo's GitHub default is confirmed `main`, delete its now-unused
+`origin/master`. **Never delete a branch that is still a repo's
+GitHub default.**
 
 ---
 
