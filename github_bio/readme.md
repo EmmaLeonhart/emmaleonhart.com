@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-I'm Emma. I work on neuro-symbolic AI — geometric tensor methods in service of interpretability and AI safety.
+I'm Emma. I work on neuro-symbolic AI — geometric tensor methods in service of interpretability and AI safety. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel.
 
 ### My website is the canonical home for everything: **https://emmaleonhart.com**
 
@@ -19,7 +19,10 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 - **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
 - **Latent Space Cartography** — relational geometry of frozen embedding spaces. https://latent-space.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/latent-space-cartography)
 
-Also: a [vibecoding tutorial](https://github.com/EmmaLeonhart/vibecoding-tutorial) and [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe), a vibecoding documentation bootstrapper.
+### Agentic coding
+
+- **cleanvibe** — Python scaffolding for agentic coding projects: the docs / queue / devlog conventions an AI coding agent works inside to stay on-task and self-documenting across long sessions. [source](https://github.com/EmmaLeonhart/cleanvibe)
+- **Vibecoding tutorial** — a beginner-friendly guide to driving AI coding agents (AI-pair-coding). [repo](https://github.com/EmmaLeonhart/vibecoding-tutorial)
 
 
 
