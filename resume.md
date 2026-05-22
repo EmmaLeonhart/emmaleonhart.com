@@ -1,7 +1,7 @@
 # Emma Leonhart
 
 Kelowna, BC · emmaleonhart999@gmail.com
-[GitHub](https://github.com/EmmaLeonhart) · [LessWrong](https://www.lesswrong.com/users/emma-leonhart) · [emmaleonhart.com](https://emmaleonhart.com)
+[GitHub](https://github.com/EmmaLeonhart) · [emmaleonhart.com](https://emmaleonhart.com)
 
 ---
 
