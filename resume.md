@@ -20,7 +20,7 @@ A typed language that compiles logical and vector operations to fused PyTorch te
 Python scaffolding that defines the environment a coding agent works inside — the docs / queue / devlog conventions that keep an AI agent on-task and self-documenting across long, multi-session work.
 
 ### [Loka](https://loka.emmaleonhart.com) — Generative knowledge graph · [GitHub](https://github.com/EmmaLeonhart/Loka)
-A Rust graph database with embeddings, built to be a *generative* knowledge graph: a small world model trained on Wikidata triples proposes new facts that are written back into the graph as triples with provenance.
+A Rust graph database with embeddings, built to be a *generative* knowledge graph: it uses a local AI model to predict adjacent facts and add them to the graph as new triples.
 
 ### [Latent Space Cartography](https://latent-space.emmaleonhart.com) — Embedding measurement · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
 Reproducible analysis of frozen text embeddings using Wikidata as probes — surfaced a production `[UNK]` tokenizer defect in mxbai-embed-large (unrelated diacritical strings collapse to cosine 1.0), bisected to a single Ollama release across 21 versions in CI.
