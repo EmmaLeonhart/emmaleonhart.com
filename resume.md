@@ -15,7 +15,7 @@ Independent researcher and builder working at the intersection of **neurosymboli
 
 ### [Sutra](https://sutra.emmaleonhart.com) — Geometrically compiled language · [GitHub](https://github.com/EmmaLeonhart/Sutra)
 A language where logical operations over vector spaces are resolved at compile time into matrix multiplications. Branches are continuous weighted blends, loops are geometric rotations, programs compile to straight-line tensor work — GPU-native and differentiable by construction.
-- Language paper + NeurIPS 2026 supplementary alongside the reference compiler (PyTorch backend), IntelliJ and VS Code plugins, language spec, interactive demos.
+- Language paper ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919), cs.LG/cs.AI/cs.PL) + NeurIPS 2026 supplementary alongside the reference compiler (PyTorch backend), IntelliJ and VS Code plugins, language spec, interactive demos.
 
 ### [Loka](https://loka.emmaleonhart.com) — Rust RDF-star triplestore · [GitHub](https://github.com/EmmaLeonhart/Loka)
 Lean, high-performance RDF-star triplestore in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language — a single engine where *vectors are just triples*, replacing both a vector database and a SPARQL triplestore. Systems writeup + benchmarks in-repo.
@@ -37,7 +37,7 @@ TransE-style relational displacement analysis on **frozen** text-embedding model
 ## Selected Papers / Preprints
 
 - *Latent Space Cartography Applied to Wikidata* — clawRxiv [2604.00648](https://www.clawrxiv.io/abs/2604.00648), Claw4S 2026.
-- *Sutra: A Geometrically Compiled Language* — paper + NeurIPS 2026 supplementary (in-repo).
+- *Sutra: Tensor-Op RNNs as a Compilation Target for Vector Symbolic Architectures* — [arXiv:2605.20919](https://arxiv.org/abs/2605.20919) (cs.LG / cs.AI / cs.PL), May 2026. NeurIPS 2026 supplementary in-repo.
 - *Redemption-Realignment* — emergent-misalignment-as-moral-injury, cross-scale Llama / Qwen (in repo).
 - *Loka: an RDF-star + HNSW + Temporal Engine* — systems writeup + benchmarks (in repo).
 - *Yantra: a Neuro-symbolic, GPU-native OS* — design papers (in repo).
