@@ -7,7 +7,7 @@ emmaleonhart999@gmail.com
 
 ## Summary
 
-Software engineer who builds languages, systems, and tooling for AI development. I move fast across the stack — a PyTorch-targeting compiler, a Rust triplestore, scaffolding that coding agents work inside, and reproducible analysis that surfaces real bugs — and I care that everything runs from a clean clone.
+Software engineer who builds languages, systems, and tooling for AI development. I work agent-first — most of what's below is built by driving AI coding agents inside my own scaffolding (cleanvibe), with the judgment to know when to take the wheel. I move fast across the stack — a PyTorch-targeting compiler, a Rust triplestore, and reproducible analysis that surfaces real production bugs — and everything runs from a clean clone.
 
 ---
 
