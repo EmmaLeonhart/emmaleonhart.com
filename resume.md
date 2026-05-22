@@ -49,5 +49,5 @@ Reproducible analysis of frozen text embeddings using Wikidata as probes — sur
 ## Skills
 
 **Languages:** Rust, C#, Python.
-**AI / ML:** embedding-space analysis, tensor-op compilation, agentic coding workflows.
+**AI / ML:** embedding-space analysis, agentic coding workflows.
 **Systems / infra:** RDF-star, HNSW, SPARQL, GitHub Actions CI/CD, Azure DevOps, MediaWiki / Wikibase, Playwright.
