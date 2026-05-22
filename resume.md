@@ -14,7 +14,7 @@ Software engineer who builds languages, systems, and tooling for AI development.
 ## Selected Projects
 
 ### [Sutra](https://sutra.emmaleonhart.com) — Language + compiler · [GitHub](https://github.com/EmmaLeonhart/Sutra)
-A typed language that compiles logical and vector operations to fused PyTorch tensor ops — GPU-native and differentiable. Reference compiler, IntelliJ/VS Code plugins, language spec. Paper: [arXiv:2605.20919](https://arxiv.org/abs/2605.20919).
+A typed language that compiles logical and vector operations to fused PyTorch tensor ops — GPU-native and differentiable. Reference compiler, IntelliJ/VS Code plugins, language spec, and a SKILL-file reproduction harness that drives a coding agent through verifying the paper's results, each step pass/fail-gated. Paper: [arXiv:2605.20919](https://arxiv.org/abs/2605.20919).
 
 ### [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe) — Agentic coding scaffold · [GitHub](https://github.com/EmmaLeonhart/cleanvibe)
 Python scaffolding that defines the environment a coding agent works inside — the docs / queue / devlog conventions that keep an AI agent on-task and self-documenting across long, multi-session work.
