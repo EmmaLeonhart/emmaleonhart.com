@@ -7,40 +7,29 @@ Kelowna, BC · emmaleonhart999@gmail.com
 
 ## Summary
 
-Independent researcher and builder working at the intersection of **neurosymbolic AI**, **interpretability**, and **AI safety** — three problems viewed as one. The tools are geometric tensor languages (Sutra) and grounded retrieval (Loka): make the geometry inside model computation explicit so it can be read, constrained, and grounded against external symbolic structure.
+Independent researcher and builder in neurosymbolic AI, interpretability, and AI safety. I build tools that make the geometry inside model computation explicit — readable, constrained, and grounded against external structure.
 
 ---
 
 ## Selected Projects
 
 ### [Sutra](https://sutra.emmaleonhart.com) — Geometrically compiled language · [GitHub](https://github.com/EmmaLeonhart/Sutra)
-A language where logical operations over vector spaces are resolved at compile time into matrix multiplications. Branches are continuous weighted blends, loops are geometric rotations, programs compile to straight-line tensor work — GPU-native and differentiable by construction.
-- Language paper ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919), cs.LG/cs.AI/cs.PL) + NeurIPS 2026 supplementary alongside the reference compiler (PyTorch backend), IntelliJ and VS Code plugins, language spec, interactive demos.
+A language where logical operations over vector spaces compile to matrix multiplications — GPU-native and differentiable. Reference compiler (PyTorch), IntelliJ/VS Code plugins, language spec. Paper: [arXiv:2605.20919](https://arxiv.org/abs/2605.20919).
 
 ### [Loka](https://loka.emmaleonhart.com) — Rust RDF-star triplestore · [GitHub](https://github.com/EmmaLeonhart/Loka)
-Lean, high-performance RDF-star triplestore in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language — a single engine where *vectors are just triples*, replacing both a vector database and a SPARQL triplestore. Systems writeup + benchmarks in-repo.
+RDF-star triplestore in Rust with native HNSW vector indexing and temporal queries — one engine replacing both a vector database and a SPARQL store.
 
-### [Yantra](https://yantra.emmaleonhart.com) — Neuro-symbolic, GPU-native operating system · [GitHub](https://github.com/EmmaLeonhart/Yantra)
-A neuro-symbolic OS written in Sutra: kernel, processes, IPC, and GUI as one differentiable tensor-op graph. Processes exchange *axons* (structured embeddings) so local AI integrates without a translation layer. Architecture + design papers in-repo.
+### [Yantra](https://yantra.emmaleonhart.com) — Neuro-symbolic OS · [GitHub](https://github.com/EmmaLeonhart/Yantra)
+A GPU-native OS written in Sutra: kernel, processes, IPC, and GUI as one differentiable tensor-op graph.
 
 ### [QueryKey](https://querykey.emmaleonhart.com) — Local-first PRM / social · [GitHub](https://github.com/EmmaLeonhart/querykey)
-A social network you run locally from your own desktop. Personal-relationship-manager elements with local AI agents to help keep up with the people in your life — privacy-respecting on both sides. Built on a local-first ingest → knowledge-graph engine.
+A locally-run social network and personal-relationship manager with on-device AI agents, built on a local-first ingest → knowledge-graph engine.
 
-### [Alignment / Redemption-Realignment](https://alignment.emmaleonhart.com) — AI safety research · [GitHub](https://github.com/EmmaLeonhart/alignment)
-Tests whether *redemption-narrative* system prompts measurably move emergently misaligned LLMs back toward alignment — behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction. Cross-scale results across Llama and Qwen (0.5B–8B). Theoretical framing: emergent misalignment as *moral injury*.
+### [Redemption-Realignment](https://alignment.emmaleonhart.com) — AI safety research · [GitHub](https://github.com/EmmaLeonhart/alignment)
+Tests whether redemption-narrative system prompts move emergently misaligned LLMs back toward alignment — measured behaviorally and geometrically against a derived misalignment direction, across Llama and Qwen (0.5B–8B).
 
-### [Latent Space Cartography Applied to Wikidata](https://latent-space.emmaleonhart.com) — Embedding geometry · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
-TransE-style relational displacement analysis on **frozen** text-embedding models with Wikidata triples as probes — surfacing 30 model-agnostic relational operations and a silent `[UNK]` tokenizer defect in mxbai-embed-large where unrelated diacritical strings collapse to cosine 1.0. clawRxiv 2604.00648, Claw4S 2026.
-
----
-
-## Selected Papers / Preprints
-
-- *Latent Space Cartography Applied to Wikidata* — clawRxiv [2604.00648](https://www.clawrxiv.io/abs/2604.00648), Claw4S 2026.
-- *Sutra: Tensor-Op RNNs as a Compilation Target for Vector Symbolic Architectures* — [arXiv:2605.20919](https://arxiv.org/abs/2605.20919) (cs.LG / cs.AI / cs.PL), May 2026. NeurIPS 2026 supplementary in-repo.
-- *Redemption-Realignment* — emergent-misalignment-as-moral-injury, cross-scale Llama / Qwen (in repo).
-- *Loka: an RDF-star + HNSW + Temporal Engine* — systems writeup + benchmarks (in repo).
-- *Yantra: a Neuro-symbolic, GPU-native OS* — design papers (in repo).
+### [Latent Space Cartography](https://latent-space.emmaleonhart.com) — Embedding geometry · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
+Relational displacement analysis on frozen text embeddings probed with Wikidata — found 30 model-agnostic relational operations and a silent `[UNK]` tokenizer defect in mxbai-embed-large (unrelated diacritical strings collapse to cosine 1.0).
 
 ---
 
@@ -48,8 +37,7 @@ TransE-style relational displacement analysis on **frozen** text-embedding model
 
 [claw.py / OpenClaw](https://github.com/EmmaLeonhart/claw.py) — portable, structured context for AI agent sessions.
 [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe) — Python scaffolding for well-documented vibecoding projects.
-[Vibecoding Tutorial](https://github.com/EmmaLeonhart/vibecoding-tutorial) — beginner-friendly guide to AI-pair-coding.
-[emmaleonhart.com](https://emmaleonhart.com) — 16 interactive ML visualizers (vector math → modern architectures) and 8 Loka database-theory explainers.
+[emmaleonhart.com](https://emmaleonhart.com) — 16 interactive ML visualizers and 8 database-theory explainers.
 
 ---
 
