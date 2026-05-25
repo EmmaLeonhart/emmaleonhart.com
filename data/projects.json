@@ -17,7 +17,7 @@
       "flagship": false,
       "subdomain": "loka.emmaleonhart.com",
       "repo": "EmmaLeonhart/Loka",
-      "vibes": 2,
+      "vibes": 3,
       "desc": "A lean, high-performance RDF-star triplestore written in Rust with native HNSW vector indexing, ontochronological temporal queries, and a SPARQL+ query language &mdash; a single system where <em>vectors are just triples</em>, replacing both a vector database and a SPARQL triplestore.",
       "tags": ["Rust", "Triplestore", "Vector + RDF"]
     },
@@ -27,7 +27,7 @@
       "flagship": false,
       "subdomain": "yantra.emmaleonhart.com",
       "repo": "EmmaLeonhart/Yantra",
-      "vibes": 3,
+      "vibes": 2,
       "desc": "A neuro-symbolic, GPU-native operating system written in Sutra. The whole running system &mdash; kernel, processes, IPC, GUI &mdash; is one differentiable tensor-op graph; processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
       "tags": ["Operating system", "Sutra", "GPU-native"]
     },

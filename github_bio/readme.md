@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-I'm Emma. I work on neuro-symbolic AI — geometric tensor methods in service of interpretability and AI safety. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel.
+I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel.
 
 ### My website is the canonical home for everything: **https://emmaleonhart.com**
 
@@ -13,8 +13,8 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 ### Projects
 
 - **Sutra** — a geometrically compiled, GPU-native, differentiable language. https://sutra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Sutra)
-- **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
 - **Yantra** — a neuro-symbolic, GPU-native operating system written in Sutra. https://yantra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Yantra)
+- **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
 - **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
 - **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
 - **Latent Space Cartography** — relational geometry of frozen embedding spaces. https://latent-space.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/latent-space-cartography)

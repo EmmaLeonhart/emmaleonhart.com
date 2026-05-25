@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Emma Leonhart">
-  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages and grounded retrieval. Builder of Sutra and Loka.">
+  <meta property="og:description" content="Neurosymbolic AI, interpretability, and AI safety &mdash; pursued through geometric tensor languages and grounded retrieval. Builder of Sutra, Yantra, and Loka.">
   <meta property="og:url" content="https://emmaleonhart.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Emma Leonhart">
-  <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra and Loka.">
-  <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), Loka (grounded retrieval), and interactive ML tutorials.">
+  <meta name="twitter:description" content="Neurosymbolic AI, interpretability, and AI safety. Builder of Sutra, Yantra, and Loka.">
+  <meta name="description" content="Emma Leonhart works on neurosymbolic AI, AI interpretability, and AI safety &mdash; through Sutra (a geometric tensor language), Yantra (an AI-native operating system written in Sutra), Loka (grounded retrieval), and interactive ML tutorials.">
   <title>Emma Leonhart</title>
 
   <!-- Canonical identity: set theme before first paint (dark default). See /_identity/. -->
@@ -882,12 +882,12 @@
       <div class="bio">
         <p>I think <strong>neurosymbolic AI</strong>, <strong>interpretability</strong>, and <strong>safety</strong> are the same problem viewed from three angles. A model whose reasoning we can&rsquo;t inspect can&rsquo;t be aligned; a model that can&rsquo;t be grounded in symbolic structure can&rsquo;t be inspected; and the structure has to be load-bearing <em>inside</em> the computation, not bolted on after the fact.</p>
         <p>My working thesis: what looks like reasoning in modern language models is mostly continuous geometric operations on embedding spaces. The path forward is to make that geometry <em>explicit</em>, so it can be read, constrained, and grounded against external symbolic structure. Geometry isn&rsquo;t the goal &mdash; it&rsquo;s the substrate that makes the other three goals tractable.</p>
-        <p>That shows up as <strong>Sutra</strong>, a language where programs are visible tensor arithmetic instead of opaque control flow; <strong>Loka</strong>, vector retrieval grounded in a typed knowledge graph; <strong>interactive tutorials</strong>, interpretability you can drag with your mouse; and <strong>Wikidata pipelines</strong> for the symbolic side of the loop.</p>
+        <p>That shows up as <strong>Sutra</strong>, a language where programs are visible tensor arithmetic instead of opaque control flow; <strong>Yantra</strong>, an operating system written in Sutra where the whole machine is one differentiable tensor graph; <strong>Loka</strong>, vector retrieval grounded in a typed knowledge graph; <strong>interactive tutorials</strong>, interpretability you can drag with your mouse; and <strong>Wikidata pipelines</strong> for the symbolic side of the loop.</p>
       </div>
     </section>
 
     <section class="section">
-      <h2><span class="num">02 &mdash;</span> Flagship</h2>
+      <h2><span class="num">02 &mdash;</span> Flagship work</h2>
       <a class="flagship" href="https://sutra.emmaleonhart.com">
         <div class="flagship-header">
           <span class="flagship-scroll">&#128220;</span>
@@ -900,6 +900,20 @@
         <div class="flagship-links">
           <span>sutra.emmaleonhart.com &rarr;</span>
           <span>github.com/EmmaLeonhart/Sutra</span>
+        </div>
+      </a>
+      <a class="flagship" href="https://yantra.emmaleonhart.com" style="margin-top: 16px;">
+        <div class="flagship-header">
+          <span class="flagship-scroll">&#9881;</span>
+          <span class="flagship-title">Yantra</span>
+          <span class="flagship-badge">Building now</span>
+        </div>
+        <div class="flagship-sub">A neuro-symbolic, GPU-native operating system written in Sutra.</div>
+        <p class="flagship-desc">The whole running system (kernel, processes, IPC, GUI) is one differentiable tensor-op graph, and a small CPU exists only to boot and orchestrate the GPU. Processes exchange <em>axons</em> (structured embeddings), so a local AI model integrates with no translation layer.</p>
+        <p class="flagship-desc">Built so far: a v0.0 kernel with real Sutra compute on torch tensors, disc-to-GPU storage-tier moves on real hardware, and a bootloader verified in QEMU. Aimed at critical systems where predictable latency and a readable verification surface matter more than mass-market compatibility.</p>
+        <div class="flagship-links">
+          <span>yantra.emmaleonhart.com &rarr;</span>
+          <span>github.com/EmmaLeonhart/Yantra</span>
         </div>
       </a>
     </section>
