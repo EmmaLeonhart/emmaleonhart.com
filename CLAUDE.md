@@ -130,6 +130,7 @@ python -m http.server 8000 --directory pages
 
 ## Writing
 - Do not use "honest", "honesty", or "honestly" — and do not swap in "frank", "frankly", "candid", "candidly", or "transparently", which are the same self-congratulatory move in a different coat. When something failed, name the failure: "it didn't work", "I got that wrong", "this failed" — flat, no qualifier. Tagging a report "honest" implies the rest aren't, and couching a failure as honesty asks for credit for the admission, which is worse than the failure itself. Use a precise positive word ("accurate", "plainly", "truly") only when that is genuinely the meaning — never as a halo on a bad outcome.
+- **No em-dashes (U+2014) in Emma's writing.** Anything authored as Emma or for her public surfaces (resume, bio/`github_bio`, site copy, project descriptions, application materials, posts) must contain zero em-dashes. Use commas, colons, parentheses, or periods instead. En-dashes in numeric or date ranges (for example `2024–2025`) are fine, and the `&mdash;` already in existing pages is not retroactively scrubbed unless asked. New copy you write must avoid em-dashes. Standing rule per the user, 2026-05-24.
 
 ## Emergency Stop Mode
 
