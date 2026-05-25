@@ -1,6 +1,6 @@
 # Emma Leonhart
 
-Kelowna, BC · contact@emmaleonhart.com
+contact@emmaleonhart.com
 [GitHub](https://github.com/EmmaLeonhart) · [emmaleonhart.com](https://emmaleonhart.com)
 
 ---
