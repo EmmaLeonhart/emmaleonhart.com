@@ -53,15 +53,6 @@ published on [HuggingFace](https://huggingface.co/EmmaLeonhart/loka). Supports
 cascade-retraction: remove a node and every generated inference that transitively
 cited it, scoped by RDF-star provenance edges.
 
-### [QueryKey](https://github.com/EmmaLeonhart/querykey): local-first relationship and life manager · [GitHub](https://github.com/EmmaLeonhart/querykey)
-A markdown-as-source-of-truth PRM and life-management system. Markdown files in a
-git-tracked vault are the data, an Electron desktop app is the UI, and a Rust server
-handles search and indexing. Working surfaces include a Profile view (contact card
-with edit, draft, and revert, plus a 24-hour edit valve), a Calendar (month grid
-and day view with agenda), and a Wiki (vault browser with wikilinks and backlinks).
-Saves are git-committed locally so the vault stays peer-to-peer and never depends
-on a central server.
-
 ### [Latent Space Cartography](https://latent-space.emmaleonhart.com): embedding measurement · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
 Reproducible analysis of frozen text embeddings using Wikidata triples as probes.
 Surfaced a silent production tokenizer defect in mxbai-embed-large (unrelated
@@ -73,6 +64,12 @@ A zero-dependency Python CLI that scaffolds AI-assisted projects: it injects an
 opinionated CLAUDE.md contract plus queue, todo, and devlog conventions so an agent
 starts structured and stays on-task and self-documenting across long, multi-session
 work. This is the environment the rest of these projects are built inside.
+
+### [QueryKey](https://github.com/EmmaLeonhart/querykey): local-first relationship and life manager · [GitHub](https://github.com/EmmaLeonhart/querykey)
+A markdown-as-source-of-truth PRM and life-management system. Markdown files in a
+git-tracked vault are the data, an Electron desktop app is the UI, a Rust server
+handles search and indexing. Working surfaces include Profile, Calendar, and Wiki
+views. Saves are git-committed locally; peer-to-peer by design.
 
 ---
 
