@@ -37,7 +37,7 @@
       "flagship": false,
       "subdomain": "querykey.emmaleonhart.com",
       "repo": "EmmaLeonhart/querykey",
-      "vibes": 4,
+      "vibes": 9,
       "desc": "A social network you run locally from your own desktop. QueryKey has the elements of a personal relationship manager and uses local AI agents to help you keep up with the people in your life &mdash; while respecting your privacy and theirs. Built on a local-first ingest &rarr; knowledge-graph engine.",
       "tags": ["Local-first", "Social / PRM", "Local AI"]
     },
@@ -47,7 +47,7 @@
       "flagship": false,
       "subdomain": "alignment.emmaleonhart.com",
       "repo": "EmmaLeonhart/alignment",
-      "vibes": 5,
+      "vibes": 10,
       "desc": "Research testing whether <em>redemption-narrative</em> system prompts measurably move emergently misaligned LLMs back toward alignment &mdash; behaviorally, on self-rated harmfulness, and geometrically against a derived misalignment direction. Theoretical framing: emergent misalignment as <em>moral injury</em>, with cross-scale results across Llama and Qwen.",
       "tags": ["Research", "AI safety", "Interpretability"]
     },
