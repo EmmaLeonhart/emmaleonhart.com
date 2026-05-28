@@ -25,11 +25,14 @@ processes, IPC, GUI) is one differentiable tensor-op graph, and a small CPU exis
 only to boot and orchestrate the GPU. Processes exchange axons (structured
 embeddings), so a local AI model integrates with no translation layer. Built so far:
 a v0.0 kernel (Python orchestration with real Sutra compute on torch tensors, around
-48 passing tests), real disc-to-GPU storage-tier moves on an RTX 4070, and a v0.4
+48 passing tests), real disc-to-GPU storage-tier moves on an RTX 4070, a v0.4
 bootloader verified in QEMU (multiboot entry, PCI enumeration, GPU framebuffer
-writes, long-mode transition). Target market: critical systems (defense, aerospace,
-medical, autonomous) where predictable latency and a readable verification surface
-matter more than mass-market compatibility.
+writes, long-mode transition), and a live calculator demo running exact arithmetic
+and multi-term expressions end-to-end through the Sutra substrate, with a
+text-symbol fidelity harness that round-trips 1,024 lines bit-exact through the
+kernel. Target market: critical systems (defense, aerospace, medical, autonomous)
+where predictable latency and a readable verification surface matter more than
+mass-market compatibility.
 
 ### [Sutra](https://sutra.emmaleonhart.com): geometric tensor language and compiler · [GitHub](https://github.com/EmmaLeonhart/Sutra)
 A typed language where logical and vector operations compile to fused PyTorch tensor
@@ -44,13 +47,35 @@ Sutra is the substrate Yantra runs on.
 A lean Rust triplestore with native HNSW vector indexing and temporal queries, where
 vectors are just triples, replacing both a vector database and a SPARQL triplestore
 in one system. Built as a generative knowledge graph: it uses a local AI model to
-predict adjacent facts and add them to the graph as new triples.
+predict adjacent facts and add them to the graph as new triples. The latest training
+checkpoint v14 (perplexity 202.01, trained on 1M normalized-Wikidata triples) is
+published on [HuggingFace](https://huggingface.co/EmmaLeonhart/loka). Supports
+cascade-retraction: remove a node and every generated inference that transitively
+cited it, scoped by RDF-star provenance edges.
+
+### [QueryKey](https://github.com/EmmaLeonhart/querykey): local-first relationship and life manager · [GitHub](https://github.com/EmmaLeonhart/querykey)
+A markdown-as-source-of-truth PRM and life-management system. Markdown files in a
+git-tracked vault are the data, an Electron desktop app is the UI, and a Rust server
+handles search and indexing. Working surfaces include a Profile view (contact card
+with edit, draft, and revert, plus a 24-hour edit valve), a Calendar (month grid
+and day view with agenda), and a Wiki (vault browser with wikilinks and backlinks).
+Saves are git-committed locally so the vault stays peer-to-peer and never depends
+on a central server.
 
 ### [Latent Space Cartography](https://latent-space.emmaleonhart.com): embedding measurement · [GitHub](https://github.com/EmmaLeonhart/latent-space-cartography)
 Reproducible analysis of frozen text embeddings using Wikidata triples as probes.
 Surfaced a silent production tokenizer defect in mxbai-embed-large (unrelated
 diacritical strings collapse to cosine 1.0), bisected to a single Ollama release
 across 21 versions in CI, with a reproducible script that demonstrates the collision.
+
+### [Alignment](https://github.com/EmmaLeonhart/alignment): redemption-narrative recovery from emergent misalignment · [GitHub](https://github.com/EmmaLeonhart/alignment)
+Research project measuring whether redemption-narrative system prompts move
+emergently misaligned LLMs back toward alignment, both behaviorally and
+geometrically. Reproduces a convergent misalignment direction across five runs
+spanning Llama and Qwen at parameter counts from 0.5B to 8B, with mean cosine
+convergence of 0.78 to 0.80 against a derived misalignment direction. Pre-registered
+hypotheses P1 to P4 with concrete pass and reject calls. Paper auto-submits to
+clawRxiv.
 
 ### [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe): agentic coding scaffold · [GitHub](https://github.com/EmmaLeonhart/cleanvibe)
 A zero-dependency Python CLI that scaffolds AI-assisted projects: it injects an
@@ -96,4 +121,5 @@ work. This is the environment the rest of these projects are built inside.
 **AI / ML:** embedding-space systems, neuro-symbolic architectures, agentic coding
 workflows, LLM application development.
 **Systems / infra:** GPU-native compilation, OS and bootloader internals, RDF-star,
-HNSW, SPARQL, GitHub Actions CI/CD, Azure DevOps, MediaWiki / Wikibase, Playwright.
+HNSW, SPARQL, Electron, GitHub Actions CI/CD, Azure DevOps, MediaWiki / Wikibase,
+Playwright, HuggingFace model publishing.
