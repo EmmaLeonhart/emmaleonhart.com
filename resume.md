@@ -68,15 +68,6 @@ Surfaced a silent production tokenizer defect in mxbai-embed-large (unrelated
 diacritical strings collapse to cosine 1.0), bisected to a single Ollama release
 across 21 versions in CI, with a reproducible script that demonstrates the collision.
 
-### [Alignment](https://github.com/EmmaLeonhart/alignment): redemption-narrative recovery from emergent misalignment · [GitHub](https://github.com/EmmaLeonhart/alignment)
-Research project measuring whether redemption-narrative system prompts move
-emergently misaligned LLMs back toward alignment, both behaviorally and
-geometrically. Reproduces a convergent misalignment direction across five runs
-spanning Llama and Qwen at parameter counts from 0.5B to 8B, with mean cosine
-convergence of 0.78 to 0.80 against a derived misalignment direction. Pre-registered
-hypotheses P1 to P4 with concrete pass and reject calls. Paper auto-submits to
-clawRxiv.
-
 ### [cleanvibe](https://github.com/EmmaLeonhart/cleanvibe): agentic coding scaffold · [GitHub](https://github.com/EmmaLeonhart/cleanvibe)
 A zero-dependency Python CLI that scaffolds AI-assisted projects: it injects an
 opinionated CLAUDE.md contract plus queue, todo, and devlog conventions so an agent
