@@ -75,13 +75,6 @@ views. Saves are git-committed locally; peer-to-peer by design.
 
 ## Experience
 
-### AI Engineer, ManuForge AI
-*March 2026–present*
-- Built a world-modelling system for short stories that uses position in the text to
-  establish known unknowns at each point, surfacing them so an author can make
-  deliberate choices. Intended as input to a chronological-world-state-driven
-  text-to-video pipeline (in progress).
-
 ### Developer, Ambient Games
 *2024–2025*
 - Shipped on *Schema* (video game) across the .NET ecosystem (C#) with CI/CD in Azure
