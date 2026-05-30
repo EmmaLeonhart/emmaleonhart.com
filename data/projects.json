@@ -52,6 +52,16 @@
       "tags": ["Research", "AI safety", "Interpretability"]
     },
     {
+      "key": "reservoir",
+      "name": "Reservoir Agent",
+      "flagship": false,
+      "subdomain": "reservoir.emmaleonhart.com",
+      "repo": "EmmaLeonhart/reservoiragent",
+      "vibes": 5,
+      "desc": "A pretrained transformer given a genuine time axis: a fixed, randomly-initialized reservoir is injected into a mid-layer's attention so the model carries state across separate forward passes. Attention runs jointly over token hidden states and reservoir nodes, the reservoir reads from the attention matrix through frozen weights and writes its state back through a learned readout each pass, and only the upper layers are fine-tuned, so recurrence comes from untrained reservoir dynamics rather than learned memory.",
+      "tags": ["Research", "Reservoir computing", "Transformers"]
+    },
+    {
       "key": "latent-space",
       "name": "Latent Space Cartography",
       "flagship": false,
