@@ -6,6 +6,10 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ---
 
+## Stuff Emma added
+
+create separate submodules for https://links.emmaleonhart.com replacing https://emmaleonhart.com/links and for https://reservoir.emmaleonhart.com
+
 ## master → main migration — essentially DONE (optional cleanup only)
 
 emmaleonhart.com GitHub default = `main` (Emma flipped it; verified
