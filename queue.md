@@ -8,7 +8,19 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
-create separate submodules for https://links.emmaleonhart.com replacing https://emmaleonhart.com/links and for https://reservoir.emmaleonhart.com
+### Links → own subdomain repo + Reservoir submodule
+
+1. Scaffold standalone `links` site in sibling dir `../links`: its own `index.html`
+   (moved from `pages/links/`, paths made self-contained), local `identity.css` copy,
+   `CNAME` = `links.emmaleonhart.com`, README. Add Bluesky link
+   (`https://bsky.app/profile/emmaleonhart.bsky.social`) to the Professional & Social
+   section. `git init` + commit, ready to push.
+3. Convert `pages/links/index.html` into a meta-refresh redirect stub →
+   `https://links.emmaleonhart.com/`.
+4. **Emma-only (gh CLI not authed here):** create empty `EmmaLeonhart/links` repo on
+   GitHub → I push the staged content + add the submodule `repos/links` → Emma enables
+   Pages (custom domain `links.emmaleonhart.com`) + adds DNS CNAME. Until that's live the
+   `/links` redirect points at a not-yet-served subdomain (acceptable, flagged).
 
 ## master → main migration — essentially DONE (optional cleanup only)
 

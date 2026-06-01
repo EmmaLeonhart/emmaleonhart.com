@@ -22,3 +22,6 @@
 [submodule "repos/cleanvibe"]
 	path = repos/cleanvibe
 	url = https://github.com/EmmaLeonhart/cleanvibe
+[submodule "repos/reservoir"]
+	path = repos/reservoir
+	url = https://github.com/EmmaLeonhart/reservoiragent
