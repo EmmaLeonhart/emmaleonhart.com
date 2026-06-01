@@ -8,19 +8,19 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
-### Links → own subdomain repo + Reservoir submodule
+### Links subdomain — finish wiring (BLOCKED on Emma + me)
 
-1. Scaffold standalone `links` site in sibling dir `../links`: its own `index.html`
-   (moved from `pages/links/`, paths made self-contained), local `identity.css` copy,
-   `CNAME` = `links.emmaleonhart.com`, README. Add Bluesky link
-   (`https://bsky.app/profile/emmaleonhart.bsky.social`) to the Professional & Social
-   section. `git init` + commit, ready to push.
-3. Convert `pages/links/index.html` into a meta-refresh redirect stub →
-   `https://links.emmaleonhart.com/`.
-4. **Emma-only (gh CLI not authed here):** create empty `EmmaLeonhart/links` repo on
-   GitHub → I push the staged content + add the submodule `repos/links` → Emma enables
-   Pages (custom domain `links.emmaleonhart.com`) + adds DNS CNAME. Until that's live the
-   `/links` redirect points at a not-yet-served subdomain (acceptable, flagged).
+Standalone links repo is built and committed locally at `../links` (remote set to
+`https://github.com/EmmaLeonhart/links.git`, not yet pushed — repo doesn't exist).
+`pages/links/` is now a redirect stub → `links.emmaleonhart.com`.
+
+Remaining, in order:
+1. **Emma:** create empty `EmmaLeonhart/links` repo on GitHub (no README/files).
+2. **Me, once #1 done:** `cd ../links && git push -u origin main`, then in this repo
+   `git submodule add https://github.com/EmmaLeonhart/links repos/links` + commit/push.
+3. **Emma:** repo Settings → Pages → custom domain `links.emmaleonhart.com`; add DNS
+   CNAME `links` → `emmaleonhart.github.io` (same as the other subdomains).
+   Until this is live the `/links` redirect points at a not-yet-served subdomain.
 
 ## master → main migration — essentially DONE (optional cleanup only)
 
