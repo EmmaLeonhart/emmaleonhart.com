@@ -8,19 +8,16 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
-### Links subdomain — finish wiring (BLOCKED on Emma + me)
+### Links subdomain — ONE manual DNS step left (Emma-only)
 
-Standalone links repo is built and committed locally at `../links` (remote set to
-`https://github.com/EmmaLeonhart/links.git`, not yet pushed — repo doesn't exist).
-`pages/links/` is now a redirect stub → `links.emmaleonhart.com`.
-
-Remaining, in order:
-1. **Emma:** create empty `EmmaLeonhart/links` repo on GitHub (no README/files).
-2. **Me, once #1 done:** `cd ../links && git push -u origin main`, then in this repo
-   `git submodule add https://github.com/EmmaLeonhart/links repos/links` + commit/push.
-3. **Emma:** repo Settings → Pages → custom domain `links.emmaleonhart.com`; add DNS
-   CNAME `links` → `emmaleonhart.github.io` (same as the other subdomains).
-   Until this is live the `/links` redirect points at a not-yet-served subdomain.
+Repo `EmmaLeonhart/links` created + pushed; mirrored as submodule `repos/links`;
+Pages enabled (source `main` /, CNAME `links.emmaleonhart.com`, domain verified);
+`pages/links/` is a redirect stub. **Remaining: Emma adds a DNS record** in the
+provider that holds emmaleonhart.com — `CNAME  links → emmaleonhart.github.io`
+(identical to the existing `reservoir`/`sutra`/`yantra` records). `links` is NOT
+in DNS yet (`reservoir` resolves; `links` returns NXDOMAIN). Once it resolves,
+GitHub provisions the HTTPS cert and the `/links` redirect lands on a live site.
+Optionally then flip HTTPS-enforce on: `gh api -X PUT repos/EmmaLeonhart/links/pages -f https_enforced=true`.
 
 ## master → main migration — essentially DONE (optional cleanup only)
 
