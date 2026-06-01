@@ -104,7 +104,7 @@ git commit -m "Bump <name> submodule pointer to <SHA-or-tag>"
 
 **Pointer freshness is automated.** `.github/workflows/submodule-bump.yml` runs daily (06:40 UTC) + on `workflow_dispatch`: it resolves each submodule's own remote default branch and re-points the gitlink to that branch's HEAD, syncing nested gitlinks (e.g. `yantra/external/Sutra`) recursively. So you normally do NOT need to hand-bump pointers — and a stray uncommitted nested-submodule edit should be discarded, not committed, because the automation (and each sister repo's own CI) is the channel for advancing them. Only hand-bump when a *specific* revision must be pinned for cross-referencing before the next daily run.
 
-`credential.helper=manager` holds push creds for all six repos. The `gh` CLI is NOT authenticated on this machine — use raw `git` and `WebFetch`/`api.github.com` for read-only inspection. `latent-space-cartography` has a purged LFS history; clone it last and avoid `git lfs pull` unless you actually need the dataset.
+`credential.helper=manager` holds push creds for all six repos. The `gh` CLI **is** authenticated (account `immanuelle-leonhart`, scopes `gist, read:org, repo, workflow`) and can create repos / enable Pages / drive the API for the `EmmaLeonhart` repos (verified 2026-06-01 when it created `EmmaLeonhart/links`). Note: the auto-mode classifier may still block *creating a public repo* until the user explicitly authorizes public visibility. `latent-space-cartography` has a purged LFS history; clone it last and avoid `git lfs pull` unless you actually need the dataset.
 
 ## Building
 
