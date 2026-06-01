@@ -25,3 +25,6 @@
 [submodule "repos/reservoir"]
 	path = repos/reservoir
 	url = https://github.com/EmmaLeonhart/reservoiragent
+[submodule "repos/links"]
+	path = repos/links
+	url = https://github.com/EmmaLeonhart/links
