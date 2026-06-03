@@ -31,7 +31,7 @@ venture and joining a safety lab. The primary gap is network and references, not
 
 ## Independent Research (2025–present)
 
-Full AI-systems stack built solo, from a PyTorch-targeting compiler to a GPU bootloader, on
+Full AI-systems stack built solo, from a PyTorch-targeting compiler to a bare-metal bootloader, on
 consumer hardware (single RTX 4070). Went from minimal ML background to a published paper and
 working compiler + OS prototype in roughly three months. Engages the alignment-research
 community directly (LessWrong, formal-verification and interpretability debates).
