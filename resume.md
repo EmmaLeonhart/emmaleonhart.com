@@ -23,8 +23,9 @@ venture and joining a safety lab. The primary gap is network and references, not
 - **[Yantra](https://yantra.emmaleonhart.com)**: a neuro-symbolic OS prototype where the whole
   running system is one inspectable tensor-op graph. v0.0 kernel (~48 passing tests),
   QEMU-verified bootloader, bit-exact fidelity harness.
-- **Finds real defects in deployed systems.** Surfaced and bisected a silent production
-  tokenizer collision in mxbai-embed-large across 21 versions in CI, with a reproducible script.
+- **[Latent Space Cartography](https://latent-space.emmaleonhart.com)** finds real defects in
+  deployed systems: surfaced and bisected a silent production tokenizer collision in
+  mxbai-embed-large across 21 versions in CI, with a reproducible script.
 
 ---
 
