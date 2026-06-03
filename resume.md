@@ -8,9 +8,11 @@ contact@emmaleonhart.com
 ## Summary
 
 Independent AI-safety researcher and systems builder. Published the Sutra language
-([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working neuro-symbolic OS
-prototype, solo, in three months. Deciding between founding an interpretable-AI-infrastructure
-venture and joining a safety lab. The primary gap is network and references, not skills.
+([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working neural-computer OS
+prototype, solo, in three months. My thesis is path dependency: the reference architectures for
+safety-critical AI lock in once set, so an interpretable alternative to opaque neural-computer
+runtimes has to exist before the opaque version becomes the default. Deciding between founding
+that venture and joining a safety lab. The primary gap is network and references, not skills.
 
 ---
 
@@ -20,7 +22,7 @@ venture and joining a safety lab. The primary gap is network and references, not
   a typed, GPU-native language with a round-trip interpretability property. Trained parameters
   write back to readable source that recompiles to reproduce behaviour to floating-point
   precision. Reference compiler, language spec, IDE plugins.
-- **[Yantra](https://yantra.emmaleonhart.com)**: a neuro-symbolic OS prototype where the whole
+- **[Yantra](https://yantra.emmaleonhart.com)**: a neural-computer OS prototype where the whole
   running system is one inspectable tensor-op graph. v0.0 kernel (~48 passing tests),
   QEMU-verified bootloader, bit-exact fidelity harness.
 - **[Latent Space Cartography](https://latent-space.emmaleonhart.com)** finds real defects in
