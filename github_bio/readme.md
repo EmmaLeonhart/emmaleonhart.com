@@ -13,7 +13,7 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 ### Projects
 
 - **Sutra** — a geometrically compiled, GPU-native, differentiable language. https://sutra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Sutra)
-- **Yantra** — a neuro-symbolic, GPU-native operating system written in Sutra. https://yantra.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Yantra)
+- **Yantra** — a neuro-symbolic, GPU-native operating system written in Sutra. https://yantraos.org · [source](https://github.com/EmmaLeonhart/Yantra)
 - **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
 - **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
 - **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)

@@ -629,7 +629,7 @@ Chronological record of every experiment run in this project. Each entry records
 
 | Subdomain | DNS | HTTPS (WebFetch) | Repo CNAME file (content / dir) | pages.yml publish path | Last Pages run | Root cause |
 |---|---|---|---|---|---|---|
-| yantra.emmaleonhart.com | ✅ CNAME→emmaleonhart.github.io→185.199.108-111.153 | ✅ valid cert, renders ("Yantra") | `yantra.emmaleonhart.com` / `site/` | `site` | ✅ | **(5) Working** — baseline |
+| yantraos.org | ✅ CNAME→emmaleonhart.github.io→185.199.108-111.153 | ✅ valid cert, renders ("Yantra") | `yantraos.org` / `site/` | `site` | ✅ | **(5) Working** — baseline |
 | querykey.emmaleonhart.com | ✅ identical to yantra | ❌ `ERR_TLS_CERT_ALTNAME_INVALID` | `querykey.emmaleonhart.com` / `site/` | `site` | ✅ success ("Queue #9-10…", 15s, main) | **(2) Cert not provisioned** — config identical to working yantra |
 | alignment.emmaleonhart.com | ✅ identical to yantra | ❌ `ERR_TLS_CERT_ALTNAME_INVALID` | `alignment.emmaleonhart.com` / `site/` | `site` | ✅ success ("Add bare-bones … site", 0505ab7, 19s) | **(2) Cert not provisioned** — domain only just set up |
 | loka.emmaleonhart.com | ✅ identical to yantra | ❌ `ERR_TLS_CERT_ALTNAME_INVALID` | `loka.emmaleonhart.com` / `pages/` | `pages` | ✅ ran ("…nav links", 47eef59, 23s, main) | **(2) Cert not provisioned** |

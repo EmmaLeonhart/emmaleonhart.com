@@ -22,7 +22,7 @@ that venture and joining a safety lab. The primary gap is network and references
   a typed, GPU-native language with a round-trip interpretability property. Trained parameters
   write back to readable source that recompiles to reproduce behaviour to floating-point
   precision. Reference compiler, language spec, IDE plugins.
-- **[Yantra](https://yantra.emmaleonhart.com)**: a neural-computer OS prototype where the whole
+- **[Yantra](https://yantraos.org)**: a neural-computer OS prototype where the whole
   running system is one inspectable tensor-op graph. v0.0 kernel (~48 passing tests),
   QEMU-verified bootloader, bit-exact fidelity harness.
 - **[Latent Space Cartography](https://latent-space.emmaleonhart.com)** finds real defects in

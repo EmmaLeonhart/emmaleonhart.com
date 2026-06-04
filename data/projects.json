@@ -25,7 +25,7 @@
       "key": "yantra",
       "name": "Yantra",
       "flagship": false,
-      "subdomain": "yantra.emmaleonhart.com",
+      "subdomain": "yantraos.org",
       "repo": "EmmaLeonhart/Yantra",
       "vibes": 2,
       "desc": "A neuro-symbolic, GPU-native operating system written in Sutra. The whole running system &mdash; kernel, processes, IPC, GUI &mdash; is one differentiable tensor-op graph; processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
