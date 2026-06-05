@@ -18,7 +18,7 @@ that venture and joining a safety lab. The primary gap is network and references
 
 ## Selected Highlights
 
-- **[Sutra](https://sutra.emmaleonhart.com)** (published, [arXiv:2605.20919](https://arxiv.org/abs/2605.20919)):
+- **[Sutra](https://sutra.yantraos.org)** (published, [arXiv:2605.20919](https://arxiv.org/abs/2605.20919)):
   a typed, GPU-native language with a round-trip interpretability property. Trained parameters
   write back to readable source that recompiles to reproduce behaviour to floating-point
   precision. Reference compiler, language spec, IDE plugins.
