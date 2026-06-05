@@ -1,7 +1,7 @@
 # Emma Leonhart
 
 contact@emmaleonhart.com
-[GitHub](https://github.com/EmmaLeonhart) · [emmaleonhart.com](https://emmaleonhart.com)
+[GitHub](https://github.com/EmmaLeonhart) · [emmaleonhart.com](https://emmaleonhart.com) · [Book a call](https://calendly.com/contact-emmaleonhart)
 
 ---
 
