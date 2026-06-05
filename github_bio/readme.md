@@ -1,6 +1,12 @@
 ## Hi there 👋
 
-I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel.
+I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories, building the substrate I think safety-critical AI will need before the opaque version locks in.
+
+### Lately
+
+- **Sutra** went public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)): an embedding-native language whose programs compile to tensor ops and round-trip back to verifiable source.
+- **Yantra** went from nothing to a v0.0 kernel nucleus plus a hand-rolled `no_std` Rust bootloader that boots on bare metal in QEMU (PCI scan, GPU framebuffer write, long-mode transition).
+- **Loka** trained role-aware transformers from scratch on Wikidata and shipped checkpoints to Hugging Face.
 
 ### My website is the canonical home for everything: **https://emmaleonhart.com**
 
@@ -18,6 +24,7 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 - **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
 - **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
 - **Latent Space Cartography** — relational geometry of frozen embedding spaces. https://latent-space.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/latent-space-cartography)
+- **Reservoir Agent**: reservoir-computing research toward a stateful, autonomous executive function for Yantra. [source](https://github.com/EmmaLeonhart/reservoiragent)
 
 ### Agentic coding
 
