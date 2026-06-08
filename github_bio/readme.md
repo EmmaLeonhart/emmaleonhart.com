@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories, building the substrate I think safety-critical AI will need before the opaque version locks in.
+I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, an interpretable neural computer: a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories, building the substrate I think safety-critical AI will need before the opaque version locks in.
 
 ### Lately
 
@@ -19,7 +19,7 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 ### Projects
 
 - **Sutra** — a geometrically compiled, GPU-native, differentiable language. https://sutra.yantraOS.org · [source](https://github.com/EmmaLeonhart/Sutra)
-- **Yantra** — a neuro-symbolic, GPU-native operating system written in Sutra. https://yantraOS.org · [source](https://github.com/EmmaLeonhart/Yantra)
+- **Yantra** — an interpretable neural computer: a GPU-native operating system written in Sutra. https://yantraOS.org · [source](https://github.com/EmmaLeonhart/Yantra)
 - **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
 - **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
 - **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
