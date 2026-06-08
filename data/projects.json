@@ -28,8 +28,8 @@
       "subdomain": "yantraos.org",
       "repo": "EmmaLeonhart/Yantra",
       "vibes": 2,
-      "desc": "A neuro-symbolic, GPU-native operating system written in Sutra. The whole running system &mdash; kernel, processes, IPC, GUI &mdash; is one differentiable tensor-op graph; processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
-      "tags": ["Operating system", "Sutra", "GPU-native"]
+      "desc": "An interpretable neural computer: a GPU-native operating system written in Sutra where the whole running system (kernel, processes, IPC, GUI) is one inspectable differentiable tensor-op graph, so you can read off what computation ran instead of trusting an opaque runtime. Processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
+      "tags": ["Interpretable neural computer", "Operating system", "Sutra", "GPU-native"]
     },
     {
       "key": "querykey",
