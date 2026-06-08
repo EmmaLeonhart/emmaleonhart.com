@@ -1,12 +1,6 @@
-[submodule "repos/sutra"]
-	path = repos/sutra
-	url = https://github.com/EmmaLeonhart/Sutra
 [submodule "repos/loka"]
 	path = repos/loka
 	url = https://github.com/EmmaLeonhart/Loka
-[submodule "repos/yantra"]
-	path = repos/yantra
-	url = https://github.com/EmmaLeonhart/Yantra
 [submodule "repos/querykey"]
 	path = repos/querykey
 	url = https://github.com/EmmaLeonhart/querykey
