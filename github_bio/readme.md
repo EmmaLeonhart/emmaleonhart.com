@@ -1,10 +1,13 @@
 ## Hi there 👋
 
-I'm Emma. I work on neuro-symbolic AI: geometric tensor methods in service of interpretability and AI safety. My current build focus is Yantra, an interpretable neural computer: a GPU-native operating system written in my language Sutra. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories, building the substrate I think safety-critical AI will need before the opaque version locks in.
+I'm Emma. I'm building an interpretable substrate for AI: a stack of geometric tensor systems meant to be the readable alternative to opaque neural-computer runtimes, in place before the opaque version locks in. The flagship is Yantra, an interpretable neural computer (a GPU-native operating system) written in my own language, Sutra, whose programs are vector symbolic architecture (VSA) operations compiled to tensor arithmetic.
+
+I treat this as a venture, not a side project. Sutra, Yantra, and Loka are a coherent product stack with their own domains, a published paper, and working prototypes, and I'm deciding between founding the company around them and joining a safety lab. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories.
 
 ### Lately
 
-- **Sutra** went public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)): an embedding-native language whose programs compile to tensor ops and round-trip back to verifiable source.
+- **Sutra** went public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)): an embedding-native language whose programs are VSA operations (bind, unbind, bundle) compiled to straight-line tensor ops and round-tripped back to verifiable source.
+- **Thermodynamic computing**: early but measured experiments mapping Sutra's VSA operations onto a thermodynamic (thrml) sampling substrate. Associative memory, content-addressable retrieval, and bind/unbind all run as energy-based sampling on the hardware model, with measured recovery numbers rather than a sketch.
 - **Yantra** went from nothing to a v0.0 kernel nucleus plus a hand-rolled `no_std` Rust bootloader that boots on bare metal in QEMU (PCI scan, GPU framebuffer write, long-mode transition).
 - **Loka** trained role-aware transformers from scratch on Wikidata and shipped checkpoints to Hugging Face.
 
@@ -18,7 +21,7 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 
 ### Projects
 
-- **Sutra** — a geometrically compiled, GPU-native, differentiable language. https://sutra.yantraOS.org · [source](https://github.com/EmmaLeonhart/Sutra)
+- **Sutra** — a geometrically compiled, GPU-native, differentiable language: vector symbolic architecture (VSA) operations as the program, compiled to tensor arithmetic, with early experiments running on thermodynamic (thrml) sampling hardware. https://sutra.yantraOS.org · [source](https://github.com/EmmaLeonhart/Sutra)
 - **Yantra** — an interpretable neural computer: a GPU-native operating system written in Sutra. https://yantraOS.org · [source](https://github.com/EmmaLeonhart/Yantra)
 - **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
 - **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
@@ -39,6 +42,7 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 **Know well:**
 
 [![Rust][Rust]][Rust-url]
+[![OCaml][OCaml]][OCaml-url]
 [![C#][CSharp]][CSharp-url]
 [![Python][Python]][Python-url]
 
@@ -67,6 +71,8 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 [Python-url]: https://www.python.org/
 [Rust]: https://img.shields.io/badge/Rust-CE422B?style=for-the-badge&logo=rust&logoColor=white
 [Rust-url]: https://www.rust-lang.org/
+[OCaml]: https://img.shields.io/badge/OCaml-EC6813?style=for-the-badge&logo=ocaml&logoColor=white
+[OCaml-url]: https://ocaml.org/
 [PHP]: https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white
 [PHP-url]: https://www.php.net/
 [Lisp]: https://img.shields.io/badge/Lisp-000000?style=for-the-badge&logo=commonlisp&logoColor=white
