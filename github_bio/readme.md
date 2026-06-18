@@ -26,14 +26,28 @@ I treat this as a venture, not a side project: Sutra and Topaz are a coherent pr
 [![C#][CSharp]][CSharp-url]
 [![Python][Python]][Python-url]
 [![CUDA][CUDA]][CUDA-url]
+[![TypeScript][TypeScript]][TypeScript-url]
 
 **Working knowledge:**
 
 [![OCaml][OCaml]][OCaml-url]
 [![F#][FSharp]][FSharp-url]
 [![Haskell][Haskell]][Haskell-url]
+[![Lean][Lean]][Lean-url]
 [![PHP][PHP]][PHP-url]
 [![Lisp][Lisp]][Lisp-url]
+
+### Frameworks & tools
+
+[![PyTorch][PyTorch]][PyTorch-url]
+[![Hugging Face][HuggingFace]][HuggingFace-url]
+[![LaTeX][LaTeX]][LaTeX-url]
+
+### Semantic web
+
+[![SPARQL][SPARQL]][SPARQL-url]
+[![RDF][RDF]][RDF-url]
+[![Wikidata][Wikidata]][Wikidata-url]
 
 ---
 
@@ -67,6 +81,16 @@ I treat this as a venture, not a side project: Sutra and Topaz are a coherent pr
 [PHP-url]: https://www.php.net/
 [Lisp]: https://img.shields.io/badge/Lisp-000000?style=for-the-badge&logo=commonlisp&logoColor=white
 [Lisp-url]: https://lisp-lang.org/
+[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Lean]: https://img.shields.io/badge/Lean_4-2C3E50?style=for-the-badge&logoColor=white
+[Lean-url]: https://leanprover.github.io/
+[PyTorch]: https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white
+[PyTorch-url]: https://pytorch.org/
+[HuggingFace]: https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black
+[HuggingFace-url]: https://huggingface.co/
+[LaTeX]: https://img.shields.io/badge/LaTeX-008080?style=for-the-badge&logo=latex&logoColor=white
+[LaTeX-url]: https://www.latex-project.org/
 [Go]: https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white
 [Go-url]: https://go.dev/
 [AzureDevOps]: https://img.shields.io/badge/Azure_DevOps-0078D7?style=for-the-badge&logo=azure-devops&logoColor=white
