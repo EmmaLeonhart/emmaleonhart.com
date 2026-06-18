@@ -1,53 +1,36 @@
 ## Hi there 👋
 
-I'm Emma. I'm building an interpretable substrate for AI: a stack of geometric tensor systems meant to be the readable alternative to opaque neural-computer runtimes, in place before the opaque version locks in. The flagship is Yantra, an interpretable neural computer (a GPU-native operating system) written in my own language, Sutra, whose programs are vector symbolic architecture (VSA) operations compiled to tensor arithmetic.
+I'm Emma. I'm building an interpretable substrate for AI: a stack of geometric tensor systems meant to be the readable alternative to opaque neural-computer runtimes, in place before the opaque version locks in. The flagship is **Topaz**, an interpretable neural computer (a GPU-native operating system) written in my own language, **Sutra**, whose programs are vector symbolic architecture (VSA) operations compiled to tensor arithmetic.
 
-I treat this as a venture, not a side project. Sutra, Yantra, and Loka are a coherent product stack with their own domains, a published paper, and working prototypes, and I'm deciding between founding the company around them and joining a safety lab. I build agent-first and high-output: most of what's here is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories.
+I treat this as a venture, not a side project: Sutra and Topaz are a coherent product stack with their own domains, a published paper, and working prototypes, and I'm building the company around them. Most of what I ship is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories.
 
-### Lately
+### What I'm working on
 
-- **Sutra** went public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)): an embedding-native language whose programs are VSA operations (bind, unbind, bundle) compiled to straight-line tensor ops and round-tripped back to verifiable source.
+- **Topaz**: the GPU-native neuro-symbolic operating system I'm building in Sutra. The kernel, processes, and GUI run as a single differentiable tensor-op graph on the GPU, so the whole running system is one inspectable neural network. From nothing to a working v0.0 prototype (terminal, calculator, GUI) plus a hand-rolled `no_std` Rust bootloader that boots on bare metal in QEMU (PCI scan, GPU framebuffer write, long-mode transition).
+- **Sutra**: my embedding-native language, public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)). Programs are vector symbolic architecture (VSA) operations (bind, unbind, bundle) compiled to straight-line tensor ops and round-tripped back to verifiable source. [site](https://sutra.yantraos.org) · [source](https://github.com/EmmaLeonhart/Sutra)
 - **Thermodynamic computing**: early but measured experiments mapping Sutra's VSA operations onto a thermodynamic (thrml) sampling substrate. Associative memory, content-addressable retrieval, and bind/unbind all run as energy-based sampling on the hardware model, with measured recovery numbers rather than a sketch.
-- **Yantra** went from nothing to a v0.0 kernel nucleus plus a hand-rolled `no_std` Rust bootloader that boots on bare metal in QEMU (PCI scan, GPU framebuffer write, long-mode transition).
-- **Loka** trained role-aware transformers from scratch on Wikidata and shipped checkpoints to Hugging Face.
+- **cleanvibe**: the open-source scaffolding underneath all of it. The docs, queue, and devlog conventions an AI coding agent works inside to stay on-task and self-documenting across long sessions. [source](https://github.com/EmmaLeonhart/cleanvibe)
 
-### My website is the canonical home for everything: **https://emmaleonhart.com**
+### Find me
 
-Bio, projects, research, and interactive tools all live there. The project subdomains below are the current homes — older standalone domains (e.g. `sutralang.dev`) are deprecated.
-
-- **Projects** — https://emmaleonhart.com/projects/
-- **Research** — https://emmaleonhart.com/research/
-- **Interactive ML tutorials** — https://emmaleonhart.com/tutorials/
-
-### Projects
-
-- **Sutra** — a geometrically compiled, GPU-native, differentiable language: vector symbolic architecture (VSA) operations as the program, compiled to tensor arithmetic, with early experiments running on thermodynamic (thrml) sampling hardware. https://sutra.yantraOS.org · [source](https://github.com/EmmaLeonhart/Sutra)
-- **Yantra** — an interpretable neural computer: a GPU-native operating system written in Sutra. https://yantraOS.org · [source](https://github.com/EmmaLeonhart/Yantra)
-- **Loka** — a Rust RDF-star triplestore with native HNSW vector indexing (vectors are just triples). https://loka.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/Loka)
-- **QueryKey** — a local-first social network / personal relationship manager run from your own desktop. https://querykey.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/querykey)
-- **Alignment** — research on steering emergently misaligned LLMs back toward alignment. https://alignment.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/alignment)
-- **Latent Space Cartography** — relational geometry of frozen embedding spaces. https://latent-space.emmaleonhart.com · [source](https://github.com/EmmaLeonhart/latent-space-cartography)
-- **Reservoir Agent**: reservoir-computing research toward a stateful, autonomous executive function for Yantra. [source](https://github.com/EmmaLeonhart/reservoiragent)
-
-### Agentic coding
-
-- **cleanvibe** — Python scaffolding for agentic coding projects: the docs / queue / devlog conventions an AI coding agent works inside to stay on-task and self-documenting across long sessions. [source](https://github.com/EmmaLeonhart/cleanvibe)
-- **Vibecoding tutorial** — a beginner-friendly guide to driving AI coding agents (AI-pair-coding). [repo](https://github.com/EmmaLeonhart/vibecoding-tutorial)
-
-
-
+- **Website** (canonical home for projects, research, and interactive tools): https://emmaleonhart.com
+- **LinkedIn**: https://www.linkedin.com/in/emmahleonhart/
+- **Google Scholar**: https://scholar.google.com/citations?user=kiJ9hGYAAAAJ
+- **More projects** (Loka, QueryKey, Alignment, Latent Space Cartography, Reservoir): https://emmaleonhart.com/projects/
 
 ### Programming Languages
 
 **Know well:**
 
 [![Rust][Rust]][Rust-url]
-[![OCaml][OCaml]][OCaml-url]
 [![C#][CSharp]][CSharp-url]
 [![Python][Python]][Python-url]
 
 **Working knowledge:**
 
+[![OCaml][OCaml]][OCaml-url]
+[![F#][FSharp]][FSharp-url]
+[![Haskell][Haskell]][Haskell-url]
 [![PHP][PHP]][PHP-url]
 [![Lisp][Lisp]][Lisp-url]
 
@@ -73,6 +56,10 @@ Bio, projects, research, and interactive tools all live there. The project subdo
 [Rust-url]: https://www.rust-lang.org/
 [OCaml]: https://img.shields.io/badge/OCaml-EC6813?style=for-the-badge&logo=ocaml&logoColor=white
 [OCaml-url]: https://ocaml.org/
+[FSharp]: https://img.shields.io/badge/F%23-378BBA?style=for-the-badge&logo=fsharp&logoColor=white
+[FSharp-url]: https://fsharp.org/
+[Haskell]: https://img.shields.io/badge/Haskell-5D4F85?style=for-the-badge&logo=haskell&logoColor=white
+[Haskell-url]: https://www.haskell.org/
 [PHP]: https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white
 [PHP-url]: https://www.php.net/
 [Lisp]: https://img.shields.io/badge/Lisp-000000?style=for-the-badge&logo=commonlisp&logoColor=white
