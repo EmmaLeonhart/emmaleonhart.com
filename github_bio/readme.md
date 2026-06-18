@@ -25,6 +25,7 @@ I treat this as a venture, not a side project: Sutra and Topaz are a coherent pr
 [![Rust][Rust]][Rust-url]
 [![C#][CSharp]][CSharp-url]
 [![Python][Python]][Python-url]
+[![CUDA][CUDA]][CUDA-url]
 
 **Working knowledge:**
 
@@ -54,6 +55,8 @@ I treat this as a venture, not a side project: Sutra and Topaz are a coherent pr
 [Python-url]: https://www.python.org/
 [Rust]: https://img.shields.io/badge/Rust-CE422B?style=for-the-badge&logo=rust&logoColor=white
 [Rust-url]: https://www.rust-lang.org/
+[CUDA]: https://img.shields.io/badge/CUDA-76B900?style=for-the-badge&logo=nvidia&logoColor=white
+[CUDA-url]: https://developer.nvidia.com/cuda-zone
 [OCaml]: https://img.shields.io/badge/OCaml-EC6813?style=for-the-badge&logo=ocaml&logoColor=white
 [OCaml-url]: https://ocaml.org/
 [FSharp]: https://img.shields.io/badge/F%23-378BBA?style=for-the-badge&logo=fsharp&logoColor=white
