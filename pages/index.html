@@ -877,6 +877,48 @@
       <p class="tagline">My work sits at the intersection of <span class="em em-neuro">neurosymbolic AI</span>, <span class="em em-interp">interpretability</span>, and <span class="em em-safety">AI safety</span> &mdash; three problems I see as a single problem. Geometric tensor languages and grounded retrieval are the tools I build to attack them.</p>
     </header>
 
+    <style>
+      .topaz-aurora {
+        position: relative; display: block; overflow: hidden; isolation: isolate;
+        margin: 0 0 72px; padding: 42px 40px; border-radius: 22px;
+        text-decoration: none; color: inherit;
+        background: rgba(255,255,255,0.015);
+        border: 1px solid rgba(139,155,255,0.30);
+        box-shadow: 0 10px 60px rgba(0,0,0,0.28);
+        transition: transform .3s ease, border-color .3s ease;
+      }
+      .topaz-aurora:hover { transform: translateY(-2px); border-color: rgba(139,155,255,0.55); }
+      .topaz-aurora .ta-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+      .topaz-aurora .ta-glow::before, .topaz-aurora .ta-glow::after {
+        content: ''; position: absolute; border-radius: 50%; filter: blur(70px);
+        mix-blend-mode: screen; opacity: 0.65;
+      }
+      .topaz-aurora .ta-glow::before {
+        width: 420px; height: 420px; top: -160px; left: -90px;
+        background: radial-gradient(circle, rgba(139,155,255,0.48) 0%, transparent 70%);
+        animation: drift1 22s ease-in-out infinite alternate;
+      }
+      .topaz-aurora .ta-glow::after {
+        width: 380px; height: 380px; bottom: -160px; right: -70px;
+        background: radial-gradient(circle, rgba(212,167,106,0.42) 0%, transparent 70%);
+        animation: drift2 26s ease-in-out infinite alternate;
+      }
+      .topaz-aurora .ta-eyebrow { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: 1.8px; color: #b0bcff; }
+      .topaz-aurora .ta-title { display: block; font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 700; letter-spacing: -0.5px; margin: .35em 0 .12em; }
+      .topaz-aurora .ta-tag { display: block; font-style: italic; font-size: 1.45rem; color: #d4a76a; margin-bottom: 16px; }
+      .topaz-aurora p { color: #b8c0d8; max-width: 62ch; line-height: 1.6; margin: 0 0 20px; }
+      .topaz-aurora .ta-cta { font-family: var(--mono); font-size: .95rem; color: #b0bcff; }
+      @media (prefers-reduced-motion: reduce) { .topaz-aurora .ta-glow::before, .topaz-aurora .ta-glow::after { animation: none; } }
+    </style>
+    <a class="topaz-aurora" href="https://topazcomputing.com">
+      <span class="ta-glow" aria-hidden="true"></span>
+      <span class="ta-eyebrow">&#9670; My company</span>
+      <span class="ta-title">&#128142; Topaz Computing</span>
+      <span class="ta-tag">Software that learns in real time.</span>
+      <p>Topaz is the company I am building around this whole stack. A Topaz program improves itself as it runs, from live signal: deep technology underneath, plain to use on top. The first product is a landing page that optimizes itself in real time, learning from every visitor instead of waiting for A/B tests a small site can never run.</p>
+      <span class="ta-cta">topazcomputing.com &rarr;</span>
+    </a>
+
     <section class="section">
       <h2><span class="num">01 &mdash;</span> About</h2>
       <div class="bio">
@@ -901,19 +943,6 @@
         <div class="flagship-links">
           <span>sutra.emmaleonhart.com &rarr;</span>
           <span>github.com/EmmaLeonhart/Sutra</span>
-        </div>
-      </a>
-      <a class="flagship" href="https://topazcomputing.com" style="margin-top: 16px;">
-        <div class="flagship-header">
-          <span class="flagship-scroll">&#128142;</span>
-          <span class="flagship-title">Topaz Computing</span>
-          <span class="flagship-badge">My company</span>
-        </div>
-        <div class="flagship-sub">Software that learns in real time.</div>
-        <p class="flagship-desc">Topaz is the company I am building around this stack. A Topaz program is like an agent, but instead of an outside agent guessing, rewriting, and re-testing it, the program improves itself as it runs, from live signal. Deep technology underneath, plain to use on top.</p>
-        <p class="flagship-desc">The first product is a landing page that optimizes itself, learning in real time from every visitor instead of waiting for the A/B tests a small site can never run. It runs on Sutra, the language above.</p>
-        <div class="flagship-links">
-          <span>topazcomputing.com &rarr;</span>
         </div>
       </a>
     </section>
