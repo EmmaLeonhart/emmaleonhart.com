@@ -8,6 +8,12 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
+### Add YC Paxel report link to links hub + resume
+Add `https://paxel.ycombinator.com/results/aqwnw8ig` (Emma's YC Paxel
+Claude-Code usage profile) as a link card in `repos/links` (Professional
+& Social) and as a link in `resume.md`. Push links repo to its `main`,
+bump submodule pointer, push site.
+
 ### Links subdomain — ONE manual DNS step left (Emma-only)
 
 Repo `EmmaLeonhart/links` created + pushed; mirrored as submodule `repos/links`;
