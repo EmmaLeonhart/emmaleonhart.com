@@ -23,12 +23,12 @@
     },
     {
       "key": "yantra",
-      "name": "Yantra",
+      "name": "Topaz OS",
       "flagship": false,
-      "subdomain": "yantraos.org",
+      "subdomain": "topazcomputing.com",
       "repo": "EmmaLeonhart/Yantra",
       "vibes": 2,
-      "desc": "An interpretable neural computer: a GPU-native operating system written in Sutra where the whole running system (kernel, processes, IPC, GUI) is one inspectable differentiable tensor-op graph, so you can read off what computation ran instead of trusting an opaque runtime. Processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
+      "desc": "Topaz OS (formerly Yantra), the operating system in the Topaz stack: an interpretable neural computer, a GPU-native OS written in Sutra where the whole running system (kernel, processes, IPC, GUI) is one inspectable differentiable tensor-op graph, so you can read off what computation ran instead of trusting an opaque runtime. Processes exchange <em>axons</em> (structured embeddings), so local AI integrates without a translation layer.",
       "tags": ["Interpretable neural computer", "Operating system", "Sutra", "GPU-native"]
     },
     {
