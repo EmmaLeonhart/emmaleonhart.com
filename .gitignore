@@ -43,7 +43,3 @@ _refscaffold/
 
 # second cleanvibe reference scaffold (1.0.0 source, gitignored)
 _refscaffold2/
-
-# local working clones of context repos (not part of the site)
-repos/sutra/
-repos/yantra/

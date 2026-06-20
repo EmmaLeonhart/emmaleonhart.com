@@ -22,3 +22,21 @@
 [submodule "repos/links"]
 	path = repos/links
 	url = https://github.com/EmmaLeonhart/links
+[submodule "redirects/sutradb.org"]
+	path = redirects/sutradb.org
+	url = https://github.com/EmmaLeonhart/sutradb.org-redirect.git
+[submodule "redirects/sutra.yantraos.org"]
+	path = redirects/sutra.yantraos.org
+	url = https://github.com/EmmaLeonhart/sutra.yantraos.org-redirect.git
+[submodule "redirects/sutralang.dev"]
+	path = redirects/sutralang.dev
+	url = https://github.com/EmmaLeonhart/sutralang.dev-redirect.git
+[submodule "redirects/sutra.noldor.tech"]
+	path = redirects/sutra.noldor.tech
+	url = https://github.com/EmmaLeonhart/sutra.noldor.tech-redirect.git
+[submodule "redirects/sutra.emmaleonhart.com"]
+	path = redirects/sutra.emmaleonhart.com
+	url = https://github.com/EmmaLeonhart/sutra.emmaleonhart.com-redirect.git
+[submodule "redirects/yantra.emmaleonhart.com"]
+	path = redirects/yantra.emmaleonhart.com
+	url = https://github.com/EmmaLeonhart/yantra.emmaleonhart.com-redirect.git
