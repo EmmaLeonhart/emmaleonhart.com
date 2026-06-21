@@ -7,12 +7,12 @@ contact@emmaleonhart.com
 
 ## Summary
 
-Independent AI-safety researcher and systems builder. Published the Sutra language
-([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working neural-computer OS
-prototype, solo, in three months. My thesis is path dependency: the reference architectures for
-safety-critical AI lock in once set, so an interpretable alternative to opaque neural-computer
-runtimes has to exist before the opaque version becomes the default. Deciding between founding
-that venture and joining a safety lab. The primary gap is network and references, not skills.
+Self-taught deep-tech founder building **Topaz Computing**: software that learns in real time.
+Published the Sutra language ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working
+neural-computer OS prototype, solo, in roughly three months. The first product is a self-optimizing
+landing page; the deeper mission is an interpretable substrate for AI, the readable alternative to
+opaque neural-computer runtimes, in place before the opaque version becomes the default. Built
+without a PhD or a lab, on the strength of the work.
 
 ---
 
