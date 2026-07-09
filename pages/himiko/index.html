@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="閻魔日巫女獅心 — the hidden name">
+  <meta property="og:description" content="Himiko — the hidden name of Emma H Leonhart. A cipher of Enma, Hi, Miko and Shishin: Buddhist judgment, Shinto mediation, a lion's heart, and a shaman-queen's divine authority.">
+  <meta property="og:url" content="https://emmaleonhart.com/himiko/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="閻魔日巫女獅心 — the hidden name">
+  <meta name="twitter:description" content="Himiko — the hidden name of Emma H Leonhart.">
+  <meta name="description" content="Himiko (卑弥呼) is the hidden name of Emma H Leonhart, written 閻魔日巫女獅心 — a constructed name unifying Anglican and Shinto, Anglo-Saxon power and Japanese myth: Enma the judge, Hi the sun, Miko the shrine maiden, Shishin the lion's heart.">
+  <title>閻魔日巫女獅心 — Himiko · Emma Leonhart</title>
+
+  <!-- Canonical identity: set theme before first paint (dark default). See /_identity/. -->
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+JP:wght@400;600;900&display=swap" rel="stylesheet">
+
+  <!-- The ONE shared identity: palette, buttons, toggle, type. /_identity/ -->
+  <link rel="stylesheet" href="/identity.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans, 'Inter', sans-serif);
+      background: var(--bg, #0a0a0f);
+      color: var(--text, #e9e9ef);
+      min-height: 100vh;
+      padding: 96px 24px 140px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      letter-spacing: -0.005em;
+      line-height: 1.7;
+    }
+
+    /* regal accent, local to this page */
+    :root { --gold: #d9b46a; --gold-soft: rgba(217,180,106,0.14); --seal: #b6435a; }
+
+    /* aurora — same primitive as the rest of the site, tuned warm/imperial */
+    .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .aurora::before, .aurora::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(100px); opacity: 0.5; mix-blend-mode: screen;
+    }
+    .aurora::before {
+      width: 760px; height: 760px; top: -280px; left: -140px;
+      background: radial-gradient(circle, rgba(217,180,106,0.20) 0%, transparent 70%);
+      animation: drift1 24s ease-in-out infinite alternate;
+    }
+    .aurora::after {
+      width: 620px; height: 620px; top: -120px; right: -100px;
+      background: radial-gradient(circle, rgba(182,67,90,0.18) 0%, transparent 70%);
+      animation: drift2 28s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(80px, 60px) scale(1.1); } }
+    @keyframes drift2 { to { transform: translate(-70px, 40px) scale(1.08); } }
+
+    .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 5;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 26px; font-size: 0.9rem;
+      backdrop-filter: blur(8px);
+    }
+    .topbar a { color: var(--muted, #9aa0b4); text-decoration: none; transition: color .2s; }
+    .topbar a:hover { color: var(--gold); }
+
+    /* hero */
+    .hero { text-align: center; padding: 40px 0 56px; }
+    .kanji-hero {
+      font-family: 'Noto Serif JP', serif; font-weight: 900;
+      font-size: clamp(3.2rem, 12vw, 6.2rem);
+      letter-spacing: 0.12em;
+      line-height: 1.05;
+      background: linear-gradient(160deg, var(--gold) 0%, #f2e2bf 45%, var(--seal) 130%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      margin: 0 0 22px;
+    }
+    .hero .roman {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--text, #e9e9ef); opacity: 0.92; margin: 0 0 6px;
+    }
+    .hero .roman b { font-style: normal; color: var(--gold); font-weight: 400; }
+    .hero .tag { color: var(--muted, #9aa0b4); font-size: 1rem; letter-spacing: 0.02em; }
+
+    .lede {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+      line-height: 1.5; text-align: center;
+      color: var(--text, #e9e9ef);
+      max-width: 620px; margin: 0 auto 64px; opacity: 0.95;
+    }
+    .lede em { color: var(--gold); font-style: italic; }
+
+    h2 {
+      font-family: 'Instrument Serif', serif; font-weight: 400;
+      font-size: clamp(1.7rem, 4vw, 2.1rem);
+      margin: 60px 0 18px; letter-spacing: 0;
+      display: flex; align-items: baseline; gap: 14px;
+    }
+    h2 .jp { font-family: 'Noto Serif JP', serif; font-weight: 600; color: var(--gold); font-size: 0.9em; }
+
+    p { margin: 0 0 18px; color: var(--text, #e9e9ef); opacity: 0.9; }
+    .muted { color: var(--muted, #9aa0b4); opacity: 1; }
+
+    /* kanji breakdown cards */
+    .glyphs { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 28px 0 8px; }
+    @media (min-width: 620px) { .glyphs { grid-template-columns: 1fr 1fr; } }
+    .glyph {
+      border: 1px solid var(--border, rgba(217,180,106,0.22));
+      border-radius: 16px; padding: 22px 24px;
+      background: linear-gradient(180deg, var(--gold-soft), transparent);
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .glyph .ch {
+      font-family: 'Noto Serif JP', serif; font-weight: 900;
+      font-size: 3rem; line-height: 1; color: var(--gold);
+      flex: 0 0 auto;
+    }
+    .glyph .body h3 {
+      margin: 2px 0 6px; font-family: 'Inter', sans-serif; font-weight: 600;
+      font-size: 1.02rem; color: var(--text, #e9e9ef);
+    }
+    .glyph .body h3 span { color: var(--muted, #9aa0b4); font-weight: 400; }
+    .glyph .body p { margin: 0; font-size: 0.94rem; opacity: 0.82; }
+
+    blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.4rem, 3.6vw, 1.9rem); line-height: 1.45;
+      border-left: 2px solid var(--gold); margin: 56px 0 20px;
+      padding: 6px 0 6px 26px; color: var(--text, #e9e9ef);
+    }
+    .seal { text-align: center; margin: 70px 0 0; }
+    .seal .mark {
+      font-family: 'Noto Serif JP', serif; font-weight: 900;
+      display: inline-block; font-size: 2.4rem; color: #fff;
+      background: var(--seal); padding: 14px 18px; border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(182,67,90,0.35); letter-spacing: 0.06em;
+    }
+    .seal p { margin: 20px 0 0; }
+
+    hr { border: none; border-top: 1px solid var(--border, rgba(255,255,255,0.08)); margin: 56px 0; }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <nav class="topbar">
+    <a href="/">← emmaleonhart.com</a>
+    <a href="/research/">research</a>
+  </nav>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="kanji-hero">閻魔日巫女獅心</div>
+      <p class="roman">Emma <b>Himiko</b> Leonhart</p>
+      <p class="tag">the hidden name</p>
+    </header>
+
+    <p class="lede">
+      <b style="font-weight:400;color:var(--gold)">Emma H Leonhart</b> is the name I present to the
+      world — the armor. <em>Himiko</em> is the name beneath it: the soul, the cipher,
+      the flag planted in the ground.
+    </p>
+
+    <h2>卑弥呼 <span class="jp">Himiko</span></h2>
+    <p>
+      Himiko was the legendary shaman-queen of Yamatai, a third-century polity remembered in the
+      Chinese chronicles — a ruler who mediated between the human and the divine, semi-mythical
+      and mysterious the way King Arthur is. Divine authority, spiritual leadership, an ancient
+      and regal aura.
+    </p>
+    <p>
+      The <b style="color:var(--gold)">H</b> in <i>Emma H Leonhart</i> is Himiko. It is the middle
+      initial you can read past — or read into. Legally I am Emma H Leonhart; Himiko is the hidden
+      name. Not hidden out of shame — kept as a sacred, personal truth, the part of me that does not
+      need to be on display to be real.
+    </p>
+
+    <h2>閻魔日巫女獅心 <span class="jp">the cipher</span></h2>
+    <p class="muted">
+      A name written to reward those who take the time to unpack it — with two kun'yomi readings
+      I invented myself, one historically plausible and one kira-kira. Four glyphs, four claims:
+    </p>
+
+    <div class="glyphs">
+      <div class="glyph">
+        <div class="ch">閻魔</div>
+        <div class="body">
+          <h3>Enma <span>· judgment</span></h3>
+          <p>The king of hell in Buddhist tradition — the judge. Authority, and a divine wrath.</p>
+        </div>
+      </div>
+      <div class="glyph">
+        <div class="ch">日</div>
+        <div class="body">
+          <h3>Hi <span>· the sun</span></h3>
+          <p>Sun, day, and Japan itself — brightness, clarity, a cultural anchor. The light in Himiko.</p>
+        </div>
+      </div>
+      <div class="glyph">
+        <div class="ch">巫女</div>
+        <div class="body">
+          <h3>Miko <span>· the mediator</span></h3>
+          <p>The shrine maiden — the bridge between the sacred and the mundane, Shinto ritual and purity.</p>
+        </div>
+      </div>
+      <div class="glyph">
+        <div class="ch">獅心</div>
+        <div class="body">
+          <h3>Shishin <span>· lion's heart</span></h3>
+          <p>Courage, ferocity, nobility. Leonhart, rendered whole: the lion's heart, unshakeable.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>A unification</h2>
+    <p>
+      The name is deliberately built to work in two worlds. To a Western ear <i>Emma Himiko
+      Leonhart</i> reads as a high-society name with a touch of the exotic; to a Japanese reader the
+      kanji open into something spiritual, powerful, and constructed. It can sound like an anime
+      character or like a WASP, depending on who is listening — and that duality is the point.
+    </p>
+    <p>
+      It ties together the things I hold in parallel: Anglo-Saxon power and Japanese myth,
+      Anglicanism and Shinto, old-money pragmatism and divine authority. I am both the judge
+      (<span class="jp" style="color:var(--gold)">閻魔</span>) and the mediator
+      (<span class="jp" style="color:var(--gold)">巫女</span>), the divine (Himiko) and the
+      pragmatic. It is not conforming to any group; it is a name that makes its own category.
+    </p>
+
+    <h2>第六天魔王 → 閻魔王</h2>
+    <p>
+      There is a loose Oda Nobunaga reference in it. He styled himself
+      <span class="jp" style="color:var(--gold)">第六天魔王</span> — Demon King of the Sixth Heaven.
+      I call myself <span class="jp" style="color:var(--gold)">閻魔</span> — or, if I am being more
+      creative, <span class="jp" style="color:var(--gold)">閻魔王</span>, King Enma.
+    </p>
+
+    <blockquote>
+      I am not just one thing. I am a synthesis of histories, spiritualities, and ambitions — the
+      judge and the mediator, the divine and the pragmatic.
+    </blockquote>
+
+    <div class="seal">
+      <span class="mark">閻魔王</span>
+      <p class="muted">Not for others to decode easily — for me to know exactly who I am,<br>and for those who bother to look, to see it too.</p>
+    </div>
+  </div>
+</body>
+</html>
