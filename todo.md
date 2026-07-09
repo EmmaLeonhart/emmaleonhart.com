@@ -171,3 +171,10 @@ plan into `queue.md` before touching it.
   (preserve path+query) and `https://sutradb.org/*` →
   `https://loka.emmaleonhart.com/${path}`, dummy proxied A record so
   CF terminates TLS. Namecheap-only tweaks cannot fix fault (1).
+
+## Possible data-lake pages (parked 2026-07-09, from a central-command session)
+Candidates surfaced while hunting for the `/himiko` page — parked as "possible", not committed to:
+- **Health / biometric timeline** from Fitbit (weight, sleep, HR). Pipeline already exists: `life-planning/scripts/build_health_timeline.py` (currently outputs to the private vault `docs/health/`).
+- **"Life in data" / quantified-self**: maps places visited, activity patterns, calendar rhythms.
+- **Chat / theme timelines** from the exported conversations + 207 Keep notes.
+Caveat: any of these makes that slice of personal data PUBLIC — decide per page.
