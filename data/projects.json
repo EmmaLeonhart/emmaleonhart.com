@@ -5,7 +5,7 @@
       "key": "sutra",
       "name": "Sutra",
       "flagship": true,
-      "subdomain": "sutra.emmaleonhart.com",
+      "subdomain": "sutra.topazcomputing.com",
       "repo": "EmmaLeonhart/Sutra",
       "vibes": 1,
       "desc": "A geometrically compiled language where logical operations over vector spaces are resolved at compile time into matrix multiplications. Branches are continuous weighted blends, loops are geometric rotations, and programs compile to straight-line tensor work &mdash; GPU-native and differentiable by construction.",
