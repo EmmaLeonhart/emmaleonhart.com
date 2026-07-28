@@ -74,7 +74,9 @@ jobs:
           git -c core.pager=cat submodule summary -- $paths || true
 
           git add -- $paths
-          git commit -m "submodules: auto-bump pointers to each repo's default-branch HEAD
-
-Automated by .github/workflows/submodule-bump.yml."
+          # The message body must stay indented inside this block scalar. A line at
+          # column 0 ends the `run: |` block, which makes the whole workflow file
+          # unparseable YAML — that is what silently broke this workflow for weeks.
+          git commit -m "submodules: auto-bump pointers to each repo's default-branch HEAD" \
+                     -m "Automated by .github/workflows/submodule-bump.yml."
           git push
