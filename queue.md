@@ -8,22 +8,6 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
-### Sutra's canonical home: pick ONE subdomain (Emma-only, DNS/positioning call)
-This site links `sutra.emmaleonhart.com`; topazcomputing.com links
-`sutra.topazcomputing.com`. Both are live, so the same project has two homes and
-neither redirects to the other. Whichever is canonical, the other should become a
-redirect stub (`redirects/sutra.emmaleonhart.com` is already a submodule here, so
-the personal-brand side is the easy one to turn into a redirect). Not touched: a
-session should not silently repoint a domain.
-
-### `resume.md`: is "an interpretable substrate for AI" yours or invented?
-The 2026-07-27 rewrite stripped the fabricated three-goal thesis (neurosymbolic /
-interpretability / safety) from `pages/index.html`, the meta tags, `github_bio`
-and the resume summary. The phrase "the deeper mission is an interpretable
-substrate for AI" survives elsewhere in `resume.md` and reads as the same shape.
-It was left in place rather than guessed at. If Emma wrote it, keep it; if it came
-out of the same drafting pass, cut it.
-
 ### Add YC Paxel report link to links hub + resume
 Add `https://paxel.ycombinator.com/results/aqwnw8ig` (Emma's YC Paxel
 Claude-Code usage profile) as a link card in `repos/links` (Professional
