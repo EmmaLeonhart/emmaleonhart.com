@@ -7,12 +7,12 @@ contact@emmaleonhart.com
 
 ## Summary
 
-Self-taught deep-tech founder building **Topaz Computing**: software that learns in real time.
-Published the Sutra language ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working
-neural-computer OS prototype, solo, in roughly three months. The first product is a self-optimizing
-landing page; the deeper mission is an interpretable substrate for AI, the readable alternative to
-opaque neural-computer runtimes, in place before the opaque version becomes the default. Built
-without a PhD or a lab, on the strength of the work.
+Self-taught deep-tech founder building **Topaz Computing**: context management for people running a
+staff team of AI agents, an ERP for agents rather than for humans. Planning, records and issue
+tracking fused into one structured workspace the agents work from, delivered as a hosted box running
+persistent agents against your own repositories. Published the Sutra language
+([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)) and a working neural-computer OS prototype,
+solo, in roughly three months. Built without a PhD or a lab, on the strength of the work.
 
 ---
 
