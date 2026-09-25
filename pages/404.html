@@ -103,9 +103,9 @@
       <span class="timer" id="timer" title="Click anywhere to stay">
         <span class="ring">
           <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="bg" cx="18" cy="18" r="15.5"></circle><circle class="fg" id="ring-fg" cx="18" cy="18" r="15.5"></circle></svg>
-          <b id="count">15</b>
+          <b id="count">30</b>
         </span>
-        <span id="timer-text">redirecting to home&hellip;</span>
+        <span id="timer-text">trying emmaleonhart.github.io&hellip;</span>
       </span>
     </div>
   </div>
@@ -203,9 +203,17 @@
         render(routes);
       }).catch(function(){ render(ROUTES); });
 
-      // ---- Visible 15s countdown → auto-redirect to subdomain root.
-      // Any interaction cancels it (don't yank a reading user away). ----
-      var secs=15, ring=document.getElementById('ring-fg'),
+      // ---- Visible 30s countdown, then redirect. On emmaleonhart.com
+      // itself the redirect goes to the SAME path on emmaleonhart.github.io:
+      // most repos' Pages have no custom domain and live at
+      // emmaleonhart.github.io/<repo>, so a 404 here is usually someone
+      // typing emmaleonhart.com/<repo>. Sister *.emmaleonhart.com sites
+      // keep the old behaviour (their own homepage). Any interaction
+      // cancels it (don't yank a reading user away). ----
+      var mainSite=/^(www\.)?emmaleonhart\.com$/i.test(location.hostname);
+      var dest=mainSite ? 'https://emmaleonhart.github.io'+location.pathname+location.search+location.hash : '/';
+      if(!mainSite) document.getElementById('timer-text').textContent='redirecting to home…';
+      var TOTAL=30, secs=TOTAL, ring=document.getElementById('ring-fg'),
           C=2*Math.PI*15.5, cancelled=false, timer=document.getElementById('timer');
       ring.style.strokeDasharray=C; ring.style.strokeDashoffset=0;
       function cancel(){
@@ -220,8 +228,8 @@
       var iv=setInterval(function(){
         secs--;
         document.getElementById('count').textContent=secs;
-        ring.style.strokeDashoffset = C*((15-secs)/15);
-        if(secs<=0){ clearInterval(iv); if(!cancelled) location.replace('/'); }
+        ring.style.strokeDashoffset = C*((TOTAL-secs)/TOTAL);
+        if(secs<=0){ clearInterval(iv); if(!cancelled) location.replace(dest); }
       },1000);
     })();
   </script>

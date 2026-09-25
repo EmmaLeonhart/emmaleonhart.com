@@ -29,6 +29,14 @@ A static personal site with:
 
 The site is intentionally static — no build server, no framework. Each interactive page is a self-contained HTML file (sometimes with a sibling `main.js` or compiled TS output). GitHub Pages serves `pages/` directly.
 
+## The 404 page (`pages/404.html`)
+
+On **emmaleonhart.com** an unknown path counts down **30 seconds** and then redirects to the **same
+path on emmaleonhart.github.io** (Emma's instruction, 2026-09-25): most repos publish Pages without a
+custom domain, at `emmaleonhart.github.io/<repo>`, so a 404 here is usually someone typing
+`emmaleonhart.com/<repo>`. Any click/key/scroll cancels the redirect. On sister `*.emmaleonhart.com`
+sites the same file keeps the old behaviour (redirect to that site's homepage).
+
 ## Page structure
 
 ```
