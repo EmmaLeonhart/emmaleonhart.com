@@ -2,13 +2,13 @@
 
 I'm Emma, a self-taught deep-tech founder building **[Topaz](https://topazcomputing.com)**: context management for people running a staff team of AI agents. It is an ERP for agents rather than for humans, planning and records and issue tracking fused into one structured workspace the agents work from instead of a chat window, delivered as a hosted box running persistent agents against your own repositories. I built this without a PhD or a lab, on the strength of the work ([the founder story is here](https://topazcomputing.com/story)).
 
-I treat this as a venture, not a side project. **Sutra**, my own language whose programs are vector symbolic architecture (VSA) operations compiled to tensor arithmetic, is published with a paper and closed at v1.1.0; it is separate work, not what Topaz sells. The usual deep-tech founder has a doctorate and an easy fallback and hedges accordingly; I have neither and I'm not building one. I went in clear-eyed about what I was giving up and committed anyway. Most of what I ship is driven by AI coding agents working inside my own scaffolding ([cleanvibe](https://github.com/EmmaLeonhart/cleanvibe)), with the judgment to know when to take the wheel. Since March 2026 I have been shipping at a pace I did not know I had, across dozens of repositories.
-
 ### What I'm working on
 
+- **SovGrid**: a subsidiary of Topaz I co-founded with Arkhos Winter, building solar power for Canadian data centres so they can grow without straining the local grid or burning natural gas. [sovgrid.ca](https://sovgrid.ca)
 - **Sutra**: my embedding-native language, public with a paper on arXiv ([arXiv:2605.20919](https://arxiv.org/abs/2605.20919)). Programs are vector symbolic architecture (VSA) operations (bind, unbind, bundle) compiled to straight-line tensor ops and round-tripped back to verifiable source. [site](https://sutra.topazcomputing.com) · [source](https://github.com/EmmaLeonhart/Sutra)
 - **Thermodynamic computing**: early but measured experiments mapping Sutra's VSA operations onto a thermodynamic (thrml) sampling substrate. Associative memory, content-addressable retrieval, and bind/unbind all run as energy-based sampling on the hardware model, with measured recovery numbers rather than a sketch.
 - **cleanvibe**: the open-source scaffolding underneath all of it. The docs, queue, and devlog conventions an AI coding agent works inside to stay on-task and self-documenting across long sessions. [source](https://github.com/EmmaLeonhart/cleanvibe)
+- **Genealogy for Wikidata**: one family tree merged from FamilySearch, Geni and RootsMagic exports, reconciled against Wikidata, with the people and relationships Wikidata is missing sent back as a daily QuickStatements batch. [source](https://github.com/EmmaLeonhart/genealogy)
 
 ### Find me
 

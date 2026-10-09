@@ -46,6 +46,11 @@ community directly (LessWrong, formal-verification and interpretability debates)
 
 ## Experience
 
+### Co-founder, [SovGrid](https://sovgrid.ca) (subsidiary of Topaz Computing)
+*2026–present*
+- Co-founded with Arkhos Winter: solar power for Canadian data centres, so they can grow without
+  straining the local grid or burning natural gas.
+
 ### Developer, Ambient Games
 *2024–2025*
 - Shipped on *Schema* (video game) across the .NET/C# ecosystem with CI/CD in Azure DevOps;
@@ -55,6 +60,9 @@ community directly (LessWrong, formal-verification and interpretability debates)
 *2025–present*
 - Python automation against MediaWiki/Wikibase APIs; SPARQL-driven batch edits on Wikidata at
   scale.
+- [Genealogy pipeline](https://github.com/EmmaLeonhart/genealogy): merges FamilySearch, Geni and
+  RootsMagic trees, reconciles them against Wikidata, and sends the missing people and
+  relationships back as a daily QuickStatements batch generated in CI.
 
 ---
 
