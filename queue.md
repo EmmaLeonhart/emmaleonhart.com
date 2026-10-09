@@ -8,6 +8,13 @@ See `CLAUDE.md` § "Workflow Rules". Visual-identity spec + confirmed kit live i
 
 ## Stuff Emma added
 
+### Submodule-bump CI fails: alignment pins a missing nested commit
+`.github/workflows/submodule-bump.yml` fails at checkout (runs on 362eedb,
+2026-10-09): `repos/alignment/external/model-organisms-for-EM` is pinned to
+`ed36b0d6`, which its remote does not have ("not our ref"). Fix at the source
+in the alignment repo (re-point that gitlink to a commit the remote has), or
+stop the workflow recursing into alignment's nested submodules.
+
 ### Links subdomain — ONE manual DNS step left (Emma-only)
 
 Repo `EmmaLeonhart/links` created + pushed; mirrored as submodule `repos/links`;
