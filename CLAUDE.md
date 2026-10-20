@@ -1,6 +1,6 @@
 # emmaleonhart.com
 
-Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory. **Branch migration in progress (2026-05-16): `master` → `main`.** The Pages workflow triggers on BOTH `master` and `main`, so deploys keep working through the switch. `main` exists on origin; the final GitHub default-branch flip (Settings → Branches) is a UI action only the repo owner can do. Once default is `main` and confirmed, drop `master` from `pages.yml` and delete `origin/master`.
+Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory. **Default branch is `main`** (the `master` → `main` migration is done; GitHub default verified `main` on 2026-10-20). Two leftovers remain and are optional: `pages.yml` still triggers on both `master` and `main`, and a stale `origin/master` branch still exists. Trimming the trigger to `[main]` and deleting `origin/master` are cleanup only; nothing deploys from `master`.
 
 ## Workflow Rules
 - **DELETE completed items from `queue.md` IN THE SAME COMMIT as the work.** This is non-negotiable. Not at the end of a session, not "soon" — same commit. No checkmarks, no `DONE` headers, no status markers. If the work is done, the line is gone. The queue is a queue, not a journal.
@@ -46,7 +46,7 @@ pages/
 │                           #   Pewter filled buttons + top-right dark/light toggle
 │                           #   (dark default). Every page/site copies its drop-in
 │                           #   block. scripts/apply_identity*.py apply it in bulk.
-├── projects/               # Projects hub — links the 6 *.emmaleonhart.com subdomain projects
+├── projects/               # Projects hub — links the *.emmaleonhart.com subdomain projects (ranked from data/projects.json)
 ├── research/               # Research hub — index of papers + per-project research
 ├── tutorials/              # ML visualizer hub — links to all tutorial pages by topic
 ├── theory/                 # Loka theory hub — 8 sub-pages on database internals
@@ -85,7 +85,7 @@ pages/
 - `resume.md` — canonical resume. Source of truth is THIS file, mirrored from the live site (`pages/index.html`, `data/projects.json`, `pages/research/index.html`). The life-planning copy is not authoritative. Built to `/resume.html` and `/resume.pdf` on each push.
 - `github_bio/readme.md` — **first-class: the canonical source of Emma's GitHub *profile* README.** It is NOT just a doc — it becomes the entire README of the `EmmaLeonhart/EmmaLeonhart` profile repo (the bio shown on her GitHub profile). **Sync is pull-based and token-free:** the profile repo's own `.github/workflows/sync-from-website.yml` checks this repo out and copies `github_bio/readme.md` over its `README.md` daily (06:00 UTC cron) + on manual dispatch, committing with its built-in `GITHUB_TOKEN`. No PAT, no secret here. It pulls from this repo's **`main`** branch. **Edit the profile bio HERE — never directly on the profile repo; the daily sync overwrites the whole README.** The sync changes only on the daily cadence (no push trigger across repos — that would need a cross-repo PAT, which we deliberately avoid). A push *from* this repo to the profile repo is impossible without such a PAT, which is why the old `sync-profile-readme.yml` (marker-based, `PROFILE_README_TOKEN`) was deleted as a permanently-failing redundancy on 2026-05-18. Treat this file with the same care as `resume.md` — it is a public-facing source of truth.
 - `prototype/` — data and scripts that feed the embeddings viewer.
-- `repos/` — git submodules pointing at the sister projects featured on this site (Loka, querykey, alignment, latent-space-cartography, vibecoding-tutorial; cleanvibe is added by a scheduled routine). **Not part of the GitHub Pages deploy** — Pages only serves `pages/`. These live here so that cross-project work (resume sync, scrubbing stale names, copy-checking, paper citations) can happen against real source trees instead of one-off shallow clones in a temp dir. **Yantra and Sutra are no longer vendored here (2026-06-08):** Sutra is moving off the personal brand, and Yantra now lives as a sibling submodule of this site under the `life-planning` repo (`external/Yantra`), so Yantra can operate on the website (its first recursive-self-improvement target). The OS (Yantra, briefly mislabeled "Topaz OS") is **no longer featured on this personal site at all** (removed 2026-06-19, Emma: "Topaz OS is not a thing to include there"). The site now features the **Topaz Computing company** card and mission instead (links to topazcomputing.com); the project list, research page, resume, and bio no longer reference the OS.
+- `repos/` — git submodules pointing at the sister projects featured on this site, per `.gitmodules`: `loka`, `querykey`, `alignment`, `latent-space-cartography`, `vibecoding-tutorial`, `cleanvibe`, `reservoir` (repo `reservoiragent`) and `links`. **Not part of the GitHub Pages deploy** — Pages only serves `pages/`. These live here so that cross-project work (resume sync, scrubbing stale names, copy-checking, paper citations) can happen against real source trees instead of one-off shallow clones in a temp dir. **Yantra and Sutra are no longer vendored here (2026-06-08):** Sutra is moving off the personal brand, and Yantra now lives as a sibling submodule of this site under the `life-planning` repo (`external/Yantra`), so Yantra can operate on the website (its first recursive-self-improvement target). The OS (Yantra, briefly mislabeled "Topaz OS") is **no longer featured on this personal site at all** (removed 2026-06-19, Emma: "Topaz OS is not a thing to include there"). The site now features the **Topaz Computing company** card and mission instead (links to topazcomputing.com); the project list, research page, resume, and bio no longer reference the OS.
 - `redirects/` — git submodules for the six Sutra/Yantra domain-redirect repos
   (`sutra.emmaleonhart.com`, `sutra.noldor.tech`, `sutra.yantraos.org`,
   `sutradb.org`, `sutralang.dev`, `yantra.emmaleonhart.com`). Added 2026-06-19 to
@@ -97,16 +97,16 @@ pages/
 The sister projects are real GitHub repos with push access. When the site pulls a fact from one of them (a project description, a paper title, a release tag) and that fact is wrong upstream, fix it **at the source**:
 
 ```bash
-# 1. Move into the submodule and get on its default branch (most use master,
-#    Loka uses main — check with `git remote show origin`).
+# 1. Move into the submodule and get on its default branch (main for the
+#    current set; confirm with `git remote show origin`).
 cd repos/<name>
-git checkout master  # or main
+git checkout main
 git pull --ff-only
 
 # 2. Edit, commit, push directly to the sister repo's default branch.
 git add -- <files>
 git commit -m "<why this change matters>"
-git push origin master  # or main
+git push origin main
 
 # 3. Optionally bump the submodule pointer in emmaleonhart.com if a specific
 #    revision matters for cross-referencing. For most edits this is unnecessary
@@ -116,9 +116,9 @@ git add repos/<name>
 git commit -m "Bump <name> submodule pointer to <SHA-or-tag>"
 ```
 
-**Pointer freshness is automated.** `.github/workflows/submodule-bump.yml` runs daily (06:40 UTC) + on `workflow_dispatch`: it resolves each submodule's own remote default branch and re-points the gitlink to that branch's HEAD, syncing nested gitlinks (e.g. `yantra/external/Sutra`) recursively. So you normally do NOT need to hand-bump pointers — and a stray uncommitted nested-submodule edit should be discarded, not committed, because the automation (and each sister repo's own CI) is the channel for advancing them. Only hand-bump when a *specific* revision must be pinned for cross-referencing before the next daily run.
+**Pointer freshness is automated.** `.github/workflows/submodule-bump.yml` runs daily (06:40 UTC) + on `workflow_dispatch`: it resolves each submodule's own remote default branch and re-points the gitlink to that branch's HEAD, syncing nested gitlinks (e.g. `alignment/external/model-organisms-for-EM`) recursively. So you normally do NOT need to hand-bump pointers — and a stray uncommitted nested-submodule edit should be discarded, not committed, because the automation (and each sister repo's own CI) is the channel for advancing them. Only hand-bump when a *specific* revision must be pinned for cross-referencing before the next daily run.
 
-`credential.helper=manager` holds push creds for all six repos. The `gh` CLI **is** authenticated (account `immanuelle-leonhart`, scopes `gist, read:org, repo, workflow`) and can create repos / enable Pages / drive the API for the `EmmaLeonhart` repos (verified 2026-06-01 when it created `EmmaLeonhart/links`). Note: the auto-mode classifier may still block *creating a public repo* until the user explicitly authorizes public visibility. `latent-space-cartography` has a purged LFS history; clone it last and avoid `git lfs pull` unless you actually need the dataset.
+`credential.helper=manager` holds push creds for the sister repos. The `gh` CLI **is** authenticated (account `immanuelle-leonhart`, scopes `gist, read:org, repo, workflow`) and can create repos / enable Pages / drive the API for the `EmmaLeonhart` repos (verified 2026-06-01 when it created `EmmaLeonhart/links`). Note: the auto-mode classifier may still block *creating a public repo* until the user explicitly authorizes public visibility. `latent-space-cartography` has a purged LFS history; clone it last and avoid `git lfs pull` unless you actually need the dataset.
 
 ## Building
 

@@ -9,7 +9,7 @@ Personal website and interactive tools, deployed via GitHub Pages.
 ## Pages
 
 - `/` — Landing page: bio, flagship project (Sutra), and research directions framed by Emma's three linked goals — neurosymbolic AI, AI interpretability, and AI safety. Geometric tensor languages, Loka, Wikidata / Pramana / Aelaki, and the tutorials are positioned as the *means* toward those goals.
-- `/projects/` — Projects hub: the six subdomain projects (Sutra, Loka, QueryKey, Yantra, Latent Space Cartography, Alignment), each linking to its own `*.emmaleonhart.com` subdomain and GitHub repo.
+- `/projects/` — Projects hub: the sister projects from `data/projects.json` (Sutra, Loka, QueryKey, Alignment, Reservoir Agent, Latent Space Cartography, Vibecoding Tutorial, cleanvibe), each linking to its own `*.emmaleonhart.com` subdomain and GitHub repo.
 - `/research/` — Research hub: an evolving index of standalone papers (Latent Space Cartography, redemption-realignment, deleuze-claw4S) and the research carried inside each project. Linked from the landing-page top bar.
 - `/resume.html` and `/resume.pdf` — Auto-built from `resume.md` by `.github/workflows/pages.yml` on every push.
 - `/tutorials/` — Hub for the 16 interactive ML visualizers (vector math, neural networks, training, architectures).
@@ -38,7 +38,7 @@ npm install
 npx tsc
 ```
 
-The `pages/` directory is served by GitHub Pages. `repos/` holds submodules pointing at the six sister projects (Sutra, Loka, Yantra, QueryKey, alignment, latent-space-cartography) so cross-project edits can land directly on those repos; it is not part of the Pages deploy. See `CLAUDE.md` for the edit-in-submodule workflow.
+The `pages/` directory is served by GitHub Pages. `repos/` holds submodules pointing at the sister projects (loka, querykey, alignment, latent-space-cartography, vibecoding-tutorial, cleanvibe, reservoir, links) so cross-project edits can land directly on those repos, and `redirects/` holds the six Sutra/Yantra domain-redirect stubs; neither is part of the Pages deploy. See `CLAUDE.md` for the edit-in-submodule workflow.
 
 ## Building the resume
 
