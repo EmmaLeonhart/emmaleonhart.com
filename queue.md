@@ -34,9 +34,7 @@ live `git ls-remote --symref origin HEAD` → `refs/heads/main`,
 (cron `ec7863e6`); `git submodule status` clean. `main` is the
 canonical/current branch everywhere; nothing deploys only from master.
 
-Optional, low-priority, do when convenient (not blocking anything):
-once a repo's GitHub default is confirmed `main`, delete its now-unused
-`origin/master` (needs Emma's yes: branch deletion). **Never delete a branch that is still a repo's
+`origin/master` deleted 2026-10-20 at Emma's say-so (see devlog). **Never delete a branch that is still a repo's
 GitHub default.**
 
 ---

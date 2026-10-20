@@ -1,6 +1,6 @@
 # emmaleonhart.com
 
-Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory. **Default branch is `main`** (the `master` → `main` migration is done; GitHub default verified `main` on 2026-10-20). One leftover remains and is optional: a stale `origin/master` branch still exists. Deleting it is cleanup only; `pages.yml` triggers on `main` alone (trimmed 2026-10-20) and nothing deploys from `master`.
+Personal website at <https://emmaleonhart.com>, deployed via GitHub Pages from the `pages/` directory. **Default branch is `main`** (the `master` → `main` migration is done; GitHub default verified `main` on 2026-10-20). `origin/master` and the stale `claude/*` branches were deleted on 2026-10-20 (SHAs in `devlog.md`); `pages.yml` triggers on `main` alone.
 
 ## Workflow Rules
 - **DELETE completed items from `queue.md` IN THE SAME COMMIT as the work.** This is non-negotiable. Not at the end of a session, not "soon" — same commit. No checkmarks, no `DONE` headers, no status markers. If the work is done, the line is gone. The queue is a queue, not a journal.
