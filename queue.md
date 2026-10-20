@@ -35,9 +35,8 @@ live `git ls-remote --symref origin HEAD` → `refs/heads/main`,
 canonical/current branch everywhere; nothing deploys only from master.
 
 Optional, low-priority, do when convenient (not blocking anything):
-trim the `pages.yml` trigger `[master, main]` → `[main]`; once a
-repo's GitHub default is confirmed `main`, delete its now-unused
-`origin/master`. **Never delete a branch that is still a repo's
+once a repo's GitHub default is confirmed `main`, delete its now-unused
+`origin/master` (needs Emma's yes: branch deletion). **Never delete a branch that is still a repo's
 GitHub default.**
 
 ---
