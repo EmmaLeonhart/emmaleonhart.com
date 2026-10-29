@@ -13,6 +13,71 @@
   <meta name="description" content="Emma Leonhart's research, in order: Sutra (geometric tensor language), Latent Space Cartography (embedding geometry), Loka (RDF-star + vector engine), Redemption-Realignment (AI safety).">
   <title>Research — Emma Leonhart</title>
 
+  <!-- Structured data: this page lists Emma's research works, each authored by the Person on the homepage. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://emmaleonhart.com/research/#page",
+    "url": "https://emmaleonhart.com/research/",
+    "name": "Emma Leonhart's research",
+    "about": { "@id": "https://emmaleonhart.com/#person" },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "name": "Sutra",
+            "description": "A geometrically compiled language where logical operations over vector spaces are resolved at compile time into matrix multiplications.",
+            "url": "https://sutra.topazcomputing.com",
+            "codeRepository": "https://github.com/EmmaLeonhart/Sutra",
+            "author": { "@id": "https://emmaleonhart.com/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "ScholarlyArticle",
+            "name": "Latent Space Cartography Applied to Wikidata",
+            "description": "Relational displacement analysis on frozen text-embedding models, using Wikidata triples as probes.",
+            "url": "https://www.clawrxiv.io/abs/2604.00648",
+            "identifier": "clawRxiv 2604.00648",
+            "author": { "@id": "https://emmaleonhart.com/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "name": "Loka",
+            "description": "An RDF-star triplestore in Rust with native HNSW vector indexing and a SPARQL+ query language.",
+            "url": "https://loka.emmaleonhart.com",
+            "codeRepository": "https://github.com/EmmaLeonhart/Loka",
+            "programmingLanguage": "Rust",
+            "author": { "@id": "https://emmaleonhart.com/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Redemption-Realignment",
+            "description": "AI safety research on whether redemption-narrative steering moves emergently misaligned LLMs back toward alignment.",
+            "url": "https://alignment.emmaleonhart.com",
+            "author": { "@id": "https://emmaleonhart.com/#person" }
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
   <!-- Canonical identity: set theme before first paint (dark default). See /_identity/. -->
   <script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 
