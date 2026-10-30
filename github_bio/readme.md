@@ -21,7 +21,7 @@ I'm Emma, a self-taught deep-tech founder building **[Topaz](https://topazcomput
 - **Substack**: https://blog.emmaleonhart.com/
 - **LessWrong**: https://www.lesswrong.com/users/emma-leonhart
 - **X**: https://x.com/EmmaNoMikoto
-- **Bluesky**: https://bsky.app/profile/emmaleonhart.bsky.social
+- **YouTube**: https://www.youtube.com/@EmmaNoMikoto
 - **More projects** (Loka, QueryKey, Alignment, Latent Space Cartography, Reservoir): https://emmaleonhart.com/projects/
 
 ### Programming Languages
